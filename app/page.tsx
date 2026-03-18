@@ -2,53 +2,41 @@ import Link from 'next/link'
 
 export default function LandingPage() {
   return (
-    <div className="landing-bg min-h-screen flex items-center justify-center relative">
-      <main className="text-center px-8 max-w-[700px] relative z-10 animate-[fadeIn_2s_ease-out]">
-        {/* Refurzy Logo */}
-        <div className="mb-16">
-          <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-16 mx-auto drop-shadow-[0_0_30px_rgba(0,229,199,0.15)]" />
-        </div>
+    <div className="landing-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Gradient orbs via CSS */}
+      <div className="bg-orb bg-orb-1" />
+      <div className="bg-orb bg-orb-2" />
+      <div className="bg-orb bg-orb-3" />
 
-        <h1 className="text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-white leading-tight mb-6">
-          Goedkoper sourcen.<br />
-          <span className="text-cyan">Betere matches.</span><br />
-          Minder mis-hires.
+      <main className="text-center px-6 max-w-[720px] relative z-10 animate-[fadeIn_0.8s_ease-out]">
+        <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="w-[220px] mx-auto mb-[60px]" />
+
+        <h1 className="text-[clamp(1.8rem,5vw,2.6rem)] font-semibold leading-[1.3] mb-5">
+          <span className="gradient-text">Redefining Recruitment.</span> Forever.
         </h1>
 
-        <div className="w-[80px] h-[2px] bg-gradient-to-r from-purple via-cyan to-purple mx-auto my-8 opacity-50" />
-
-        <p className="text-lg text-gray-400 leading-relaxed mb-8 max-w-[500px] mx-auto">
-          Wetenschappelijk gevalideerde matching. No cure, no pay. Ontwikkeld i.s.m. VU Amsterdam.
+        <p className="text-[clamp(1rem,2.5vw,1.15rem)] font-light text-[rgba(249,251,255,0.8)] max-w-[560px] mx-auto leading-relaxed mb-4">
+          De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven nauwelijks.
+        </p>
+        <p className="text-[clamp(0.9rem,2vw,0.95rem)] font-light text-[rgba(249,251,255,0.6)] max-w-[520px] mx-auto leading-relaxed mb-12">
+          Refurzy draait het om. Met wetenschap als fundament en technologie als motor maken wij werving sneller, objectiever en voor een fractie van de kosten.
         </p>
 
-        <div className="flex items-center justify-center gap-6 mb-12">
-          <div className="text-center">
-            <div className="text-cyan font-bold text-2xl">70%</div>
-            <div className="text-gray-500 text-xs">lagere kosten</div>
-          </div>
-          <div className="w-px h-10 bg-purple/30" />
-          <div className="text-center">
-            <div className="text-purple-light font-bold text-2xl">&beta;=.30**</div>
-            <div className="text-gray-500 text-xs">bewezen effect</div>
-          </div>
-          <div className="w-px h-10 bg-purple/30" />
-          <div className="text-center">
-            <div className="text-orange font-bold text-2xl">651%</div>
-            <div className="text-gray-500 text-xs">ROI</div>
-          </div>
-        </div>
+        <div className="w-[60px] h-[2px] btn-gradient mx-auto mb-12 rounded-full" />
 
-        <p className="text-sm text-gray-600 italic">
-          Exclusief platform &mdash; toegang via uitnodiging
+        <p className="text-[0.85rem] font-medium text-[rgba(249,251,255,0.5)] uppercase tracking-[2px] mb-6">
+          Binnenkort live — Wees er als eerste bij
         </p>
+
+        <Link
+          href="/login"
+          className="inline-block btn-gradient text-white font-semibold px-10 py-3.5 rounded-[10px] text-[0.95rem] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all"
+        >
+          Demo bekijken
+        </Link>
+
+        <p className="mt-[60px] text-[rgba(249,251,255,0.25)] text-[0.75rem]">&copy; 2026 Refurzy B.V. — Alle rechten voorbehouden</p>
       </main>
-
-      <Link
-        href="/login"
-        className="fixed bottom-4 right-4 text-gray-700 hover:text-cyan/60 text-xs transition-colors duration-300"
-      >
-        demo &rarr;
-      </Link>
     </div>
   )
 }

@@ -8,9 +8,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: { DEFAULT: '#0f0a2e', light: '#1a1145', dark: '#0a0720' },
-        purple: { DEFAULT: '#6c3ce0', light: '#8b5cf6', dark: '#4c1d95' },
-        cyan: { DEFAULT: '#00e5c7', light: '#5eead4', dark: '#0d9488' },
+        navy: { DEFAULT: '#1A0F5D', light: '#231470', dark: '#130B45' },
+        purple: { DEFAULT: '#6D40F9', light: '#8B5CF6', dark: '#4c1d95' },
+        cyan: { DEFAULT: '#14CDD3', light: '#06BAFF', dark: '#0d9488' },
         orange: { DEFAULT: '#f59e0b', light: '#fbbf24' },
       },
     },

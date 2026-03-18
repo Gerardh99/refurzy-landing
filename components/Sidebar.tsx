@@ -48,15 +48,10 @@ export default function Sidebar({ role }: { role: UserRole }) {
         {items.map(item => {
           const isActive = pathname === item.href || (item.href !== `/demo/${role}` && pathname.startsWith(item.href))
           return (
-            <Link
-              key={item.href}
-              href={item.href}
+            <Link key={item.href} href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                isActive
-                  ? 'bg-purple/15 text-cyan border border-purple/20'
-                  : 'text-gray-400 hover:text-white hover:bg-purple/5'
-              }`}
-            >
+                isActive ? 'bg-purple/15 text-cyan border border-purple/20' : 'text-gray-400 hover:text-white hover:bg-purple/5'
+              }`}>
               <span className="text-base">{item.icon}</span>
               {item.label}
             </Link>
@@ -65,11 +60,8 @@ export default function Sidebar({ role }: { role: UserRole }) {
       </nav>
 
       <div className="p-4 border-t border-purple/10">
-        <Link
-          href="/login"
-          onClick={() => { if (typeof window !== 'undefined') sessionStorage.removeItem('refurzy_user') }}
-          className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors px-3 py-2"
-        >
+        <Link href="/login" onClick={() => { if (typeof window !== 'undefined') sessionStorage.removeItem('refurzy_user') }}
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors px-3 py-2">
           <span>↩</span> Uitloggen
         </Link>
       </div>

@@ -2,23 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .landing-bg {
-  background: linear-gradient(170deg, #0a0720 0%, #0f0a2e 40%, #1a1145 100%);
+  background: #1A0F5D;
 }
 
-.landing-bg::before {
-  content: '';
+.gradient-text {
+  background: linear-gradient(135deg, #14CDD3, #06BAFF, #6D40F9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #14CDD3, #06BAFF, #6D40F9);
+}
+
+.bg-orb {
   position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 45%, rgba(0, 229, 199, 0.04) 0%, transparent 70%);
-  z-index: 0;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
   pointer-events: none;
+  z-index: 0;
+}
+.bg-orb-1 {
+  width: 600px; height: 600px;
+  background: #14CDD3;
+  top: -200px; right: -100px;
+}
+.bg-orb-2 {
+  width: 500px; height: 500px;
+  background: #6D40F9;
+  bottom: -150px; left: -100px;
+}
+.bg-orb-3 {
+  width: 350px; height: 350px;
+  background: #06BAFF;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes fadeIn {

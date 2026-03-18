@@ -3,7 +3,7 @@ export default function StarRating({ rating, showValue = true, showMasterBadge =
   const stars = []
   for (let i = 1; i <= 5; i++) {
     stars.push(
-      <span key={i} className={i <= Math.round(rating) ? 'text-orange' : 'text-gray-600'}>
+      <span key={i} className={i <= Math.round(rating) ? 'text-orange' : 'text-gray-300'}>
         ★
       </span>
     )
@@ -13,7 +13,7 @@ export default function StarRating({ rating, showValue = true, showMasterBadge =
       <span className="text-sm tracking-tight">{stars}</span>
       {showValue && <span className="text-orange font-semibold text-sm ml-1">{rating.toFixed(1)}</span>}
       {showMasterBadge && isMasterMatcher && (
-        <span className="ml-1 px-1.5 py-0.5 bg-orange/15 text-orange text-[10px] font-bold rounded border border-orange/30">
+        <span className="ml-1 px-1.5 py-0.5 bg-amber-50 text-orange text-[10px] font-bold rounded border border-orange/30">
           MASTER MATCHER
         </span>
       )}

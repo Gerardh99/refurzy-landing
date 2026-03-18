@@ -34,7 +34,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
       <Sidebar role={user.role} />
       <div className="flex-1 flex flex-col">
         <TopBar user={user} />
-        <main className="flex-1 p-8 overflow-auto scrollbar-thin">
+        <main className="flex-1 p-8 overflow-auto">
           {children}
         </main>
       </div>

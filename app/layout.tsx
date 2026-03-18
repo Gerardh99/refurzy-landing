@@ -4,7 +4,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Refurzy — Demo',
   description: 'Refurzy recruitment platform demo',
-  icons: { icon: '/assets/favicon.svg' },
+  icons: { icon: '/assets/refurzy-favicon.jpg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
