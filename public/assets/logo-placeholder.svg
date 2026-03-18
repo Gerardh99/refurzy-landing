@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="48" viewBox="0 0 180 48">
+  <defs>
+    <style>
+      .t{ font:700 22px 'Cinzel', serif; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="180" height="48" fill="none"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="t" fill="#C9A24E">CIRCLE OF 10</text>
+</svg>
