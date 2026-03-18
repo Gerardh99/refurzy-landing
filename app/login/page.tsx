@@ -60,27 +60,6 @@ export default function LoginPage() {
             Inloggen
           </button>
 
-          <div className="mt-8 pt-6 border-t border-purple/10">
-            <p className="text-xs text-gray-500 mb-3">Demo accounts:</p>
-            <div className="space-y-2 text-xs">
-              {[
-                { label: 'Opdrachtgever', email: 'demo@bedrijf.nl' },
-                { label: 'Talent Scout', email: 'scout@refurzy.nl' },
-                { label: 'Kandidaat', email: 'kandidaat@refurzy.nl' },
-              ].map(acc => (
-                <button
-                  key={acc.email} type="button"
-                  onClick={() => { setEmail(acc.email); setPassword('demo2026') }}
-                  className="w-full text-left bg-navy/50 border border-purple/10 rounded-lg px-3 py-2 hover:border-cyan/30 transition-colors group"
-                >
-                  <span className="text-cyan font-medium">{acc.label}</span>
-                  <span className="text-gray-500 ml-2">{acc.email}</span>
-                  <span className="text-gray-600 float-right group-hover:text-gray-400">→</span>
-                </button>
-              ))}
-              <p className="text-gray-600 mt-1">Wachtwoord: demo2026</p>
-            </div>
-          </div>
         </form>
       </div>
     </div>
