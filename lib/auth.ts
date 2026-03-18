@@ -21,7 +21,7 @@ const DEMO_USERS: Record<string, User> = {
   },
 }
 
-const DEMO_PASSWORD = 'demo2026'
+const DEMO_PASSWORD = 'Nummer1platform'
 
 export function login(email: string, password: string): User | null {
   const user = DEMO_USERS[email.toLowerCase()]

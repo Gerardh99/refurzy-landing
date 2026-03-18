@@ -17,7 +17,7 @@ export default function LoginPage() {
     if (user) {
       router.push(getRolePath(user.role))
     } else {
-      setError('Ongeldige inloggegevens. Gebruik een demo-account.')
+      setError('Ongeldige inloggegevens.')
     }
   }
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
               className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
-              placeholder="demo@bedrijf.nl" required
+              placeholder="je@email.nl" required
             />
           </div>
 
