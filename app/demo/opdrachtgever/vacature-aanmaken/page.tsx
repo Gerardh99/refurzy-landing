@@ -337,9 +337,9 @@ export default function VacatureAanmakenPage() {
 
             <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-6 mb-6">
               <div className="text-center mb-4">
-                <p className="text-sm text-ink-light mb-2">Prijs per ontgrendeling</p>
+                <p className="text-sm text-ink-light mb-2">Prijs per plaatsing (excl. BTW)</p>
                 <div className="text-4xl font-bold text-ink mb-1">{formatPrice(price, pricing)}</div>
-                <p className="text-cyan text-sm font-medium">No Cure No Pay</p>
+                <p className="text-cyan text-sm font-medium">No Cure No Pay · excl. 21% BTW</p>
               </div>
               <div className="grid grid-cols-3 gap-3 text-center text-xs">
                 <div className="bg-surface-muted/50 rounded-lg p-3">
@@ -361,8 +361,8 @@ export default function VacatureAanmakenPage() {
               <p className="font-semibold text-ink mb-2">Voorwaarden No Cure No Pay</p>
               <ul className="space-y-2 list-disc list-inside">
                 <li>U betaalt uitsluitend wanneer u een kandidaat aanneemt die via Refurzy is ontgrendeld.</li>
-                <li>De prijs per ontgrendeling is {formatPrice(price, pricing)} op basis van {form.opleiding} + {EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}.</li>
-                <li>50% van de vergoeding gaat naar de Talent Scout, 50% naar Refurzy.</li>
+                <li>De plaatsingsfee is {formatPrice(price, pricing)} excl. BTW, op basis van {form.opleiding} + {EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}.</li>
+                <li>Alle bedragen zijn exclusief 21% BTW. 50% van de vergoeding gaat naar de Talent Scout, 50% naar Refurzy.</li>
                 <li>Bemiddeling buiten het platform om resulteert in een penalty van 100% van de vergoeding.</li>
                 <li>De factuur volgt bij ondertekening van het arbeidscontract met de kandidaat.</li>
                 <li>Optioneel: activeer exclusiviteit (+30% premium, volledig voor de Scout) voor 2 weken prioriteit.</li>

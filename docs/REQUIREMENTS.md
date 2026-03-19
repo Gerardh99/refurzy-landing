@@ -49,8 +49,16 @@ Fee = Ervaringspunten × Opleidingspunten × Waarde per punt (€1.200 NL)
 *>10 jaar regel: HBO en WO krijgen dezelfde multiplier (2.5) om prijsdalingen te voorkomen.*
 
 ### Verdeling
-- 50% Scout fee
-- 50% Refurzy fee
+- 50% Scout fee (excl. BTW)
+- 50% Refurzy fee (excl. BTW)
+
+### BTW & Uitbetaling
+- **Alle prijzen op het platform zijn exclusief BTW**
+- **Particuliere scout (geen KVK)**: ontvangt 50% van de fee excl. BTW. Refurzy houdt loonheffing in (IB-47)
+- **Pro Scout (met KVK)**: ontvangt 50% van de fee excl. BTW + 21% BTW daarboven. Factureert als ondernemer
+- **Automatische facturatie**: Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur
+- **Uitbetaling trigger**: Scout wordt uitbetaald zodra de opdrachtgever heeft betaald
+- **Opdrachtgever betaalt**: Plaatsingsfee + 21% BTW via creditcard
 
 ### No Cure, No Pay
 Opdrachtgever betaalt alleen bij ondertekening arbeidsovereenkomst.
@@ -442,3 +450,6 @@ lib/
 8. **>10 jaar regel**: HBO en WO krijgen zelfde multiplier (2.5) bij >10 jaar ervaring
 9. **Fit Garantie**: Alleen bij M-Score ≥80%, 12 maanden, alleen cultuur/waarden/interesses mismatch
 10. **Exclusiviteit**: Optioneel 2-weken exclusiviteit met 30% premium (gaat naar scout)
+11. **Prijzen excl. BTW**: Alle prijzen op het platform zijn exclusief BTW
+12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
+13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee minus loonheffing

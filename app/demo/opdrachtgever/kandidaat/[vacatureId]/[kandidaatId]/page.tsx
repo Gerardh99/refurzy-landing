@@ -207,7 +207,7 @@ export default function OpdrachtgeverKandidaatProces() {
             <h3 className="text-sm font-medium text-ink mb-2">Plaatsingsvoorwaarden</h3>
             <div className="space-y-2 text-sm text-ink-light">
               <div className="flex justify-between">
-                <span>Plaatsingsfee bij aanname</span>
+                <span>Plaatsingsfee bij aanname (excl. BTW)</span>
                 <span className="text-ink font-semibold">€{fee.fee.toLocaleString('nl-NL')}</span>
               </div>
               <div className="flex justify-between">
@@ -400,9 +400,9 @@ export default function OpdrachtgeverKandidaatProces() {
             De Fit Garantie van 12 maanden is nu actief.
           </p>
           <div className="bg-white rounded-xl p-4 max-w-sm mx-auto">
-            <p className="text-xs text-ink-muted">Plaatsingsfee</p>
+            <p className="text-xs text-ink-muted">Plaatsingsfee (excl. BTW)</p>
             <p className="text-2xl font-bold text-ink">€{fee.fee.toLocaleString('nl-NL')}</p>
-            <p className="text-xs text-ink-muted mt-1">Wordt in rekening gebracht via uw creditcard</p>
+            <p className="text-xs text-ink-muted mt-1">+ 21% BTW. Wordt geïncasseerd via uw creditcard.</p>
           </div>
         </div>
       )}

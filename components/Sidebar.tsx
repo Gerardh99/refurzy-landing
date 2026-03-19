@@ -16,9 +16,10 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/scout', label: 'Talent Pool', icon: '👥' },
     { href: '/demo/scout/vacatures', label: 'Vacatures', icon: '📋' },
     { href: '/demo/scout/pipeline', label: 'Pipeline', icon: '📈' },
+    { href: '/demo/scout/facturen', label: 'Facturen & Verdiensten', icon: '💰' },
     { href: '/demo/scout/kandidaat-uitnodigen', label: 'Kandidaat uitnodigen', icon: '✉️' },
     { href: '/demo/scout/meldingen', label: 'Meldingen', icon: '🔔' },
-    { href: '/demo/scout/instellingen', label: 'Instellingen & Uitbetaling', icon: '⚙️' },
+    { href: '/demo/scout/instellingen', label: 'Instellingen', icon: '⚙️' },
   ],
   kandidaat: [
     { href: '/homepage', label: 'Homepage', icon: '🏠' },
