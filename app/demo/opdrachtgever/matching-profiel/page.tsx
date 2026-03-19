@@ -6,16 +6,11 @@ import {
   waarden,
   organisatiekenmerken,
   werkzaamhedenRatingScale,
-  waardenRatingScaleKandidaat,
+  waardenRatingScaleOrg,
   kenmerkenRatingScale,
-  calculateMScore,
-  demoOrgResponses,
   scanSteps,
   type ScanResponses,
   type ScanStep,
-  type ScanItem,
-  type WaardeItem,
-  type KenmerkItem,
   type ScaleOption,
 } from '@/lib/matching-scan'
 
@@ -45,7 +40,7 @@ function emptyResponses(): ScanResponses {
 
 // ─── Main page component ────────────────────────────────────────────────────
 
-export default function KandidaatMatchingScan() {
+export default function OpdrachtgeverMatchingProfiel() {
   const [stepIndex, setStepIndex] = useState(0)
   const [responses, setResponses] = useState<ScanResponses>(emptyResponses)
   const [validationError, setValidationError] = useState('')
@@ -139,8 +134,8 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'werkzaamheden_ranking' && (
         <RankingStep
           title="Rangschik de werkzaamheden"
-          description="Geef elke werkzaamheid een unieke rangorde van 1 (minst passend) tot 19 (meest passend). Elk nummer mag maar één keer gebruikt worden."
-          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelKandidaat, description: w.description }))}
+          description="Geef elke werkzaamheid een unieke rangorde van 1 (minst relevant voor de vacature) tot 19 (meest relevant). Elk nummer mag maar één keer gebruikt worden."
+          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelOrg, description: w.description }))}
           max={19}
           values={responses.werkzaamheden_ranking}
           onChange={(id, v) => setRanking('werkzaamheden_ranking', id, v)}
@@ -150,8 +145,8 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'werkzaamheden_rating' && (
         <RatingStep
           title="Beoordeel elke werkzaamheid"
-          description="Geef aan in welke mate u deze werkzaamheid bij u past."
-          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelKandidaat, description: w.description }))}
+          description="Geef aan in welke mate deze werkzaamheid relevant is voor de vacature."
+          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelOrg, description: w.description }))}
           scale={werkzaamhedenRatingScale}
           values={responses.werkzaamheden_rating}
           onChange={(id, v) => setRating('werkzaamheden_rating', id, v)}
@@ -161,7 +156,7 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'waarden_ranking' && (
         <RankingStep
           title="Rangschik de waarden"
-          description="Geef elke waarde een unieke rangorde van 1 (minst belangrijk) tot 9 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden."
+          description="Geef elke waarde een unieke rangorde van 1 (minst kenmerkend voor uw organisatie) tot 9 (meest kenmerkend). Elk nummer mag maar één keer gebruikt worden."
           items={waarden.map((w) => ({ id: w.id, label: w.label, description: w.description }))}
           max={9}
           values={responses.waarden_ranking}
@@ -172,9 +167,9 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'waarden_rating' && (
         <RatingStep
           title="Beoordeel elke waarde"
-          description="Geef aan hoe belangrijk deze waarde voor u is."
+          description="Geef aan hoe belangrijk deze waarde is voor uw organisatie."
           items={waarden.map((w) => ({ id: w.id, label: w.label, description: w.description }))}
-          scale={waardenRatingScaleKandidaat}
+          scale={waardenRatingScaleOrg}
           values={responses.waarden_rating}
           onChange={(id, v) => setRating('waarden_rating', id, v)}
         />
@@ -183,7 +178,7 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'kenmerken_ranking' && (
         <RankingStep
           title="Rangschik de organisatiekenmerken"
-          description="Geef elk kenmerk een unieke rangorde van 1 (minst belangrijk) tot 7 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden."
+          description="Geef elk kenmerk een unieke rangorde van 1 (minst kenmerkend) tot 7 (meest kenmerkend). Elk nummer mag maar één keer gebruikt worden."
           items={organisatiekenmerken.map((k) => ({ id: k.id, label: k.label, description: k.description }))}
           max={7}
           values={responses.kenmerken_ranking}
@@ -194,7 +189,7 @@ export default function KandidaatMatchingScan() {
       {currentStep === 'kenmerken_rating' && (
         <RatingStep
           title="Beoordeel elk organisatiekenmerk"
-          description="Geef aan in welke mate dit kenmerk bij u past."
+          description="Geef aan in welke mate dit kenmerk past bij uw organisatie."
           items={organisatiekenmerken.map((k) => ({ id: k.id, label: k.label, description: k.description }))}
           scale={kenmerkenRatingScale}
           values={responses.kenmerken_rating}
@@ -202,7 +197,7 @@ export default function KandidaatMatchingScan() {
         />
       )}
 
-      {currentStep === 'result' && <ResultStep responses={responses} />}
+      {currentStep === 'result' && <CompletionStep />}
 
       {/* Validation error */}
       {validationError && (
@@ -229,7 +224,7 @@ export default function KandidaatMatchingScan() {
             onClick={goNext}
             className="px-6 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors"
           >
-            {currentStep === 'intro' ? 'Start de scan \u2192' : 'Volgende \u2192'}
+            {currentStep === 'intro' ? 'Start het profiel \u2192' : 'Volgende \u2192'}
           </button>
         )}
       </div>
@@ -266,20 +261,20 @@ function IntroStep() {
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-8 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Matching Scan</h1>
+        <h1 className="text-2xl font-bold text-ink">M-Score Profiel</h1>
         <p className="text-ink-light mt-2 leading-relaxed">
-          De Matching Scan meet in 35 vragen hoe goed u past bij een organisatie.
-          De scan is ontwikkeld met de Vrije Universiteit Amsterdam.
+          Vul het M-Score profiel in voor uw vacature. Dit profiel wordt gebruikt om kandidaten
+          te matchen op cultuur, waarden en interesses.
         </p>
       </div>
 
       <div className="bg-purple/10 border border-purple/20 rounded-xl p-5 space-y-3">
-        <p className="text-sm font-medium text-purple">Hoe werkt het?</p>
+        <p className="text-sm font-medium text-purple">Het profiel bestaat uit 6 stappen:</p>
         <ul className="text-sm text-ink-light space-y-2">
-          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> Rangschik werkzaamheden naar voorkeur</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> Rangschik werkzaamheden naar relevantie</li>
           <li className="flex gap-2"><span className="text-purple font-bold">2.</span> Beoordeel werkzaamheden op een schaal</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> Rangschik persoonlijke waarden</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> Beoordeel uw waarden op een schaal</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> Rangschik organisatiewaarden</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> Beoordeel waarden op een schaal</li>
           <li className="flex gap-2"><span className="text-purple font-bold">5.</span> Rangschik organisatiekenmerken</li>
           <li className="flex gap-2"><span className="text-purple font-bold">6.</span> Beoordeel organisatiekenmerken op een schaal</li>
         </ul>
@@ -318,9 +313,7 @@ function RankingStep({
   values: Record<string, number>
   onChange: (id: string, value: number) => void
 }) {
-  // Build used-values set
   const usedValues = new Set(Object.values(values))
-
   const options = Array.from({ length: max }, (_, i) => i + 1)
 
   return (
@@ -445,83 +438,36 @@ function RatingStep({
   )
 }
 
-// ─── Result Step ────────────────────────────────────────────────────────────
+// ─── Completion Step ────────────────────────────────────────────────────────
 
-function ResultStep({ responses }: { responses: ScanResponses }) {
-  const mScore = calculateMScore(demoOrgResponses, responses)
-
-  // Dimension sub-scores for breakdown
-  const werkRanking = avgPOMPForKeys(responses.werkzaamheden_ranking, 1, 19)
-  const werkRating = avgPOMPForKeys(responses.werkzaamheden_rating, 1, 7)
-  const werkTotal = Math.round((werkRanking + werkRating) / 2)
-
-  const waardenRanking = avgPOMPForKeys(responses.waarden_ranking, 1, 9)
-  const waardenRating = avgPOMPForKeys(responses.waarden_rating, 1, 9)
-  const waardenTotal = Math.round((waardenRanking + waardenRating) / 2)
-
-  const kenmRanking = avgPOMPForKeys(responses.kenmerken_ranking, 1, 7)
-  const kenmRating = avgPOMPForKeys(responses.kenmerken_rating, 1, 7)
-  const kenmTotal = Math.round((kenmRanking + kenmRating) / 2)
-
-  const scoreColor = mScore >= 70 ? 'text-green-400' : mScore >= 50 ? 'text-yellow-400' : 'text-red-400'
-  const ringColor = mScore >= 70 ? 'border-green-400' : mScore >= 50 ? 'border-yellow-400' : 'border-red-400'
-
+function CompletionStep() {
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl border border-surface-border p-8 text-center space-y-6">
-        <h2 className="text-2xl font-bold text-ink">Uw profiel is compleet!</h2>
-        <p className="text-ink-light text-sm">
-          Hieronder ziet u uw M-Score berekend tegen het demo-organisatieprofiel (TechVentures B.V.)
-        </p>
-
-        {/* Big score circle */}
-        <div className="flex justify-center">
-          <div className={`w-36 h-36 rounded-full border-4 ${ringColor} flex flex-col items-center justify-center`}>
-            <span className={`text-4xl font-bold ${scoreColor}`}>{mScore}</span>
-            <span className="text-xs text-ink-muted mt-1">M-Score</span>
-          </div>
+    <div className="bg-white rounded-2xl border border-surface-border p-8 text-center space-y-6">
+      <div className="flex justify-center">
+        <div className="w-24 h-24 rounded-full bg-green-500/10 border-2 border-green-400 flex items-center justify-center">
+          <span className="text-4xl">&#10003;</span>
         </div>
+      </div>
 
-        <p className="text-sm text-ink-muted">
-          {mScore >= 70 && 'Sterke match! Uw profiel sluit goed aan bij deze organisatie.'}
-          {mScore >= 50 && mScore < 70 && 'Redelijke match. Er zijn overeenkomsten, maar ook verschillen.'}
-          {mScore < 50 && 'Beperkte match. Uw profiel wijkt af van het organisatieprofiel.'}
+      <div>
+        <h2 className="text-2xl font-bold text-ink">Profiel opgeslagen!</h2>
+        <p className="text-ink-light mt-2 text-sm leading-relaxed">
+          Het M-Score profiel voor uw vacature is succesvol opgeslagen. Kandidaten worden nu automatisch
+          gematcht op basis van cultuur, waarden en interesses.
         </p>
       </div>
 
-      {/* Breakdown */}
-      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
-        <h3 className="text-lg font-semibold text-ink">Breakdown per dimensie</h3>
-
-        <DimensionBar label="Werkzaamheden / Interesses" score={werkTotal} />
-        <DimensionBar label="Waarden" score={waardenTotal} />
-        <DimensionBar label="Organisatiekenmerken" score={kenmTotal} />
+      <div className="bg-purple/10 border border-purple/20 rounded-xl p-4 text-sm text-ink-light">
+        Kandidaten die de Matching Scan invullen krijgen een M-Score te zien die aangeeft
+        hoe goed zij bij uw organisatie passen.
       </div>
+
+      <a
+        href="/demo/opdrachtgever"
+        className="inline-block px-6 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors"
+      >
+        Terug naar dashboard
+      </a>
     </div>
   )
-}
-
-function DimensionBar({ label, score }: { label: string; score: number }) {
-  const color = score >= 60 ? 'bg-green-400' : score >= 40 ? 'bg-yellow-400' : 'bg-red-400'
-
-  return (
-    <div className="space-y-1">
-      <div className="flex justify-between text-sm">
-        <span className="text-ink-light">{label}</span>
-        <span className="text-ink font-medium">{score}%</span>
-      </div>
-      <div className="h-2.5 bg-surface-muted rounded-full overflow-hidden">
-        <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${score}%` }} />
-      </div>
-    </div>
-  )
-}
-
-// ─── Utility ────────────────────────────────────────────────────────────────
-
-function avgPOMPForKeys(data: Record<string, number>, scaleMin: number, scaleMax: number): number {
-  const vals = Object.values(data)
-  if (vals.length === 0) return 50
-  const pompValues = vals.map((v) => (100 / (scaleMax - scaleMin)) * (v - scaleMin))
-  return Math.round(pompValues.reduce((a, b) => a + b, 0) / pompValues.length)
 }
