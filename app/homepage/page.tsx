@@ -7,13 +7,6 @@ import { User } from '@/lib/types'
 import { t, Lang } from '@/lib/i18n'
 import LangToggle from '@/components/LangToggle'
 
-const roleLabels: Record<string, string> = {
-  opdrachtgever: 'Opdrachtgever',
-  scout: 'Talent Scout',
-  kandidaat: 'Kandidaat',
-  admin: 'Refurzy Admin',
-}
-
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [user, setUser] = useState<User | null>(null)
@@ -40,36 +33,27 @@ export default function HomePage() {
           </Link>
           <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
             <a href="#hoe-het-werkt" className="hover:text-white transition-colors">{t('nav.howItWorks', lang)}</a>
-            <a href="#voor-wie" className="hover:text-white transition-colors">{t('nav.forWhom', lang)}</a>
             <a href="#pricing" className="hover:text-white transition-colors">{t('nav.pricing', lang)}</a>
-            <a href="#faq" className="hover:text-white transition-colors">{t('nav.faq', lang)}</a>
             <Link href="/wetenschap" className="hover:text-white transition-colors">{t('nav.science', lang)}</Link>
-            <LangToggle lang={lang} setLang={changeLang} />
+            <a href="#faq" className="hover:text-white transition-colors">{t('nav.faq', lang)}</a>
           </div>
-          {user ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple-light text-xs font-bold">
-                  {user.name.charAt(0)}
-                </div>
-                <span className="text-xs text-gray-400">{user.name}</span>
-                <span className="px-1.5 py-0.5 bg-purple/10 rounded text-purple-light text-[10px] font-medium">{roleLabels[user.role]}</span>
-              </div>
+          <div className="flex items-center gap-3">
+            <LangToggle lang={lang} setLang={changeLang} />
+            {user ? (
               <Link href={getRolePath(user.role)} className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
                 {t('nav.dashboard', lang)}
               </Link>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <LangToggle lang={lang} setLang={changeLang} />
-              <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
-                {t('nav.login', lang)}
-              </Link>
-              <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-                {t('nav.getStarted', lang)}
-              </Link>
-            </div>
-          )}
+            ) : (
+              <>
+                <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
+                  {t('nav.login', lang)}
+                </Link>
+                <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+                  {t('nav.getStarted', lang)}
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </nav>
 
