@@ -255,7 +255,7 @@ export default function VacatureAanmaken() {
             </div>
 
             <div className="bg-cyan/10 border border-cyan/20 rounded-xl p-4 text-sm text-cyan">
-              In de volledige applicatie vult de opdrachtgever hier de gehele Profiel Match Scan in. De antwoorden worden gebruikt om kandidaten te matchen op basis van de De Vries Fit score.
+              In de volledige applicatie vult de opdrachtgever hier de gehele Profiel Match Scan in. De antwoorden worden gebruikt om kandidaten te matchen op basis van de M-Score.
             </div>
           </div>
         )}

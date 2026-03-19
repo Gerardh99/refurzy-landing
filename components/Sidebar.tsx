@@ -8,6 +8,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
   opdrachtgever: [
     { href: '/demo/opdrachtgever', label: 'Dashboard', icon: '📊' },
     { href: '/demo/opdrachtgever/vacature-aanmaken', label: 'Vacature aanmaken', icon: '➕' },
+    { href: '/demo/opdrachtgever/instellingen', label: 'Instellingen', icon: '⚙️' },
   ],
   scout: [
     { href: '/demo/scout', label: 'Talent Pool', icon: '👥' },
@@ -21,12 +22,19 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/kandidaat/profiel', label: 'Profiel', icon: '👤' },
     { href: '/demo/kandidaat/scan', label: 'Profiel Match Scan', icon: '🧪' },
   ],
+  admin: [
+    { href: '/demo/admin', label: 'Dashboard', icon: '📊' },
+    { href: '/demo/admin/pricing', label: 'Pricing', icon: '💰' },
+    { href: '/demo/admin/landen', label: 'Landen', icon: '🌍' },
+    { href: '/demo/admin/gebruikers', label: 'Gebruikers', icon: '👥' },
+  ],
 }
 
 const roleLabels: Record<UserRole, string> = {
   opdrachtgever: 'Opdrachtgever',
   scout: 'Talent Scout',
   kandidaat: 'Kandidaat',
+  admin: 'Refurzy Admin',
 }
 
 export default function Sidebar({ role }: { role: UserRole }) {

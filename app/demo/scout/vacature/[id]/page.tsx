@@ -74,7 +74,7 @@ export default function ScoutVacatureDetail() {
                 <tr className="border-b border-purple/10">
                   <th className="text-left px-6 py-3 text-gray-500 font-medium">Kandidaat</th>
                   <th className="text-left px-6 py-3 text-gray-500 font-medium">Harde Criteria Match</th>
-                  <th className="text-left px-6 py-3 text-gray-500 font-medium">De Vries Fit</th>
+                  <th className="text-left px-6 py-3 text-gray-500 font-medium">M-Score</th>
                   <th className="text-left px-6 py-3 text-gray-500 font-medium">Status</th>
                 </tr>
               </thead>

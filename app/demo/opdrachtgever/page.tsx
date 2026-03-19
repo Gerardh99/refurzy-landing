@@ -1,10 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { vacatures } from '@/lib/mock-data'
 import StatusBadge from '@/components/StatusBadge'
 
 export default function OpdrachtgeverDashboard() {
+  const [showWelcome, setShowWelcome] = useState(true)
   const totalKandidaten = vacatures.reduce((sum, v) => sum + v.kandidaten.length, 0)
   const allScores = vacatures.flatMap(v => v.kandidaten.map(k => k.deVriesFit))
   const gemiddeldeFit = allScores.length > 0
@@ -14,11 +16,32 @@ export default function OpdrachtgeverDashboard() {
   const stats = [
     { label: 'Actieve vacatures', value: vacatures.length, icon: '📋' },
     { label: 'Totaal kandidaten', value: totalKandidaten, icon: '👥' },
-    { label: 'Gem. De Vries Fit', value: `${gemiddeldeFit}%`, icon: '🎯' },
+    { label: 'Gem. M-Score', value: `${gemiddeldeFit}%`, icon: '🎯' },
   ]
 
   return (
     <div>
+      {/* Welkomstbanner */}
+      {showWelcome && (
+        <div className="bg-gradient-to-r from-cyan/10 via-blue/10 to-purple/10 border border-cyan/20 rounded-2xl p-5 mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-3xl">🏢</span>
+            <div>
+              <p className="text-white font-semibold text-sm">Welkom! Stel uw bedrijfsprofiel in</p>
+              <p className="text-gray-400 text-xs mt-0.5">Vul uw bedrijfsgegevens en omschrijving in zodat kandidaten uw bedrijf zien bij vacatures.</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <Link href="/demo/opdrachtgever/instellingen" className="bg-cyan text-navy-dark px-4 py-2 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
+              Bedrijfsprofiel instellen
+            </Link>
+            <button onClick={() => setShowWelcome(false)} className="text-gray-600 hover:text-gray-400 transition-colors text-lg" title="Sluiten">
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white">Dashboard</h1>
         <p className="text-gray-400 mt-1">Overzicht van uw vacatures en kandidaten</p>

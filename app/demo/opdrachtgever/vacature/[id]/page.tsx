@@ -9,16 +9,6 @@ import StarRating from '@/components/StarRating'
 import StatusBadge from '@/components/StatusBadge'
 import Link from 'next/link'
 
-function calcMScore(k: KandidaatMatch) {
-  const scoutScore = k.scoutRating
-  const fitScore = k.deVriesFit / 20 // 0-100 → 0-5
-  const refScore = 3.8 // placeholder LinkedIn reference score
-  const components = [scoutScore > 0, fitScore > 0, true] // assume ref always present in demo
-  const presentCount = components.filter(Boolean).length
-  const mScore = ((scoutScore + fitScore + refScore) / 3)
-  const reliability = Math.round((presentCount / 3) * 100)
-  return { mScore: Math.round(mScore * 20), reliability } // convert to 0-100%
-}
 
 function isNewScout(scoutNaam: string) {
   return scoutNaam === 'Mark Jansen' // mock: Mark Jansen is new scout
@@ -59,8 +49,8 @@ export default function VacatureDetailPage() {
     )
   }
 
-  // Sort by M-score descending
-  const sorted = [...kandidaten].sort((a, b) => calcMScore(b).mScore - calcMScore(a).mScore)
+  // Sort by M-Score descending
+  const sorted = [...kandidaten].sort((a, b) => b.deVriesFit - a.deVriesFit)
 
   return (
     <div>
@@ -133,8 +123,7 @@ export default function VacatureDetailPage() {
       <div className="bg-navy-light rounded-2xl border border-purple/10 p-4 mb-6">
         <div className="flex items-center gap-6 text-xs text-gray-400">
           <span className="font-semibold text-white">Score legenda:</span>
-          <span><span className="text-cyan font-medium">M-score</span> = gewogen gem. van Profiel Match + Scout Rating + Referenties</span>
-          <span><span className="text-purple-light font-medium">Betrouwbaarheid</span> = % beschikbare scorecomponenten</span>
+          <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Profiel Match assessment</span>
           <span><span className="text-orange font-medium">50% korting</span> = nieuwe scout zonder track record</span>
         </div>
       </div>
@@ -145,24 +134,21 @@ export default function VacatureDetailPage() {
           <h2 className="text-white font-semibold">Kandidaten ({kandidaten.length})</h2>
         </div>
 
-        <div className="hidden md:grid grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_1fr_2fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
+        <div className="hidden md:grid grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_2fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
           <div>Kandidaat</div>
           <div className="text-center">Harde Criteria</div>
-          <div className="text-center">De Vries Fit</div>
-          <div className="text-center">Scout Rating</div>
           <div className="text-center">M-Score</div>
-          <div className="text-center">Betrouwb.</div>
+          <div className="text-center">Scout Rating</div>
           <div className="text-center">Status</div>
           <div className="text-right">Acties</div>
         </div>
 
         {sorted.map((k) => {
-          const { mScore, reliability } = calcMScore(k)
           const newScout = isNewScout(k.scoutNaam)
           const isMaster = k.scoutRating >= 3.5
 
           return (
-            <div key={k.id} className="grid grid-cols-1 md:grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_1fr_2fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors">
+            <div key={k.id} className="grid grid-cols-1 md:grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_2fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors">
               {/* Kandidaat */}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple-light font-bold text-sm">
@@ -190,7 +176,7 @@ export default function VacatureDetailPage() {
                 </span>
               </div>
 
-              {/* De Vries Fit */}
+              {/* M-Score */}
               <div className="flex justify-center">
                 <FitScore score={k.deVriesFit} size="sm" />
               </div>
@@ -198,20 +184,6 @@ export default function VacatureDetailPage() {
               {/* Scout Rating */}
               <div className="flex justify-center">
                 <StarRating rating={k.scoutRating} />
-              </div>
-
-              {/* M-Score */}
-              <div className="flex justify-center">
-                <div className={`px-2.5 py-1 rounded-lg text-sm font-bold ${mScore >= 70 ? 'bg-cyan/15 text-cyan' : mScore >= 50 ? 'bg-purple/15 text-purple-light' : 'bg-orange/15 text-orange'}`}>
-                  {mScore}%
-                </div>
-              </div>
-
-              {/* Betrouwbaarheid */}
-              <div className="flex justify-center">
-                <span className={`text-xs font-medium ${reliability === 100 ? 'text-green-400' : reliability >= 67 ? 'text-orange' : 'text-red-400'}`}>
-                  {reliability}%
-                </span>
               </div>
 
               {/* Status */}

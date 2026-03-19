@@ -112,7 +112,7 @@ export default function KandidaatDetailPage() {
             {/* Visible scores */}
             <div className="grid grid-cols-3 gap-4 mb-6">
               <div className="bg-navy rounded-xl border border-purple/10 p-4">
-                <div className="text-xs text-gray-500 mb-2">De Vries Fit</div>
+                <div className="text-xs text-gray-500 mb-2">M-Score</div>
                 <div className="flex justify-center">
                   <FitScore score={kandidaat.deVriesFit} size="md" />
                 </div>
@@ -217,7 +217,7 @@ export default function KandidaatDetailPage() {
           {/* Scores */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex flex-col items-center">
-              <div className="text-sm text-gray-400 mb-3">De Vries Fit</div>
+              <div className="text-sm text-gray-400 mb-3">M-Score</div>
               <FitScore score={kandidaat.deVriesFit} size="lg" />
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex flex-col items-center">

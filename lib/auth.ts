@@ -19,6 +19,12 @@ const DEMO_USERS: Record<string, User> = {
     name: 'Anna de Jong',
     role: 'kandidaat',
   },
+  'admin@refurzy.nl': {
+    email: 'admin@refurzy.nl',
+    name: 'Refurzy Admin',
+    role: 'admin',
+    company: 'Refurzy B.V.',
+  },
 }
 
 const DEMO_PASSWORD = 'Nummer1platform'
@@ -52,5 +58,6 @@ export function getRolePath(role: UserRole): string {
     case 'opdrachtgever': return '/demo/opdrachtgever'
     case 'scout': return '/demo/scout'
     case 'kandidaat': return '/demo/kandidaat'
+    case 'admin': return '/demo/admin'
   }
 }

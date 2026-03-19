@@ -1,4 +1,4 @@
-export type UserRole = 'opdrachtgever' | 'scout' | 'kandidaat'
+export type UserRole = 'opdrachtgever' | 'scout' | 'kandidaat' | 'admin'
 
 export interface User {
   email: string

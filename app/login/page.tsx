@@ -61,6 +61,30 @@ export default function LoginPage() {
           </button>
 
         </form>
+
+        {/* Demo accounts */}
+        <div className="mt-6 bg-navy-light/50 rounded-2xl p-5 border border-purple/10">
+          <p className="text-xs text-gray-600 mb-3 font-medium uppercase tracking-wider">Demo accounts</p>
+          <div className="space-y-2">
+            {[
+              { email: 'demo@bedrijf.nl', label: 'Opdrachtgever', icon: '🏢' },
+              { email: 'scout@refurzy.nl', label: 'Talent Scout', icon: '🔍' },
+              { email: 'kandidaat@refurzy.nl', label: 'Kandidaat', icon: '👤' },
+              { email: 'admin@refurzy.nl', label: 'Refurzy Admin', icon: '⚙️' },
+            ].map(acc => (
+              <button
+                key={acc.email}
+                onClick={() => { setEmail(acc.email); setPassword('Nummer1platform') }}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-purple/10 transition-colors text-left"
+              >
+                <span>{acc.icon}</span>
+                <span className="flex-1">{acc.label}</span>
+                <span className="text-xs text-gray-600">{acc.email}</span>
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-gray-700 mt-3">Wachtwoord: Nummer1platform</p>
+        </div>
       </div>
     </div>
   )
