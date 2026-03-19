@@ -1,4 +1,4 @@
-import { Vacature, Kandidaat, Sollicitatie } from './types'
+import { Vacature, Kandidaat, Sollicitatie, Contract } from './types'
 
 export const vacatures: Vacature[] = [
   {
@@ -178,6 +178,88 @@ export function calculateFee(opleidingsniveau: string, werkervaring: string): { 
   const fee = exp * edu * 1200
   return { fee, scoutFee: fee * 0.5, refurzyFee: fee * 0.5 }
 }
+
+// ─── Mock contracts ─────────────────────────────────────────────────────────
+export const mockContracten: Contract[] = [
+  {
+    id: 'contract-1',
+    contractNummer: 'RF-2026-001',
+    datum: '2026-02-15',
+    opdrachtgeverNaam: 'Jan van der Berg',
+    opdrachtgeverBedrijf: 'TechVentures B.V.',
+    opdrachtgeverKvk: '12345678',
+    opdrachtgeverAdres: 'Herengracht 100, 1015 BS Amsterdam',
+    vacatureId: 'vac-1',
+    vacatureTitle: 'Marketing Manager',
+    kandidaatId: 'k-1',
+    kandidaatNaam: 'Anna de Jong',
+    kandidaatInitialen: 'A',
+    scoutNaam: 'Sophie de Graaf',
+    opleidingsniveau: 'WO',
+    werkervaring: '8 jaar',
+    plaatsingsfee: 10800,
+    btw: 2268,
+    totaalInclBtw: 13068,
+    scoutFee: 5400,
+    fitGarantie: true,
+    mScore: 87,
+    status: 'actief',
+    ondertekendDoor: 'Jan van der Berg',
+    ondertekendOp: '2026-02-15T14:32:00Z',
+  },
+  {
+    id: 'contract-2',
+    contractNummer: 'RF-2026-002',
+    datum: '2026-03-05',
+    opdrachtgeverNaam: 'Jan van der Berg',
+    opdrachtgeverBedrijf: 'TechVentures B.V.',
+    opdrachtgeverKvk: '12345678',
+    opdrachtgeverAdres: 'Herengracht 100, 1015 BS Amsterdam',
+    vacatureId: 'vac-2',
+    vacatureTitle: 'Senior Software Developer',
+    kandidaatId: 'k-4',
+    kandidaatNaam: 'Thomas van Dijk',
+    kandidaatInitialen: 'T',
+    scoutNaam: 'Sophie de Graaf',
+    opleidingsniveau: 'WO',
+    werkervaring: '10 jaar',
+    plaatsingsfee: 14400,
+    btw: 3024,
+    totaalInclBtw: 17424,
+    scoutFee: 7200,
+    fitGarantie: true,
+    mScore: 82,
+    status: 'getekend',
+    ondertekendDoor: 'Jan van der Berg',
+    ondertekendOp: '2026-03-05T10:15:00Z',
+  },
+  {
+    id: 'contract-3',
+    contractNummer: 'RF-2025-047',
+    datum: '2025-06-20',
+    opdrachtgeverNaam: 'Jan van der Berg',
+    opdrachtgeverBedrijf: 'TechVentures B.V.',
+    opdrachtgeverKvk: '12345678',
+    opdrachtgeverAdres: 'Herengracht 100, 1015 BS Amsterdam',
+    vacatureId: 'vac-old-1',
+    vacatureTitle: 'Product Owner',
+    kandidaatId: 'k-old-1',
+    kandidaatNaam: 'Sanne Visser',
+    kandidaatInitialen: 'S',
+    scoutNaam: 'Mark Jansen',
+    opleidingsniveau: 'HBO',
+    werkervaring: '5-10 jaar',
+    plaatsingsfee: 7200,
+    btw: 1512,
+    totaalInclBtw: 8712,
+    scoutFee: 3600,
+    fitGarantie: false,
+    mScore: 74,
+    status: 'verlopen',
+    ondertekendDoor: 'Jan van der Berg',
+    ondertekendOp: '2025-06-20T09:00:00Z',
+  },
+]
 
 // ─── Pipeline step definitions ──────────────────────────────────────────────
 export const pipelineSteps = [

@@ -131,3 +131,38 @@ export interface Sollicitatie {
   procesStatus?: ProcesStatus
   vacatureId?: string
 }
+
+export interface Contract {
+  id: string
+  contractNummer: string
+  datum: string                    // ISO date when signed
+  // Parties
+  opdrachtgeverNaam: string
+  opdrachtgeverBedrijf: string
+  opdrachtgeverKvk: string
+  opdrachtgeverAdres: string
+  // Vacancy
+  vacatureId: string
+  vacatureTitle: string
+  // Candidate
+  kandidaatId: string
+  kandidaatNaam: string
+  kandidaatInitialen: string
+  // Scout
+  scoutNaam: string
+  // Financials
+  opleidingsniveau: string
+  werkervaring: string
+  plaatsingsfee: number            // excl BTW
+  btw: number                      // 21%
+  totaalInclBtw: number
+  scoutFee: number                 // 50% excl BTW
+  // Terms
+  fitGarantie: boolean             // M-Score >= 80%
+  mScore: number
+  // Status
+  status: 'getekend' | 'actief' | 'verlopen'
+  // Signature
+  ondertekendDoor: string          // Name typed
+  ondertekendOp: string            // ISO datetime
+}

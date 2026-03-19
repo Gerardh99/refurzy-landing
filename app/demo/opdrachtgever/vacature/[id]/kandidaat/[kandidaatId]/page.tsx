@@ -29,6 +29,10 @@ export default function OpdrachtgeverKandidaatProces() {
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackRating, setFeedbackRating] = useState(0)
   const [isRejected, setIsRejected] = useState(false)
+  const [ondertekeningNaam, setOndertekeningNaam] = useState('')
+  const [creditcardNummer, setCreditcardNummer] = useState('')
+  const [creditcardExpiry, setCreditcardExpiry] = useState('')
+  const [creditcardCvc, setCreditcardCvc] = useState('')
 
   if (!vacature || !kandidaat) {
     return <div className="flex items-center justify-center h-64"><p className="text-ink-light">Kandidaat niet gevonden.</p></div>
@@ -482,7 +486,7 @@ export default function OpdrachtgeverKandidaatProces() {
       {/* ─── Contract Modal ──────────────────────────────────────────────────────── */}
       {showContractModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden max-h-[90vh] overflow-y-auto">
             <div className="bg-purple/5 p-6 border-b border-surface-border">
               <h2 className="text-xl font-bold text-ink">Plaatsingsovereenkomst</h2>
               <p className="text-ink-light text-sm mt-1">Lees de voorwaarden en ga akkoord om de contactgegevens te ontsluiten.</p>
@@ -490,18 +494,58 @@ export default function OpdrachtgeverKandidaatProces() {
             <div className="p-6 space-y-4">
               <div className="bg-surface-muted rounded-xl p-4 space-y-3 text-sm text-ink-light">
                 <p><strong className="text-ink">Artikel 1 — No cure, no pay</strong><br />U betaalt alleen een plaatsingsfee bij daadwerkelijke ondertekening van een arbeidsovereenkomst.</p>
-                <p><strong className="text-ink">Artikel 2 — Plaatsingsfee</strong><br />De fee bedraagt €{fee.fee.toLocaleString('nl-NL')} excl. BTW, gebaseerd op opleidingsniveau ({kandidaat.opleidingsniveau}) en werkervaring ({kandidaat.werkervaring}).</p>
-                <p><strong className="text-ink">Artikel 3 — Fit Garantie</strong><br />Bij een M-Score van ≥80% geldt een Fit Garantie van 12 maanden. Als de medewerker vertrekt vanwege een mismatch in cultuur, waarden of interesses, wordt de fee gerestitueerd.</p>
-                <p><strong className="text-ink">Artikel 4 — Betaling</strong><br />De fee wordt geïncasseerd via uw creditcard na ondertekening van de arbeidsovereenkomst.</p>
+                <p><strong className="text-ink">Artikel 2 — Plaatsingsfee</strong><br />De fee bedraagt {'\u20AC'}{fee.fee.toLocaleString('nl-NL')} excl. BTW, gebaseerd op opleidingsniveau ({kandidaat.opleidingsniveau}) en werkervaring ({kandidaat.werkervaring}).</p>
+                <p><strong className="text-ink">Artikel 3 — Fit Garantie</strong><br />Bij een M-Score van {'\u2265'}80% geldt een Fit Garantie van 12 maanden. Als de medewerker vertrekt vanwege een mismatch in cultuur, waarden of interesses, wordt de fee gerestitueerd.</p>
+                <p><strong className="text-ink">Artikel 4 — Betaling</strong><br />De fee wordt ge{'\u00EF'}ncasseerd via uw creditcard na ondertekening van de arbeidsovereenkomst.</p>
               </div>
+
+              {/* Creditcard gegevens */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-medium text-ink">Betaalgegevens</h3>
+                <div>
+                  <label className="block text-xs text-ink-muted mb-1">Creditcardnummer</label>
+                  <input type="text" value={creditcardNummer} onChange={(e) => setCreditcardNummer(e.target.value)}
+                    placeholder="1234 5678 9012 3456" maxLength={19}
+                    className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-ink-muted mb-1">Vervaldatum (MM/JJ)</label>
+                    <input type="text" value={creditcardExpiry} onChange={(e) => setCreditcardExpiry(e.target.value)}
+                      placeholder="MM/JJ" maxLength={5}
+                      className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-ink-muted mb-1">CVC</label>
+                    <input type="text" value={creditcardCvc} onChange={(e) => setCreditcardCvc(e.target.value)}
+                      placeholder="123" maxLength={4}
+                      className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Ondertekening */}
+              <div className="space-y-3 border-t border-surface-border pt-4">
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">Uw naam (ter ondertekening)</label>
+                  <input type="text" value={ondertekeningNaam} onChange={(e) => setOndertekeningNaam(e.target.value)}
+                    placeholder="Volledige naam"
+                    className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
+                </div>
+                <p className="text-xs text-ink-muted leading-relaxed">
+                  Door hieronder uw naam in te vullen en te klikken op &lsquo;Onderteken&rsquo;, gaat u digitaal akkoord met de bovenstaande plaatsingsovereenkomst. Dit contract wordt opgeslagen en is te downloaden via Mijn Contracten.
+                </p>
+              </div>
+
               <div className="flex gap-3">
                 <button onClick={() => setShowContractModal(false)}
                   className="flex-1 py-2.5 border border-surface-border text-ink-light rounded-lg text-sm hover:bg-surface-muted transition-colors">
                   Annuleren
                 </button>
                 <button onClick={handleAcceptContract}
-                  className="flex-1 py-2.5 bg-cyan text-navy-dark rounded-lg font-semibold text-sm hover:bg-cyan/90 transition-colors">
-                  Akkoord — ontsluit profiel
+                  disabled={!ondertekeningNaam.trim()}
+                  className="flex-1 py-2.5 bg-cyan text-navy-dark rounded-lg font-semibold text-sm hover:bg-cyan/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  Onderteken plaatsingsovereenkomst
                 </button>
               </div>
             </div>

@@ -10,6 +10,8 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/opdrachtgever', label: 'Dashboard', icon: '📊' },
     { href: '/demo/opdrachtgever/vacature-aanmaken', label: 'Vacature aanmaken', icon: '➕' },
     { href: '/demo/opdrachtgever/matching-profiel', label: 'M-Score Profiel', icon: '🧪' },
+    { href: '/demo/opdrachtgever/contracten', label: 'Contracten', icon: '📄' },
+    { href: '/demo/opdrachtgever/facturen', label: 'Facturen', icon: '🧾' },
     { href: '/demo/opdrachtgever/instellingen', label: 'Instellingen', icon: '⚙️' },
   ],
   scout: [
