@@ -42,7 +42,7 @@ export const translations = {
 
   // ─── Problem section ───────────────────────────────────────────────────────
   'problem.label': { nl: 'De uitdaging', en: 'The challenge' },
-  'problem.title': { nl: 'Werving is achterhaald', en: 'Recruitment is outdated' },
+  'problem.title': { nl: 'Bureaus raden. Wij matchen.', en: 'Agencies guess. We match.' },
   'problem.subtitle': {
     nl: 'De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven niet. Processen die ontworpen zijn voor een markt die niet meer bestaat, kosten u meer dan u denkt.',
     en: 'The labor market has changed drastically. The way we recruit talent has not. Processes designed for a market that no longer exists cost you more than you think.'
@@ -74,10 +74,10 @@ export const translations = {
     nl: 'Werven is niet waarvoor managers zijn aangenomen. Ze vinden het tijdrovend, onzeker en frustrerend. Als ze het leuk hadden gevonden, waren ze wel recruiter geworden.',
     en: 'Recruiting is not what managers were hired for. They find it time-consuming, uncertain and frustrating. If they had enjoyed it, they would have become recruiters.'
   },
-  'pain.market.title': { nl: 'Krappe markt, dezelfde vijver', en: 'Tight market, same pond' },
+  'pain.market.title': { nl: 'Eén bureau, één vijver. Honderden scouts, oneindig bereik.', en: 'One agency, one pond. Hundreds of scouts, infinite reach.' },
   'pain.market.desc': {
-    nl: 'De arbeidsmarkt is krapper dan ooit. Bureaus vissen in dezelfde vijver. Refurzy zet ervaren Talent Scouts in — professionals die al jaren netwerken hebben opgebouwd en weten waar het talent zit.',
-    en: 'The labor market is tighter than ever. Agencies fish in the same pond. Refurzy deploys experienced Talent Scouts — professionals who have built networks for years and know where the talent is.'
+    nl: 'Bureaus zoeken allemaal in dezelfde LinkedIn-vijver. Onze Talent Scouts werken gericht binnen hun eigen netwerk — mensen die ze kennen, hebben gesproken en kunnen inschatten. En omdat honderden scouts tegelijk voor u zoeken, is uw bereik vele malen groter dan dat van één bureau.',
+    en: 'Agencies all fish in the same LinkedIn pond. Our Talent Scouts work their own networks — people they know, have spoken to, and can assess. And with hundreds of scouts searching for you simultaneously, your reach is far greater than any single agency.'
   },
 
   // ─── How it works ──────────────────────────────────────────────────────────
