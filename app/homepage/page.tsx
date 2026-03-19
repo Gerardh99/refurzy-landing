@@ -190,6 +190,13 @@ export default function HomePage() {
                 <li className="flex gap-3"><span className="text-cyan font-bold">2.</span> {t('how.employer.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">3.</span> {t('how.employer.3', lang)}</li>
               </ol>
+              <div className="mt-5 pt-5 border-t border-cyan/10">
+                <p className="text-xs text-cyan font-medium">
+                  {lang === 'nl'
+                    ? '💰 No cure, no pay. Geen risico, alleen resultaat.'
+                    : '💰 No cure, no pay. Zero risk, only results.'}
+                </p>
+              </div>
             </div>
 
             {/* Talent Scout */}
@@ -202,11 +209,10 @@ export default function HomePage() {
                 <li className="flex gap-3"><span className="text-purple-light font-bold">3.</span> {t('how.scout.3', lang)}</li>
               </ol>
               <div className="mt-5 pt-5 border-t border-purple/10">
-                <p className="text-xs text-purple-light font-medium mb-1">🌍 {lang === 'nl' ? 'Werk waar je wilt' : 'Work from anywhere'}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-purple-light font-medium">
                   {lang === 'nl'
-                    ? 'Jouw netwerk is je business. Amsterdam, Bali of Barcelona — alles wat je nodig hebt is een laptop en je professionele netwerk. Verdien 50% van elke plaatsingsfee, waar je ook bent.'
-                    : 'Your network is your business. Amsterdam, Bali or Barcelona — all you need is a laptop and your professional network. Earn 50% of every placement fee, wherever you are.'}
+                    ? '🌍 Amsterdam, Bali of Barcelona — jouw laptop is je kantoor.'
+                    : '🌍 Amsterdam, Bali or Barcelona — your laptop is your office.'}
                 </p>
               </div>
             </div>
@@ -220,6 +226,13 @@ export default function HomePage() {
                 <li className="flex gap-3"><span className="text-orange font-bold">2.</span> {t('how.candidate.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">3.</span> {t('how.candidate.3', lang)}</li>
               </ol>
+              <div className="mt-5 pt-5 border-t border-orange/10">
+                <p className="text-xs text-orange font-medium">
+                  {lang === 'nl'
+                    ? '✨ Gratis. Geen sollicitatiestress. Alleen kansen die bij je passen.'
+                    : '✨ Free. No application stress. Only opportunities that fit you.'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
