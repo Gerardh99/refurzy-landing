@@ -399,12 +399,14 @@ app/
       vacature-aanmaken/page.tsx     # 6-stappen wizard
       vacature/[id]/page.tsx         # Vacature detail + kandidaten
       kandidaat/[vacatureId]/[kandidaatId]/page.tsx  # Hiring pipeline
+      bedrijfsprofiel/page.tsx       # Bedrijfsprofiel beheer
       instellingen/page.tsx          # Bedrijfsinstellingen
     scout/
       page.tsx                       # Talent Pool
       vacatures/page.tsx             # Vacature browser
       vacature/[id]/page.tsx         # Vacature detail
       pipeline/page.tsx              # Pipeline overzicht + nudges
+      analytics/page.tsx             # Scout analytics dashboard
       kandidaat-uitnodigen/page.tsx  # Uitnodigingsformulier
       meldingen/page.tsx             # Notificaties
       instellingen/page.tsx          # Instellingen & uitbetaling
@@ -439,7 +441,233 @@ lib/
 
 ---
 
-## 11. Nog te Bouwen
+## 11. Factuurmodule
+
+### Automatische facturatie
+- Na elke succesvolle plaatsing (contract getekend) genereert Refurzy automatisch een factuur
+- Factuurnummering: `RF-F-[jaar]-[volgnummer]`
+- Creditnota bij Fit Garantie restitutie: `RF-CN-[jaar]-[volgnummer]`
+- Alle bedragen exclusief 21% BTW
+
+### Admin factuuroverzicht (`/demo/admin/facturen`)
+- Tabel met: factuurnummer, datum, opdrachtgever, vacature, kandidaat, scout, bedrag, BTW, totaal, status
+- Statussen: betaald, openstaand, creditnota
+- Filters: status, opdrachtgever, periode (jaar)
+- Summary stats: totaal omzet, betaald, openstaand, creditnota's
+- "Download PDF" button per factuur (mock)
+
+### Opdrachtgever factuuroverzicht (`/demo/opdrachtgever/facturen`)
+- Gefilterd op eigen bedrijf
+- Tabel met: factuurnummer, datum, vacature, kandidaat, bedrag excl. BTW, BTW, totaal, status
+- Filters: betaald/openstaand
+- Summary stats: totaal facturen, betaald, openstaand
+- "Download PDF" button per factuur
+
+### Scout verdiensten (`/demo/scout/verdiensten`)
+- Summary cards: totaal verdiend, uitbetaald, openstaand, aantal plaatsingen
+- Tabel: datum, vacature, kandidaat, opdrachtgever, plaatsingsfee, jouw deel (50%), status
+- Introductiekorting op eerste plaatsing zichtbaar (25% i.p.v. 50%)
+- Statussen: uitbetaald, openstaand, wacht op betaling
+- Link naar volledige factuurpagina
+
+---
+
+## 12. Kandidaat Dashboard
+
+### Dashboard (`/demo/kandidaat`)
+- Welkomstbericht: "Welkom, [naam]"
+- Status cards:
+  - Matching Scan: "Ingevuld" of "Nog niet ingevuld" met link naar scan
+  - Aantal vacatures waarvoor voorgedragen
+  - Aantal actieve processen in pipeline
+- Sectie "Mijn vacatures": cards per vacature met:
+  - Vacaturetitel + bedrijf (anoniem tot contractfase)
+  - M-Score percentage met kleurindicator
+  - Pipeline statusbalk (voorgedragen, gesprek, arbeidsvoorwaarden, contract)
+  - Huidige stap gehighlight
+  - Scout naam en datum
+- Sectie "Mijn documenten":
+  - Toestemmingsverklaring (getekend op datum)
+  - Privacyverklaring
+  - Eventuele arbeidscontracten
+
+### Vacature detailpagina (`/demo/kandidaat/vacature/[id]`)
+- Functietitel, locatie, sector (bedrijfsnaam NIET zichtbaar tot contractfase)
+- M-Score visualisatie (bar chart per dimensie: werkzaamheden, waarden, organisatie)
+- Pipeline timeline met huidige status
+- Scout info: "Voorgedragen door [scout naam]"
+- Privacy-informatie over anonimiteit
+
+---
+
+## 13. Matching Scan Interactief
+
+### Route: `/demo/kandidaat/matching-scan`
+
+Interactieve 35-vragen vragenlijst gebaseerd op VU Amsterdam onderzoek.
+
+### 8 Stappen
+1. **Introductie** — Uitleg van de scan, drie dimensies, tijdsindicatie (10-15 min)
+2. **Werkzaamheden - Ranking** — 19 items, ranking 1-19 via dropdown + pijltjes
+3. **Werkzaamheden - Rating** — 19 items, Likert schaal 1-7
+4. **Waarden - Ranking** — 9 items, ranking 1-9
+5. **Waarden - Rating** — 9 items, Likert schaal 1-9
+6. **Organisatiekenmerken - Ranking** — 7 items, ranking 1-7
+7. **Organisatiekenmerken - Rating** — 7 items, Likert schaal 1-7
+8. **Resultaat** — POMP-profiel visualisatie (bar chart per dimensie) + bevestiging opslaan
+
+### Items
+
+**19 Werkzaamheden:**
+a. Mensen sociaal faciliteren, b. Zaken regelen, c. Financieel administreren, d. Gegevens verwerken, e. Met mechanica/machines werken, f. In de natuur/voor het milieu werken, g. Artistiek werk verrichten, h. Mensen helpen, i. Gespecialiseerde zorg verlenen, j. Invloedrijk werk doen, k. Met zakelijke systemen werken, l. Kwaliteitscontroles uitvoeren, m. Uitvoerend werk doen, n. Persoonlijke diensten verlenen, o. Financien analyseren, p. Gespecialiseerd onderzoek doen, q. Bouwen/repareren, r. Basisdiensten verlenen, s. Sport- en spelactiviteiten
+
+**9 Waarden:**
+a. Macht, b. Prestatie, c. Plezier, d. Stimulatie, e. Autonomie, f. Universalisme, g. Toegeeflijkheid, h. Traditie, i. Veiligheid
+
+**7 Organisatiekenmerken:**
+a. Detailgerichtheid, b. Klantgerichtheid, c. Resultaatgerichtheid, d. Stabiliteitgerichtheid, e. Samenwerkingsgerichtheid, f. Integriteitgerichtheid, g. Innovatiegerichtheid
+
+### UX
+- Progress bar met stap X van 8 + dot indicators
+- "Opslaan en later verder" button
+- Validatie: alle items moeten gerankt/beoordeeld zijn per stap
+- Foutmelding bij onvolledige stap
+- Ranking: dropdown per item + omhoog/omlaag pijltjes, unieke posities
+- Rating: knoppen 1-N, geselecteerde waarde gehighlight in paars
+
+---
+
+## 14. Zoek & Filter Verbeteren
+
+### Scout Vacatures (`/demo/scout/vacatures`)
+
+Uitgebreide zoek- en filterfunctionaliteit voor de vacaturebrowser.
+
+#### Filters (inklapbaar filterpaneel)
+- Sector dropdown: IT, Marketing, Finance, HR, Sales, Operations, Overig
+- Salaris range: min-max invoervelden
+- Contract type: Vast, Tijdelijk, Freelance
+- Werkmodel: Op kantoor, Hybride, Volledig remote
+- Opleiding: MBO, HBO, WO
+- Ervaring: 0-2, 2-5, 5-10, 10+
+
+#### Sortering
+- Nieuwste eerst (standaard)
+- Salaris hoog-laag
+- Deadline
+
+#### UX
+- Actieve filter chips met X om te verwijderen
+- Resultaat telling: "X vacatures gevonden"
+- Bestaande zoekbalk en locatiefilter behouden
+- Tags per vacaturekaart (sector, contract, werkmodel, opleiding, ervaring)
+
+### Opdrachtgever Kandidaten (`/demo/opdrachtgever/kandidaten`)
+
+Overzicht van alle voorgedragen kandidaten voor de opdrachtgever.
+
+#### Filters
+- Vacature dropdown (filter per specifieke vacature)
+- M-Score range slider (0-100%)
+- Status: alle, voorgedragen, in gesprek, arbeidsvoorwaarden, afgewezen
+
+#### Weergave (cards)
+- Kandidaat naam (of "Anoniem" als niet ontgrendeld)
+- Vacature naam
+- M-Score met kleur (groen >80%, geel 60-80%, rood <60%)
+- Status badge
+- Scout naam
+- "Bekijk profiel" button
+
+#### Sortering
+- M-Score (hoog-laag)
+- Datum (nieuwste eerst)
+- Status
+
+---
+
+## 15. Fit Garantie Module
+
+### Opdrachtgever View (`/demo/opdrachtgever/fit-garantie`)
+
+Overzicht van alle Fit Garanties voor de opdrachtgever.
+
+#### Actieve garantie cards
+- Kandidaat naam, vacature, plaatsingsdatum
+- Garantie timeline: visuele balk 0-12 maanden met huidige positie
+- Check-in status per mijlpaal:
+  - 3 maanden: afgerond / aankomend / toekomstig
+  - 6 maanden: afgerond / aankomend / toekomstig
+  - 12 maanden: afgerond / aankomend / toekomstig
+- M-Score bij plaatsing
+- Status: Actief, Verlopen, Claim ingediend
+
+#### Claim indienen modal
+- Reden dropdown: Culturele mismatch, Waarden mismatch, Anders
+- Toelichting textarea
+- Uitsluitingsnoot: "Niet van toepassing bij: reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud"
+- Submit button met bevestiging
+
+#### Sectie Verlopen garanties
+- Verlopen en afgeronde garanties met verminderde opacity
+
+### Admin View (`/demo/admin/fit-garantie`)
+
+Beheerpagina voor alle Fit Garantie claims.
+
+#### Statistieken (4 cards)
+- Actieve garanties
+- Claims in behandeling
+- Goedgekeurd
+- Afgewezen
+
+#### Claims tabel
+- Kolommen: kandidaat, opdrachtgever, vacature, plaatsingsdatum, claimdatum, reden, status
+- Status: in behandeling, goedgekeurd, afgewezen
+- Uitklapbaar per claim: volledige details + opmerkingen timeline
+- Actieknoppen (bij in behandeling): Goedkeuren, Afwijzen, Opmerking toevoegen
+
+---
+
+## 16. Berichtenmodule
+
+### Route: `/demo/berichten`
+
+In-platform berichtensysteem, toegankelijk vanuit alle rollen.
+
+#### Layout
+- Links paneel: gesprekkenlijst
+  - Per gesprek: avatar, naam, laatste bericht preview, tijd, ongelezen badge
+  - Optioneel filter op vacature
+- Rechts paneel: actief gesprek
+  - Berichtenthread met bubbles (links/rechts)
+  - Tijdstempel per bericht
+  - Invoerveld "Type een bericht..." met verstuurknop
+
+#### Mock gesprekken per rol
+
+**Scout:**
+- Gesprek met "HR Afdeling TechCorp" over "Marketing Manager vacature"
+- Gesprek met "Kandidaat Lisa J." over "Status update"
+
+**Opdrachtgever:**
+- Gesprek met "Scout Jan de Vries" over "Voorgestelde kandidaten"
+
+**Kandidaat:**
+- Gesprek met "Mijn Scout - Jan de Vries" over "Vacature update"
+
+#### Mobiel responsive
+- Op kleine schermen: toon lijst OF gesprek (niet beide)
+- Terugknop om van gesprek naar lijst te gaan
+
+#### Overig
+- Noot onderaan: "Berichten zijn altijd gekoppeld aan een vacature of kandidaat"
+- Sidebar: "Berichten" link met ongelezen teller badge voor alle rollen
+- Sidebar: "Fit Garantie" link onder Opdrachtgever en Admin navigatie
+
+---
+
+## 17. Nog te Bouwen
 
 ### Must-have (MVP)
 - [ ] KVK-duplicaatcontrole bij registratie opdrachtgever (check of KVK al bestaat, stuur verzoek)
@@ -454,7 +682,7 @@ lib/
 
 ### Nice-to-have
 - [ ] NL/EN vertaling voor alle demo-pagina's
-- [ ] Dashboard analytics voor admin
+- [x] Dashboard analytics voor admin
 - [ ] Scout leaderboard / ranking
 - [ ] Opdrachtgever review systeem (publiek)
 - [ ] Mobiele responsive optimalisatie
@@ -463,7 +691,7 @@ lib/
 
 ---
 
-## 12. Business Rules
+## 18. Business Rules
 
 1. **No cure, no pay**: Geen betaling zonder ondertekend arbeidscontract
 2. **Anonimiteit**: Kandidaat blijft anoniem totdat opdrachtgever contract accepteert
@@ -488,7 +716,7 @@ lib/
 
 ---
 
-## 14. Algemene Voorwaarden — Kernbepalingen
+## 19. Algemene Voorwaarden — Kernbepalingen
 
 De volgende bepalingen moeten worden opgenomen in de Algemene Voorwaarden:
 
@@ -526,7 +754,7 @@ De volgende bepalingen moeten worden opgenomen in de Algemene Voorwaarden:
 
 ---
 
-## 15. Juridische Documenten & Consent Logging
+## 20. Juridische Documenten & Consent Logging
 
 ### Documenten overzicht
 
@@ -573,3 +801,259 @@ Elk akkoord moet worden gelogd met:
 - Bij een nieuwe versie van een document moet de gebruiker opnieuw akkoord gaan
 - Het oude akkoord blijft bewaard in de log (nooit overschrijven)
 - De huidige documentversie wordt centraal beheerd in `lib/consent-log.ts`
+
+---
+
+## 21. Opdrachtgever Bedrijfsprofiel
+
+**Route:** `/demo/opdrachtgever/bedrijfsprofiel`
+
+Beheer pagina voor het bedrijfsprofiel van de opdrachtgever.
+
+### Secties
+
+1. **Bedrijfsgegevens** — KVK-nummer, bedrijfsnaam, adres, postcode, plaats, land, sector, website. Edit-mode toggle per sectie.
+2. **Factuurgegevens** — Factuurnaam, factuuradres, BTW-nummer, IBAN. Edit-mode toggle.
+3. **Contactpersonen** — Tabel met naam, email, rol, actief sinds. "Collega uitnodigen" button.
+4. **Organisatie M-Score Profiel** — Status (ingevuld/niet ingevuld). Bij ingevuld: samenvatting waarden (dim 2) en organisatiekenmerken (dim 3). "Profiel bewerken" button. Noot over hergebruik bij alle vacatures.
+5. **Getekende contracten** — Tabel met contractnaam, vacature, kandidaat, datum getekend, status. "Download PDF" button per contract.
+
+### Technisch
+- Light theme (`bg-surface`, `text-ink`)
+- `'use client'` directive
+- Alle velden pre-filled met mock data
+- Edit mode toggle per sectie (bedrijfsgegevens, factuurgegevens)
+
+---
+
+## 22. Scout Analytics Dashboard
+
+**Route:** `/demo/scout/analytics`
+
+Performance dashboard voor Talent Scouts.
+
+### Secties
+
+1. **Stat cards (4x):**
+   - Totaal plaatsingen: 7 (met trend ↑)
+   - Gemiddelde rating: 4.2/5 (uit opdrachtgever reviews)
+   - Conversieratio: 34% (voorgedragen → geplaatst)
+   - Totaal verdiend: €18.400
+
+2. **Prestaties per maand** — CSS-only bar chart, laatste 6 maanden plaatsingen.
+
+3. **Recente reviews** — Review cards met: opdrachtgever (anoniem), vacature, sterren (1-5), datum. Gemiddelde prominent weergegeven.
+
+4. **Top vakgebieden** — Horizontale bar chart met success rate per sector (Marketing 45%, IT 30%, Finance 25%).
+
+5. **Pro Scout status** — Progress bar met voortgang richting Pro Scout (2 plaatsingen vereist). Voordelen lijst.
+
+### Technisch
+- Light theme (`bg-surface`, `text-ink`)
+- `'use client'` directive
+- CSS-only charts (geen externe chart library)
+
+---
+
+## 23. Admin Dashboard (verbeterd)
+
+**Route:** `/demo/admin`
+
+Executive dashboard met KPI's en beheertools.
+
+### Secties
+
+1. **KPI stat cards (6x):**
+   - Actieve vacatures: 23
+   - Plaatsingen deze maand: 4
+   - Omzet deze maand: €28.800
+   - Actieve scouts: 47
+   - Actieve opdrachtgevers: 12
+   - Openstaande escalaties: 2
+
+2. **Omzet overzicht** — CSS bar chart, maandelijkse omzet laatste 6 maanden.
+
+3. **Recente activiteit** — Activity feed met 6-8 recente platform activiteiten (voorstellen, contracten, escalaties, registraties).
+
+4. **Escalaties** — Tabel met opdrachtgever, vacature, scout, nudges verstuurd, laatste nudge, actie. "Bel opdrachtgever" button.
+
+5. **Fit Garantie claims** — Tabel met kandidaat, opdrachtgever, plaatsingsdatum, claim datum, reden, status (in behandeling/goedgekeurd/afgewezen).
+
+6. **Snelkoppelingen** — Buttons naar: Uitbetalingen, Facturen, VU Test Log, Email Templates, Gebruikersbeheer.
+
+### Sidebar navigatie (admin)
+- Dashboard, Pricing, Landen, Gebruikers, Facturen, Uitbetalingen, VU Test Log, Email Templates
+
+### Technisch
+- Light theme (`bg-surface`, `text-ink`)
+- `'use client'` directive
+- CSS-only charts
+
+---
+
+## 24. Onboarding & Registratie Flows
+
+### 24.1 Opdrachtgever Onboarding
+
+**Route:** `/demo/onboarding/opdrachtgever`
+
+Multi-step registratie wizard voor nieuwe opdrachtgevers.
+
+**Stappen:**
+
+| Stap | Naam | Velden |
+|------|------|--------|
+| 1 | Bedrijfsgegevens | KVK-nummer, bedrijfsnaam, adres, postcode, plaats, sector |
+| 2 | Contactpersoon | Naam, email, telefoon, functie |
+| 3 | KVK Verificatie | Automatische check of KVK al geregistreerd is |
+| 4 | Voorwaarden | Algemene Voorwaarden, Privacyverklaring, Verwerkersovereenkomst (checkboxes) |
+| 5 | Account aangemaakt | Bevestigingspagina, doorverwijzing naar dashboard |
+
+**KVK Duplicaatcontrole (Stap 3):**
+- Systeem controleert of KVK-nummer al bestaat in de database
+- **KVK bestaat niet:** Doorgaan naar stap 4
+- **KVK bestaat al:** Toon melding met bestaand bedrijfsnaam, mogelijkheid om:
+  - KVK-nummer wijzigen (terug naar stap 1)
+  - Toegangsverzoek sturen naar bestaande account-beheerder
+- Bestaande beheerder ontvangt email met verzoek + gegevens aanvrager
+
+### 24.2 Scout Onboarding
+
+**Route:** `/demo/onboarding/scout`
+
+Multi-step registratie wizard voor nieuwe Talent Scouts.
+
+**Stappen:**
+
+| Stap | Naam | Velden |
+|------|------|--------|
+| 1 | Persoonlijke gegevens | Naam, email, telefoon, woonplaats, land |
+| 2 | Professioneel profiel | Sector expertise (multi-select), jaren ervaring, LinkedIn URL |
+| 3 | Voorwaarden | Scoutovereenkomst, Privacyverklaring, Verwerkersovereenkomst (checkboxes) |
+| 4 | Account aangemaakt | Bevestigingspagina, doorverwijzing naar scout dashboard |
+
+### 24.3 Kandidaat Onboarding
+
+**Route:** `/demo/onboarding/kandidaat`
+
+Toegankelijk via uitnodigingslink van scout. Bevat context over de scout en vacature.
+
+**Stappen:**
+
+| Stap | Naam | Velden |
+|------|------|--------|
+| 1 | Welkom | Bericht: "Je bent uitgenodigd door [scout_naam]", uitleg over het proces |
+| 2 | Persoonlijke gegevens | Naam, email, telefoon |
+| 3 | Toestemming | Toestemmingsverklaring, Privacyverklaring (checkboxes) |
+| 4 | Account aangemaakt | Bevestigingspagina, doorverwijzing naar Matching Scan |
+
+### Technisch (alle onboarding flows)
+- Light theme (`bg-surface`, `text-ink`)
+- Progress stepper component bovenaan elke pagina
+- Geen authenticatie vereist (registratie flow)
+- Na account aanmaken: automatische login + redirect naar dashboard/scan
+
+---
+
+## 25. Email Templates
+
+**Route:** `/demo/admin/email-templates` (Admin only)
+
+Overzicht van alle 12 email templates in het systeem.
+
+### Templates
+
+| Nr | Template | Ontvanger | Trigger | Onderwerp |
+|----|----------|-----------|---------|-----------|
+| 01 | Uitnodiging kandidaat | Kandidaat | Scout nodigt kandidaat uit | Je bent uitgenodigd voor een unieke kans bij {{bedrijf}}! |
+| 02 | Matching Scan herinnering | Kandidaat | Scan niet ingevuld na 48u | Vergeet je Matching Scan niet! |
+| 03 | Nieuwe matchingsuggestie | Scout | Nieuwe vacature matcht met talent pool | Nieuwe match gevonden: {{vacature_titel}} bij {{bedrijf}} |
+| 04 | Kandidaat voorgedragen | Opdrachtgever | Scout draagt kandidaat voor | Nieuwe kandidaat voorgedragen voor {{vacature_titel}} |
+| 05 | Contract akkoord bevestiging | Scout | OG accepteert profiel | Profiel ontgrendeld: {{kandidaat_naam}} voor {{vacature_titel}} |
+| 06 | Gespreksdatum herinnering | Kandidaat, Scout | 24 uur voor gepland gesprek | Morgen: gesprek bij {{bedrijf}} voor {{vacature_titel}} |
+| 07 | Nudge 1 — Vriendelijke herinnering | Opdrachtgever | Scout stuurt nudge (niveau 1) | Herinnering: plan het gesprek in voor {{vacature_titel}} |
+| 08 | Nudge 2 — Urgente herinnering | Opdrachtgever | Scout stuurt nudge (niveau 2) | Urgent: kandidaat wacht op reactie voor {{vacature_titel}} |
+| 09 | Escalatie naar Refurzy | Admin | Na 2 onbeantwoorde nudges | Escalatie: geen reactie van {{bedrijf}} op {{vacature_titel}} |
+| 10 | Feedback na gesprek herinnering | Opdrachtgever | Gesprek afgerond, geen feedback na 48u | Geef feedback over het gesprek met kandidaat {{initialen}} |
+| 11 | Felicitatie contract getekend | OG, Kandidaat, Scout | Arbeidsovereenkomst getekend | Gefeliciteerd! Contract getekend voor {{vacature_titel}} |
+| 12 | Fit Garantie check-in | Opdrachtgever | 3, 6 en 12 maanden na startdatum | Fit Garantie check-in: hoe gaat het met {{kandidaat_naam}}? |
+
+### Felicitatie email (3 versies)
+- **Opdrachtgever versie:** Bevat factuurinformatie + Fit Garantie details
+- **Kandidaat versie:** Bevat startdatum + contactgegevens opdrachtgever
+- **Scout versie:** Bevat fee-overzicht + uitbetalingsinformatie
+
+### Fit Garantie check-in (3 momenten)
+- **3 maanden:** Vroege check-in — "Hoe verloopt de samenwerking?"
+- **6 maanden:** Halverwege check-in — Optioneel feedbackformulier
+- **12 maanden:** Finale check-in — Fit Garantie loopt af, evaluatie
+
+### Admin interface
+- Card grid layout met alle 12 templates
+- Per card: template naam, ontvanger rol, trigger event, onderwerpregel
+- Klik op card: uitklappen met volledige HTML email preview (Refurzy branding)
+- Templates gebruiken variabelen: {{kandidaat_naam}}, {{scout_naam}}, {{bedrijf}}, etc.
+
+### Technisch
+- Light theme (`bg-surface`, `text-ink`)
+- `'use client'` directive
+- Mock HTML email previews met Refurzy gradient header
+
+---
+
+## 26. Notificatiesysteem
+
+### NotificationBell component
+
+**Locatie:** TopBar (alle rollen)
+
+- Bell icon in top-right van de topbar (naast gebruikersnaam)
+- Badge met ongelezen telling (bijv. "3")
+- Klik: dropdown met laatste 6 notificaties
+- Per notificatie: type icon, titel, beschrijving, tijdstip ("2 uur geleden"), gelezen/ongelezen status
+- "Alles gelezen" button
+- Link naar volledige notificatiepagina
+
+### Notificaties pagina
+
+**Route:** `/demo/notificaties` (alle rollen)
+
+Volledige notificatiepagina met:
+- Lijst van alle notificaties
+- Per notificatie:
+  - Icon per type (vacature, match, contract, bericht, systeem)
+  - Titel + beschrijving
+  - Tijdstempel (relatief)
+  - Gelezen/ongelezen toggle
+  - Link naar relevante pagina
+- Filter op type (Alles, Vacature, Match, Contract, Bericht, Systeem)
+- "Alles als gelezen markeren" button
+- 8-10 notificaties per rol (mock data)
+
+### Notificatie types
+
+| Type | Icon | Beschrijving |
+|------|------|-------------|
+| vacancy | Vacature | Nieuwe vacature, verloopt binnenkort, gepubliceerd |
+| match | Match | Nieuwe voordracht, matchingsuggestie, M-Score berekend |
+| contract | Contract | Profiel ontgrendeld, contract getekend, arbeidsvoorwaarden |
+| message | Bericht | Nudge, feedback, gesprek herinnering |
+| system | Systeem | Welkom, registratie, Pro Scout upgrade, Fit Garantie check-in |
+
+### Delivery per rol
+
+| Rol | Voorbeeld notificaties |
+|-----|----------------------|
+| Opdrachtgever | Nieuwe voordracht, nudge van scout, contract klaar, vacature verloopt, feedback herinnering |
+| Scout | Matchingsuggestie, profiel ontgrendeld, scan ingevuld, contract getekend, nieuwe vacature |
+| Kandidaat | Voorgedragen voor vacature, gesprek gepland, feedback ontvangen, scan resultaat |
+| Admin | Escalatie melding, contract getekend, nieuwe registratie, KVK duplicaat, uitbetaling |
+
+### Technisch
+- Light theme (`bg-surface`, `text-ink`)
+- `'use client'` directive
+- Mock data in `lib/mock-notifications.ts`
+- NotificationBell component in `app/demo/components/NotificationBell.tsx`
+- Notificaties pagina in `app/demo/notificaties/page.tsx`
+- TopBar geupdate met NotificationBell
+- Sidebar geupdate met "Notificaties" link voor alle rollen

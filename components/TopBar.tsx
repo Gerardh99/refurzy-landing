@@ -1,12 +1,14 @@
 'use client'
 
 import { User } from '@/lib/types'
+import NotificationBell from '@/app/demo/components/NotificationBell'
 
 export default function TopBar({ user }: { user: User }) {
   return (
     <header className="h-16 bg-white border-b border-surface-border flex items-center justify-between px-8">
       <div />
       <div className="flex items-center gap-4">
+        <NotificationBell role={user.role} />
         <div className="text-right">
           <p className="text-sm font-medium text-ink">{user.name}</p>
           <p className="text-xs text-ink-muted">{user.company || user.email}</p>
