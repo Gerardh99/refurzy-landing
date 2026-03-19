@@ -78,9 +78,6 @@ export default function ScoutVacatureDetail() {
         {vacature.kandidaten.length === 0 ? (
           <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
             <p className="text-ink-light">Nog geen kandidaten voorgedragen voor deze vacature.</p>
-            <button className="mt-4 px-5 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors">
-              Kandidaat voordragen uit talent pool
-            </button>
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
