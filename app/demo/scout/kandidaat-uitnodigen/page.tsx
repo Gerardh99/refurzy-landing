@@ -196,14 +196,14 @@ export default function KandidaatUitnodigen() {
         <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
           <h2 className="text-lg font-semibold text-ink">Of deel je generieke uitnodigingslink</h2>
           <div className="flex items-center gap-3">
-            <div className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-cyan text-sm font-mono break-all">
+            <div className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-purple font-medium text-sm font-mono break-all">
               {poolLink}
             </div>
-            <button onClick={handleCopy} className="px-5 py-3 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors whitespace-nowrap">
+            <button onClick={handleCopy} className="px-5 py-3 bg-purple text-white rounded-lg font-medium text-sm hover:bg-purple/90 transition-colors whitespace-nowrap">
               {copied ? 'Gekopieerd!' : 'Kopieer link'}
             </button>
           </div>
-          <p className="text-xs text-ink-faint">Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.</p>
+          <p className="text-xs text-ink-muted">Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.</p>
         </div>
       )}
 
