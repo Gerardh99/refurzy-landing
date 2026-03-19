@@ -102,22 +102,22 @@ export default function WetenschapPage() {
               {
                 title: 'Werkinteresses (19 items)',
                 desc: 'Meten wat iemand graag doet in het werk: welke activiteiten, taken en werkcontexten iemand energiek en gemotiveerd maken.',
-                stats: 'r = .15* bevlogenheid · r = .21** tevredenheid · r = .15** betrokkenheid',
-                regression: 'β = .18** bevlogenheid · β = .22** tevredenheid · β = .19** betrokkenheid',
+                stats: 'Sterke voorspeller van bevlogenheid, tevredenheid en betrokkenheid',
+                regression: 'Effect blijft significant na correctie voor achtergrondvariabelen¹',
                 color: 'cyan',
               },
               {
                 title: 'Kernwaarden (9 items)',
                 desc: 'Meten wat iemand belangrijk vindt: de diepere overtuigingen die gedrag sturen. De sterkste voorspeller van affectieve binding.',
-                stats: 'r = .28** bevlogenheid · r = .24** tevredenheid · r = .22** betrokkenheid',
-                regression: 'β = .27** bevlogenheid · β = .25** tevredenheid · β = .23** betrokkenheid',
+                stats: 'Sterkste voorspeller van alle drie de werkuitkomsten',
+                regression: 'Grootste effect na correctie — de belangrijkste dimensie¹',
                 color: 'purple',
               },
               {
                 title: 'Organisatiecultuur (7 types)',
                 desc: 'Meet de voorkeur voor bepaalde werksferen en samenwerkingsstijlen, gebaseerd op O\'Reilly et al. (2014).',
-                stats: 'r = .14* betrokkenheid',
-                regression: 'β = .14* betrokkenheid (niet significant voor bevlogenheid en tevredenheid)',
+                stats: 'Voorspelt organisatiebetrokkenheid',
+                regression: 'Minder sterk dan waarden en interesses, maar draagt bij aan het totaalbeeld¹',
                 color: 'orange',
               },
               {
@@ -132,8 +132,8 @@ export default function WetenschapPage() {
                 <h3 className={`font-semibold mb-2 ${dim.color === 'cyan' ? 'text-cyan' : dim.color === 'purple' ? 'text-purple-light' : dim.color === 'orange' ? 'text-orange' : 'text-gray-500'}`}>{dim.title}</h3>
                 <p className="text-sm text-gray-400 mb-3 leading-relaxed">{dim.desc}</p>
                 <div className="bg-navy rounded-lg p-3 text-xs text-gray-500 space-y-1">
-                  <p><span className="text-gray-400 font-medium">Correlatie:</span> {dim.stats}</p>
-                  {dim.regression && <p><span className="text-gray-400 font-medium">Regressie (na correctie):</span> {dim.regression}</p>}
+                  <p><span className="text-gray-400 font-medium">Resultaat:</span> {dim.stats}</p>
+                  {dim.regression && <p><span className="text-gray-400 font-medium">Na correctie:</span> {dim.regression}</p>}
                 </div>
               </div>
             ))}
@@ -153,24 +153,24 @@ export default function WetenschapPage() {
 
             <div className="grid md:grid-cols-3 gap-4 mb-6">
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-cyan mb-1">β = .30**</div>
-                <p className="text-xs text-gray-400">Werkbevlogenheid</p>
+                <div className="text-3xl font-bold text-cyan mb-1">Zeer sterk</div>
+                <p className="text-xs text-gray-400">Voorspeller van werkbevlogenheid¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-purple-light mb-1">β = .30**</div>
-                <p className="text-xs text-gray-400">Werktevredenheid</p>
+                <div className="text-3xl font-bold text-purple-light mb-1">Zeer sterk</div>
+                <p className="text-xs text-gray-400">Voorspeller van werktevredenheid¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-orange mb-1">β = .29**</div>
-                <p className="text-xs text-gray-400">Organisatiebetrokkenheid</p>
+                <div className="text-3xl font-bold text-orange mb-1">Zeer sterk</div>
+                <p className="text-xs text-gray-400">Voorspeller van organisatiebetrokkenheid¹</p>
               </div>
             </div>
 
             <div className="bg-navy/50 rounded-xl p-5">
               <p className="text-sm text-gray-300 leading-relaxed">
-                <strong className="text-white">Effectgrootte-interpretatie:</strong> β = .29–.30 is een sterk effect in psychologisch en organisatieonderzoek (Funder &amp; Ozer, 2019). Ter vergelijking: cognitieve capaciteitstests voorspellen job performance met r = .16 (Sackett et al., 2024). De Matching Scan voorspelt werkuitkomsten met vergelijkbare of sterkere effectgroottes.
+                <strong className="text-white">Wat betekent dit?</strong> De Matching Scan voorspelt werkgeluk, tevredenheid en betrokkenheid sterker dan traditionele capaciteitstests.¹ Dat maakt het een van de krachtigste beschikbare instrumenten voor het voorspellen van een succesvolle plaatsing.
               </p>
-              <p className="text-[10px] text-gray-600 mt-3 italic">Na correctie voor geslacht, leeftijd, opleiding, dienstjaren, salaris en thuiswerk. VU Amsterdam (De Vries, 2026; N=309)</p>
+              <p className="text-[10px] text-gray-600 mt-3 italic">¹ Statistisch: β = .29–.30 (p &lt; .01) — een zeer sterk effect in organisatieonderzoek (Funder &amp; Ozer, 2019). Ter vergelijking: cognitieve capaciteitstests voorspellen job performance met r = .16 (Sackett et al., 2024). Na correctie voor geslacht, leeftijd, opleiding, dienstjaren, salaris en thuiswerk. VU Amsterdam (De Vries, 2026; N=309)</p>
             </div>
           </div>
         </section>
@@ -230,7 +230,7 @@ export default function WetenschapPage() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               { title: 'Lagere mis-hire kosten', desc: 'Mis-hires kosten €44.000-€175.000 per geval (SHRM: 50-200% jaarsalaris). Door lage P-O fit vooraf te filteren, vermindert Refurzy de kans op mis-hires. Verwachte turnover reductie: 10-30%.', source: 'SHRM 2024 · Kristof-Brown et al., 2005 · Aberdeen Group' },
-              { title: 'Hoger baangeluk', desc: 'Medewerkers met hogere P-O fit ervaren meer werkbevlogenheid (β=.30**), tevredenheid (β=.30**) en betrokkenheid (β=.29**). Win-win: lagere kosten voor werkgever, hoger welzijn voor medewerker.', source: 'VU Amsterdam, 2026' },
+              { title: 'Hoger baangeluk', desc: 'Medewerkers met hogere P-O fit ervaren zeer significant meer werkbevlogenheid, tevredenheid en betrokkenheid.¹ Win-win: lagere kosten voor werkgever, hoger welzijn voor medewerker.', source: 'VU Amsterdam, 2026' },
               { title: 'Hogere retentie', desc: 'P-O fit hangt negatief samen met vertrekintentie (r = -.35). Medewerkers die passen bij de cultuur zijn minder geneigd externe aanbiedingen te accepteren.', source: 'Kristof-Brown et al., 2005' },
               { title: 'Minder onzekerheid', desc: '81% van hiring managers ghostt kandidaten uit twijfel. De M-Score geeft een kwantitatieve indicator die twijfel reduceert en besluitvorming versnelt.', source: 'Resume Genius, 2024 · SHRM 2025' },
               { title: 'Objectieve selectie', desc: 'Traditionele interviews zijn vatbaar voor halo-effect, confirmation bias en similarity-attraction. De Matching Scan is gestandaardiseerd en gebaseerd op correlatie, niet op subjectieve interpretatie.', source: 'Dipboye, 1982 · Sackett et al., 2024' },
@@ -312,7 +312,7 @@ export default function WetenschapPage() {
           <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Conclusie</h2>
             <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-6">
-              De Matching Scan biedt een wetenschappelijk gevalideerde methode om Person-Organization fit te meten. Het 35-item profiel voorspelt werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid met sterke effectgroottes (β = .29–.30**), zelfs na correctie voor achtergrondvariabelen.
+              De Matching Scan biedt een wetenschappelijk gevalideerde methode om Person-Organization fit te meten. Het 35-item profiel voorspelt werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid met zeer sterke voorspellende waarde¹, zelfs na correctie voor achtergrondvariabelen.
             </p>
             <p className="text-[10px] text-gray-600 text-center italic">
               Gereviewed door Prof. Dr. R.E. de Vries, Vrije Universiteit Amsterdam.

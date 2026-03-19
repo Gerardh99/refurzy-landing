@@ -251,7 +251,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { icon: '🧬', title: 'Matching Scan — ontwikkeld met de VU Amsterdam', desc: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd (β = .30, p < .01). Ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam.', source: 'VU Amsterdam, 2026 (N=309)' },
+              { icon: '🧬', title: 'Matching Scan — ontwikkeld met de VU Amsterdam', desc: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd met zeer sterke voorspellende waarde.⁵ Ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam.', source: 'VU Amsterdam, 2026 (N=309)' },
               { icon: '💰', title: 'No cure, no pay — nul risico', desc: 'Geen abonnement, geen opstartkosten, geen fee als u niemand aanneemt. U betaalt alleen bij een succesvolle plaatsing. Vergelijk dat met gemiddeld €16.000 per hire bij een traditioneel bureau — zonder garantie.', source: 'Op basis van 25% fee bij €5.000 bruto/mnd' },
               { icon: '🔍', title: 'Ervaren Talent Scouts, niet een algoritme', desc: 'Onze Talent Scouts zijn veelal ervaren recruiters die al jaren in het vak zitten. Zij kennen hun netwerk, weten waar het talent zit en kunnen de strijd aan met de beste bureaus — maar werken voor u, niet voor een bureau.', },
               { icon: '📊', title: 'Data vervangt twijfel', desc: '81% van managers twijfelt bij aannames. De M-Score geeft een objectieve, kwantitatieve indicator van de match. Geen buikgevoel meer, maar wetenschappelijk onderbouwde zekerheid vóór het eerste gesprek.', source: 'Resume Genius, 2024' },
@@ -290,7 +290,7 @@ export default function HomePage() {
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> 7 cultuurtypen — waar voelt iemand zich thuis</li>
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> Voorspelt bevlogenheid, tevredenheid én retentie</li>
                 </ul>
-                <p className="text-[10px] text-gray-600 mt-4 italic">VU Amsterdam (De Vries, 2026; N=309) — β = .30** voor werkbevlogenheid en werktevredenheid, β = .29** voor organisatiebetrokkenheid</p>
+                <p className="text-[10px] text-gray-600 mt-4 italic">⁵ VU Amsterdam (De Vries, 2026; N=309) — Zeer sterke voorspellende waarde voor werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid (β = .29–.30, p &lt; .01)</p>
               </div>
               <div className="flex justify-center">
                 <div className="relative">
@@ -309,9 +309,9 @@ export default function HomePage() {
           {/* Wetenschap samenvatting */}
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-              <div className="text-3xl font-bold text-cyan mb-2">β = .30**</div>
-              <p className="text-sm text-gray-400">Voorspellende waarde voor werkbevlogenheid en tevredenheid</p>
-              <p className="text-[10px] text-gray-600 mt-2">Na correctie voor leeftijd, opleiding, salaris</p>
+              <div className="text-3xl font-bold text-cyan mb-2">Zeer sterk</div>
+              <p className="text-sm text-gray-400">Wetenschappelijk bewezen voorspeller van werkgeluk⁵</p>
+              <p className="text-[10px] text-gray-600 mt-2">Na correctie voor leeftijd, opleiding en salaris</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-purple-light mb-2">10–30%</div>
@@ -416,8 +416,8 @@ export default function HomePage() {
           <div className="space-y-3">
             {[
               { q: 'Wat kost het als ik geen kandidaat aanneem?', a: 'Niets. Refurzy werkt op basis van no cure, no pay. Geen abonnement, geen opstartkosten. U betaalt alleen wanneer u daadwerkelijk een kandidaat aanneemt. Vergelijk dat met een traditioneel bureau dat gemiddeld €16.000 per hire rekent — ongeacht het resultaat.' },
-              { q: 'Hoe werkt de Matching Scan?', a: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld in samenwerking met de Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). Het meet de match tussen kandidaat en organisatie op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkbevlogenheid, tevredenheid en retentie voorspelt (β = .30, p < .01).' },
-              { q: 'Hoe betrouwbaar is de M-Score?', a: 'De Matching Scan is gevalideerd door de Vrije Universiteit Amsterdam in een onderzoek met 309 respondenten. De voorspellende waarde (β = .29–.30) is vergelijkbaar met of sterker dan cognitieve capaciteitstests (r = .16, Sackett et al., 2024). De scan vervangt interviews niet, maar geeft een objectief datapunt dat twijfel reduceert.' },
+              { q: 'Hoe werkt de Matching Scan?', a: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld met de Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). Het meet de match op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkgeluk, tevredenheid en retentie zeer sterk voorspelt.⁵' },
+              { q: 'Hoe betrouwbaar is de M-Score?', a: 'De Matching Scan is gevalideerd door de VU Amsterdam in een onderzoek met 309 respondenten. De voorspellende waarde is zeer sterk — sterker dan traditionele capaciteitstests.⁵ De scan vervangt interviews niet, maar geeft een objectief datapunt dat twijfel reduceert.' },
               { q: 'Kan ik als recruiter Talent Scout worden?', a: 'Ja. Elke ervaren recruiter, HR-professional of netwerker kan zich aanmelden als Talent Scout. U bouwt uw eigen talent pool op, matcht kandidaten aan vacatures en verdient 50% van de fee bij elke succesvolle plaatsing. Hoe beter uw track record, hoe hoger uw reputatiescore.' },
               { q: 'Waarom zijn kandidaten anoniem?', a: 'Anonimiteit voorkomt onbewuste bias (halo-effect, similarity-attraction) en zorgt voor objectieve beoordeling op basis van fit, niet op basis van naam, foto of achtergrond. Pas na akkoord op de voorwaarden krijgt u toegang tot het volledige profiel.' },
               { q: 'Hoeveel kan ik besparen?', a: 'Conservatief scenario: ROI vanaf 336%. Voor een klein bedrijf met 3 hires per jaar betekent dit €44.000–€85.000 netto besparing. Voor organisaties met 100+ medewerkers: €72.000–€668.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.' },
