@@ -26,16 +26,16 @@ export default function ScoutMeldingen() {
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Signaleringen</h1>
-        <p className="text-gray-400 mt-1">Houd bij of opdrachtgevers tijdig reageren</p>
+        <h1 className="text-2xl font-bold text-ink">Signaleringen</h1>
+        <p className="text-ink-light mt-1">Houd bij of opdrachtgevers tijdig reageren</p>
       </div>
 
       {/* Active notification */}
-      <div className="bg-navy-light rounded-2xl border border-orange/30 p-6 space-y-4">
+      <div className="bg-white rounded-2xl border border-orange/30 p-6 space-y-4">
         <div className="flex items-start gap-3">
           <span className="text-orange text-xl mt-0.5">&#9888;</span>
           <div className="flex-1 space-y-2">
-            <p className="text-white font-medium">{signaleringen[0].bericht}</p>
+            <p className="text-ink font-medium">{signaleringen[0].bericht}</p>
             <p className="text-orange text-sm">
               Let op: Opdrachtgevers zijn contractueel verplicht binnen 7 dagen te reageren.
               Bij overschrijding kan een boeteclausule van toepassing zijn.
@@ -60,10 +60,10 @@ export default function ScoutMeldingen() {
 
       {/* Timeline */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white">Signalering log</h2>
+        <h2 className="text-lg font-semibold text-ink">Signalering log</h2>
         <div className="space-y-3">
           {tijdlijn.map((item) => (
-            <div key={item.id} className="bg-navy-light rounded-2xl border border-purple/10 p-4 flex items-start gap-4">
+            <div key={item.id} className="bg-white rounded-2xl border border-surface-border p-4 flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
                 {item.type === 'verstuurd' && <span className="text-cyan text-sm">&#9993;</span>}
                 {item.type === 'opgelost' && <span className="text-green-400 text-sm">&#10003;</span>}
@@ -71,7 +71,7 @@ export default function ScoutMeldingen() {
               </div>
               <div className="flex-1">
                 <p className="text-gray-300 text-sm">{item.bericht}</p>
-                <p className="text-gray-600 text-xs mt-1">{new Date(item.datum).toLocaleDateString('nl-NL')}</p>
+                <p className="text-ink-faint text-xs mt-1">{new Date(item.datum).toLocaleDateString('nl-NL')}</p>
               </div>
             </div>
           ))}

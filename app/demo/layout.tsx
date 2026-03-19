@@ -23,14 +23,14 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-navy-dark flex items-center justify-center">
-        <div className="text-purple-light animate-pulse">Laden...</div>
+      <div className="min-h-screen bg-surface flex items-center justify-center">
+        <div className="text-purple animate-pulse">Laden...</div>
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen bg-navy-dark">
+    <div className="flex min-h-screen bg-surface">
       <Sidebar role={user.role} />
       <div className="flex-1 flex flex-col">
         <TopBar user={user} />

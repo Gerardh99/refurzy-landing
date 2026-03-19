@@ -84,9 +84,9 @@ function StatusBadge({ status }: { status: AccountStatus }) {
 
 function RoleBadge({ role }: { role: OrgRole }) {
   const s: Record<OrgRole, string> = {
-    owner: 'bg-purple/15 text-purple-light border-purple/20',
+    owner: 'bg-purple/15 text-purple border-surface-border',
     admin: 'bg-cyan/15 text-cyan border-cyan/20',
-    gebruiker: 'bg-gray-500/15 text-gray-400 border-gray-500/20',
+    gebruiker: 'bg-gray-500/15 text-ink-light border-gray-500/20',
   }
   const l: Record<OrgRole, string> = { owner: '👑', admin: '🛡', gebruiker: '👤' }
   return <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${s[role]}`}>{l[role]} {role}</span>
@@ -119,35 +119,35 @@ export default function GebruikersPage() {
       )}
 
       <div className="mb-8">
-        <Link href="/demo/admin" className="text-gray-400 hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
+        <Link href="/demo/admin" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
           ← Terug naar admin
         </Link>
-        <h1 className="text-2xl font-bold text-white mt-3">Gebruikers overzicht</h1>
-        <p className="text-gray-400 mt-1">Gegroepeerd per organisatie en type</p>
+        <h1 className="text-2xl font-bold text-ink mt-3">Gebruikers overzicht</h1>
+        <p className="text-ink-light mt-1">Gegroepeerd per organisatie en type</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-5 gap-4 mb-6">
         {[
-          { label: 'Organisaties', value: mockOrganizations.length, color: 'text-purple-light' },
-          { label: 'Gebruikers', value: mockOrganizations.reduce((s, o) => s + o.leden.length, 0), color: 'text-white' },
+          { label: 'Organisaties', value: mockOrganizations.length, color: 'text-purple' },
+          { label: 'Gebruikers', value: mockOrganizations.reduce((s, o) => s + o.leden.length, 0), color: 'text-ink' },
           { label: 'Talent Scouts', value: mockScouts.length, color: 'text-cyan' },
           { label: 'Actief', value: mockOrganizations.filter(o => o.status === 'actief').length + mockScouts.filter(s => s.status === 'actief').length, color: 'text-green-400' },
           { label: 'Geblokkeerd', value: mockOrganizations.filter(o => o.status !== 'actief').length + mockScouts.filter(s => s.status !== 'actief').length, color: 'text-red-400' },
         ].map(s => (
-          <div key={s.label} className="bg-navy-light rounded-2xl border border-purple/10 p-4 text-center">
+          <div key={s.label} className="bg-white rounded-2xl border border-surface-border p-4 text-center">
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
-            <div className="text-xs text-gray-500 mt-1">{s.label}</div>
+            <div className="text-xs text-ink-muted mt-1">{s.label}</div>
           </div>
         ))}
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-navy-light rounded-xl p-1 border border-purple/10 w-fit mb-6">
-        <button onClick={() => setTab('organisaties')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'organisaties' ? 'bg-purple/15 text-cyan border border-purple/20' : 'text-gray-400 hover:text-white'}`}>
+      <div className="flex gap-1 bg-white rounded-xl p-1 border border-surface-border w-fit mb-6">
+        <button onClick={() => setTab('organisaties')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'organisaties' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink'}`}>
           🏢 Organisaties ({mockOrganizations.length})
         </button>
-        <button onClick={() => setTab('scouts')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'scouts' ? 'bg-purple/15 text-cyan border border-purple/20' : 'text-gray-400 hover:text-white'}`}>
+        <button onClick={() => setTab('scouts')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'scouts' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink'}`}>
           🔍 Talent Scouts ({mockScouts.length})
         </button>
       </div>
@@ -156,20 +156,20 @@ export default function GebruikersPage() {
       {tab === 'organisaties' && (
         <div className="space-y-4">
           {mockOrganizations.map(org => (
-            <div key={org.id} className={`bg-navy-light rounded-2xl border border-purple/10 overflow-hidden ${org.status !== 'actief' ? 'opacity-60' : ''}`}>
+            <div key={org.id} className={`bg-white rounded-2xl border border-surface-border overflow-hidden ${org.status !== 'actief' ? 'opacity-60' : ''}`}>
               {/* Org header */}
               <button
                 onClick={() => setExpandedOrg(expandedOrg === org.id ? null : org.id)}
-                className="w-full flex items-center justify-between p-5 hover:bg-purple/5 transition-colors"
+                className="w-full flex items-center justify-between p-5 hover:bg-surface-muted transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl bg-purple/15 flex items-center justify-center text-lg">🏢</div>
                   <div className="text-left">
-                    <div className="text-white font-semibold flex items-center gap-2">
+                    <div className="text-ink font-semibold flex items-center gap-2">
                       {org.naam}
                       <StatusBadge status={org.status} />
                     </div>
-                    <div className="text-xs text-gray-500 flex items-center gap-3 mt-0.5">
+                    <div className="text-xs text-ink-muted flex items-center gap-3 mt-0.5">
                       <span>KVK: {org.kvk}</span>
                       <span>Plan: {org.plan}</span>
                       <span>{org.leden.length} leden</span>
@@ -194,14 +194,14 @@ export default function GebruikersPage() {
                       ✓ Deblokkeer
                     </button>
                   )}
-                  <span className={`text-gray-500 transition-transform ${expandedOrg === org.id ? 'rotate-90' : ''}`}>▶</span>
+                  <span className={`text-ink-muted transition-transform ${expandedOrg === org.id ? 'rotate-90' : ''}`}>▶</span>
                 </div>
               </button>
 
               {/* Expanded: members */}
               {expandedOrg === org.id && (
-                <div className="border-t border-purple/10 px-5 pb-5">
-                  <div className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-2 text-[10px] text-gray-600 uppercase tracking-wider mt-3">
+                <div className="border-t border-surface-border px-5 pb-5">
+                  <div className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-2 text-[10px] text-ink-faint uppercase tracking-wider mt-3">
                     <div>Naam</div>
                     <div>E-mail</div>
                     <div>Rol</div>
@@ -209,14 +209,14 @@ export default function GebruikersPage() {
                     <div className="text-right">Acties</div>
                   </div>
                   {org.leden.map(lid => (
-                    <div key={lid.id} className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-3 items-center hover:bg-purple/5 rounded-lg transition-colors">
+                    <div key={lid.id} className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-3 items-center hover:bg-surface-muted rounded-lg transition-colors">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-purple/20 flex items-center justify-center text-purple-light text-[10px] font-bold">
+                        <div className="w-7 h-7 rounded-full bg-purple/20 flex items-center justify-center text-purple text-[10px] font-bold">
                           {lid.naam.split(' ').map(n => n[0]).join('').slice(0, 2)}
                         </div>
-                        <span className="text-white text-sm font-medium">{lid.naam}</span>
+                        <span className="text-ink text-sm font-medium">{lid.naam}</span>
                       </div>
-                      <div className="text-gray-400 text-sm">{lid.email}</div>
+                      <div className="text-ink-light text-sm">{lid.email}</div>
                       <div><RoleBadge role={lid.role} /></div>
                       <div><StatusBadge status={lid.status} /></div>
                       <div className="flex justify-end gap-2">
@@ -240,8 +240,8 @@ export default function GebruikersPage() {
 
       {/* Scouts tab */}
       {tab === 'scouts' && (
-        <div className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
-          <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
+        <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
+          <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
             <div>Naam</div>
             <div>E-mail</div>
             <div className="text-center">Rating</div>
@@ -251,14 +251,14 @@ export default function GebruikersPage() {
             <div className="text-right">Acties</div>
           </div>
           {mockScouts.map(scout => (
-            <div key={scout.id} className={`grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors ${scout.status !== 'actief' ? 'opacity-50' : ''}`}>
+            <div key={scout.id} className={`grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors ${scout.status !== 'actief' ? 'opacity-50' : ''}`}>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-cyan/15 flex items-center justify-center text-cyan text-xs font-bold">
                   {scout.naam.split(' ').map(n => n[0]).join('').slice(0, 2)}
                 </div>
-                <span className="text-white font-medium text-sm">{scout.naam}</span>
+                <span className="text-ink font-medium text-sm">{scout.naam}</span>
               </div>
-              <div className="text-gray-400 text-sm">{scout.email}</div>
+              <div className="text-ink-light text-sm">{scout.email}</div>
               <div className="text-center text-sm text-yellow-400">⭐ {scout.rating > 0 ? scout.rating : '—'}</div>
               <div className="text-center text-sm text-gray-300">{scout.poolSize}</div>
               <div className="text-center text-sm text-cyan font-semibold">{scout.plaatsingen}</div>
@@ -281,11 +281,11 @@ export default function GebruikersPage() {
       {/* Block modal */}
       {blockModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-navy-light rounded-2xl border border-purple/20 p-8 max-w-md w-full shadow-2xl">
-            <h3 className="text-xl font-bold text-white mb-2">
+          <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-md w-full shadow-2xl">
+            <h3 className="text-xl font-bold text-ink mb-2">
               {blockModal.action === 'unblock' ? 'Deblokkeren' : blockModal.action === 'perm' ? 'Permanent blokkeren' : 'Tijdelijk blokkeren'}
             </h3>
-            <p className="text-gray-400 text-sm mb-4">{blockModal.naam}</p>
+            <p className="text-ink-light text-sm mb-4">{blockModal.naam}</p>
 
             {blockModal.action === 'perm' && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3 mb-4">
@@ -295,13 +295,13 @@ export default function GebruikersPage() {
 
             {blockModal.action !== 'unblock' && (
               <div className="mb-4">
-                <label className="text-xs text-gray-500 mb-1.5 block">Reden</label>
-                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder="Geef een reden op..." className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50 placeholder-gray-600 resize-none" />
+                <label className="text-xs text-ink-muted mb-1.5 block">Reden</label>
+                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder="Geef een reden op..." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint resize-none" />
               </div>
             )}
 
             <div className="flex gap-3">
-              <button onClick={() => { setBlockModal(null); setBlockReason('') }} className="flex-1 bg-navy border border-purple/20 text-gray-400 px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white transition-colors">Annuleren</button>
+              <button onClick={() => { setBlockModal(null); setBlockReason('') }} className="flex-1 bg-surface-muted border border-surface-border text-ink-light px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-ink transition-colors">Annuleren</button>
               <button onClick={handleBlock} className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                 blockModal.action === 'unblock' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
                 blockModal.action === 'perm' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :

@@ -53,16 +53,16 @@ export default function KandidaatUitnodigen() {
       )}
 
       <div>
-        <h1 className="text-2xl font-bold text-white">Kandidaat uitnodigen</h1>
-        <p className="text-gray-400 mt-1">Nodig kandidaten uit voor je talent pool of voor een specifieke vacature</p>
+        <h1 className="text-2xl font-bold text-ink">Kandidaat uitnodigen</h1>
+        <p className="text-ink-light mt-1">Nodig kandidaten uit voor je talent pool of voor een specifieke vacature</p>
       </div>
 
       {/* Type selector */}
-      <div className="flex gap-1 bg-navy-light rounded-xl p-1 border border-purple/10 w-fit">
+      <div className="flex gap-1 bg-white rounded-xl p-1 border border-surface-border w-fit">
         <button
           onClick={() => setType('pool')}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-            type === 'pool' ? 'bg-purple/15 text-cyan border border-purple/20' : 'text-gray-400 hover:text-white hover:bg-purple/5'
+            type === 'pool' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink hover:bg-surface-muted'
           }`}
         >
           👥 Talent Pool (generiek)
@@ -70,7 +70,7 @@ export default function KandidaatUitnodigen() {
         <button
           onClick={() => setType('vacature')}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-            type === 'vacature' ? 'bg-purple/15 text-cyan border border-purple/20' : 'text-gray-400 hover:text-white hover:bg-purple/5'
+            type === 'vacature' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink hover:bg-surface-muted'
           }`}
         >
           📋 Specifieke vacature
@@ -80,14 +80,14 @@ export default function KandidaatUitnodigen() {
       {/* Uitleg */}
       <div className={`rounded-2xl border p-5 flex items-start gap-3 ${
         type === 'pool'
-          ? 'bg-purple/10 border-purple/20'
+          ? 'bg-purple/10 border-surface-border'
           : 'bg-cyan/10 border-cyan/20'
       }`}>
-        <span className={`text-lg mt-0.5 ${type === 'pool' ? 'text-purple-light' : 'text-cyan'}`}>ℹ️</span>
+        <span className={`text-lg mt-0.5 ${type === 'pool' ? 'text-purple' : 'text-cyan'}`}>ℹ️</span>
         <div className="text-sm space-y-1">
           {type === 'pool' ? (
             <>
-              <p className="font-medium text-purple-light">Generieke uitnodiging — Talent Pool</p>
+              <p className="font-medium text-purple">Generieke uitnodiging — Talent Pool</p>
               <p className="text-gray-300">De kandidaat wordt toegevoegd aan jouw talent pool. Er hoeft nog geen assessment te worden ingevuld. Zodra je de kandidaat voordraagt voor een specifieke vacature, ontvangt deze een uitnodiging om de 35-vragen M-Score in te vullen.</p>
             </>
           ) : (
@@ -101,12 +101,12 @@ export default function KandidaatUitnodigen() {
 
       {/* Vacature selector (alleen bij vacature-specifiek) */}
       {type === 'vacature' && (
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-white">Selecteer vacature</h2>
+        <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-ink">Selecteer vacature</h2>
           <select
             value={selectedVacature}
             onChange={e => setSelectedVacature(e.target.value)}
-            className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan/50"
+            className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm focus:outline-none focus:border-cyan/50"
           >
             <option value="">Kies een vacature...</option>
             {vacatures.map(v => (
@@ -115,16 +115,16 @@ export default function KandidaatUitnodigen() {
           </select>
 
           {activeVacature && (
-            <div className="bg-navy rounded-xl border border-cyan/20 p-4 space-y-3">
+            <div className="bg-surface-muted rounded-xl border border-cyan/20 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-white font-semibold">{activeVacature.title}</h3>
+                <h3 className="text-ink font-semibold">{activeVacature.title}</h3>
                 <span className="text-xs text-cyan bg-cyan/15 px-2 py-1 rounded border border-cyan/20">Geselecteerd</span>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><span className="text-gray-500">Bedrijf:</span> <span className="text-gray-300">{activeVacature.company}</span></div>
-                <div><span className="text-gray-500">Locatie:</span> <span className="text-gray-300">{activeVacature.location}</span></div>
-                <div><span className="text-gray-500">Salaris:</span> <span className="text-gray-300">{activeVacature.salaris}</span></div>
-                <div><span className="text-gray-500">Deadline:</span> <span className="text-gray-300">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
+                <div><span className="text-ink-muted">Bedrijf:</span> <span className="text-gray-300">{activeVacature.company}</span></div>
+                <div><span className="text-ink-muted">Locatie:</span> <span className="text-gray-300">{activeVacature.location}</span></div>
+                <div><span className="text-ink-muted">Salaris:</span> <span className="text-gray-300">{activeVacature.salaris}</span></div>
+                <div><span className="text-ink-muted">Deadline:</span> <span className="text-gray-300">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
               </div>
             </div>
           )}
@@ -132,38 +132,38 @@ export default function KandidaatUitnodigen() {
       )}
 
       {/* Uitnodigingsformulier */}
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-5">
-        <h2 className="text-lg font-semibold text-white">
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-5">
+        <h2 className="text-lg font-semibold text-ink">
           {type === 'pool' ? 'Uitnodigen per e-mail of link' : 'Uitnodigen per e-mail'}
         </h2>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-gray-500 mb-1.5 block">Naam kandidaat</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">Naam kandidaat</label>
             <input
               type="text" value={naam} onChange={e => setNaam(e.target.value)}
               placeholder="Volledige naam"
-              className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50 placeholder-gray-600"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint"
             />
           </div>
           <div>
-            <label className="text-xs text-gray-500 mb-1.5 block">E-mailadres</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">E-mailadres</label>
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
               placeholder="naam@email.nl"
-              className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50 placeholder-gray-600"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint"
             />
           </div>
         </div>
 
         {type === 'vacature' && (
           <div>
-            <label className="text-xs text-gray-500 mb-1.5 block">Persoonlijke boodschap (optioneel)</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">Persoonlijke boodschap (optioneel)</label>
             <textarea
               rows={3} value={persoonlijkeBoodschap}
               onChange={e => setPersoonlijkeBoodschap(e.target.value)}
               placeholder="Hi! Ik denk dat deze vacature goed bij je past omdat..."
-              className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50 placeholder-gray-600 resize-none"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint resize-none"
             />
           </div>
         )}
@@ -175,7 +175,7 @@ export default function KandidaatUitnodigen() {
             className={`flex-1 px-5 py-3 rounded-lg font-semibold text-sm transition-all ${
               email && naam && (type === 'pool' || selectedVacature)
                 ? 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]'
-                : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                : 'bg-gray-700 text-ink-muted cursor-not-allowed'
             }`}
           >
             ✉️ Uitnodiging versturen
@@ -183,7 +183,7 @@ export default function KandidaatUitnodigen() {
           {type === 'vacature' && email && naam && activeVacature && (
             <button
               onClick={() => setEmailPreview(true)}
-              className="px-5 py-3 bg-purple/15 text-purple-light border border-purple/20 rounded-lg font-semibold text-sm hover:bg-purple/25 transition-colors"
+              className="px-5 py-3 bg-purple/15 text-purple border border-surface-border rounded-lg font-semibold text-sm hover:bg-purple/25 transition-colors"
             >
               👁 Preview e-mail
             </button>
@@ -193,47 +193,47 @@ export default function KandidaatUitnodigen() {
 
       {/* Generieke link (alleen bij pool) */}
       {type === 'pool' && (
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-white">Of deel je generieke uitnodigingslink</h2>
+        <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-ink">Of deel je generieke uitnodigingslink</h2>
           <div className="flex items-center gap-3">
-            <div className="flex-1 bg-navy border border-purple/20 rounded-lg px-4 py-3 text-cyan text-sm font-mono break-all">
+            <div className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-cyan text-sm font-mono break-all">
               {poolLink}
             </div>
             <button onClick={handleCopy} className="px-5 py-3 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors whitespace-nowrap">
               {copied ? 'Gekopieerd!' : 'Kopieer link'}
             </button>
           </div>
-          <p className="text-xs text-gray-600">Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.</p>
+          <p className="text-xs text-ink-faint">Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.</p>
         </div>
       )}
 
       {/* Recente uitnodigingen */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-white">Recente uitnodigingen</h2>
-        <div className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
+        <h2 className="text-lg font-semibold text-ink">Recente uitnodigingen</h2>
+        <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-purple/10">
-                <th className="text-left px-6 py-3 text-gray-500 font-medium">Naam</th>
-                <th className="text-left px-6 py-3 text-gray-500 font-medium">Type</th>
-                <th className="text-left px-6 py-3 text-gray-500 font-medium">Vacature</th>
-                <th className="text-left px-6 py-3 text-gray-500 font-medium">Datum</th>
-                <th className="text-left px-6 py-3 text-gray-500 font-medium">Status</th>
+              <tr className="border-b border-surface-border">
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">Naam</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">Type</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">Vacature</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">Datum</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">Status</th>
               </tr>
             </thead>
             <tbody>
               {mockUitnodigingen.map(u => (
-                <tr key={u.id} className="border-b border-purple/5 last:border-0">
-                  <td className="px-6 py-3 text-white">{u.naam}</td>
+                <tr key={u.id} className="border-b border-surface-border last:border-0">
+                  <td className="px-6 py-3 text-ink">{u.naam}</td>
                   <td className="px-6 py-3">
                     <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                      u.type === 'pool' ? 'bg-purple/15 text-purple-light' : 'bg-cyan/15 text-cyan'
+                      u.type === 'pool' ? 'bg-purple/15 text-purple' : 'bg-cyan/15 text-cyan'
                     }`}>
                       {u.type === 'pool' ? '👥 Pool' : '📋 Vacature'}
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-gray-400">{u.vacature || '—'}</td>
-                  <td className="px-6 py-3 text-gray-400">{new Date(u.datum).toLocaleDateString('nl-NL')}</td>
+                  <td className="px-6 py-3 text-ink-light">{u.vacature || '—'}</td>
+                  <td className="px-6 py-3 text-ink-light">{new Date(u.datum).toLocaleDateString('nl-NL')}</td>
                   <td className="px-6 py-3">
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${
                       u.status === 'Geaccepteerd' ? 'bg-green-500/15 text-green-400 border-green-500/30' :
@@ -257,10 +257,10 @@ export default function KandidaatUitnodigen() {
             {/* Email header */}
             <div className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple p-6">
               <img src="/logo-white.png" alt="Refurzy" className="h-6 mb-4 opacity-80" />
-              <h3 className="text-white text-xl font-bold">Er is een vacature die bij je past!</h3>
+              <h3 className="text-ink text-xl font-bold">Er is een vacature die bij je past!</h3>
             </div>
             {/* Email body */}
-            <div className="p-6 space-y-4 text-sm text-gray-700">
+            <div className="p-6 space-y-4 text-sm text-ink-faint">
               <p>Hi {naam || 'kandidaat'},</p>
               <p>
                 <strong>Sophie de Graaf</strong> denkt dat onderstaande vacature goed bij jou past
@@ -276,16 +276,16 @@ export default function KandidaatUitnodigen() {
               <div className="bg-gray-50 rounded-xl p-5 space-y-3 border">
                 <h4 className="font-bold text-gray-900 text-base">{activeVacature.title}</h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div><span className="text-gray-500">🏢 Bedrijf:</span> <span className="font-medium">{activeVacature.company}</span></div>
-                  <div><span className="text-gray-500">📍 Locatie:</span> <span className="font-medium">{activeVacature.location}</span></div>
-                  <div><span className="text-gray-500">💰 Salaris:</span> <span className="font-medium">{activeVacature.salaris}</span></div>
-                  <div><span className="text-gray-500">📅 Start:</span> <span className="font-medium">Per direct</span></div>
-                  <div><span className="text-gray-500">🏠 Werkwijze:</span> <span className="font-medium">{activeVacature.hardeCriteria.opKantoor}</span></div>
-                  <div><span className="text-gray-500">🎓 Niveau:</span> <span className="font-medium">{activeVacature.hardeCriteria.opleidingsniveau}+</span></div>
+                  <div><span className="text-ink-muted">🏢 Bedrijf:</span> <span className="font-medium">{activeVacature.company}</span></div>
+                  <div><span className="text-ink-muted">📍 Locatie:</span> <span className="font-medium">{activeVacature.location}</span></div>
+                  <div><span className="text-ink-muted">💰 Salaris:</span> <span className="font-medium">{activeVacature.salaris}</span></div>
+                  <div><span className="text-ink-muted">📅 Start:</span> <span className="font-medium">Per direct</span></div>
+                  <div><span className="text-ink-muted">🏠 Werkwijze:</span> <span className="font-medium">{activeVacature.hardeCriteria.opKantoor}</span></div>
+                  <div><span className="text-ink-muted">🎓 Niveau:</span> <span className="font-medium">{activeVacature.hardeCriteria.opleidingsniveau}+</span></div>
                 </div>
                 <div className="border-t pt-3 mt-2">
-                  <p className="text-xs text-gray-500 font-medium mb-1">Over het team:</p>
-                  <p className="text-xs text-gray-600">Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.</p>
+                  <p className="text-xs text-ink-muted font-medium mb-1">Over het team:</p>
+                  <p className="text-xs text-ink-faint">Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.</p>
                 </div>
               </div>
 
@@ -300,7 +300,7 @@ export default function KandidaatUitnodigen() {
                 </div>
               </div>
 
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-xs text-ink-light text-center">
                 Je gegevens worden anoniem gepresenteerd aan de opdrachtgever. Pas bij een match worden je contactgegevens gedeeld.
               </p>
             </div>
@@ -308,7 +308,7 @@ export default function KandidaatUitnodigen() {
             <div className="border-t px-6 py-4 flex justify-end">
               <button
                 onClick={() => setEmailPreview(false)}
-                className="px-5 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors"
+                className="px-5 py-2 bg-surface-muted text-ink rounded-lg text-sm font-semibold hover:bg-white transition-colors"
               >
                 Sluiten
               </button>

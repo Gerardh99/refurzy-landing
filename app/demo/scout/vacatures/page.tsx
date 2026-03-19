@@ -31,8 +31,8 @@ export default function ScoutVacatures() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white">Vacatures</h1>
-        <p className="text-gray-400 mt-1">Bekijk openstaande vacatures en bewaar je favorieten</p>
+        <h1 className="text-2xl font-bold text-ink">Vacatures</h1>
+        <p className="text-ink-light mt-1">Bekijk openstaande vacatures en bewaar je favorieten</p>
       </div>
 
       <div className="flex gap-4">
@@ -41,14 +41,14 @@ export default function ScoutVacatures() {
           placeholder="Zoek op titel..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-cyan/50"
+          className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50"
         />
         <input
           type="text"
           placeholder="Filter op locatie..."
           value={locationFilter}
           onChange={(e) => setLocationFilter(e.target.value)}
-          className="w-48 bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-cyan/50"
+          className="w-48 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50"
         />
       </div>
 
@@ -75,7 +75,7 @@ export default function ScoutVacatures() {
           ))}
         </div>
         {overige.length === 0 && favorieten.length === 0 && (
-          <p className="text-gray-500 text-sm">Geen vacatures gevonden.</p>
+          <p className="text-ink-muted text-sm">Geen vacatures gevonden.</p>
         )}
       </div>
     </div>
@@ -84,24 +84,24 @@ export default function ScoutVacatures() {
 
 function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle: () => void }) {
   return (
-    <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex items-start justify-between gap-4">
+    <div className="bg-white rounded-2xl border border-surface-border p-6 flex items-start justify-between gap-4">
       <div className="flex-1 space-y-2">
         <div className="flex items-center gap-3">
-          <h3 className="text-white font-semibold">{v.title}</h3>
-          <span className="text-xs text-purple-light bg-purple/10 px-2 py-0.5 rounded-full">{v.company}</span>
+          <h3 className="text-ink font-semibold">{v.title}</h3>
+          <span className="text-xs text-purple bg-purple/10 px-2 py-0.5 rounded-full">{v.company}</span>
         </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-400">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink-light">
           <span>{v.location}</span>
           <span>{v.salaris}</span>
           <span>Deadline: {new Date(v.deadline).toLocaleDateString('nl-NL')}</span>
         </div>
-        <div className="text-xs text-gray-500 mt-1">
+        <div className="text-xs text-ink-muted mt-1">
           Harde criteria: {v.hardeCriteria.opleidingsniveau} &middot; {v.hardeCriteria.minimaleErvaring} &middot; {v.hardeCriteria.opKantoor}
         </div>
       </div>
       <button
         onClick={onToggle}
-        className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-gray-600 hover:text-cyan/60'}`}
+        className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-ink-faint hover:text-cyan/60'}`}
         aria-label={isFav ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'}
       >
         {isFav ? '★' : '☆'}

@@ -38,7 +38,7 @@ export default function KandidaatDetailPage() {
   if (!kandidaat || !foundVacature) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-gray-400">Kandidaat niet gevonden</div>
+        <div className="text-ink-light">Kandidaat niet gevonden</div>
       </div>
     )
   }
@@ -70,7 +70,7 @@ export default function KandidaatDetailPage() {
       {/* Navigation */}
       <Link
         href={`/demo/opdrachtgever/vacature/${foundVacature.id}`}
-        className="text-gray-400 hover:text-cyan text-sm mb-6 inline-flex items-center gap-1 transition-colors"
+        className="text-ink-light hover:text-cyan text-sm mb-6 inline-flex items-center gap-1 transition-colors"
       >
         ← Terug naar {foundVacature.title}
       </Link>
@@ -78,15 +78,15 @@ export default function KandidaatDetailPage() {
       {/* Locked overlay */}
       {isLocked ? (
         <div className="mt-4">
-          <div className="bg-navy-light rounded-2xl border border-purple/10 p-12 text-center max-w-lg mx-auto">
+          <div className="bg-white rounded-2xl border border-surface-border p-12 text-center max-w-lg mx-auto">
             <div className="text-6xl mb-4 opacity-50">🔒</div>
-            <h2 className="text-xl font-bold text-white mb-2">Profiel vergrendeld</h2>
-            <p className="text-gray-400 mb-6">
+            <h2 className="text-xl font-bold text-ink mb-2">Profiel vergrendeld</h2>
+            <p className="text-ink-light mb-6">
               Teken het contract om het volledige profiel en de contactgegevens van deze kandidaat te bekijken.
             </p>
 
             {/* Blurred preview */}
-            <div className="bg-navy rounded-xl border border-purple/10 p-6 mb-6 relative overflow-hidden">
+            <div className="bg-surface-muted rounded-xl border border-surface-border p-6 mb-6 relative overflow-hidden">
               <div className="blur-md select-none pointer-events-none">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full bg-purple/20" />
@@ -103,7 +103,7 @@ export default function KandidaatDetailPage() {
                 </div>
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-purple-light text-sm font-semibold bg-navy/80 px-4 py-2 rounded-lg border border-purple/20">
+                <span className="text-purple text-sm font-semibold bg-surface-muted/80 px-4 py-2 rounded-lg border border-surface-border">
                   Kandidaat {kandidaat.initialen}
                 </span>
               </div>
@@ -111,14 +111,14 @@ export default function KandidaatDetailPage() {
 
             {/* Visible scores */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="bg-navy rounded-xl border border-purple/10 p-4">
-                <div className="text-xs text-gray-500 mb-2">M-Score</div>
+              <div className="bg-surface-muted rounded-xl border border-surface-border p-4">
+                <div className="text-xs text-ink-muted mb-2">M-Score</div>
                 <div className="flex justify-center">
                   <FitScore score={kandidaat.deVriesFit} size="md" />
                 </div>
               </div>
-              <div className="bg-navy rounded-xl border border-purple/10 p-4">
-                <div className="text-xs text-gray-500 mb-2">Harde Criteria</div>
+              <div className="bg-surface-muted rounded-xl border border-surface-border p-4">
+                <div className="text-xs text-ink-muted mb-2">Harde Criteria</div>
                 <div className="flex items-center justify-center gap-1 mt-2">
                   {kandidaat.hardeCriteriaIcon === 'check' ? (
                     <span className="text-green-400">&#10003;</span>
@@ -130,8 +130,8 @@ export default function KandidaatDetailPage() {
                   </span>
                 </div>
               </div>
-              <div className="bg-navy rounded-xl border border-purple/10 p-4">
-                <div className="text-xs text-gray-500 mb-2">Scout Rating</div>
+              <div className="bg-surface-muted rounded-xl border border-surface-border p-4">
+                <div className="text-xs text-ink-muted mb-2">Scout Rating</div>
                 <div className="mt-2">
                   <StarRating rating={kandidaat.scoutRating} />
                 </div>
@@ -150,14 +150,14 @@ export default function KandidaatDetailPage() {
         /* Unlocked profile */
         <div className="mt-4 space-y-6">
           {/* Profile header */}
-          <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
+          <div className="bg-white rounded-2xl border border-surface-border p-6">
             <div className="flex items-start gap-6">
-              <div className="w-20 h-20 rounded-full bg-purple/20 border-2 border-purple/30 flex items-center justify-center text-purple-light text-2xl font-bold flex-shrink-0">
+              <div className="w-20 h-20 rounded-full bg-purple/20 border-2 border-purple/30 flex items-center justify-center text-purple text-2xl font-bold flex-shrink-0">
                 {kandidaat.initialen}
               </div>
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-white">{kandidaat.naam}</h1>
-                <p className="text-gray-400 mt-1">
+                <h1 className="text-2xl font-bold text-ink">{kandidaat.naam}</h1>
+                <p className="text-ink-light mt-1">
                   {kandidaat.opleidingsniveau} &middot; {kandidaat.werkervaring} ervaring &middot; {kandidaat.woonplaats}
                 </p>
                 <div className="flex items-center gap-4 mt-3">
@@ -168,47 +168,47 @@ export default function KandidaatDetailPage() {
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="text-xs text-gray-500 mb-1">Vacature</div>
-                <div className="text-sm text-purple-light font-medium">{foundVacature.title}</div>
-                <div className="text-xs text-gray-500">{foundVacature.company}</div>
+                <div className="text-xs text-ink-muted mb-1">Vacature</div>
+                <div className="text-sm text-purple font-medium">{foundVacature.title}</div>
+                <div className="text-xs text-ink-muted">{foundVacature.company}</div>
               </div>
             </div>
           </div>
 
           {/* Contact & details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-              <h2 className="text-white font-semibold mb-4">Contactgegevens</h2>
+            <div className="bg-white rounded-2xl border border-surface-border p-6">
+              <h2 className="text-ink font-semibold mb-4">Contactgegevens</h2>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Email</span>
-                  <span className="text-white text-sm">{kandidaat.email || '—'}</span>
+                  <span className="text-ink-muted text-sm">Email</span>
+                  <span className="text-ink text-sm">{kandidaat.email || '—'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Telefoon</span>
-                  <span className="text-white text-sm">{kandidaat.telefoon || '—'}</span>
+                  <span className="text-ink-muted text-sm">Telefoon</span>
+                  <span className="text-ink text-sm">{kandidaat.telefoon || '—'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Woonplaats</span>
-                  <span className="text-white text-sm">{kandidaat.woonplaats}</span>
+                  <span className="text-ink-muted text-sm">Woonplaats</span>
+                  <span className="text-ink text-sm">{kandidaat.woonplaats}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-              <h2 className="text-white font-semibold mb-4">Profiel</h2>
+            <div className="bg-white rounded-2xl border border-surface-border p-6">
+              <h2 className="text-ink font-semibold mb-4">Profiel</h2>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Opleidingsniveau</span>
-                  <span className="text-white text-sm">{kandidaat.opleidingsniveau}</span>
+                  <span className="text-ink-muted text-sm">Opleidingsniveau</span>
+                  <span className="text-ink text-sm">{kandidaat.opleidingsniveau}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Werkervaring</span>
-                  <span className="text-white text-sm">{kandidaat.werkervaring}</span>
+                  <span className="text-ink-muted text-sm">Werkervaring</span>
+                  <span className="text-ink text-sm">{kandidaat.werkervaring}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500 text-sm">Scout</span>
-                  <span className="text-purple-light text-sm">{kandidaat.scoutNaam}</span>
+                  <span className="text-ink-muted text-sm">Scout</span>
+                  <span className="text-purple text-sm">{kandidaat.scoutNaam}</span>
                 </div>
               </div>
             </div>
@@ -216,12 +216,12 @@ export default function KandidaatDetailPage() {
 
           {/* Scores */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex flex-col items-center">
-              <div className="text-sm text-gray-400 mb-3">M-Score</div>
+            <div className="bg-white rounded-2xl border border-surface-border p-6 flex flex-col items-center">
+              <div className="text-sm text-ink-light mb-3">M-Score</div>
               <FitScore score={kandidaat.deVriesFit} size="lg" />
             </div>
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex flex-col items-center">
-              <div className="text-sm text-gray-400 mb-3">Harde Criteria</div>
+            <div className="bg-white rounded-2xl border border-surface-border p-6 flex flex-col items-center">
+              <div className="text-sm text-ink-light mb-3">Harde Criteria</div>
               <div className="flex items-center gap-2 mt-2">
                 {kandidaat.hardeCriteriaIcon === 'check' ? (
                   <span className="text-green-400 text-2xl">&#10003;</span>
@@ -233,8 +233,8 @@ export default function KandidaatDetailPage() {
                 </span>
               </div>
             </div>
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex flex-col items-center">
-              <div className="text-sm text-gray-400 mb-3">Scout Rating</div>
+            <div className="bg-white rounded-2xl border border-surface-border p-6 flex flex-col items-center">
+              <div className="text-sm text-ink-light mb-3">Scout Rating</div>
               <div className="mt-2">
                 <StarRating rating={kandidaat.scoutRating} />
               </div>
@@ -242,8 +242,8 @@ export default function KandidaatDetailPage() {
           </div>
 
           {/* Proces Timeline */}
-          <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-            <h2 className="text-white font-semibold mb-6">Proces Status</h2>
+          <div className="bg-white rounded-2xl border border-surface-border p-6">
+            <h2 className="text-ink font-semibold mb-6">Proces Status</h2>
 
             {isAfgewezen ? (
               <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
@@ -264,14 +264,14 @@ export default function KandidaatDetailPage() {
                               ? 'bg-cyan text-navy-dark border-cyan'
                               : isCompleted
                               ? 'bg-cyan/20 text-cyan border-cyan/40'
-                              : 'bg-navy border-purple/20 text-gray-600'
+                              : 'bg-surface-muted border-surface-border text-ink-faint'
                           }`}
                         >
                           {isCompleted && !isCurrent ? '✓' : i + 1}
                         </div>
                         <div
                           className={`text-xs mt-2 text-center ${
-                            isCurrent ? 'text-cyan font-semibold' : isCompleted ? 'text-cyan/60' : 'text-gray-600'
+                            isCurrent ? 'text-cyan font-semibold' : isCompleted ? 'text-cyan/60' : 'text-ink-faint'
                           }`}
                         >
                           {stap.label}
@@ -292,8 +292,8 @@ export default function KandidaatDetailPage() {
 
             {/* Status actions */}
             {!isAfgewezen && (
-              <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-purple/10">
-                <span className="text-sm text-gray-500 mr-2 self-center">Wijzig status:</span>
+              <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-surface-border">
+                <span className="text-sm text-ink-muted mr-2 self-center">Wijzig status:</span>
                 {procesStappen.map((stap) => (
                   <button
                     key={stap.key}
@@ -301,7 +301,7 @@ export default function KandidaatDetailPage() {
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                       kandidaat.procesStatus === stap.key
                         ? 'bg-cyan/20 text-cyan border border-cyan/30'
-                        : 'bg-navy border border-purple/10 text-gray-400 hover:text-white hover:border-purple/30'
+                        : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink hover:border-purple/30'
                     }`}
                   >
                     {stap.label}

@@ -28,32 +28,32 @@ export default function LandenPage() {
       )}
 
       <div className="mb-8">
-        <Link href="/demo/admin" className="text-gray-400 hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
+        <Link href="/demo/admin" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
           ← Terug naar admin
         </Link>
-        <h1 className="text-2xl font-bold text-white mt-3">Landen configuratie</h1>
-        <p className="text-gray-400 mt-1">Beheer de internationale uitrol van Refurzy</p>
+        <h1 className="text-2xl font-bold text-ink mt-3">Landen configuratie</h1>
+        <p className="text-ink-light mt-1">Beheer de internationale uitrol van Refurzy</p>
       </div>
 
       {/* Samenvatting */}
       <div className="grid grid-cols-3 gap-6 mb-6">
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
+        <div className="bg-white rounded-2xl border border-surface-border p-6 text-center">
           <div className="text-3xl font-bold text-cyan">{countries.filter(c => c.active).length}</div>
-          <div className="text-xs text-gray-500 mt-1">Actieve landen</div>
+          <div className="text-xs text-ink-muted mt-1">Actieve landen</div>
         </div>
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-          <div className="text-3xl font-bold text-purple-light">{countries.length}</div>
-          <div className="text-xs text-gray-500 mt-1">Geconfigureerd</div>
+        <div className="bg-white rounded-2xl border border-surface-border p-6 text-center">
+          <div className="text-3xl font-bold text-purple">{countries.length}</div>
+          <div className="text-xs text-ink-muted mt-1">Geconfigureerd</div>
         </div>
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-          <div className="text-3xl font-bold text-white">{new Set(countries.map(c => c.currency)).size}</div>
-          <div className="text-xs text-gray-500 mt-1">Valuta&apos;s</div>
+        <div className="bg-white rounded-2xl border border-surface-border p-6 text-center">
+          <div className="text-3xl font-bold text-ink">{new Set(countries.map(c => c.currency)).size}</div>
+          <div className="text-xs text-ink-muted mt-1">Valuta&apos;s</div>
         </div>
       </div>
 
       {/* Landen tabel */}
-      <div className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
-        <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
+      <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
+        <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
           <div>Land</div>
           <div className="text-center">Taal</div>
           <div className="text-center">Valuta</div>
@@ -67,12 +67,12 @@ export default function LandenPage() {
           const minPrice = country.pricing.experiencePoints['0-2'] * country.pricing.educationPoints['MBO'] * country.pricing.valuePerPoint
           const maxPrice = country.pricing.experiencePoints['10+'] * country.pricing.educationPoints10yr['WO'] * country.pricing.valuePerPoint
           return (
-            <div key={country.code} className={`grid grid-cols-1 md:grid-cols-[2.5fr_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors ${!country.active ? 'opacity-50' : ''}`}>
+            <div key={country.code} className={`grid grid-cols-1 md:grid-cols-[2.5fr_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors ${!country.active ? 'opacity-50' : ''}`}>
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{FLAGS[country.code] || '🏳️'}</span>
                 <div>
-                  <div className="text-white font-medium text-sm">{country.localName}</div>
-                  <div className="text-xs text-gray-500">{country.name}</div>
+                  <div className="text-ink font-medium text-sm">{country.localName}</div>
+                  <div className="text-xs text-ink-muted">{country.name}</div>
                 </div>
               </div>
               <div className="text-center text-sm text-gray-300">{country.language.toUpperCase()}</div>
@@ -80,7 +80,7 @@ export default function LandenPage() {
               <div className="text-center text-sm text-cyan font-bold">
                 {formatPrice(country.pricing.valuePerPoint, country.pricing)}
               </div>
-              <div className="text-center text-xs text-gray-400">
+              <div className="text-center text-xs text-ink-light">
                 {formatPrice(minPrice, country.pricing)} – {formatPrice(maxPrice, country.pricing)}
               </div>
               <div className="flex justify-center">
@@ -89,7 +89,7 @@ export default function LandenPage() {
                   className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${
                     country.active
                       ? 'bg-green-500/15 text-green-400 border-green-500/20 hover:bg-green-500/25'
-                      : 'bg-gray-500/15 text-gray-500 border-gray-500/20 hover:bg-gray-500/25'
+                      : 'bg-gray-500/15 text-ink-muted border-gray-500/20 hover:bg-gray-500/25'
                   }`}
                 >
                   {country.active ? 'Actief' : 'Inactief'}
@@ -98,7 +98,7 @@ export default function LandenPage() {
               <div className="flex justify-end">
                 <Link
                   href={`/demo/admin/pricing?country=${country.code}`}
-                  className="text-xs text-purple-light hover:bg-purple/10 px-3 py-1.5 rounded-lg transition-colors border border-purple/20"
+                  className="text-xs text-purple hover:bg-purple/10 px-3 py-1.5 rounded-lg transition-colors border border-surface-border"
                 >
                   Pricing →
                 </Link>

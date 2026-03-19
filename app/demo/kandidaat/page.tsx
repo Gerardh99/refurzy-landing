@@ -42,8 +42,8 @@ export default function KandidaatDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white">Mijn Vacatures</h1>
-        <p className="text-gray-400 mt-1">Overzicht van vacatures waarvoor je bent voorgedragen</p>
+        <h1 className="text-2xl font-bold text-ink">Mijn Vacatures</h1>
+        <p className="text-ink-light mt-1">Overzicht van vacatures waarvoor je bent voorgedragen</p>
       </div>
 
       {/* Scan alert */}
@@ -59,7 +59,7 @@ export default function KandidaatDashboard() {
         </div>
       )}
 
-      <div className="bg-navy-light rounded-2xl border border-cyan/20 p-5 flex items-start gap-3">
+      <div className="bg-white rounded-2xl border border-cyan/20 p-5 flex items-start gap-3">
         <span className="text-cyan text-lg mt-0.5">ℹ️</span>
         <div className="text-sm text-gray-300 space-y-1">
           <p className="font-medium text-cyan">Hoe werkt Refurzy voor jou?</p>
@@ -71,15 +71,15 @@ export default function KandidaatDashboard() {
       {/* Voordrachten */}
       <div className="space-y-3">
         {mockVoordrachten.map(v => (
-          <div key={v.id} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
+          <div key={v.id} className="bg-white rounded-2xl border border-surface-border p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-white font-semibold">{v.vacatureTitle}</h3>
-                <p className="text-purple-light text-sm">{v.company}</p>
+                <h3 className="text-ink font-semibold">{v.vacatureTitle}</h3>
+                <p className="text-purple text-sm">{v.company}</p>
               </div>
               <div className="text-right">
-                <span className="text-gray-500 text-xs">Via {v.scoutNaam}</span>
-                <div className="text-gray-600 text-xs mt-0.5">{new Date(v.datum).toLocaleDateString('nl-NL')}</div>
+                <span className="text-ink-muted text-xs">Via {v.scoutNaam}</span>
+                <div className="text-ink-faint text-xs mt-0.5">{new Date(v.datum).toLocaleDateString('nl-NL')}</div>
               </div>
             </div>
 
@@ -96,7 +96,7 @@ export default function KandidaatDashboard() {
                       {v.mScore}%
                     </div>
                     <div>
-                      <div className="text-xs text-gray-500">M-Score</div>
+                      <div className="text-xs text-ink-muted">M-Score</div>
                       <div className="text-xs text-green-400">✓ Assessment afgerond</div>
                     </div>
                   </div>
@@ -106,7 +106,7 @@ export default function KandidaatDashboard() {
                       ?
                     </div>
                     <div>
-                      <div className="text-xs text-gray-500">M-Score</div>
+                      <div className="text-xs text-ink-muted">M-Score</div>
                       <div className="text-xs text-orange">⚠ Assessment nog invullen</div>
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export default function KandidaatDashboard() {
               ) : (
                 <Link
                   href={`/demo/kandidaat/scan?vacature=${v.id}`}
-                  className="bg-purple/15 text-purple-light px-5 py-2.5 rounded-[10px] text-sm font-semibold border border-purple/20 hover:bg-purple/25 transition-colors"
+                  className="bg-purple/15 text-purple px-5 py-2.5 rounded-[10px] text-sm font-semibold border border-surface-border hover:bg-purple/25 transition-colors"
                 >
                   Bekijk resultaat
                 </Link>
@@ -138,8 +138,8 @@ export default function KandidaatDashboard() {
       </div>
 
       {mockVoordrachten.length === 0 && (
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 text-center">
-          <p className="text-gray-400">Je bent nog niet voorgedragen voor vacatures. Je Talent Scout draagt je voor bij passende vacatures.</p>
+        <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
+          <p className="text-ink-light">Je bent nog niet voorgedragen voor vacatures. Je Talent Scout draagt je voor bij passende vacatures.</p>
         </div>
       )}
     </div>

@@ -20,12 +20,12 @@ export default function KandidaatProfiel() {
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Mijn Profiel</h1>
-        <p className="text-gray-400 mt-1">Beheer je persoonlijke en professionele gegevens</p>
+        <h1 className="text-2xl font-bold text-ink">Mijn Profiel</h1>
+        <p className="text-ink-light mt-1">Beheer je persoonlijke en professionele gegevens</p>
       </div>
 
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-6">
-        <h2 className="text-lg font-semibold text-white">Persoonlijke gegevens</h2>
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-ink">Persoonlijke gegevens</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Naam" value={form.naam} onChange={(v) => handleChange('naam', v)} />
           <Field label="Email" value={form.email} onChange={(v) => handleChange('email', v)} type="email" />
@@ -34,15 +34,15 @@ export default function KandidaatProfiel() {
         </div>
       </div>
 
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-6">
-        <h2 className="text-lg font-semibold text-white">Professionele gegevens</h2>
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-ink">Professionele gegevens</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-gray-500 mb-1.5">Opleidingsniveau</label>
+            <label className="block text-sm text-ink-muted mb-1.5">Opleidingsniveau</label>
             <select
               value={form.opleidingsniveau}
               onChange={(e) => handleChange('opleidingsniveau', e.target.value)}
-              className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50"
             >
               <option value="MBO">MBO</option>
               <option value="HBO">HBO</option>
@@ -56,19 +56,19 @@ export default function KandidaatProfiel() {
         </div>
       </div>
 
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 space-y-4">
-        <h2 className="text-lg font-semibold text-white">CV</h2>
-        <div className="border-2 border-dashed border-purple/20 rounded-xl p-8 text-center">
-          <div className="text-gray-500 space-y-2">
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
+        <h2 className="text-lg font-semibold text-ink">CV</h2>
+        <div className="border-2 border-dashed border-surface-border rounded-xl p-8 text-center">
+          <div className="text-ink-muted space-y-2">
             <p className="text-3xl">&#128196;</p>
             <p className="text-sm">Sleep je CV hierheen of klik om te uploaden</p>
-            <p className="text-xs text-gray-600">PDF, DOC of DOCX (max. 5MB)</p>
+            <p className="text-xs text-ink-faint">PDF, DOC of DOCX (max. 5MB)</p>
           </div>
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-green-400">&#10003;</span>
           <span className="text-gray-300">CV_Anna_de_Jong_2026.pdf</span>
-          <span className="text-gray-600">geupload op 5 maart 2026</span>
+          <span className="text-ink-faint">geupload op 5 maart 2026</span>
         </div>
       </div>
 
@@ -82,12 +82,12 @@ export default function KandidaatProfiel() {
 function Field({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
   return (
     <div>
-      <label className="block text-sm text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-sm text-ink-muted mb-1.5">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50"
+        className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50"
       />
     </div>
   )

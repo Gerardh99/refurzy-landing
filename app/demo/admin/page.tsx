@@ -17,54 +17,54 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Refurzy Admin</h1>
-        <p className="text-gray-400 mt-1">Platform beheer en configuratie</p>
+        <h1 className="text-2xl font-bold text-ink">Refurzy Admin</h1>
+        <p className="text-ink-light mt-1">Platform beheer en configuratie</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {stats.map(stat => (
-          <div key={stat.label} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
+          <div key={stat.label} className="bg-white rounded-2xl border border-surface-border p-6">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl">{stat.icon}</span>
-              <span className="text-gray-400 text-sm">{stat.label}</span>
+              <span className="text-ink-light text-sm">{stat.label}</span>
             </div>
-            <div className="text-3xl font-bold text-white">{stat.value}</div>
-            <div className="text-xs text-gray-600 mt-1">{stat.sub}</div>
+            <div className="text-3xl font-bold text-ink">{stat.value}</div>
+            <div className="text-xs text-ink-faint mt-1">{stat.sub}</div>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Link href="/demo/admin/pricing" className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-purple/25 transition-colors group">
+        <Link href="/demo/admin/pricing" className="bg-white rounded-2xl border border-surface-border p-6 hover:border-purple/25 transition-colors group">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">💰</span>
-            <h2 className="text-lg font-semibold text-white group-hover:text-cyan transition-colors">Pricing beheer</h2>
+            <h2 className="text-lg font-semibold text-ink group-hover:text-cyan transition-colors">Pricing beheer</h2>
           </div>
-          <p className="text-gray-400 text-sm">Pas puntwaarden, ervarings- en opleidingsmultipliers aan per land. No Cure No Pay model.</p>
+          <p className="text-ink-light text-sm">Pas puntwaarden, ervarings- en opleidingsmultipliers aan per land. No Cure No Pay model.</p>
         </Link>
 
-        <Link href="/demo/admin/landen" className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-purple/25 transition-colors group">
+        <Link href="/demo/admin/landen" className="bg-white rounded-2xl border border-surface-border p-6 hover:border-purple/25 transition-colors group">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">🌍</span>
-            <h2 className="text-lg font-semibold text-white group-hover:text-cyan transition-colors">Landen configuratie</h2>
+            <h2 className="text-lg font-semibold text-ink group-hover:text-cyan transition-colors">Landen configuratie</h2>
           </div>
-          <p className="text-gray-400 text-sm">Beheer actieve landen, talen en valuta-instellingen voor de internationale uitrol.</p>
+          <p className="text-ink-light text-sm">Beheer actieve landen, talen en valuta-instellingen voor de internationale uitrol.</p>
         </Link>
 
-        <Link href="/demo/admin/gebruikers" className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-purple/25 transition-colors group">
+        <Link href="/demo/admin/gebruikers" className="bg-white rounded-2xl border border-surface-border p-6 hover:border-purple/25 transition-colors group">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">👥</span>
-            <h2 className="text-lg font-semibold text-white group-hover:text-cyan transition-colors">Gebruikers overzicht</h2>
+            <h2 className="text-lg font-semibold text-ink group-hover:text-cyan transition-colors">Gebruikers overzicht</h2>
           </div>
-          <p className="text-gray-400 text-sm">Overzicht van alle opdrachtgevers, scouts en kandidaten op het platform.</p>
+          <p className="text-ink-light text-sm">Overzicht van alle opdrachtgevers, scouts en kandidaten op het platform.</p>
         </Link>
 
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 opacity-50">
+        <div className="bg-white rounded-2xl border border-surface-border p-6 opacity-50">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-2xl">📈</span>
-            <h2 className="text-lg font-semibold text-white">Analytics</h2>
+            <h2 className="text-lg font-semibold text-ink">Analytics</h2>
           </div>
-          <p className="text-gray-400 text-sm">Platform statistieken en rapportages. <span className="text-purple-light">(Binnenkort)</span></p>
+          <p className="text-ink-light text-sm">Platform statistieken en rapportages. <span className="text-purple">(Binnenkort)</span></p>
         </div>
       </div>
     </div>

@@ -60,24 +60,24 @@ export default function PricingAdminPage() {
       )}
 
       <div className="mb-8">
-        <Link href="/demo/admin" className="text-gray-400 hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
+        <Link href="/demo/admin" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
           ← Terug naar admin
         </Link>
-        <h1 className="text-2xl font-bold text-white mt-3">Pricing beheer</h1>
-        <p className="text-gray-400 mt-1">No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt</p>
+        <h1 className="text-2xl font-bold text-ink mt-3">Pricing beheer</h1>
+        <p className="text-ink-light mt-1">No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt</p>
       </div>
 
       {/* Land selector */}
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 mb-6">
+      <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-2xl">🌍</span>
             <div>
-              <label className="text-xs text-gray-500 block mb-1">Land selecteren</label>
+              <label className="text-xs text-ink-muted block mb-1">Land selecteren</label>
               <select
                 value={selectedCountry.code}
                 onChange={e => handleCountryChange(e.target.value)}
-                className="bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-cyan/50 min-w-[250px]"
+                className="bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 min-w-[250px]"
               >
                 {COUNTRIES.map(c => (
                   <option key={c.code} value={c.code}>
@@ -91,42 +91,42 @@ export default function PricingAdminPage() {
             <span className={`px-3 py-1 rounded-lg text-xs font-bold border ${
               selectedCountry.active
                 ? 'bg-green-500/15 text-green-400 border-green-500/20'
-                : 'bg-gray-500/15 text-gray-400 border-gray-500/20'
+                : 'bg-gray-500/15 text-ink-light border-gray-500/20'
             }`}>
               {selectedCountry.active ? 'ACTIEF' : 'INACTIEF'}
             </span>
-            <span className="text-sm text-gray-500">Taal: {selectedCountry.language} | Valuta: {selectedCountry.currency}</span>
+            <span className="text-sm text-ink-muted">Taal: {selectedCountry.language} | Valuta: {selectedCountry.currency}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Waarde per punt */}
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-          <h2 className="text-white font-semibold mb-4">Waarde per punt</h2>
+        <div className="bg-white rounded-2xl border border-surface-border p-6">
+          <h2 className="text-ink font-semibold mb-4">Waarde per punt</h2>
           <div className="flex items-end gap-4">
             <div className="flex-1">
-              <label className="text-xs text-gray-500 mb-1.5 block">Bedrag ({pricing.currency})</label>
+              <label className="text-xs text-ink-muted mb-1.5 block">Bedrag ({pricing.currency})</label>
               <input
                 type="number"
                 value={pricing.valuePerPoint}
                 onChange={e => updateValuePerPoint(Number(e.target.value))}
-                className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-2.5 text-white text-lg font-bold focus:outline-none focus:border-cyan/50"
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-lg font-bold focus:outline-none focus:border-cyan/50"
               />
             </div>
-            <div className="text-xs text-gray-500 pb-3">
+            <div className="text-xs text-ink-muted pb-3">
               50% Scout / 50% Refurzy
             </div>
           </div>
         </div>
 
         {/* Formule uitleg */}
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-          <h2 className="text-white font-semibold mb-4">Formule</h2>
-          <div className="bg-navy rounded-xl border border-purple/10 p-4 font-mono text-sm">
+        <div className="bg-white rounded-2xl border border-surface-border p-6">
+          <h2 className="text-ink font-semibold mb-4">Formule</h2>
+          <div className="bg-surface-muted rounded-xl border border-surface-border p-4 font-mono text-sm">
             <div className="text-cyan mb-2">prijs = werkervaring × opleiding × waarde_per_punt</div>
-            <div className="text-gray-500 text-xs mt-3">Voorbeeld: HBO + 5-10 jaar ({selectedCountry.localName})</div>
-            <div className="text-white">
+            <div className="text-ink-muted text-xs mt-3">Voorbeeld: HBO + 5-10 jaar ({selectedCountry.localName})</div>
+            <div className="text-ink">
               {pricing.experiencePoints['5-10']} × {pricing.educationPoints['HBO']} × {formatPrice(pricing.valuePerPoint, pricing)} = <span className="text-cyan font-bold">{formatPrice(calculatePrice('5-10', 'HBO', pricing), pricing)}</span>
             </div>
           </div>
@@ -135,8 +135,8 @@ export default function PricingAdminPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Werkervaring punten */}
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-          <h2 className="text-white font-semibold mb-4">Werkervaring — punten</h2>
+        <div className="bg-white rounded-2xl border border-surface-border p-6">
+          <h2 className="text-ink font-semibold mb-4">Werkervaring — punten</h2>
           <div className="space-y-3">
             {experiences.map(exp => (
               <div key={exp} className="flex items-center justify-between">
@@ -146,7 +146,7 @@ export default function PricingAdminPage() {
                   step="0.5"
                   value={pricing.experiencePoints[exp]}
                   onChange={e => updateExpPoints(exp, Number(e.target.value))}
-                  className="w-24 bg-navy border border-purple/20 rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-cyan/50"
+                  className="w-24 bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm text-center focus:outline-none focus:border-cyan/50"
                 />
               </div>
             ))}
@@ -154,39 +154,39 @@ export default function PricingAdminPage() {
         </div>
 
         {/* Opleiding punten */}
-        <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
-          <h2 className="text-white font-semibold mb-4">Opleiding — punten</h2>
+        <div className="bg-white rounded-2xl border border-surface-border p-6">
+          <h2 className="text-ink font-semibold mb-4">Opleiding — punten</h2>
           <div className="space-y-3">
             {educations.map(edu => (
               <div key={edu} className="flex items-center justify-between gap-4">
                 <span className="text-sm text-gray-300 w-16">{EDUCATION_LABELS[edu]}</span>
                 <div className="flex items-center gap-2">
                   <div>
-                    <label className="text-[10px] text-gray-600 block text-center">Normaal</label>
+                    <label className="text-[10px] text-ink-faint block text-center">Normaal</label>
                     <input
                       type="number"
                       step="0.5"
                       value={pricing.educationPoints[edu]}
                       onChange={e => updateEduPoints(edu, Number(e.target.value))}
-                      className="w-20 bg-navy border border-purple/20 rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-cyan/50"
+                      className="w-20 bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm text-center focus:outline-none focus:border-cyan/50"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] text-gray-600 block text-center">&gt;10 jaar</label>
+                    <label className="text-[10px] text-ink-faint block text-center">&gt;10 jaar</label>
                     <input
                       type="number"
                       step="0.5"
                       value={pricing.educationPoints10yr[edu]}
                       onChange={e => updateEdu10yrPoints(edu, Number(e.target.value))}
-                      className="w-20 bg-navy border border-purple/20 rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-cyan/50"
+                      className="w-20 bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm text-center focus:outline-none focus:border-cyan/50"
                     />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="mt-4 bg-purple/10 rounded-lg p-3 border border-purple/20">
-            <p className="text-xs text-purple-light">
+          <div className="mt-4 bg-purple/10 rounded-lg p-3 border border-surface-border">
+            <p className="text-xs text-purple">
               Bij &gt;10 jaar ervaring worden HBO en WO gelijk (multiplier 2,5) omdat het opleidingsniveau minder relevant is.
             </p>
           </div>
@@ -194,32 +194,32 @@ export default function PricingAdminPage() {
       </div>
 
       {/* Live prijstabel */}
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 mb-6">
+      <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white font-semibold">Live prijstabel — {selectedCountry.localName}</h2>
-          <span className="text-xs text-gray-500">Prijzen in {pricing.currency} (ex. BTW)</span>
+          <h2 className="text-ink font-semibold">Live prijstabel — {selectedCountry.localName}</h2>
+          <span className="text-xs text-ink-muted">Prijzen in {pricing.currency} (ex. BTW)</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-purple/10">
-                <th className="text-left py-3 px-4 text-xs text-gray-500 uppercase">Werkervaring</th>
+              <tr className="border-b border-surface-border">
+                <th className="text-left py-3 px-4 text-xs text-ink-muted uppercase">Werkervaring</th>
                 {educations.map(edu => (
-                  <th key={edu} className="text-center py-3 px-4 text-xs text-gray-500 uppercase">{edu}</th>
+                  <th key={edu} className="text-center py-3 px-4 text-xs text-ink-muted uppercase">{edu}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {experiences.map(exp => (
-                <tr key={exp} className="border-b border-purple/5 hover:bg-purple/5 transition-colors">
+                <tr key={exp} className="border-b border-surface-border hover:bg-surface-muted transition-colors">
                   <td className="py-3 px-4 text-sm text-gray-300 font-medium">{EXPERIENCE_LABELS[exp]}</td>
                   {educations.map(edu => {
                     const price = calculatePrice(exp, edu, pricing)
                     const isEqual = exp === '10+' && (edu === 'HBO' || edu === 'WO')
                     return (
                       <td key={edu} className="text-center py-3 px-4">
-                        <span className={`text-sm font-bold ${isEqual ? 'text-cyan' : 'text-white'}`}>
+                        <span className={`text-sm font-bold ${isEqual ? 'text-cyan' : 'text-ink'}`}>
                           {formatPrice(price, pricing)}
                         </span>
                         {isEqual && <span className="text-[10px] text-cyan/60 block">gelijk</span>}
@@ -234,19 +234,19 @@ export default function PricingAdminPage() {
       </div>
 
       {/* Verdeling */}
-      <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 mb-6">
-        <h2 className="text-white font-semibold mb-4">Verdeling per plaatsing</h2>
+      <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
+        <h2 className="text-ink font-semibold mb-4">Verdeling per plaatsing</h2>
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-navy rounded-xl border border-cyan/20 p-4 text-center">
-            <div className="text-xs text-gray-500 mb-1">Talent Scout</div>
+          <div className="bg-surface-muted rounded-xl border border-cyan/20 p-4 text-center">
+            <div className="text-xs text-ink-muted mb-1">Talent Scout</div>
             <div className="text-2xl font-bold text-cyan">50%</div>
           </div>
-          <div className="bg-navy rounded-xl border border-purple/20 p-4 text-center">
-            <div className="text-xs text-gray-500 mb-1">Refurzy</div>
-            <div className="text-2xl font-bold text-purple-light">50%</div>
+          <div className="bg-surface-muted rounded-xl border border-surface-border p-4 text-center">
+            <div className="text-xs text-ink-muted mb-1">Refurzy</div>
+            <div className="text-2xl font-bold text-purple">50%</div>
           </div>
-          <div className="bg-navy rounded-xl border border-orange/20 p-4 text-center">
-            <div className="text-xs text-gray-500 mb-1">Exclusiviteitstoeslag</div>
+          <div className="bg-surface-muted rounded-xl border border-orange/20 p-4 text-center">
+            <div className="text-xs text-ink-muted mb-1">Exclusiviteitstoeslag</div>
             <div className="text-2xl font-bold text-orange">+30%</div>
             <div className="text-[10px] text-orange/60">naar Scout</div>
           </div>
@@ -257,7 +257,7 @@ export default function PricingAdminPage() {
       <div className="flex justify-end gap-3">
         <button
           onClick={() => setPricing({ ...selectedCountry.pricing })}
-          className="bg-navy border border-purple/20 text-gray-400 px-6 py-3 rounded-xl font-semibold text-sm hover:text-white transition-colors"
+          className="bg-surface-muted border border-surface-border text-ink-light px-6 py-3 rounded-xl font-semibold text-sm hover:text-ink transition-colors"
         >
           Reset
         </button>
