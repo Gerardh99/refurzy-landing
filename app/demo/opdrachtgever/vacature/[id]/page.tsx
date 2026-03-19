@@ -146,9 +146,49 @@ export default function VacatureDetailPage() {
 
       {savedToast && (
         <div className="fixed top-6 right-6 z-50 bg-purple text-white px-6 py-3 rounded-xl shadow-lg font-semibold text-sm">
-          ✓ Vacaturebeschrijving opgeslagen
+          &#10003; Vacaturebeschrijving opgeslagen
         </div>
       )}
+
+      {/* M-Score Profiel Status */}
+      <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
+        <h2 className="text-ink font-semibold mb-4">M-Score Profiel</h2>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-green-400">&#10003;</span>
+              <span className="text-sm text-ink">Organisatieprofiel</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-green-400 font-medium">Ingevuld</span>
+              <Link
+                href="/demo/opdrachtgever/matching-profiel"
+                className="text-xs text-purple font-medium hover:text-purple/80 transition-colors"
+              >
+                Bekijken
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-green-400">&#10003;</span>
+              <span className="text-sm text-ink">Werkzaamheden (vac.)</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-green-400 font-medium">Ingevuld</span>
+              <button className="text-xs text-purple font-medium hover:text-purple/80 transition-colors">
+                Bewerken
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 pt-3 border-t border-surface-border">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-400" />
+            <span className="text-sm text-green-400 font-medium">Volledig &mdash; kandidaten worden gematcht</span>
+          </div>
+        </div>
+      </div>
 
       {/* Exclusiviteit banner */}
       {exclusief && (

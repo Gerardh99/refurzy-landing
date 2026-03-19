@@ -2,24 +2,19 @@
 
 import { useState, useCallback } from 'react'
 import {
-  werkzaamheden,
   waarden,
   organisatiekenmerken,
-  werkzaamhedenRatingScale,
   waardenRatingScaleOrg,
   kenmerkenRatingScale,
-  scanSteps,
-  type ScanResponses,
-  type ScanStep,
   type ScaleOption,
 } from '@/lib/matching-scan'
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
-const STEP_ORDER: ScanStep[] = [
+type OrgStep = 'intro' | 'waarden_ranking' | 'waarden_rating' | 'kenmerken_ranking' | 'kenmerken_rating' | 'result'
+
+const STEP_ORDER: OrgStep[] = [
   'intro',
-  'werkzaamheden_ranking',
-  'werkzaamheden_rating',
   'waarden_ranking',
   'waarden_rating',
   'kenmerken_ranking',
@@ -27,10 +22,24 @@ const STEP_ORDER: ScanStep[] = [
   'result',
 ]
 
-function emptyResponses(): ScanResponses {
+const STEP_LABELS: Record<OrgStep, string> = {
+  intro: 'Introductie',
+  waarden_ranking: 'Waarden (rangorde)',
+  waarden_rating: 'Waarden (beoordeling)',
+  kenmerken_ranking: 'Organisatiekenmerken (rangorde)',
+  kenmerken_rating: 'Organisatiekenmerken (beoordeling)',
+  result: 'Resultaat',
+}
+
+interface OrgResponses {
+  waarden_ranking: Record<string, number>
+  waarden_rating: Record<string, number>
+  kenmerken_ranking: Record<string, number>
+  kenmerken_rating: Record<string, number>
+}
+
+function emptyResponses(): OrgResponses {
   return {
-    werkzaamheden_ranking: {},
-    werkzaamheden_rating: {},
     waarden_ranking: {},
     waarden_rating: {},
     kenmerken_ranking: {},
@@ -42,14 +51,14 @@ function emptyResponses(): ScanResponses {
 
 export default function OpdrachtgeverMatchingProfiel() {
   const [stepIndex, setStepIndex] = useState(0)
-  const [responses, setResponses] = useState<ScanResponses>(emptyResponses)
+  const [responses, setResponses] = useState<OrgResponses>(emptyResponses)
   const [validationError, setValidationError] = useState('')
+  const [profileAlreadyFilled, setProfileAlreadyFilled] = useState(false)
 
   const currentStep = STEP_ORDER[stepIndex]
-  const stepMeta = scanSteps[stepIndex]
 
   const setRanking = useCallback(
-    (section: 'werkzaamheden_ranking' | 'waarden_ranking' | 'kenmerken_ranking', itemId: string, value: number) => {
+    (section: 'waarden_ranking' | 'kenmerken_ranking', itemId: string, value: number) => {
       setResponses((prev) => ({
         ...prev,
         [section]: { ...prev[section], [itemId]: value },
@@ -59,7 +68,7 @@ export default function OpdrachtgeverMatchingProfiel() {
   )
 
   const setRating = useCallback(
-    (section: 'werkzaamheden_rating' | 'waarden_rating' | 'kenmerken_rating', itemId: string, value: number) => {
+    (section: 'waarden_rating' | 'kenmerken_rating', itemId: string, value: number) => {
       setResponses((prev) => ({
         ...prev,
         [section]: { ...prev[section], [itemId]: value },
@@ -71,15 +80,6 @@ export default function OpdrachtgeverMatchingProfiel() {
   function validateStep(): boolean {
     setValidationError('')
 
-    if (currentStep === 'werkzaamheden_ranking') {
-      const vals = Object.values(responses.werkzaamheden_ranking)
-      if (vals.length < 19) { setValidationError('Geef elke werkzaamheid een rangorde.'); return false }
-      const unique = new Set(vals)
-      if (unique.size < 19) { setValidationError('Elke rangorde mag maar één keer voorkomen.'); return false }
-    }
-    if (currentStep === 'werkzaamheden_rating') {
-      if (Object.values(responses.werkzaamheden_rating).length < 19) { setValidationError('Beoordeel alle werkzaamheden.'); return false }
-    }
     if (currentStep === 'waarden_ranking') {
       const vals = Object.values(responses.waarden_ranking)
       if (vals.length < 9) { setValidationError('Geef elke waarde een rangorde.'); return false }
@@ -125,33 +125,22 @@ export default function OpdrachtgeverMatchingProfiel() {
 
   return (
     <div className="space-y-6 max-w-3xl">
+      {/* Green banner when profile already filled */}
+      {profileAlreadyFilled && currentStep === 'intro' && (
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 flex items-center gap-3">
+          <span className="text-green-400 text-xl">&#10003;</span>
+          <div>
+            <p className="text-green-400 font-semibold text-sm">Organisatieprofiel is al ingevuld</p>
+            <p className="text-green-400/70 text-xs">U kunt het profiel hieronder bekijken en aanpassen indien gewenst.</p>
+          </div>
+        </div>
+      )}
+
       {/* Progress bar */}
-      <ProgressBar current={stepIndex} total={STEP_ORDER.length} label={stepMeta.label} />
+      <ProgressBar current={stepIndex} total={STEP_ORDER.length} label={STEP_LABELS[currentStep]} />
 
       {/* Step content */}
       {currentStep === 'intro' && <IntroStep />}
-
-      {currentStep === 'werkzaamheden_ranking' && (
-        <RankingStep
-          title="Rangschik de werkzaamheden"
-          description="Geef elke werkzaamheid een unieke rangorde van 1 (minst relevant voor de vacature) tot 19 (meest relevant). Elk nummer mag maar één keer gebruikt worden."
-          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelOrg, description: w.description }))}
-          max={19}
-          values={responses.werkzaamheden_ranking}
-          onChange={(id, v) => setRanking('werkzaamheden_ranking', id, v)}
-        />
-      )}
-
-      {currentStep === 'werkzaamheden_rating' && (
-        <RatingStep
-          title="Beoordeel elke werkzaamheid"
-          description="Geef aan in welke mate deze werkzaamheid relevant is voor de vacature."
-          items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelOrg, description: w.description }))}
-          scale={werkzaamhedenRatingScale}
-          values={responses.werkzaamheden_rating}
-          onChange={(id, v) => setRating('werkzaamheden_rating', id, v)}
-        />
-      )}
 
       {currentStep === 'waarden_ranking' && (
         <RankingStep
@@ -261,23 +250,28 @@ function IntroStep() {
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-8 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">M-Score Profiel</h1>
+        <h1 className="text-2xl font-bold text-ink">Organisatieprofiel &mdash; Waarden &amp; Kenmerken</h1>
         <p className="text-ink-light mt-2 leading-relaxed">
-          Vul het M-Score profiel in voor uw vacature. Dit profiel wordt gebruikt om kandidaten
-          te matchen op cultuur, waarden en interesses.
+          Dit profiel wordt eenmalig ingevuld en hergebruikt voor al uw vacatures. Het beschrijft de waarden
+          en kenmerken van uw organisatie, zodat kandidaten gematcht kunnen worden op cultuurfit.
         </p>
       </div>
 
       <div className="bg-purple/10 border border-purple/20 rounded-xl p-5 space-y-3">
-        <p className="text-sm font-medium text-purple">Het profiel bestaat uit 6 stappen:</p>
+        <p className="text-sm font-medium text-purple">Het profiel bestaat uit 4 stappen:</p>
         <ul className="text-sm text-ink-light space-y-2">
-          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> Rangschik werkzaamheden naar relevantie</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">2.</span> Beoordeel werkzaamheden op een schaal</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> Rangschik organisatiewaarden</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> Beoordeel waarden op een schaal</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">5.</span> Rangschik organisatiekenmerken</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">6.</span> Beoordeel organisatiekenmerken op een schaal</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> Rangschik organisatiewaarden (9 vragen) &mdash; wat uw organisatie belangrijk vindt</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">2.</span> Beoordeel waarden op een schaal</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> Rangschik organisatiekenmerken (7 vragen) &mdash; kenmerken van uw organisatie</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> Beoordeel organisatiekenmerken op een schaal</li>
         </ul>
+      </div>
+
+      <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 text-sm text-ink-light">
+        <p>
+          <strong className="text-ink">Werkzaamheden (dimensie 1)</strong> worden per vacature apart ingevuld bij het aanmaken van de vacature.
+          Zo kunt u per functie aangeven welke werkzaamheden het meest relevant zijn.
+        </p>
       </div>
 
       <div className="flex items-center gap-3 text-sm text-ink-muted">
@@ -285,7 +279,7 @@ function IntroStep() {
         <span>Wetenschappelijk onderbouwd &mdash; ontwikkeld i.s.m. Prof. Dr. R.E. de Vries (VU Amsterdam)</span>
       </div>
 
-      <p className="text-ink-muted text-sm">0/6 stappen voltooid</p>
+      <p className="text-ink-muted text-sm">0/4 stappen voltooid</p>
     </div>
   )
 }
@@ -339,7 +333,7 @@ function RankingStep({
                 }}
                 className="w-20 shrink-0 mt-0.5 rounded-lg border border-surface-border bg-surface text-ink text-sm px-2 py-2 focus:outline-none focus:ring-2 focus:ring-cyan/40"
               >
-                <option value="">—</option>
+                <option value="">&mdash;</option>
                 {options.map((n) => {
                   const taken = usedValues.has(n) && currentVal !== n
                   return (
@@ -450,11 +444,14 @@ function CompletionStep() {
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold text-ink">Profiel opgeslagen!</h2>
+        <h2 className="text-2xl font-bold text-ink">Organisatieprofiel opgeslagen!</h2>
         <p className="text-ink-light mt-2 text-sm leading-relaxed">
-          Het M-Score profiel voor uw vacature is succesvol opgeslagen. Kandidaten worden nu automatisch
-          gematcht op basis van cultuur, waarden en interesses.
+          Dit profiel wordt hergebruikt voor al uw vacatures. U kunt het altijd aanpassen.
         </p>
+      </div>
+
+      <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 text-sm text-ink-light">
+        Per vacature vult u nog de werkzaamheden in (dimensie 1) bij het aanmaken van de vacature.
       </div>
 
       <div className="bg-purple/10 border border-purple/20 rounded-xl p-4 text-sm text-ink-light">

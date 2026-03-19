@@ -3,8 +3,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { calculatePrice, formatPrice, ExperienceLevel, EducationLevel, EXPERIENCE_LABELS, EDUCATION_LABELS, COUNTRIES } from '@/lib/pricing'
+import {
+  werkzaamheden,
+  werkzaamhedenRatingScale,
+  type ScaleOption,
+} from '@/lib/matching-scan'
 
 type Step = 1 | 2 | 3 | 4 | 5 | 6
+type WerkzaamhedenSubStep = 'ranking' | 'rating'
 
 const STEPS = [
   { nr: 1, label: 'Functie', short: 'Titel' },
@@ -12,25 +18,7 @@ const STEPS = [
   { nr: 3, label: 'Details', short: 'Info' },
   { nr: 4, label: 'Harde criteria', short: 'Criteria' },
   { nr: 5, label: 'Controleer & publiceer', short: 'Publiceer' },
-  { nr: 6, label: 'M-Score profiel', short: 'Vragen' },
-]
-
-const MSCORE_QUESTIONS = [
-  { id: 1, category: 'Persoonlijkheid', question: 'In welke mate moet de kandidaat extravert zijn?', labels: ['Introvert', 'Neutraal', 'Extravert'] },
-  { id: 2, category: 'Persoonlijkheid', question: 'Hoe belangrijk is nauwkeurigheid en oog voor detail?', labels: ['Niet belangrijk', 'Gemiddeld', 'Essentieel'] },
-  { id: 3, category: 'Persoonlijkheid', question: 'Hoe open moet de kandidaat staan voor nieuwe ervaringen?', labels: ['Traditioneel', 'Flexibel', 'Zeer innovatief'] },
-  { id: 4, category: 'Persoonlijkheid', question: 'Hoe belangrijk is het dat de kandidaat samenwerking verkiest boven solo werk?', labels: ['Solo werker', 'Flexibel', 'Teamspeler'] },
-  { id: 5, category: 'Persoonlijkheid', question: 'Hoe stressbestendig moet de kandidaat zijn?', labels: ['Rustige omgeving', 'Normaal', 'Hoge druk'] },
-  { id: 6, category: 'Cognitief', question: 'Hoe belangrijk is analytisch denkvermogen?', labels: ['Niet cruciaal', 'Gemiddeld', 'Zeer belangrijk'] },
-  { id: 7, category: 'Cognitief', question: 'Moet de kandidaat snel complexe informatie kunnen verwerken?', labels: ['Nee', 'Soms', 'Dagelijks'] },
-  { id: 8, category: 'Cognitief', question: 'Hoe creatief moet de kandidaat problemen kunnen oplossen?', labels: ['Standaard', 'Enige creativiteit', 'Zeer creatief'] },
-  { id: 9, category: 'Werkwaarden', question: 'Hoe belangrijk is autonomie in deze functie?', labels: ['Veel sturing', 'Gemiddeld', 'Volledig zelfstandig'] },
-  { id: 10, category: 'Werkwaarden', question: 'Hoe ambitieus moet de kandidaat zijn qua groei?', labels: ['Stabiel', 'Enige ambitie', 'Sterk gedreven'] },
-  { id: 11, category: 'Werkwaarden', question: 'Hoe belangrijk is work-life balance voor deze rol?', labels: ['Altijd beschikbaar', 'Flexibel', 'Strikte balans'] },
-  { id: 12, category: 'Werkwaarden', question: 'Moet de kandidaat intrinsiek gemotiveerd zijn door de inhoud?', labels: ['Niet vereist', 'Deels', 'Essentieel'] },
-  { id: 13, category: 'Cultuur', question: 'Hoe formeel is de werkcultuur?', labels: ['Zeer informeel', 'Gemiddeld', 'Formeel'] },
-  { id: 14, category: 'Cultuur', question: 'Hoe snel verandert de werkomgeving?', labels: ['Stabiel', 'Enige verandering', 'Snel veranderend'] },
-  { id: 15, category: 'Cultuur', question: 'Hoe belangrijk is leiderschapspotentieel?', labels: ['Niet nodig', 'Mooi meegenomen', 'Vereist'] },
+  { nr: 6, label: 'Werkzaamheden', short: 'M-Score' },
 ]
 
 export default function VacatureAanmakenPage() {
@@ -54,7 +42,13 @@ export default function VacatureAanmakenPage() {
     ervaring: '' as ExperienceLevel | '',
   })
 
-  const [mscoreAnswers, setMscoreAnswers] = useState<Record<number, number>>({})
+  // Werkzaamheden state (step 6)
+  const [werkzaamhedenSubStep, setWerkzaamhedenSubStep] = useState<WerkzaamhedenSubStep>('ranking')
+  const [werkzaamhedenRankings, setWerkzaamhedenRankings] = useState<Record<string, number>>({})
+  const [werkzaamhedenRatings, setWerkzaamhedenRatings] = useState<Record<string, number>>({})
+
+  // Mock: organisation profile status
+  const orgProfileFilled = true
 
   const pricing = COUNTRIES.find(c => c.code === 'NL')!.pricing
   const price = form.opleiding && form.ervaring
@@ -68,7 +62,13 @@ export default function VacatureAanmakenPage() {
       case 3: return form.locatie.length > 0 && form.afdelingscultuur.length > 10
       case 4: return form.opleiding !== '' && form.ervaring !== ''
       case 5: return akkoord
-      case 6: return Object.keys(mscoreAnswers).length >= 10
+      case 6: {
+        if (werkzaamhedenSubStep === 'ranking') {
+          const vals = Object.values(werkzaamhedenRankings)
+          return vals.length >= 19 && new Set(vals).size >= 19
+        }
+        return Object.keys(werkzaamhedenRatings).length >= 19
+      }
       default: return false
     }
   }
@@ -85,14 +85,39 @@ export default function VacatureAanmakenPage() {
     }, 2000)
   }
 
+  const handleStep6Next = () => {
+    if (werkzaamhedenSubStep === 'ranking') {
+      const vals = Object.values(werkzaamhedenRankings)
+      if (vals.length >= 19 && new Set(vals).size >= 19) {
+        setWerkzaamhedenSubStep('rating')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    } else {
+      // All ratings filled — publish
+      setPublished(true)
+    }
+  }
+
+  const handleStep6Back = () => {
+    if (werkzaamhedenSubStep === 'rating') {
+      setWerkzaamhedenSubStep('ranking')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      setStep(5)
+    }
+  }
+
   if (published) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md">
-          <div className="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
+          <div className="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6">&#10003;</div>
           <h2 className="text-2xl font-bold text-ink mb-3">Vacature gepubliceerd!</h2>
           <p className="text-ink-light mb-2"><span className="text-ink font-semibold">{form.titel}</span> staat nu open voor Talent Scouts.</p>
-          <p className="text-ink-muted text-sm mb-8">Je ontvangt een melding zodra de eerste kandidaten worden voorgedragen.</p>
+          <p className="text-ink-muted text-sm mb-4">Je ontvangt een melding zodra de eerste kandidaten worden voorgedragen.</p>
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 mb-6 text-sm text-green-400 font-medium">
+            M-Score profiel compleet &mdash; kandidaten worden automatisch gematcht.
+          </div>
           <div className="bg-white rounded-2xl border border-surface-border p-4 mb-8 text-left">
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div><span className="text-ink-muted">Model:</span> <span className="text-green-400">No Cure No Pay</span></div>
@@ -112,7 +137,7 @@ export default function VacatureAanmakenPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">← Terug naar dashboard</Link>
+        <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">&larr; Terug naar dashboard</Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Vacature aanmaken</h1>
         <p className="text-ink-light mt-1">Doorloop de stappen om uw vacature te publiceren</p>
       </div>
@@ -131,7 +156,7 @@ export default function VacatureAanmakenPage() {
             >
               <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
                 s.nr === step ? 'bg-cyan text-navy-dark' : s.nr < step ? 'bg-green-500 text-white' : 'bg-purple/15 text-ink-muted'
-              }`}>{s.nr < step ? '✓' : s.nr}</span>
+              }`}>{s.nr < step ? '\u2713' : s.nr}</span>
               <span className="hidden lg:inline">{s.label}</span>
               <span className="lg:hidden">{s.short}</span>
             </button>
@@ -142,7 +167,7 @@ export default function VacatureAanmakenPage() {
 
       <div className="bg-white rounded-2xl border border-surface-border p-8">
 
-        {/* ═══ STEP 1: Functietitel ═══ */}
+        {/* Step 1: Functietitel */}
         {step === 1 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Functietitel &amp; afdeling</h2>
@@ -164,7 +189,7 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* ═══ STEP 2: Omschrijving met AI ═══ */}
+        {/* Step 2: Omschrijving met AI */}
         {step === 2 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Functieomschrijving</h2>
@@ -176,7 +201,7 @@ export default function VacatureAanmakenPage() {
                   : form.titel ? 'btn-gradient text-white hover:-translate-y-px'
                   : 'bg-gray-700 text-ink-muted cursor-not-allowed'
                 }`}>
-                {aiLoading ? <><span className="animate-spin">⟳</span> AI schrijft...</> : <>✨ Schrijf met AI</>}
+                {aiLoading ? <><span className="animate-spin">&#10227;</span> AI schrijft...</> : <>&#10024; Schrijf met AI</>}
               </button>
               {!form.titel && <span className="text-xs text-ink-muted">Vul eerst een functietitel in (stap 1)</span>}
               {form.titel && !aiLoading && <span className="text-xs text-ink-muted">Genereert een concept op basis van &ldquo;{form.titel}&rdquo;</span>}
@@ -191,7 +216,7 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* ═══ STEP 3: Details + Afdelingscultuur ═══ */}
+        {/* Step 3: Details + Afdelingscultuur */}
         {step === 3 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Vacature details</h2>
@@ -207,7 +232,7 @@ export default function VacatureAanmakenPage() {
                 <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie</label>
                 <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="bijv. €4.000 - €5.500" />
+                  placeholder="bijv. &euro;4.000 - &euro;5.500" />
               </div>
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Contracttype</label>
@@ -254,7 +279,7 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* ═══ STEP 4: Harde criteria ═══ */}
+        {/* Step 4: Harde criteria */}
         {step === 4 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
@@ -291,13 +316,13 @@ export default function VacatureAanmakenPage() {
 
             {form.opleiding && form.ervaring && form.opleiding !== 'MBO' && form.ervaring === '10+' && (
               <div className="mt-4 bg-cyan/5 border border-cyan/20 rounded-xl p-3">
-                <p className="text-xs text-cyan">ℹ️ Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
+                <p className="text-xs text-cyan">&#8505;&#65039; Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
               </div>
             )}
           </div>
         )}
 
-        {/* ═══ STEP 5: Samenvatting & publiceer ═══ */}
+        {/* Step 5: Samenvatting & publiceer */}
         {step === 5 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Controleer &amp; publiceer</h2>
@@ -324,7 +349,7 @@ export default function VacatureAanmakenPage() {
             </div>
 
             <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 mb-6 flex items-start gap-3">
-              <span className="text-lg">💡</span>
+              <span className="text-lg">&#128161;</span>
               <div className="text-sm text-ink-light">
                 <p><strong className="text-ink">Hoe werkt het?</strong></p>
                 <p className="mt-1">Na publicatie kunnen Talent Scouts kandidaten voordragen. U ontvangt kandidaten met een anonieme M-Score. Wanneer u een profiel wilt bekijken, gaat u akkoord met de plaatsingsovereenkomst. U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).</p>
@@ -341,78 +366,238 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* ═══ STEP 6: M-Score profiel ═══ */}
+        {/* Step 6: Werkzaamheden profiel */}
         {step === 6 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">M-Score profiel invullen</h2>
+            <h2 className="text-xl font-semibold text-ink mb-2">
+              Werkzaamheden profiel &mdash; specifiek voor {form.titel || 'deze vacature'}
+            </h2>
             <p className="text-ink-light text-sm mb-2">
-              Beantwoord onderstaande vragen om het ideale kandidaatprofiel voor <span className="text-ink font-medium">{form.titel}</span> te bepalen.
+              Geef aan welke werkzaamheden het meest relevant zijn voor deze functie. Dit bepaalt de M-Score matching.
             </p>
-            <p className="text-xs text-ink-muted mb-8">
-              {Object.keys(mscoreAnswers).length} / {MSCORE_QUESTIONS.length} vragen beantwoord · Minimaal 10 vereist
+            <p className="text-xs text-ink-muted mb-4">
+              Uw organisatieprofiel (waarden &amp; kenmerken) wordt automatisch gecombineerd.
             </p>
 
-            <div className="w-full bg-surface-muted rounded-full h-2 mb-8">
-              <div className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(Object.keys(mscoreAnswers).length / MSCORE_QUESTIONS.length) * 100}%` }} />
+            {/* Org profile status banner */}
+            {orgProfileFilled ? (
+              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 mb-6 flex items-center gap-2">
+                <span className="text-green-400">&#8505;&#65039;</span>
+                <span className="text-green-400 text-sm font-medium">Organisatieprofiel: &#10003; Ingevuld</span>
+              </div>
+            ) : (
+              <div className="bg-orange/10 border border-orange/30 rounded-xl p-3 mb-6 flex items-center gap-2">
+                <span className="text-orange">&#9888;&#65039;</span>
+                <span className="text-orange text-sm">
+                  Niet ingevuld &mdash;{' '}
+                  <Link href="/demo/opdrachtgever/matching-profiel" className="underline font-medium hover:text-orange/80">
+                    vul eerst uw organisatieprofiel in
+                  </Link>
+                </span>
+              </div>
+            )}
+
+            {/* Sub-step progress */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium ${
+                werkzaamhedenSubStep === 'ranking' ? 'bg-cyan/15 text-cyan border border-cyan/20' : 'bg-green-500/10 text-green-400 border border-green-500/20'
+              }`}>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  werkzaamhedenSubStep === 'ranking' ? 'bg-cyan text-navy-dark' : 'bg-green-500 text-white'
+                }`}>{werkzaamhedenSubStep === 'ranking' ? 'a' : '\u2713'}</span>
+                Rangorde
+              </div>
+              <div className="w-6 h-px bg-purple/10" />
+              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium ${
+                werkzaamhedenSubStep === 'rating' ? 'bg-cyan/15 text-cyan border border-cyan/20' : 'bg-surface-muted border border-surface-border text-ink-muted'
+              }`}>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  werkzaamhedenSubStep === 'rating' ? 'bg-cyan text-navy-dark' : 'bg-purple/15 text-ink-muted'
+                }`}>b</span>
+                Beoordeling
+              </div>
             </div>
 
-            <div className="space-y-6">
-              {MSCORE_QUESTIONS.map((q, idx) => {
-                const prevCategory = idx > 0 ? MSCORE_QUESTIONS[idx - 1].category : null
-                const showCategory = q.category !== prevCategory
-                return (
-                  <div key={q.id}>
-                    {showCategory && (
-                      <div className="flex items-center gap-3 mb-4 mt-2">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-purple bg-purple/10 px-2.5 py-1 rounded">{q.category}</span>
-                        <div className="flex-1 h-px bg-purple/10" />
-                      </div>
-                    )}
-                    <div className="bg-surface-muted rounded-xl border border-surface-border p-5">
-                      <p className="text-sm text-ink font-medium mb-4">{q.id}. {q.question}</p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-ink-muted w-20 text-right">{q.labels[0]}</span>
-                        <div className="flex-1 flex justify-between">
-                          {[1, 2, 3, 4, 5].map(val => (
-                            <button key={val} onClick={() => setMscoreAnswers(a => ({ ...a, [q.id]: val }))}
-                              className={`w-10 h-10 rounded-full border-2 text-xs font-bold transition-all ${
-                                mscoreAnswers[q.id] === val
-                                  ? 'bg-gradient-to-br from-cyan to-purple border-cyan text-white scale-110'
-                                  : 'bg-surface-muted border-surface-border text-ink-muted hover:border-purple/40 hover:text-ink'
-                              }`}>{val}</button>
-                          ))}
-                        </div>
-                        <span className="text-[10px] text-ink-muted w-20">{q.labels[2]}</span>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            {/* Sub-step content */}
+            {werkzaamhedenSubStep === 'ranking' && (
+              <WerkzaamhedenRankingStep
+                rankings={werkzaamhedenRankings}
+                onChange={(id, v) => setWerkzaamhedenRankings(prev => ({ ...prev, [id]: v }))}
+              />
+            )}
+
+            {werkzaamhedenSubStep === 'rating' && (
+              <WerkzaamhedenRatingStep
+                ratings={werkzaamhedenRatings}
+                onChange={(id, v) => setWerkzaamhedenRatings(prev => ({ ...prev, [id]: v }))}
+              />
+            )}
           </div>
         )}
 
         {/* Navigation */}
         <div className="flex justify-between mt-8 pt-6 border-t border-surface-border">
-          <button onClick={() => setStep((step - 1) as Step)} disabled={step === 1}
-            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-              step === 1 ? 'text-ink-muted cursor-not-allowed' : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink'
-            }`}>← Vorige</button>
+          {step === 6 ? (
+            <button onClick={handleStep6Back}
+              className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors bg-surface-muted border border-surface-border text-ink-light hover:text-ink">
+              &larr; {werkzaamhedenSubStep === 'rating' ? 'Terug naar rangorde' : 'Vorige'}
+            </button>
+          ) : (
+            <button onClick={() => setStep((step - 1) as Step)} disabled={step === 1}
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                step === 1 ? 'text-ink-muted cursor-not-allowed' : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink'
+              }`}>&larr; Vorige</button>
+          )}
 
           {step < 6 ? (
             <button onClick={() => setStep((step + 1) as Step)} disabled={!canProceed()}
               className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 canProceed() ? 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]' : 'bg-gray-700 text-ink-muted cursor-not-allowed'
-              }`}>Volgende →</button>
+              }`}>Volgende &rarr;</button>
           ) : (
-            <button onClick={() => setPublished(true)} disabled={!canProceed()}
+            <button onClick={handleStep6Next} disabled={!canProceed()}
               className={`px-8 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                canProceed() ? 'bg-green-500 text-white hover:bg-green-400 hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(16,185,129,0.3)]' : 'bg-gray-700 text-ink-muted cursor-not-allowed'
-              }`}>✓ Publiceer vacature</button>
+                canProceed()
+                  ? werkzaamhedenSubStep === 'rating'
+                    ? 'bg-green-500 text-white hover:bg-green-400 hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(16,185,129,0.3)]'
+                    : 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]'
+                  : 'bg-gray-700 text-ink-muted cursor-not-allowed'
+              }`}>
+              {werkzaamhedenSubStep === 'rating' ? '\u2713 Publiceer vacature' : 'Volgende \u2192'}
+            </button>
           )}
         </div>
       </div>
+    </div>
+  )
+}
+
+// ─── Werkzaamheden Ranking Sub-step ─────────────────────────────────────────
+
+function WerkzaamhedenRankingStep({
+  rankings,
+  onChange,
+}: {
+  rankings: Record<string, number>
+  onChange: (id: string, value: number) => void
+}) {
+  const usedValues = new Set(Object.values(rankings))
+  const options = Array.from({ length: 19 }, (_, i) => i + 1)
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <h3 className="text-lg font-semibold text-ink">Rangschik de werkzaamheden</h3>
+        <p className="text-ink-light text-sm mt-1">
+          Geef elke werkzaamheid een unieke rangorde van 1 (minst relevant voor de vacature) tot 19 (meest relevant). Elk nummer mag maar één keer gebruikt worden.
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        {werkzaamheden.map((item) => {
+          const currentVal = rankings[item.id]
+          return (
+            <div
+              key={item.id}
+              className="flex items-start gap-4 border-b border-surface-border pb-3 last:border-0 last:pb-0"
+            >
+              <select
+                value={currentVal || ''}
+                onChange={(e) => {
+                  const v = parseInt(e.target.value, 10)
+                  if (!isNaN(v)) onChange(item.id, v)
+                }}
+                className="w-20 shrink-0 mt-0.5 rounded-lg border border-surface-border bg-surface text-ink text-sm px-2 py-2 focus:outline-none focus:ring-2 focus:ring-cyan/40"
+              >
+                <option value="">&mdash;</option>
+                {options.map((n) => {
+                  const taken = usedValues.has(n) && currentVal !== n
+                  return (
+                    <option key={n} value={n} disabled={taken}>
+                      {n}{taken ? ' (in gebruik)' : ''}
+                    </option>
+                  )
+                })}
+              </select>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-ink">{item.labelOrg}</p>
+                <p className="text-xs text-ink-muted mt-0.5">{item.description}</p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <p className="text-xs text-ink-muted">
+        {Object.keys(rankings).length} van 19 ingevuld
+      </p>
+    </div>
+  )
+}
+
+// ─── Werkzaamheden Rating Sub-step ──────────────────────────────────────────
+
+function WerkzaamhedenRatingStep({
+  ratings,
+  onChange,
+}: {
+  ratings: Record<string, number>
+  onChange: (id: string, value: number) => void
+}) {
+  return (
+    <div className="space-y-5">
+      <div>
+        <h3 className="text-lg font-semibold text-ink">Beoordeel elke werkzaamheid</h3>
+        <p className="text-ink-light text-sm mt-1">
+          Geef aan in welke mate deze werkzaamheid relevant is voor de vacature.
+        </p>
+      </div>
+
+      {/* Scale legend */}
+      <div className="flex flex-wrap gap-2 text-xs text-ink-muted">
+        {werkzaamhedenRatingScale.filter((s) => s.label).map((s) => (
+          <span key={s.value} className="bg-surface-muted px-2 py-1 rounded">
+            {s.value} = {s.label}
+          </span>
+        ))}
+      </div>
+
+      <div className="space-y-4">
+        {werkzaamheden.map((item) => {
+          const currentVal = ratings[item.id]
+          return (
+            <div
+              key={item.id}
+              className="border-b border-surface-border pb-4 last:border-0 last:pb-0 space-y-2"
+            >
+              <div>
+                <p className="text-sm font-medium text-ink">{item.labelOrg}</p>
+                <p className="text-xs text-ink-muted">{item.description}</p>
+              </div>
+              <div className="flex gap-1.5 flex-wrap">
+                {werkzaamhedenRatingScale.map((s) => (
+                  <button
+                    key={s.value}
+                    onClick={() => onChange(item.id, s.value)}
+                    title={s.label || String(s.value)}
+                    className={`w-10 h-10 rounded-lg text-sm font-medium transition-all ${
+                      currentVal === s.value
+                        ? 'bg-cyan text-navy-dark ring-2 ring-cyan/40'
+                        : 'bg-surface-muted border border-surface-border text-ink-light hover:border-cyan/30'
+                    }`}
+                  >
+                    {s.value}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <p className="text-xs text-ink-muted">
+        {Object.keys(ratings).length} van 19 beoordeeld
+      </p>
     </div>
   )
 }
