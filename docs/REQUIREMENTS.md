@@ -164,16 +164,27 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │     ├── Harde criteria bekijken                          │
 │     └── Vacature detail met kandidatenlijst              │
 │                                                           │
-│  4. KANDIDAAT VOORDRAGEN                                 │
-│     └── Match kandidaat aan vacature                     │
+│  4. MATCHINGSUGGESTIES ONTVANGEN                         │
+│     ├── Automatische notificatie bij nieuwe vacature      │
+│     │   die matcht met kandidaten in talent pool         │
+│     ├── Match op basis van:                              │
+│     │   ├── Harde criteria (opleiding, ervaring, locatie)│
+│     │   └── M-Score (als scan is ingevuld)               │
+│     ├── Suggestie accepteren = kandidaat voordragen      │
+│     └── Suggestie afwijzen = niet voordragen             │
 │                                                           │
-│  5. PIPELINE VOLGEN                                      │
+│  5. KANDIDAAT VOORDRAGEN                                 │
+│     ├── Handmatig matchen aan vacature                   │
+│     ├── Of via matchingsuggestie (stap 4)                │
+│     └── Alleen eigen kandidaten (scout-exclusiviteit)    │
+│                                                           │
+│  6. PIPELINE VOLGEN                                      │
 │     ├── Overzicht alle voorgedragen kandidaten           │
 │     ├── Status per kandidaat (visuele pipeline)          │
 │     ├── Filter op status                                 │
 │     └── Actie-indicatoren (oranje bij vertraging)        │
 │                                                           │
-│  6. NUDGE SYSTEEM                                        │
+│  7. NUDGE SYSTEEM                                        │
 │     ├── Nudge 1: Friendly reminder (💬)                  │
 │     │   "Plan je het gesprek deze week in?"              │
 │     ├── Nudge 2: Urgente herinnering (⚠️)               │
@@ -183,7 +194,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │         ├── Kandidaat wordt geïnformeerd                 │
 │         └── Registratie op opdrachtgever-account         │
 │                                                           │
-│  7. PRO SCOUT UPGRADE (na 2 plaatsingen)                │
+│  8. PRO SCOUT UPGRADE (na 2 plaatsingen)                │
 │     ├── Blokkade: geen nieuwe voordrachten mogelijk      │
 │     ├── Celebratie-modal: "Gefeliciteerd!"               │
 │     ├── Inspiratie: "Werk waar je wilt, wanneer je wilt" │
@@ -198,7 +209,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │         ├── Pro Scout badge                              │
 │         └── Wereldwijd werken                            │
 │                                                           │
-│  8. FEE ONTVANGEN                                        │
+│  9. FEE ONTVANGEN                                        │
 │     └── 50% van plaatsingsfee na contract getekend       │
 │                                                           │
 └─────────────────────────────────────────────────────────┘
@@ -469,6 +480,10 @@ lib/
 13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)
 14. **Zelfstandigheid scout**: De Talent Scout werkt volledig voor eigen rekening en risico. Bepaalt zelf wanneer, hoe, hoeveel en waar opdrachten worden vervuld. Geen arbeidsrelatie met Refurzy.
 15. **VU Amsterdam licentie**: Refurzy betaalt de VU per afgenomen Matching Scan. Intern testgebruik wordt uitgefilterd op basis van test-emailadressen. Alle afnames worden gelogd met datum, type, gebruiker en status.
+16. **Profiel hergebruik**: Kandidaat vult scan 1x in → profiel herbruikbaar over alle vacatures. Organisatie: waarden + kenmerken (dim 2+3, 16 vragen) herbruikbaar over vacatures, alleen werkzaamheden (dim 1, 19 vragen) per vacature opnieuw.
+17. **Scout-exclusiviteit**: Een kandidaat kan alleen worden voorgedragen door de scout die de kandidaat heeft aangebracht. Andere scouts kunnen dezelfde kandidaat niet voordragen.
+18. **Automatische matchingsuggesties**: Scouts ontvangen automatische matchingsuggesties wanneer een vacature wordt gepubliceerd die matcht met kandidaten in hun talent pool — op basis van harde criteria (opleiding, ervaring, locatie) en M-Score. De scout kan de suggestie accepteren (= voordragen) of afwijzen.
+19. **Handmatig matchen**: Scouts kunnen kandidaten ook handmatig aan vacatures koppelen, onafhankelijk van automatische suggesties.
 
 ---
 
