@@ -11,7 +11,7 @@ const STEPS = [
   { nr: 2, label: 'Omschrijving', short: 'Tekst' },
   { nr: 3, label: 'Details', short: 'Info' },
   { nr: 4, label: 'Harde criteria', short: 'Criteria' },
-  { nr: 5, label: 'Prijs & akkoord', short: 'Prijs' },
+  { nr: 5, label: 'Controleer & publiceer', short: 'Publiceer' },
   { nr: 6, label: 'M-Score profiel', short: 'Vragen' },
 ]
 
@@ -95,8 +95,8 @@ export default function VacatureAanmakenPage() {
           <p className="text-ink-muted text-sm mb-8">Je ontvangt een melding zodra de eerste kandidaten worden voorgedragen.</p>
           <div className="bg-white rounded-2xl border border-surface-border p-4 mb-8 text-left">
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div><span className="text-ink-muted">Prijs:</span> <span className="text-cyan font-semibold">{formatPrice(price, pricing)}</span></div>
               <div><span className="text-ink-muted">Model:</span> <span className="text-green-400">No Cure No Pay</span></div>
+              <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
               <div><span className="text-ink-muted">Opleiding:</span> <span className="text-ink">{form.opleiding}</span></div>
               <div><span className="text-ink-muted">Ervaring:</span> <span className="text-ink">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
             </div>
