@@ -172,7 +172,7 @@ const landingCSS = `
   h1 { font-size:clamp(1.8rem,5vw,2.6rem); font-weight:600; text-align:center; margin-bottom:20px; line-height:1.3; animation:fadeInUp 0.8s ease-out 0.2s both; }
   .gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
   .subtitle { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.8); max-width:560px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.4s both; }
-  .body-text { font-size:clamp(0.9rem,2vw,0.95rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.6); max-width:520px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
+  .body-text { font-size:clamp(0.95rem,2vw,1.05rem); font-weight:400; text-align:center; color:rgba(249,251,255,0.75); max-width:520px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
   .divider { width:60px; height:2px; background:var(--gradient); margin:0 auto 48px; border-radius:2px; animation:fadeInUp 0.8s ease-out 0.55s both; }
   .cta-section { width:100%; max-width:500px; animation:fadeInUp 0.8s ease-out 0.6s both; }
   .cta-label { font-size:0.85rem; font-weight:500; text-align:center; color:rgba(249,251,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
