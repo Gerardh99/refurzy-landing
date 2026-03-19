@@ -103,8 +103,8 @@ export default function LandingPage() {
           De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay. ROI vanaf 336%.³
         </p>
 
-        <p style={{fontSize: '0.65rem', color: 'rgba(249,251,255,0.25)', textAlign: 'center', maxWidth: '480px', marginBottom: '48px', lineHeight: '1.6'}}>
-          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ Op basis van VU Amsterdam (De Vries, 2026; N=309), SHRM, Kristof-Brown et al.
+        <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.45)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
+          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ VU Amsterdam (De Vries, 2026; N=309)
         </p>
 
         <div className="divider" />
@@ -171,8 +171,8 @@ const landingCSS = `
   @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   h1 { font-size:clamp(1.8rem,5vw,2.6rem); font-weight:600; text-align:center; margin-bottom:20px; line-height:1.3; animation:fadeInUp 0.8s ease-out 0.2s both; }
   .gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .subtitle { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.8); max-width:560px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.4s both; }
-  .body-text { font-size:clamp(0.95rem,2vw,1.05rem); font-weight:400; text-align:center; color:rgba(249,251,255,0.75); max-width:520px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
+  .subtitle { font-size:clamp(1.05rem,2.5vw,1.2rem); font-weight:400; text-align:center; color:rgba(249,251,255,0.85); max-width:560px; line-height:1.7; margin-bottom:20px; animation:fadeInUp 0.8s ease-out 0.4s both; }
+  .body-text { font-size:clamp(1rem,2vw,1.1rem); font-weight:400; text-align:center; color:rgba(249,251,255,0.8); max-width:520px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
   .divider { width:60px; height:2px; background:var(--gradient); margin:0 auto 48px; border-radius:2px; animation:fadeInUp 0.8s ease-out 0.55s both; }
   .cta-section { width:100%; max-width:500px; animation:fadeInUp 0.8s ease-out 0.6s both; }
   .cta-label { font-size:0.85rem; font-weight:500; text-align:center; color:rgba(249,251,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
