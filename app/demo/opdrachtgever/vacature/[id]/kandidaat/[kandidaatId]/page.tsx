@@ -10,7 +10,7 @@ import PipelineTracker from '@/components/PipelineTracker'
 
 export default function OpdrachtgeverKandidaatProces() {
   const params = useParams()
-  const vacature = vacatures.find(v => v.id === params.vacatureId)
+  const vacature = vacatures.find(v => v.id === params.id)
   const kandidaat = vacature?.kandidaten.find(k => k.id === params.kandidaatId)
 
   const [procesStatus, setProcesStatus] = useState<ProcesStatus>(kandidaat?.procesStatus || 'voorgesteld')
