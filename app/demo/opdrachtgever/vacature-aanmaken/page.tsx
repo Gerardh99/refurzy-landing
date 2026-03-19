@@ -151,13 +151,13 @@ export default function VacatureAanmakenPage() {
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Functietitel *</label>
                 <input type="text" value={form.titel} onChange={e => setForm(f => ({ ...f, titel: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors"
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Marketing Manager, Senior Developer, Sales Lead" />
               </div>
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Afdeling / Team</label>
                 <input type="text" value={form.afdeling} onChange={e => setForm(f => ({ ...f, afdeling: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors"
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Marketing, Engineering, Sales" />
               </div>
             </div>
@@ -182,7 +182,7 @@ export default function VacatureAanmakenPage() {
               {form.titel && !aiLoading && <span className="text-xs text-ink-muted">Genereert een concept op basis van &ldquo;{form.titel}&rdquo;</span>}
             </div>
             <textarea value={form.omschrijving} onChange={e => setForm(f => ({ ...f, omschrijving: e.target.value }))} rows={14}
-              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
               placeholder="Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt..." />
             <div className="flex justify-between mt-2">
               <span className="text-xs text-ink-faint">{form.omschrijving.length} tekens</span>
@@ -200,13 +200,13 @@ export default function VacatureAanmakenPage() {
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Locatie *</label>
                 <input type="text" value={form.locatie} onChange={e => setForm(f => ({ ...f, locatie: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors"
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Amsterdam" />
               </div>
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie</label>
                 <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors"
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. €4.000 - €5.500" />
               </div>
               <div>
@@ -244,7 +244,7 @@ export default function VacatureAanmakenPage() {
                 Beschrijf hoe het team samenwerkt, de sfeer, het tempo en wat het uniek maakt. Dit wordt gedeeld met kandidaten en helpt bij de M-Score matching.
               </p>
               <textarea value={form.afdelingscultuur} onChange={e => setForm(f => ({ ...f, afdelingscultuur: e.target.value }))} rows={4}
-                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-faint focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
                 placeholder="bijv. Ons marketingteam van 8 personen werkt in een informele, energieke omgeving. We combineren data-gedreven beslissingen met creatieve brainstorms. Het tempo is hoog maar de sfeer is open en ondersteunend. Fouten maken mag — leren is belangrijker dan perfect zijn." />
               <div className="flex justify-between mt-2">
                 <span className="text-xs text-ink-faint">{form.afdelingscultuur.length} tekens</span>

@@ -143,7 +143,7 @@ export default function KandidaatUitnodigen() {
             <input
               type="text" value={naam} onChange={e => setNaam(e.target.value)}
               placeholder="Volledige naam"
-              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted"
             />
           </div>
           <div>
@@ -151,7 +151,7 @@ export default function KandidaatUitnodigen() {
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
               placeholder="naam@email.nl"
-              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted"
             />
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function KandidaatUitnodigen() {
               rows={3} value={persoonlijkeBoodschap}
               onChange={e => setPersoonlijkeBoodschap(e.target.value)}
               placeholder="Hi! Ik denk dat deze vacature goed bij je past omdat..."
-              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint resize-none"
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none"
             />
           </div>
         )}

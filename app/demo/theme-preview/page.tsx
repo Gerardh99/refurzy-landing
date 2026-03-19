@@ -49,7 +49,7 @@ export default function ThemePreviewPage() {
     body: 'text-ink-light',
     muted: 'text-ink-muted',
     faint: 'text-ink-faint',
-    input: 'bg-white border-surface-border text-ink placeholder-ink-faint focus:border-cyan',
+    input: 'bg-white border-surface-border text-ink placeholder-ink-muted focus:border-cyan',
     tableHeader: 'bg-surface-muted text-ink-muted',
     rowHover: 'hover:bg-surface-muted/50',
     sidebarBg: 'bg-navy-light border-r border-purple/10',

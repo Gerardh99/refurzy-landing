@@ -126,27 +126,27 @@ function BedrijfTab() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Bedrijfsnaam</label>
-            <input type="text" defaultValue="TechCorp Solutions B.V." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="TechCorp Solutions B.V." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">KVK-nummer</label>
-            <input type="text" defaultValue="12345678" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="12345678" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Adres</label>
-            <input type="text" defaultValue="Herengracht 182" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="Herengracht 182" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Postcode &amp; Plaats</label>
-            <input type="text" defaultValue="1016 BR Amsterdam" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="1016 BR Amsterdam" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Website</label>
-            <input type="text" defaultValue="https://techcorp.nl" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="https://techcorp.nl" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Telefoonnummer</label>
-            <input type="text" defaultValue="+31 20 123 4567" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="+31 20 123 4567" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
         </div>
       </div>
@@ -184,7 +184,7 @@ function BedrijfTab() {
           </div>
           <div className="md:col-span-2">
             <label className="text-xs text-ink-muted mb-1.5 block">Bedrijfscultuur</label>
-            <input type="text" defaultValue="Informeel, innovatief, hybride werken" placeholder="Bijv. informeel, resultaatgericht, teamwork" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="Informeel, innovatief, hybride werken" placeholder="Bijv. informeel, resultaatgericht, teamwork" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
         </div>
       </div>
@@ -196,7 +196,7 @@ function BedrijfTab() {
         <textarea
           rows={5}
           defaultValue="TechCorp Solutions is een snelgroeiend technologiebedrijf dat gespecialiseerd is in AI-gedreven HR-oplossingen. Wij geloven in de kracht van data om betere beslissingen te nemen. Ons team van 120 professionals werkt vanuit Amsterdam en remote aan innovatieve producten die de toekomst van werk vormgeven."
-          className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint resize-none"
+          className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none"
           placeholder="Beschrijf uw bedrijf, missie, cultuur en wat u een aantrekkelijke werkgever maakt..."
         />
         <div className="flex justify-between mt-2">
@@ -374,7 +374,7 @@ function TeamTab({
             <div className="space-y-5">
               <div>
                 <label className="text-xs text-ink-muted mb-1.5 block">E-mailadres</label>
-                <input type="email" placeholder="naam@bedrijf.nl" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+                <input type="email" placeholder="naam@bedrijf.nl" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
               </div>
 
               <div>
@@ -438,7 +438,7 @@ function TeamTab({
 
               <div>
                 <label className="text-xs text-ink-muted mb-1.5 block">Bevestig met uw wachtwoord</label>
-                <input type="password" placeholder="Uw huidige wachtwoord" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+                <input type="password" placeholder="Uw huidige wachtwoord" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
               </div>
 
               <div className="flex gap-3 pt-2">
@@ -515,7 +515,7 @@ function BetalingTab() {
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">BTW-nummer</label>
-            <input type="text" defaultValue="NL123456789B01" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint" />
+            <input type="text" defaultValue="NL123456789B01" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Factuuradres</label>

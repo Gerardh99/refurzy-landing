@@ -296,7 +296,7 @@ export default function GebruikersPage() {
             {blockModal.action !== 'unblock' && (
               <div className="mb-4">
                 <label className="text-xs text-ink-muted mb-1.5 block">Reden</label>
-                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder="Geef een reden op..." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-faint resize-none" />
+                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder="Geef een reden op..." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none" />
               </div>
             )}
 
