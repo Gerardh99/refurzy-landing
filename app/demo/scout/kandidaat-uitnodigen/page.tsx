@@ -88,12 +88,12 @@ export default function KandidaatUitnodigen() {
           {type === 'pool' ? (
             <>
               <p className="font-medium text-purple">Generieke uitnodiging — Talent Pool</p>
-              <p className="text-gray-300">De kandidaat wordt toegevoegd aan jouw talent pool. Er hoeft nog geen assessment te worden ingevuld. Zodra je de kandidaat voordraagt voor een specifieke vacature, ontvangt deze een uitnodiging om de 35-vragen M-Score in te vullen.</p>
+              <p className="text-ink-light">De kandidaat wordt toegevoegd aan jouw talent pool. Er hoeft nog geen assessment te worden ingevuld. Zodra je de kandidaat voordraagt voor een specifieke vacature, ontvangt deze een uitnodiging om de 35-vragen M-Score in te vullen.</p>
             </>
           ) : (
             <>
               <p className="font-medium text-cyan">Vacature-specifieke uitnodiging</p>
-              <p className="text-gray-300">De kandidaat ontvangt een enthousiasmerende e-mail met vacaturedetails en wordt direct uitgenodigd om de 35-vragen M-Score assessment in te vullen voor deze specifieke vacature. De M-Score moet per vacature opnieuw worden ingevuld.</p>
+              <p className="text-ink-light">De kandidaat ontvangt een enthousiasmerende e-mail met vacaturedetails en wordt direct uitgenodigd om de 35-vragen M-Score assessment in te vullen voor deze specifieke vacature. De M-Score moet per vacature opnieuw worden ingevuld.</p>
             </>
           )}
         </div>
@@ -121,10 +121,10 @@ export default function KandidaatUitnodigen() {
                 <span className="text-xs text-cyan bg-cyan/15 px-2 py-1 rounded border border-cyan/20">Geselecteerd</span>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><span className="text-ink-muted">Bedrijf:</span> <span className="text-gray-300">{activeVacature.company}</span></div>
-                <div><span className="text-ink-muted">Locatie:</span> <span className="text-gray-300">{activeVacature.location}</span></div>
-                <div><span className="text-ink-muted">Salaris:</span> <span className="text-gray-300">{activeVacature.salaris}</span></div>
-                <div><span className="text-ink-muted">Deadline:</span> <span className="text-gray-300">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
+                <div><span className="text-ink-muted">Bedrijf:</span> <span className="text-ink-light">{activeVacature.company}</span></div>
+                <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink-light">{activeVacature.location}</span></div>
+                <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink-light">{activeVacature.salaris}</span></div>
+                <div><span className="text-ink-muted">Deadline:</span> <span className="text-ink-light">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
               </div>
             </div>
           )}

@@ -67,7 +67,7 @@ export default function KandidaatProfiel() {
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-green-400">&#10003;</span>
-          <span className="text-gray-300">CV_Anna_de_Jong_2026.pdf</span>
+          <span className="text-ink-light">CV_Anna_de_Jong_2026.pdf</span>
           <span className="text-ink-faint">geupload op 5 maart 2026</span>
         </div>
       </div>

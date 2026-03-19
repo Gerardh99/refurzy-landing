@@ -318,7 +318,7 @@ export default function VacatureAanmakenPage() {
               {form.afdelingscultuur && (
                 <div className="mt-4 pt-4 border-t border-surface-border">
                   <span className="text-ink-muted text-sm">Afdelingscultuur:</span>
-                  <p className="text-gray-300 text-sm mt-1 leading-relaxed">{form.afdelingscultuur}</p>
+                  <p className="text-ink-light text-sm mt-1 leading-relaxed">{form.afdelingscultuur}</p>
                 </div>
               )}
             </div>
@@ -334,7 +334,7 @@ export default function VacatureAanmakenPage() {
             <label className="flex items-start gap-3 cursor-pointer group">
               <input type="checkbox" checked={akkoord} onChange={e => setAkkoord(e.target.checked)}
                 className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-surface-muted accent-cyan" />
-              <span className="text-sm text-gray-300 group-hover:text-ink transition-colors">
+              <span className="text-sm text-ink-light group-hover:text-ink transition-colors">
                 Ik bevestig dat de bovenstaande gegevens correct zijn en wil deze vacature publiceren.
               </span>
             </label>

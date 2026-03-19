@@ -75,8 +75,8 @@ export default function LandenPage() {
                   <div className="text-xs text-ink-muted">{country.name}</div>
                 </div>
               </div>
-              <div className="text-center text-sm text-gray-300">{country.language.toUpperCase()}</div>
-              <div className="text-center text-sm text-gray-300 font-medium">{country.currency}</div>
+              <div className="text-center text-sm text-ink-light">{country.language.toUpperCase()}</div>
+              <div className="text-center text-sm text-ink-light font-medium">{country.currency}</div>
               <div className="text-center text-sm text-cyan font-bold">
                 {formatPrice(country.pricing.valuePerPoint, country.pricing)}
               </div>

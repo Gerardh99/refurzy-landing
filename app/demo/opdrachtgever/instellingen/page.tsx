@@ -281,7 +281,7 @@ function TeamTab({
           <span className="font-semibold text-ink">Rollen:</span>
           <span><span className="text-purple font-medium">Owner</span> = volledige controle + eigenaarschap overdragen</span>
           <span><span className="text-cyan font-medium">Admin</span> = team &amp; bedrijfsgegevens beheren</span>
-          <span><span className="text-gray-300 font-medium">Gebruiker</span> = eigen vacatures schrijven &amp; beheren</span>
+          <span><span className="text-ink-light font-medium">Gebruiker</span> = eigen vacatures schrijven &amp; beheren</span>
         </div>
       </div>
 
@@ -318,7 +318,7 @@ function TeamTab({
                 <>
                   <select
                     defaultValue={member.role}
-                    className="bg-surface-muted border border-surface-border rounded-lg px-2 py-1 text-xs text-gray-300 focus:outline-none focus:border-cyan/50"
+                    className="bg-surface-muted border border-surface-border rounded-lg px-2 py-1 text-xs text-ink-light focus:outline-none focus:border-cyan/50"
                   >
                     <option value="admin">Admin</option>
                     <option value="gebruiker">Gebruiker</option>
@@ -348,7 +348,7 @@ function TeamTab({
             </div>
             {mockInvites.map(invite => (
               <div key={invite.id} className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-2 px-6 py-4 border-b border-surface-border items-center">
-                <div className="flex items-center gap-2 text-gray-300 text-sm">
+                <div className="flex items-center gap-2 text-ink-light text-sm">
                   <span>✉️</span> {invite.email}
                 </div>
                 <div><RoleBadge role={invite.role} /></div>

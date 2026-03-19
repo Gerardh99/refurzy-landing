@@ -260,7 +260,7 @@ export default function GebruikersPage() {
               </div>
               <div className="text-ink-light text-sm">{scout.email}</div>
               <div className="text-center text-sm text-yellow-400">⭐ {scout.rating > 0 ? scout.rating : '—'}</div>
-              <div className="text-center text-sm text-gray-300">{scout.poolSize}</div>
+              <div className="text-center text-sm text-ink-light">{scout.poolSize}</div>
               <div className="text-center text-sm text-cyan font-semibold">{scout.plaatsingen}</div>
               <div className="flex justify-center"><StatusBadge status={scout.status} /></div>
               <div className="flex justify-end gap-2">

@@ -228,7 +228,7 @@ export default function ScoutInstellingen() {
               <th className="text-right pb-3">Bedrag</th>
             </tr>
           </thead>
-          <tbody className="text-gray-300">
+          <tbody className="text-ink-light">
             <tr className="border-b border-surface-border">
               <td className="py-3">08-03-2026</td>
               <td>Anna de Jong</td>

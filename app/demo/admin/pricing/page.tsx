@@ -140,7 +140,7 @@ export default function PricingAdminPage() {
           <div className="space-y-3">
             {experiences.map(exp => (
               <div key={exp} className="flex items-center justify-between">
-                <span className="text-sm text-gray-300 w-24">{EXPERIENCE_LABELS[exp]}</span>
+                <span className="text-sm text-ink-light w-24">{EXPERIENCE_LABELS[exp]}</span>
                 <input
                   type="number"
                   step="0.5"
@@ -159,7 +159,7 @@ export default function PricingAdminPage() {
           <div className="space-y-3">
             {educations.map(edu => (
               <div key={edu} className="flex items-center justify-between gap-4">
-                <span className="text-sm text-gray-300 w-16">{EDUCATION_LABELS[edu]}</span>
+                <span className="text-sm text-ink-light w-16">{EDUCATION_LABELS[edu]}</span>
                 <div className="flex items-center gap-2">
                   <div>
                     <label className="text-[10px] text-ink-faint block text-center">Normaal</label>
@@ -213,7 +213,7 @@ export default function PricingAdminPage() {
             <tbody>
               {experiences.map(exp => (
                 <tr key={exp} className="border-b border-surface-border hover:bg-surface-muted transition-colors">
-                  <td className="py-3 px-4 text-sm text-gray-300 font-medium">{EXPERIENCE_LABELS[exp]}</td>
+                  <td className="py-3 px-4 text-sm text-ink-light font-medium">{EXPERIENCE_LABELS[exp]}</td>
                   {educations.map(edu => {
                     const price = calculatePrice(exp, edu, pricing)
                     const isEqual = exp === '10+' && (edu === 'HBO' || edu === 'WO')

@@ -70,7 +70,7 @@ export default function ScoutMeldingen() {
                 {item.type === 'waarschuwing' && <span className="text-orange text-sm">&#9888;</span>}
               </div>
               <div className="flex-1">
-                <p className="text-gray-300 text-sm">{item.bericht}</p>
+                <p className="text-ink-light text-sm">{item.bericht}</p>
                 <p className="text-ink-faint text-xs mt-1">{new Date(item.datum).toLocaleDateString('nl-NL')}</p>
               </div>
             </div>

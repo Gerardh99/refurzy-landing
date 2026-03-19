@@ -60,19 +60,19 @@ export default function ScoutDashboard() {
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
                 <span className="text-ink-muted">Woonplaats</span>
-                <p className="text-gray-300">{k.woonplaats}</p>
+                <p className="text-ink-light">{k.woonplaats}</p>
               </div>
               <div>
                 <span className="text-ink-muted">Opleiding</span>
-                <p className="text-gray-300">{k.opleidingsniveau}</p>
+                <p className="text-ink-light">{k.opleidingsniveau}</p>
               </div>
               <div>
                 <span className="text-ink-muted">Werkervaring</span>
-                <p className="text-gray-300">{k.werkervaring}</p>
+                <p className="text-ink-light">{k.werkervaring}</p>
               </div>
               <div>
                 <span className="text-ink-muted">CV</span>
-                <p className="text-gray-300">{k.cvUploaded ? 'Geupload' : 'Ontbreekt'}</p>
+                <p className="text-ink-light">{k.cvUploaded ? 'Geupload' : 'Ontbreekt'}</p>
               </div>
             </div>
 
