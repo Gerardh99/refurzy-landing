@@ -42,14 +42,14 @@ export default function ScoutPipeline() {
 
   const sendNudge = () => {
     if (selectedKandidaat) {
-      setNudgeSent(new Set([...nudgeSent, selectedKandidaat.id]))
+      setNudgeSent(new Set(Array.from(nudgeSent).concat(selectedKandidaat.id)))
     }
     setShowNudgeModal(false)
   }
 
   const sendReport = () => {
     if (selectedKandidaat) {
-      setReportSent(new Set([...reportSent, selectedKandidaat.id]))
+      setReportSent(new Set(Array.from(reportSent).concat(selectedKandidaat.id)))
     }
     setShowReportModal(false)
   }
