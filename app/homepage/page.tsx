@@ -97,10 +97,10 @@ export default function HomePage() {
             {t('hero.roi', lang)}
           </p>
 
-          <p className="text-base md:text-lg text-gray-300 font-light max-w-2xl mx-auto mb-4 leading-relaxed">
+          <p className="text-base md:text-lg text-[rgba(249,251,255,0.65)] font-normal max-w-2xl mx-auto mb-4 leading-relaxed">
             {t('hero.sub1', lang)}
           </p>
-          <p className="text-base text-gray-400 font-light max-w-2xl mx-auto mb-10">
+          <p className="text-base md:text-lg text-[rgba(249,251,255,0.65)] font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
             {t('hero.sub2', lang)}
           </p>
 
