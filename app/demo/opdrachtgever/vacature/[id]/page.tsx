@@ -123,7 +123,7 @@ export default function VacatureDetailPage() {
       <div className="bg-white rounded-2xl border border-surface-border p-4 mb-6">
         <div className="flex items-center gap-6 text-xs text-ink-light">
           <span className="font-semibold text-ink">Score legenda:</span>
-          <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Profiel Match assessment</span>
+          <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Matching Scan</span>
           <span><span className="text-orange font-medium">50% korting</span> = nieuwe scout zonder track record</span>
         </div>
       </div>

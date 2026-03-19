@@ -23,7 +23,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/kandidaat', label: 'Mijn sollicitaties', icon: '📄' },
     { href: '/demo/kandidaat/profiel', label: 'Profiel', icon: '👤' },
-    { href: '/demo/kandidaat/scan', label: 'Profiel Match Scan', icon: '🧪' },
+    { href: '/demo/kandidaat/scan', label: 'Matching Scan', icon: '🧪' },
   ],
   admin: [
     { href: '/homepage', label: 'Homepage', icon: '🏠' },

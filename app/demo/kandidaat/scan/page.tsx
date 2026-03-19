@@ -31,7 +31,7 @@ export default function ProfielMatchScan() {
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Profiel Match Scan</h1>
+        <h1 className="text-2xl font-bold text-ink">Matching Scan</h1>
         <p className="text-ink-light mt-1">
           Beantwoord 35 vragen over je werkinteresses, kernwaarden en ideale organisatiecultuur
         </p>
