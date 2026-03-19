@@ -33,6 +33,7 @@ export default function HomePage() {
             <a href="#voor-wie" className="hover:text-white transition-colors">Voor wie</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+            <Link href="/wetenschap" className="hover:text-white transition-colors">Wetenschap</Link>
           </div>
           {user ? (
             <div className="flex items-center gap-4">
@@ -133,11 +134,11 @@ export default function HomePage() {
       <section className="py-24">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-block px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-xs font-semibold mb-4 tracking-wider uppercase">
-              Het probleem
+            <div className="inline-block px-3 py-1 bg-orange/10 border border-orange/20 rounded-full text-orange text-xs font-semibold mb-4 tracking-wider uppercase">
+              De uitdaging
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Waarom werving kapot is</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven nauwelijks.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Werving is achterhaald</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven niet. Processen die ontworpen zijn voor een markt die niet meer bestaat, kosten u meer dan u denkt.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -176,7 +177,7 @@ export default function HomePage() {
                 desc: 'De arbeidsmarkt is krapper dan ooit. Bureaus vissen in dezelfde vijver. Refurzy zet ervaren Talent Scouts in — professionals die al jaren netwerken hebben opgebouwd en weten waar het talent zit.',
               },
             ].map(pain => (
-              <div key={pain.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-red-500/20 transition-colors group">
+              <div key={pain.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-orange/20 transition-colors group">
                 <div className="text-2xl mb-4">{pain.icon}</div>
                 <h3 className="text-white font-semibold mb-2">{pain.title}</h3>
                 <p className="text-sm text-gray-400 leading-relaxed mb-2">{pain.desc}</p>
@@ -224,7 +225,7 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-3 text-white">Kandidaat</h3>
               <ol className="space-y-3 text-sm text-gray-400">
                 <li className="flex gap-3"><span className="text-orange font-bold">1.</span> Word uitgenodigd door een Talent Scout</li>
-                <li className="flex gap-3"><span className="text-orange font-bold">2.</span> Vul de 35-vragen M-Score assessment in</li>
+                <li className="flex gap-3"><span className="text-orange font-bold">2.</span> Vul de 35-vragen Matching Scan in</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">3.</span> Word objectief gematcht aan passende vacatures</li>
               </ol>
             </div>
