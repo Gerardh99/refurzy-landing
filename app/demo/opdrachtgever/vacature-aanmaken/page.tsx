@@ -258,7 +258,7 @@ export default function VacatureAanmakenPage() {
         {step === 4 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
-            <p className="text-ink-light text-sm mb-8">Deze criteria bepalen de prijs voor het ontgrendelen van een kandidaat.</p>
+            <p className="text-ink-light text-sm mb-8">Deze criteria bepalen de plaatsingsfee bij een succesvolle match. Profielen ontgrendelen is kosteloos.</p>
             <div className="grid grid-cols-2 gap-8">
               <div>
                 <label className="block text-sm text-ink-light mb-3">Minimaal opleidingsniveau *</label>
@@ -293,7 +293,7 @@ export default function VacatureAanmakenPage() {
               <div className="mt-8 bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-ink-light mb-1">Prijs per ontgrendeling (No Cure No Pay)</p>
+                    <p className="text-sm text-ink-light mb-1">Plaatsingsfee bij succesvolle match (excl. BTW)</p>
                     <div className="text-3xl font-bold text-ink">{formatPrice(price, pricing)}</div>
                     <p className="text-xs text-ink-muted mt-1">50% Scout · 50% Refurzy</p>
                   </div>
@@ -360,7 +360,7 @@ export default function VacatureAanmakenPage() {
             <div className="bg-surface-muted rounded-2xl border border-surface-border p-5 mb-6 text-sm text-ink-light max-h-40 overflow-y-auto leading-relaxed">
               <p className="font-semibold text-ink mb-2">Voorwaarden No Cure No Pay</p>
               <ul className="space-y-2 list-disc list-inside">
-                <li>U betaalt uitsluitend wanneer u een kandidaat aanneemt die via Refurzy is ontgrendeld.</li>
+                <li>U betaalt uitsluitend bij een succesvolle plaatsing (ondertekening arbeidsovereenkomst). Het ontgrendelen van profielen is kosteloos.</li>
                 <li>De plaatsingsfee is {formatPrice(price, pricing)} excl. BTW, op basis van {form.opleiding} + {EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}.</li>
                 <li>Alle bedragen zijn exclusief 21% BTW. 50% van de vergoeding gaat naar de Talent Scout, 50% naar Refurzy.</li>
                 <li>Bemiddeling buiten het platform om resulteert in een penalty van 100% van de vergoeding.</li>
