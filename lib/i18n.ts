@@ -66,8 +66,8 @@ export const translations = {
   },
   'pain.expensive.title': { nl: 'Steeds korter, steeds duurder', en: 'Shorter tenure, higher costs' },
   'pain.expensive.desc': {
-    nl: 'Een medewerker bleef vroeger zes jaar. Vandaag is dat anderhalf tot twee jaar. Maar de wervingskosten zijn niet gedaald — ze zijn gestegen. De terugverdientijd is korter dan de fee.',
-    en: 'An employee used to stay six years. Today it\'s one and a half to two years. But recruitment costs haven\'t dropped — they\'ve increased. The payback period is shorter than the fee.'
+    nl: 'Een medewerker bleef vroeger zes jaar. Vandaag is dat anderhalf tot twee jaar. Maar de wervingskosten zijn niet gedaald — ze zijn gestegen. En bij een verkeerde match begint het hele circus opnieuw.',
+    en: 'An employee used to stay six years. Today it\'s one and a half to two years. But recruitment costs haven\'t dropped — they\'ve increased. And with a bad hire, the whole cycle starts over.'
   },
   'pain.managers.title': { nl: 'Managers willen het niet doen', en: 'Managers don\'t want to do it' },
   'pain.managers.desc': {
