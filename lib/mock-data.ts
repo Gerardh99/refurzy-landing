@@ -22,23 +22,27 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-1', naam: 'Anna de Jong', initialen: 'A', anoniem: false,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 87, scoutRating: 4.9, scoutNaam: 'Sophie de Graaf',
-        status: 'aanbevolen', procesStatus: 'nieuw', unlocked: true,
+        deVriesFit: 87, scoutRating: 4.9, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        status: 'aanbevolen', procesStatus: 'arbeidsvoorwaarden', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '8 jaar', woonplaats: 'Amsterdam',
         email: 'anna.dejong@email.nl', telefoon: '06-12345678',
+        gesprekken: [
+          { id: 'g-1', type: 'kennismaking', datum: '2026-03-10', feedback: 'Zeer sterke kandidaat. Goede culturele fit, enthousiast over de rol. Inhoudelijk sterk.', rating: 5, status: 'afgerond' },
+          { id: 'g-2', type: 'verdieping', datum: '2026-03-14', feedback: 'Team was ook enthousiast. Past goed bij de bedrijfscultuur.', rating: 5, status: 'afgerond' },
+        ],
       },
       {
         id: 'k-2', naam: 'Jamal Usan', initialen: 'M', anoniem: true,
         hardeCriteriaMatch: 92, hardeCriteriaIcon: 'check',
-        deVriesFit: 71, scoutRating: 4.1, scoutNaam: 'Sophie de Graaf',
-        status: 'bekijk', procesStatus: 'nieuw', unlocked: false,
+        deVriesFit: 71, scoutRating: 4.1, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Utrecht',
       },
       {
         id: 'k-3', naam: 'Lisa Brouwer', initialen: 'L', anoniem: true,
         hardeCriteriaMatch: 76, hardeCriteriaIcon: 'warning',
-        deVriesFit: 53, scoutRating: 3.2, scoutNaam: 'Mark Jansen',
-        status: 'overweeg', procesStatus: 'nieuw', unlocked: false,
+        deVriesFit: 53, scoutRating: 3.2, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        status: 'overweeg', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '4 jaar', woonplaats: 'Den Haag',
       },
     ],
@@ -62,18 +66,27 @@ export const vacatures: Vacature[] = [
     },
     kandidaten: [
       {
-        id: 'k-4', naam: 'Thomas van Dijk', initialen: 'T', anoniem: true,
+        id: 'k-4', naam: 'Thomas van Dijk', initialen: 'T', anoniem: false,
         hardeCriteriaMatch: 95, hardeCriteriaIcon: 'check',
-        deVriesFit: 82, scoutRating: 4.5, scoutNaam: 'Sophie de Graaf',
-        status: 'aanbevolen', procesStatus: 'kennismaking', unlocked: false,
+        deVriesFit: 82, scoutRating: 4.5, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        status: 'aanbevolen', procesStatus: 'gesprek_plannen', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '10 jaar', woonplaats: 'Amsterdam',
+        email: 'thomas.vdijk@email.nl', telefoon: '06-34567890',
+        gesprekken: [],
+        nudges: [
+          { id: 'n-1', type: 'friendly', datum: '2026-03-16', bericht: 'Hi! Thomas van Dijk wacht op een uitnodiging voor een kennismakingsgesprek. Plan je het deze week in?', vanScout: true },
+        ],
       },
       {
         id: 'k-5', naam: 'Priya Sharma', initialen: 'P', anoniem: true,
         hardeCriteriaMatch: 88, hardeCriteriaIcon: 'check',
-        deVriesFit: 68, scoutRating: 3.8, scoutNaam: 'Mark Jansen',
-        status: 'bekijk', procesStatus: 'nieuw', unlocked: false,
+        deVriesFit: 68, scoutRating: 3.8, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        status: 'bekijk', procesStatus: 'feedback_geven', unlocked: true,
         opleidingsniveau: 'HBO', werkervaring: '7 jaar', woonplaats: 'Rotterdam',
+        email: 'priya.sharma@email.nl', telefoon: '06-45678901',
+        gesprekken: [
+          { id: 'g-3', type: 'kennismaking', datum: '2026-03-12', status: 'afgerond' },
+        ],
       },
     ],
   },
@@ -153,8 +166,8 @@ export const scoutKandidaten: Kandidaat[] = [
 ]
 
 export const kandidaatSollicitaties: Sollicitatie[] = [
-  { id: 's-1', vacatureTitle: 'Marketing Manager', company: 'TechVentures B.V.', status: 'Aanbevolen', datum: '2026-03-08' },
-  { id: 's-2', vacatureTitle: 'Brand Strategist', company: 'CreativeCo', status: 'In behandeling', datum: '2026-03-12' },
+  { id: 's-1', vacatureTitle: 'Marketing Manager', company: 'TechVentures B.V.', status: 'Arbeidsvoorwaarden', datum: '2026-03-08', procesStatus: 'arbeidsvoorwaarden', vacatureId: 'vac-1' },
+  { id: 's-2', vacatureTitle: 'Brand Strategist', company: 'CreativeCo', status: 'In behandeling', datum: '2026-03-12', procesStatus: 'gesprek_gepland', vacatureId: 'vac-ext-1' },
 ]
 
 export function calculateFee(opleidingsniveau: string, werkervaring: string): { fee: number; scoutFee: number; refurzyFee: number } {
@@ -165,3 +178,23 @@ export function calculateFee(opleidingsniveau: string, werkervaring: string): { 
   const fee = exp * edu * 1200
   return { fee, scoutFee: fee * 0.5, refurzyFee: fee * 0.5 }
 }
+
+// ─── Pipeline step definitions ──────────────────────────────────────────────
+export const pipelineSteps = [
+  { key: 'voorgesteld', label: 'Voorgesteld', icon: '📋', color: 'text-ink-muted' },
+  { key: 'contract_akkoord', label: 'Contract akkoord', icon: '✅', color: 'text-purple' },
+  { key: 'gesprek_plannen', label: 'Gesprek plannen', icon: '📅', color: 'text-orange' },
+  { key: 'gesprek_gepland', label: 'Gesprek gepland', icon: '🤝', color: 'text-blue-500' },
+  { key: 'feedback_geven', label: 'Feedback geven', icon: '💬', color: 'text-yellow-600' },
+  { key: 'vervolggesprek', label: 'Vervolggesprek', icon: '🔄', color: 'text-blue-500' },
+  { key: 'arbeidsvoorwaarden', label: 'Arbeidsvoorwaarden', icon: '💼', color: 'text-purple' },
+  { key: 'contract_getekend', label: 'Contract getekend', icon: '🎉', color: 'text-green-600' },
+] as const
+
+export const afwijzingsRedenen = [
+  { key: 'ervaring', label: 'Niet de juiste ervaring' },
+  { key: 'cultuur', label: 'Culturele mismatch' },
+  { key: 'salaris', label: 'Salariseis te hoog' },
+  { key: 'andere_kandidaat', label: 'Andere kandidaat gekozen' },
+  { key: 'anders', label: 'Anders' },
+] as const

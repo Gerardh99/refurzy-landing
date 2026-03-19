@@ -15,6 +15,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/scout', label: 'Talent Pool', icon: '👥' },
     { href: '/demo/scout/vacatures', label: 'Vacatures', icon: '📋' },
+    { href: '/demo/scout/pipeline', label: 'Pipeline', icon: '📈' },
     { href: '/demo/scout/kandidaat-uitnodigen', label: 'Kandidaat uitnodigen', icon: '✉️' },
     { href: '/demo/scout/meldingen', label: 'Meldingen', icon: '🔔' },
     { href: '/demo/scout/instellingen', label: 'Instellingen & Uitbetaling', icon: '⚙️' },
@@ -22,6 +23,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
   kandidaat: [
     { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/kandidaat', label: 'Mijn sollicitaties', icon: '📄' },
+    { href: '/demo/kandidaat/pipeline', label: 'Mijn voortgang', icon: '📈' },
     { href: '/demo/kandidaat/profiel', label: 'Profiel', icon: '👤' },
     { href: '/demo/kandidaat/scan', label: 'Matching Scan', icon: '🧪' },
   ],
@@ -31,6 +33,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/admin/pricing', label: 'Pricing', icon: '💰' },
     { href: '/demo/admin/landen', label: 'Landen', icon: '🌍' },
     { href: '/demo/admin/gebruikers', label: 'Gebruikers', icon: '👥' },
+    { href: '/demo/admin/uitbetalingen', label: 'Uitbetalingen', icon: '🏦' },
   ],
 }
 

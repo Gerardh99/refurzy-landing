@@ -194,13 +194,13 @@ export default function VacatureDetailPage() {
               {/* Acties */}
               <div className="flex justify-end gap-2">
                 {k.unlocked ? (
-                  <Link href={`/demo/opdrachtgever/kandidaat/${k.id}`} className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan/25 transition-colors border border-cyan/20">
-                    Bekijk profiel
+                  <Link href={`/demo/opdrachtgever/kandidaat/${vacature.id}/${k.id}`} className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan/25 transition-colors border border-cyan/20">
+                    Bekijk proces →
                   </Link>
                 ) : (
-                  <button onClick={() => setContractModal(k.id)} className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
-                    Ontgrendel
-                  </button>
+                  <Link href={`/demo/opdrachtgever/kandidaat/${vacature.id}/${k.id}`} className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
+                    Bekijk & ontgrendel →
+                  </Link>
                 )}
                 {k.status !== 'afgewezen' && (
                   <button onClick={() => handleAfwijzen(k.id)} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">

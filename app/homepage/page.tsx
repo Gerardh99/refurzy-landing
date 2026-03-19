@@ -201,6 +201,14 @@ export default function HomePage() {
                 <li className="flex gap-3"><span className="text-purple-light font-bold">2.</span> {t('how.scout.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-purple-light font-bold">3.</span> {t('how.scout.3', lang)}</li>
               </ol>
+              <div className="mt-5 pt-5 border-t border-purple/10">
+                <p className="text-xs text-purple-light font-medium mb-1">🌍 {lang === 'nl' ? 'Werk waar je wilt' : 'Work from anywhere'}</p>
+                <p className="text-xs text-gray-500">
+                  {lang === 'nl'
+                    ? 'Jouw netwerk is je business. Amsterdam, Bali of Barcelona — alles wat je nodig hebt is een laptop en je professionele netwerk. Verdien 50% van elke plaatsingsfee, waar je ook bent.'
+                    : 'Your network is your business. Amsterdam, Bali or Barcelona — all you need is a laptop and your professional network. Earn 50% of every placement fee, wherever you are.'}
+                </p>
+              </div>
             </div>
 
             {/* Kandidaat */}

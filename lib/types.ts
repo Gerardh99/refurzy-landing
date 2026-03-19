@@ -30,6 +30,42 @@ export interface HardeCriteria {
   maxReistijd: string
 }
 
+// ─── Pipeline statuses (ordered) ────────────────────────────────────────────
+export type ProcesStatus =
+  | 'voorgesteld'          // Scout has proposed the candidate
+  | 'contract_akkoord'     // Employer accepted contract, profile unlocked
+  | 'gesprek_plannen'      // Contact details visible, needs to schedule interview
+  | 'gesprek_gepland'      // Interview date set
+  | 'feedback_geven'       // Interview done, awaiting feedback
+  | 'vervolggesprek'       // Follow-up interview(s)
+  | 'arbeidsvoorwaarden'   // Salary negotiation phase
+  | 'contract_getekend'    // 🎉 Hired!
+  | 'afgewezen'            // Rejected at any stage
+
+export type AfwijzingsReden =
+  | 'ervaring'             // Niet de juiste ervaring
+  | 'cultuur'              // Culturele mismatch
+  | 'salaris'              // Salariseis te hoog
+  | 'andere_kandidaat'     // Andere kandidaat gekozen
+  | 'anders'               // Anders
+
+export interface Gesprek {
+  id: string
+  type: 'kennismaking' | 'verdieping' | 'arbeidsvoorwaarden'
+  datum: string            // ISO date
+  feedback?: string        // Free text feedback
+  rating?: number          // 1-5 stars (only on rejection or completion)
+  status: 'gepland' | 'afgerond' | 'geannuleerd'
+}
+
+export interface Nudge {
+  id: string
+  type: 'friendly' | 'urgent' | 'rapport'
+  datum: string
+  bericht: string
+  vanScout: boolean        // true = from scout, false = from Refurzy
+}
+
 export interface KandidaatMatch {
   id: string
   naam: string
@@ -40,14 +76,22 @@ export interface KandidaatMatch {
   deVriesFit: number
   scoutRating: number
   scoutNaam: string
+  scoutId?: string
   status: 'aanbevolen' | 'bekijk' | 'overweeg' | 'afgewezen' | 'aangenomen'
-  procesStatus?: 'nieuw' | 'kennismaking' | 'arbeidsvoorwaarden' | 'contract_getekend' | 'afgewezen' | 'aangenomen'
+  procesStatus: ProcesStatus
   unlocked: boolean
   opleidingsniveau: 'MBO' | 'HBO' | 'WO'
   werkervaring: string
   woonplaats: string
   email?: string
   telefoon?: string
+  gesprekken?: Gesprek[]
+  nudges?: Nudge[]
+  afwijzingsReden?: AfwijzingsReden
+  afwijzingsToelichting?: string
+  afwijzingsRating?: number  // 1-5 stars
+  contractDatum?: string     // When contract was signed
+  fitGarantieStart?: string  // Start of 12-month guarantee
 }
 
 export interface TalentScout {
@@ -56,6 +100,12 @@ export interface TalentScout {
   rating: number
   aantalPlaatsingen: number
   anoniem: boolean
+  // Pro Scout fields
+  isProScout: boolean
+  kvkNummer?: string
+  bedrijfsnaam?: string
+  btwNummer?: string
+  zakelijkIban?: string
 }
 
 export interface Kandidaat {
@@ -78,4 +128,6 @@ export interface Sollicitatie {
   company: string
   status: string
   datum: string
+  procesStatus?: ProcesStatus
+  vacatureId?: string
 }

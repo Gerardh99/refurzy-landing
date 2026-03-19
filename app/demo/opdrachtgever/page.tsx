@@ -75,7 +75,10 @@ export default function OpdrachtgeverDashboard() {
         <div className="space-y-3">
           {vacatures.map((vacature) => {
             const nieuweKandidaten = vacature.kandidaten.filter(
-              (k) => k.procesStatus === 'nieuw'
+              (k) => k.procesStatus === 'voorgesteld'
+            ).length
+            const actieVereist = vacature.kandidaten.filter(
+              (k) => k.procesStatus === 'gesprek_plannen' || k.procesStatus === 'feedback_geven'
             ).length
 
             return (
