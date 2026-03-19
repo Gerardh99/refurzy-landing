@@ -54,7 +54,7 @@ Fee = Ervaringspunten × Opleidingspunten × Waarde per punt (€1.200 NL)
 
 ### BTW & Uitbetaling
 - **Alle prijzen op het platform zijn exclusief BTW**
-- **Particuliere scout (geen KVK)**: ontvangt 50% van de fee excl. BTW. Refurzy houdt loonheffing in (IB-47)
+- **Particuliere scout (geen KVK)**: ontvangt 50% van de fee excl. BTW (bruto). Geen loonheffing — Refurzy rapporteert jaarlijks aan de Belastingdienst via IB-47. Scout is zelf verantwoordelijk voor inkomstenbelasting
 - **Pro Scout (met KVK)**: ontvangt 50% van de fee excl. BTW + 21% BTW daarboven. Factureert als ondernemer
 - **Automatische facturatie**: Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur
 - **Uitbetaling trigger**: Scout wordt uitbetaald zodra de opdrachtgever heeft betaald
@@ -452,4 +452,4 @@ lib/
 10. **Exclusiviteit**: Optioneel 2-weken exclusiviteit met 30% premium (gaat naar scout)
 11. **Prijzen excl. BTW**: Alle prijzen op het platform zijn exclusief BTW
 12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
-13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee minus loonheffing
+13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)

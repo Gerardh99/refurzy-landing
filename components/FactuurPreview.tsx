@@ -98,7 +98,7 @@ export default function FactuurPreview({
             ) : (
               <tr>
                 <td className="py-1.5 text-ink-light text-xs" colSpan={2}>
-                  Geen BTW — uitbetaling als natuurlijk persoon (loonheffing wordt ingehouden)
+                  Geen BTW — uitbetaling als particulier. Bedrag wordt gerapporteerd aan de Belastingdienst (IB-47). U bent zelf verantwoordelijk voor inkomstenbelasting.
                 </td>
               </tr>
             )}
@@ -121,7 +121,7 @@ export default function FactuurPreview({
         {isProScout ? (
           <p><strong>Pro Scout factuur</strong> — BTW wordt bovenop de scout fee uitbetaald. U ontvangt EUR {totaalUitbetaling.toLocaleString('nl-NL', { minimumFractionDigits: 2 })} zodra de opdrachtgever heeft betaald.</p>
         ) : (
-          <p><strong>Particuliere uitbetaling</strong> — Refurzy houdt loonheffing in conform de IB-47 regeling. Het netto bedrag wordt overgemaakt zodra de opdrachtgever heeft betaald. Word <a href="/demo/scout/instellingen" className="underline">Pro Scout</a> om BTW terug te ontvangen.</p>
+          <p><strong>Particuliere uitbetaling</strong> — U ontvangt het volledige bruto bedrag. Refurzy rapporteert dit jaarlijks aan de Belastingdienst (IB-47). U bent zelf verantwoordelijk voor de inkomstenbelasting. Word <a href="/demo/scout/instellingen" className="underline">Pro Scout</a> om als ondernemer te factureren en BTW te ontvangen.</p>
         )}
       </div>
     </div>

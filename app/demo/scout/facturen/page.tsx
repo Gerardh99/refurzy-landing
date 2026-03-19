@@ -100,7 +100,7 @@ export default function ScoutFacturen() {
             Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur.
             Zodra de opdrachtgever heeft betaald, wordt uw fee direct overgemaakt op uw IBAN.
             {' '}<strong>Pro Scouts</strong> ontvangen 50% van de plaatsingsfee + 21% BTW.
-            {' '}<strong>Particuliere scouts</strong> ontvangen 50% minus loonheffing.
+            {' '}<strong>Particuliere scouts</strong> ontvangen 50% bruto — geen inhouding. Refurzy rapporteert dit jaarlijks aan de Belastingdienst (IB-47).
           </p>
         </div>
       </div>
