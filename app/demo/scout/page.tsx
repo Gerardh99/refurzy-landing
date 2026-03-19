@@ -11,6 +11,33 @@ export default function ScoutDashboard() {
         <p className="text-ink-light mt-1">{scoutKandidaten.length} kandidaten in je netwerk</p>
       </div>
 
+      {/* Introductiekorting banner voor nieuwe scouts */}
+      <div className="bg-gradient-to-r from-green-50 to-cyan/5 border border-green-200 rounded-2xl p-5">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+            <span className="text-xl">🚀</span>
+          </div>
+          <div>
+            <h3 className="text-ink font-bold text-sm">Jouw eerste match met introductiekorting</h3>
+            <p className="text-ink-light text-sm mt-1 leading-relaxed">
+              Als nieuwe scout bieden we jouw kandidaten aan met <span className="text-green-600 font-semibold">50% korting</span> voor de opdrachtgever.
+              Dit maakt het extra aantrekkelijk om jouw kandidaat een kans te geven. Na je eerste succesvolle plaatsing
+              bouw je je reputatie op en gelden de reguliere tarieven.
+            </p>
+            <div className="flex items-center gap-4 mt-3 text-xs">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                <span className="text-ink-muted">Eerste plaatsing: 25% fee voor jou (i.p.v. 50%)</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-cyan"></span>
+                <span className="text-ink-muted">Daarna: reguliere 50% fee</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {scoutKandidaten.map((k) => (
           <div key={k.id} className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">

@@ -226,46 +226,46 @@ export default function VacatureDetailPage() {
             <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-lg w-full shadow-2xl">
               <h3 className="text-xl font-bold text-ink mb-2">Profiel ontgrendelen</h3>
               <p className="text-ink-light text-sm mb-4">
-                Om het profiel en contactgegevens te bekijken, gaat u akkoord met de voorwaarden.
+                Om het profiel en contactgegevens te bekijken, gaat u akkoord met de plaatsingsovereenkomst. Het ontgrendelen is kosteloos — u betaalt alleen bij een succesvolle match.
               </p>
 
               {newScout && (
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 mb-4 text-sm">
-                  <span className="text-green-400 font-semibold">50% introductiekorting!</span>
-                  <span className="text-green-400/70 ml-1">Deze Talent Scout heeft nog geen reputatiescore. U betaalt slechts de helft.</span>
+                <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mb-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-lg">🎉</span>
+                    <span className="text-green-600 font-bold text-sm">50% introductiekorting!</span>
+                  </div>
+                  <p className="text-green-600/80 text-xs leading-relaxed">
+                    Deze Talent Scout doet zijn/haar eerste bemiddeling via Refurzy en heeft daarom nog geen reputatiescore.
+                    Om u te laten kennismaken betaalt u slechts de helft van de plaatsingsfee bij een succesvolle match.
+                  </p>
                 </div>
               )}
 
-              <div className="bg-surface-muted rounded-xl border border-surface-border p-4 mb-4 text-sm text-gray-300 max-h-32 overflow-y-auto">
-                <p className="font-semibold text-ink mb-2">Contractvoorwaarden</p>
-                <p>Door het ontgrendelen gaat u akkoord met de introductie-vergoeding. Bemiddeling buiten het platform om resulteert in een penalty van 100% van de vergoeding.</p>
-                <p className="mt-2">De vergoeding is afhankelijk van opleidingsniveau en werkervaring. Factuur volgt bij ondertekening arbeidscontract.</p>
+              <div className="bg-surface-muted rounded-xl border border-surface-border p-4 mb-4 text-sm text-ink-light max-h-40 overflow-y-auto">
+                <p className="font-semibold text-ink mb-2">Plaatsingsovereenkomst</p>
+                <ul className="space-y-1.5 text-xs leading-relaxed">
+                  <li>• Het ontgrendelen van het profiel is <span className="text-ink font-medium">kosteloos</span>.</li>
+                  <li>• U betaalt <span className="text-ink font-medium">alleen bij een succesvolle plaatsing</span> (ondertekend arbeidscontract).</li>
+                  <li>• De plaatsingsfee is afhankelijk van opleidingsniveau en werkervaring{newScout ? ' (50% introductiekorting toegepast)' : ''}.</li>
+                  <li>• Bemiddeling buiten het platform om resulteert in een boete van 100% van de vergoeding.</li>
+                  <li>• Bij M-Score ≥80% geldt de <span className="text-ink font-medium">Fit Garantie</span> (12 maanden).</li>
+                </ul>
               </div>
 
               <label className="flex items-start gap-3 mb-4 cursor-pointer group">
                 <input type="checkbox" checked={akkoord} onChange={(e) => setAkkoord(e.target.checked)} className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-surface-muted accent-cyan" />
-                <span className="text-sm text-gray-300 group-hover:text-ink transition-colors">
-                  Ik ga akkoord met de voorwaarden, het penalty-beding en de AVG-bepalingen
+                <span className="text-sm text-ink-light group-hover:text-ink transition-colors">
+                  Ik ga akkoord met de plaatsingsovereenkomst, het penalty-beding en de AVG-bepalingen
                 </span>
               </label>
-
-              <div className="mb-6">
-                <p className="text-sm text-ink font-semibold mb-3">Betaalgegevens</p>
-                <div className="space-y-3">
-                  <input type="text" placeholder="4242 4242 4242 4242" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-cyan/50" />
-                  <div className="grid grid-cols-2 gap-3">
-                    <input type="text" placeholder="MM/JJ" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-cyan/50" />
-                    <input type="text" placeholder="CVC" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder-ink-faint focus:outline-none focus:border-cyan/50" />
-                  </div>
-                </div>
-              </div>
 
               <div className="flex gap-3">
                 <button onClick={() => { setContractModal(null); setAkkoord(false) }} className="flex-1 bg-surface-muted border border-surface-border text-ink-light px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-ink transition-colors">
                   Annuleren
                 </button>
-                <button onClick={() => handleUnlock(contractModal)} disabled={!akkoord} className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${akkoord ? 'bg-cyan text-navy-dark hover:bg-cyan-light' : 'bg-gray-700 text-ink-muted cursor-not-allowed'}`}>
-                  Onderteken &amp; betaal
+                <button onClick={() => handleUnlock(contractModal)} disabled={!akkoord} className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${akkoord ? 'bg-cyan text-navy-dark hover:bg-cyan-light' : 'bg-surface-muted text-ink-muted cursor-not-allowed'}`}>
+                  Akkoord &amp; profiel bekijken
                 </button>
               </div>
             </div>
