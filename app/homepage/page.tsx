@@ -31,9 +31,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy-dark text-white font-[Poppins]">
+    <div className="min-h-screen bg-navy text-white font-[Poppins]">
       {/* ═══ NAVIGATION ═══ */}
-      <nav className="fixed top-0 w-full z-50 bg-navy-dark/80 backdrop-blur-md border-b border-purple/10">
+      <nav className="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md border-b border-purple/10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/homepage">
             <img src="/logo-white.png" alt="Refurzy" className="h-7" />
