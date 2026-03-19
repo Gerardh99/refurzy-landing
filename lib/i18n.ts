@@ -30,8 +30,8 @@ export const translations = {
   'hero.trust2': { nl: '🔬 35-vragen Matching Scan', en: '🔬 35-question Matching Scan' },
   'hero.trust3': { nl: '💰 No Cure No Pay', en: '💰 No Cure No Pay' },
   'hero.sources': {
-    nl: '¹ SHRM, 2024 · ² Leadership IQ · ³ VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024',
-    en: '¹ SHRM, 2024 · ² Leadership IQ · ³ VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024'
+    nl: '¹ SHRM, 2024 · ² Leadership IQ · ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam',
+    en: '¹ SHRM, 2024 · ² Leadership IQ · ³ Based on SHRM, Kristof-Brown et al. and VU Amsterdam'
   },
 
   // ─── Social proof bar ──────────────────────────────────────────────────────

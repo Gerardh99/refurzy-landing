@@ -104,7 +104,7 @@ export default function LandingPage() {
         </p>
 
         <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.45)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
-          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ VU Amsterdam (De Vries, 2026; N=309)
+          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam
         </p>
 
         <div className="divider" />
