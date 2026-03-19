@@ -74,7 +74,7 @@ export default function LoginPage() {
             ].map(acc => (
               <button
                 key={acc.email}
-                onClick={() => { setEmail(acc.email); setPassword('Nummer1platform') }}
+                onClick={() => { setEmail(acc.email) }}
                 className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-purple/10 transition-colors text-left"
               >
                 <span>{acc.icon}</span>
@@ -83,7 +83,7 @@ export default function LoginPage() {
               </button>
             ))}
           </div>
-          <p className="text-[10px] text-gray-700 mt-3">Wachtwoord: Nummer1platform</p>
+          <p className="text-[10px] text-gray-700 mt-3">Klik op een account om het e-mailadres in te vullen. Voer het wachtwoord handmatig in.</p>
         </div>
       </div>
     </div>

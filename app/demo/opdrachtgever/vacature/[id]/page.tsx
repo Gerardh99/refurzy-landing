@@ -134,7 +134,7 @@ export default function VacatureDetailPage() {
           <h2 className="text-white font-semibold">Kandidaten ({kandidaten.length})</h2>
         </div>
 
-        <div className="hidden md:grid grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_2fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
+        <div className="hidden md:grid grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1fr_2fr] gap-2 px-6 py-3 text-xs text-gray-500 uppercase tracking-wider border-b border-purple/10 bg-navy-dark/50">
           <div>Kandidaat</div>
           <div className="text-center">Harde Criteria</div>
           <div className="text-center">M-Score</div>
@@ -148,7 +148,7 @@ export default function VacatureDetailPage() {
           const isMaster = k.scoutRating >= 3.5
 
           return (
-            <div key={k.id} className="grid grid-cols-1 md:grid-cols-[3fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr_2fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors">
+            <div key={k.id} className="grid grid-cols-1 md:grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1fr_2fr] gap-2 px-6 py-4 border-b border-purple/5 items-center hover:bg-purple/5 transition-colors">
               {/* Kandidaat */}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple-light font-bold text-sm">
