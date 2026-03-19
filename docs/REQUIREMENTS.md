@@ -274,6 +274,20 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │         ├── Bedrijfsgegevens (KVK, BTW, type relatie)    │
 │         └── Transactiedetails (factuurnr, data, status)  │
 │                                                           │
+│  6. SCAN GEBRUIK (VU AMSTERDAM)                          │
+│     ├── Log van alle Matching Scan afnames               │
+│     │   ├── Datum + tijd                                 │
+│     │   ├── Type (kandidaat / organisatie)                │
+│     │   ├── Gebruiker (naam + email)                     │
+│     │   ├── Vacature + bedrijf                           │
+│     │   └── Status (facturabel / test)                   │
+│     ├── Test-email configuratie                          │
+│     │   ├── Lijst van test-emailadressen                 │
+│     │   ├── Automatische detectie testgebruik            │
+│     │   └── Handmatig uitsluiten per afname              │
+│     ├── Filtering: jaar, maand, facturabel/test          │
+│     └── CSV export facturabel gebruik voor VU            │
+│                                                           │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -454,6 +468,7 @@ lib/
 12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
 13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)
 14. **Zelfstandigheid scout**: De Talent Scout werkt volledig voor eigen rekening en risico. Bepaalt zelf wanneer, hoe, hoeveel en waar opdrachten worden vervuld. Geen arbeidsrelatie met Refurzy.
+15. **VU Amsterdam licentie**: Refurzy betaalt de VU per afgenomen Matching Scan. Intern testgebruik wordt uitgefilterd op basis van test-emailadressen. Alle afnames worden gelogd met datum, type, gebruiker en status.
 
 ---
 

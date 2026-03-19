@@ -36,6 +36,7 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/admin/landen', label: 'Landen', icon: '🌍' },
     { href: '/demo/admin/gebruikers', label: 'Gebruikers', icon: '👥' },
     { href: '/demo/admin/uitbetalingen', label: 'Uitbetalingen', icon: '🏦' },
+    { href: '/demo/admin/scan-gebruik', label: 'Scan Gebruik (VU)', icon: '🎓' },
   ],
 }
 
