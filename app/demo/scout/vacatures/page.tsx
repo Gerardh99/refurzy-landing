@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { allVacatures } from '@/lib/mock-data'
 
 export default function ScoutVacatures() {
@@ -84,10 +85,10 @@ export default function ScoutVacatures() {
 
 function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle: () => void }) {
   return (
-    <div className="bg-white rounded-2xl border border-surface-border p-6 flex items-start justify-between gap-4">
-      <div className="flex-1 space-y-2">
+    <div className="bg-white rounded-2xl border border-surface-border p-6 flex items-start justify-between gap-4 hover:border-purple/30 transition-colors">
+      <Link href={`/demo/scout/vacature/${v.id}`} className="flex-1 space-y-2">
         <div className="flex items-center gap-3">
-          <h3 className="text-ink font-semibold">{v.title}</h3>
+          <h3 className="text-ink font-semibold hover:text-purple transition-colors">{v.title}</h3>
           <span className="text-xs text-purple bg-purple/10 px-2 py-0.5 rounded-full">{v.company}</span>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink-light">
@@ -98,7 +99,7 @@ function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle
         <div className="text-xs text-ink-muted mt-1">
           Harde criteria: {v.hardeCriteria.opleidingsniveau} &middot; {v.hardeCriteria.minimaleErvaring} &middot; {v.hardeCriteria.opKantoor}
         </div>
-      </div>
+      </Link>
       <button
         onClick={onToggle}
         className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-ink-faint hover:text-cyan/60'}`}

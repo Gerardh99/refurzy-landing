@@ -1,6 +1,7 @@
 'use client'
 
 import { useParams } from 'next/navigation'
+import Link from 'next/link'
 import { allVacatures } from '@/lib/mock-data'
 import FitScore from '@/components/FitScore'
 import StatusBadge from '@/components/StatusBadge'
@@ -19,6 +20,7 @@ export default function ScoutVacatureDetail() {
 
   return (
     <div className="space-y-8">
+      <Link href="/demo/scout/vacatures" className="text-ink-light hover:text-cyan text-sm inline-flex items-center gap-1 transition-colors">← Terug naar vacatures</Link>
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-ink">{vacature.title}</h1>
@@ -27,6 +29,19 @@ export default function ScoutVacatureDetail() {
         <button className="px-5 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors">
           Kandidaat voordragen
         </button>
+      </div>
+
+      {/* Vacature info */}
+      <div className="bg-white rounded-2xl border border-surface-border p-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
+          <div><span className="text-ink-muted">Salaris</span><p className="text-ink font-medium">{vacature.salaris || '€4.000 – €6.000'}</p></div>
+          <div><span className="text-ink-muted">Deadline</span><p className="text-ink font-medium">{new Date(vacature.deadline).toLocaleDateString('nl-NL')}</p></div>
+          <div><span className="text-ink-muted">Contract</span><p className="text-ink font-medium">Vast</p></div>
+          <div><span className="text-ink-muted">Geplaatst</span><p className="text-ink font-medium">2 weken geleden</p></div>
+        </div>
+        <p className="text-sm text-ink-light leading-relaxed">
+          We zoeken een ervaren {vacature.title} die onze organisatie versterkt. De ideale kandidaat combineert vakkennis met een sterke culturele fit. Je werkt nauw samen met het team en draagt bij aan de groeidoelstellingen van {vacature.company}.
+        </p>
       </div>
 
       <div className="bg-white rounded-2xl border border-surface-border p-6">
