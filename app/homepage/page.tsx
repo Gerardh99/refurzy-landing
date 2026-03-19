@@ -82,17 +82,16 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <div className="inline-block px-4 py-1.5 bg-cyan/10 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-8 tracking-wider uppercase">
-            {t('hero.tagline', lang)}
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-3">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-2">
             <span className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent">
-              {t('hero.h1a', lang)}
+              {t('hero.tagline', lang).split('.')[0]}.
             </span>
+            <br />
+            {t('hero.tagline', lang).split('.')[1]?.trim()}.
           </h1>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-2">
-            {t('hero.h1b', lang)}
-          </h1>
+          <p className="text-lg md:text-xl text-[rgba(249,251,255,0.65)] font-normal mb-2 mt-6">
+            {t('hero.h1a', lang)} {t('hero.h1b', lang)}
+          </p>
           <p className="text-lg md:text-xl text-cyan font-semibold mb-8">
             {t('hero.roi', lang)}
           </p>
