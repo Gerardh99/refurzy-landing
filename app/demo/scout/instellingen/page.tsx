@@ -46,12 +46,12 @@ export default function ScoutInstellingen() {
 
       {/* Blokkering banner */}
       {geblokkeerd && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-6 mb-6">
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">⛔</span>
             <div>
-              <h3 className="font-semibold text-red-400 mb-1">Account geblokkeerd voor nieuwe bemiddelingen</h3>
-              <p className="text-red-300/80 text-sm mb-3">
+              <h3 className="font-semibold text-red-700 mb-1">Account geblokkeerd voor nieuwe bemiddelingen</h3>
+              <p className="text-red-600 text-sm mb-3">
                 Je hebt het maximum van {maxBemiddelingenParticulier} bemiddelingen als particulier bereikt.
                 Om verder te kunnen bemiddelen moet je je registreren als ZZP&apos;er bij de KvK.
               </p>
