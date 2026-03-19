@@ -6,11 +6,13 @@ import { UserRole } from '@/lib/types'
 
 const navItems: Record<UserRole, { href: string; label: string; icon: string }[]> = {
   opdrachtgever: [
+    { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/opdrachtgever', label: 'Dashboard', icon: '📊' },
     { href: '/demo/opdrachtgever/vacature-aanmaken', label: 'Vacature aanmaken', icon: '➕' },
     { href: '/demo/opdrachtgever/instellingen', label: 'Instellingen', icon: '⚙️' },
   ],
   scout: [
+    { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/scout', label: 'Talent Pool', icon: '👥' },
     { href: '/demo/scout/vacatures', label: 'Vacatures', icon: '📋' },
     { href: '/demo/scout/kandidaat-uitnodigen', label: 'Kandidaat uitnodigen', icon: '✉️' },
@@ -18,11 +20,13 @@ const navItems: Record<UserRole, { href: string; label: string; icon: string }[]
     { href: '/demo/scout/instellingen', label: 'Instellingen & Uitbetaling', icon: '⚙️' },
   ],
   kandidaat: [
+    { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/kandidaat', label: 'Mijn sollicitaties', icon: '📄' },
     { href: '/demo/kandidaat/profiel', label: 'Profiel', icon: '👤' },
     { href: '/demo/kandidaat/scan', label: 'Profiel Match Scan', icon: '🧪' },
   ],
   admin: [
+    { href: '/homepage', label: 'Homepage', icon: '🏠' },
     { href: '/demo/admin', label: 'Dashboard', icon: '📊' },
     { href: '/demo/admin/pricing', label: 'Pricing', icon: '💰' },
     { href: '/demo/admin/landen', label: 'Landen', icon: '🌍' },

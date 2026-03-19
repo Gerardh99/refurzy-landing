@@ -1,10 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { getUser, getRolePath } from '@/lib/auth'
+import { User } from '@/lib/types'
+
+const roleLabels: Record<string, string> = {
+  opdrachtgever: 'Opdrachtgever',
+  scout: 'Talent Scout',
+  kandidaat: 'Kandidaat',
+  admin: 'Refurzy Admin',
+}
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    setUser(getUser())
+  }, [])
 
   return (
     <div className="min-h-screen bg-navy-dark text-white font-[Poppins]">
@@ -20,14 +34,29 @@ export default function HomePage() {
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
-              Inloggen
-            </Link>
-            <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-              Gratis starten
-            </Link>
-          </div>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple-light text-xs font-bold">
+                  {user.name.charAt(0)}
+                </div>
+                <span className="text-xs text-gray-400">{user.name}</span>
+                <span className="px-1.5 py-0.5 bg-purple/10 rounded text-purple-light text-[10px] font-medium">{roleLabels[user.role]}</span>
+              </div>
+              <Link href={getRolePath(user.role)} className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+                Ga naar dashboard →
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
+                Inloggen
+              </Link>
+              <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+                Gratis starten
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
 

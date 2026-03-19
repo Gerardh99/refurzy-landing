@@ -15,7 +15,7 @@ export default function LoginPage() {
     setError('')
     const user = login(email, password)
     if (user) {
-      router.push(getRolePath(user.role))
+      router.push('/homepage')
     } else {
       setError('Ongeldige inloggegevens.')
     }
