@@ -117,6 +117,7 @@ export interface Kandidaat {
   opleidingsniveau: 'MBO' | 'HBO' | 'WO'
   werkervaring: string
   huidigeRol: string
+  voorkeursFunctie: string
   scanCompleted: boolean
   cvUploaded: boolean
   scoutId: string

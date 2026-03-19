@@ -140,6 +140,7 @@ export const scoutKandidaten: Kandidaat[] = [
     telefoon: '06-12345678', woonplaats: 'Amsterdam',
     opleidingsniveau: 'WO', werkervaring: '8 jaar',
     huidigeRol: 'Marketing Lead bij CreativeAgency',
+    voorkeursFunctie: 'Marketing Manager',
     scanCompleted: true, cvUploaded: true, scoutId: 'scout-1',
   },
   {
@@ -147,6 +148,7 @@ export const scoutKandidaten: Kandidaat[] = [
     telefoon: '06-23456789', woonplaats: 'Utrecht',
     opleidingsniveau: 'HBO', werkervaring: '6 jaar',
     huidigeRol: 'Digital Marketing Specialist',
+    voorkeursFunctie: 'Marketing Manager',
     scanCompleted: true, cvUploaded: true, scoutId: 'scout-1',
   },
   {
@@ -154,6 +156,7 @@ export const scoutKandidaten: Kandidaat[] = [
     telefoon: '06-34567890', woonplaats: 'Amsterdam',
     opleidingsniveau: 'WO', werkervaring: '10 jaar',
     huidigeRol: 'Lead Developer bij FinTechCo',
+    voorkeursFunctie: 'Senior Software Developer',
     scanCompleted: true, cvUploaded: true, scoutId: 'scout-1',
   },
   {
@@ -161,6 +164,7 @@ export const scoutKandidaten: Kandidaat[] = [
     telefoon: '06-45678901', woonplaats: 'Haarlem',
     opleidingsniveau: 'HBO', werkervaring: '3 jaar',
     huidigeRol: 'Junior Accountant',
+    voorkeursFunctie: 'Financial Controller',
     scanCompleted: false, cvUploaded: true, scoutId: 'scout-1',
   },
 ]

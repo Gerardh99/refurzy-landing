@@ -206,6 +206,8 @@ export default function ScoutVacatureDetail() {
                         {beschikbareKandidaten.map(k => {
                           const isSelected = selectedKandidaat?.id === k.id
                           const feeInfo = calculateFee(k.opleidingsniveau, k.werkervaring)
+                          const voorkeurMatcht = vacature.title.toLowerCase().includes(k.voorkeursFunctie.toLowerCase())
+                            || k.voorkeursFunctie.toLowerCase().includes(vacature.title.toLowerCase())
                           return (
                             <button
                               key={k.id}
@@ -230,6 +232,19 @@ export default function ScoutVacatureDetail() {
                                   <p className="text-xs text-ink-muted">{k.opleidingsniveau} · {k.werkervaring}</p>
                                   <p className="text-xs text-ink-light">{k.woonplaats}</p>
                                 </div>
+                              </div>
+                              {/* Voorkeursfunctie */}
+                              <div className="mt-2 flex items-center gap-1.5">
+                                {voorkeurMatcht ? (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-50 text-green-700 text-xs font-medium">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                    Voorkeur: {k.voorkeursFunctie}
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-muted text-ink-muted text-xs">
+                                    🎯 Voorkeur: {k.voorkeursFunctie}
+                                  </span>
+                                )}
                               </div>
                               {isSelected && (
                                 <div className="mt-3 pt-3 border-t border-purple/10">
