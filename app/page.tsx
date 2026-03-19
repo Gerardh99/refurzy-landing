@@ -96,12 +96,15 @@ export default function LandingPage() {
         <h1><span className="gradient-text">Redefining Recruitment.</span> Forever.</h1>
 
         <p className="subtitle">
-          De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven nauwelijks.<br /><br />
-          Waar een hire vroeger zes jaar waarde cre&euml;erde, is dat vandaag anderhalf tot twee jaar. Toch blijven processen achterhaald, onnodig kostbaar en vaak gebaseerd op onderbuikgevoel.
+          Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een modaal salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²
         </p>
 
         <p className="body-text">
-          Refurzy draait het om. Met wetenschap als fundament en technologie als motor maken wij werving sneller, objectiever en voor een fractie van de kosten.
+          De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay. ROI vanaf 336%.³
+        </p>
+
+        <p style={{fontSize: '0.65rem', color: 'rgba(249,251,255,0.25)', textAlign: 'center', maxWidth: '480px', marginBottom: '48px', lineHeight: '1.6'}}>
+          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ Op basis van VU Amsterdam (De Vries, 2026; N=309), SHRM, Kristof-Brown et al.
         </p>
 
         <div className="divider" />
@@ -169,7 +172,7 @@ const landingCSS = `
   h1 { font-size:clamp(1.8rem,5vw,2.6rem); font-weight:600; text-align:center; margin-bottom:20px; line-height:1.3; animation:fadeInUp 0.8s ease-out 0.2s both; }
   .gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
   .subtitle { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.8); max-width:560px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.4s both; }
-  .body-text { font-size:clamp(0.9rem,2vw,0.95rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.6); max-width:520px; line-height:1.7; margin-bottom:48px; animation:fadeInUp 0.8s ease-out 0.5s both; }
+  .body-text { font-size:clamp(0.9rem,2vw,0.95rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.6); max-width:520px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
   .divider { width:60px; height:2px; background:var(--gradient); margin:0 auto 48px; border-radius:2px; animation:fadeInUp 0.8s ease-out 0.55s both; }
   .cta-section { width:100%; max-width:500px; animation:fadeInUp 0.8s ease-out 0.6s both; }
   .cta-label { font-size:0.85rem; font-weight:500; text-align:center; color:rgba(249,251,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }

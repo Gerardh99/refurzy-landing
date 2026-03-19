@@ -129,7 +129,7 @@ export default function HomePage() {
       <section className="border-y border-purple/10 bg-navy-light/50 py-8">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { value: '€44k–€175k', label: t('stats.mishireCost', lang) },
+            { value: '50–200%', label: t('stats.mishireCost', lang) },
             { value: '46%', label: t('stats.failRate', lang) },
             { value: '336%+', label: t('stats.roi', lang) },
             { value: '81%', label: t('stats.doubt', lang) },

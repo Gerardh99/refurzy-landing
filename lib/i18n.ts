@@ -17,12 +17,12 @@ export const translations = {
   'hero.h1b': { nl: 'Niet op buikgevoel.', en: 'Not on gut feeling.' },
   'hero.roi': { nl: 'ROI vanaf 336%. No cure, no pay.', en: 'ROI from 336%. No cure, no pay.' },
   'hero.sub1': {
-    nl: '46% van nieuwe medewerkers faalt binnen 18 maanden — niet door gebrek aan kwalificaties, maar door een mismatch in cultuur en waarden.',
-    en: '46% of new hires fail within 18 months — not due to lack of qualifications, but because of a mismatch in culture and values.'
+    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een modaal salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
+    en: 'One wrong hire costs 50-200% of the annual salary.¹ At an average salary, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²'
   },
   'hero.sub2': {
-    nl: 'De Matching Scan, ontwikkeld met de Vrije Universiteit Amsterdam, meet die match vóór de aanname. Wetenschappelijk bewezen. No cure, no pay.',
-    en: 'The Matching Scan, developed with Vrije Universiteit Amsterdam, measures that match before hiring. Scientifically proven. No cure, no pay.'
+    nl: 'De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay.',
+    en: 'The Matching Scan — developed with Vrije Universiteit Amsterdam — measures before hiring whether someone fits your organization. Scientifically proven. No cure, no pay.'
   },
   'hero.ctaEmployer': { nl: 'Start als opdrachtgever →', en: 'Start as employer →' },
   'hero.ctaScout': { nl: 'Word Talent Scout', en: 'Become a Talent Scout' },
@@ -30,12 +30,12 @@ export const translations = {
   'hero.trust2': { nl: '🔬 35-vragen Matching Scan', en: '🔬 35-question Matching Scan' },
   'hero.trust3': { nl: '💰 No Cure No Pay', en: '💰 No Cure No Pay' },
   'hero.sources': {
-    nl: 'Bronnen: Leadership IQ · SHRM 2024 · VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024',
-    en: 'Sources: Leadership IQ · SHRM 2024 · VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024'
+    nl: '¹ SHRM, 2024 · ² Leadership IQ · ³ VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024',
+    en: '¹ SHRM, 2024 · ² Leadership IQ · ³ VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024'
   },
 
   // ─── Social proof bar ──────────────────────────────────────────────────────
-  'stats.mishireCost': { nl: 'kosten per mis-hire (SHRM, 2024)', en: 'cost per mis-hire (SHRM, 2024)' },
+  'stats.mishireCost': { nl: 'van jaarsalaris per mis-hire (SHRM, 2024)', en: 'of annual salary per mis-hire (SHRM, 2024)' },
   'stats.failRate': { nl: 'van hires faalt binnen 18 maanden', en: 'of hires fail within 18 months' },
   'stats.roi': { nl: 'ROI bij inzet Refurzy (conservatief)', en: 'ROI with Refurzy (conservative)' },
   'stats.doubt': { nl: 'managers twijfelt over aannamebeslissing', en: 'of managers doubt their hiring decision' },
@@ -56,8 +56,8 @@ export const translations = {
   },
   'pain.turnover.title': { nl: 'Hoog verloop door mismatches', en: 'High turnover from mismatches' },
   'pain.turnover.desc': {
-    nl: 'Eén verkeerde hire kost €44.000 tot €175.000 aan herwervingskosten, productiviteitsverlies en teamschade. En het gebeurt vaker dan u denkt: 46% van nieuwe medewerkers faalt binnen 18 maanden.',
-    en: 'One wrong hire costs €44,000 to €175,000 in re-recruitment, lost productivity and team damage. And it happens more often than you think: 46% of new hires fail within 18 months.'
+    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris aan herwervingskosten, productiviteitsverlies en teamschade. Bij een modaal salaris is dat €44.000 tot €175.000. En 46% van nieuwe medewerkers faalt binnen 18 maanden.',
+    en: 'One wrong hire costs 50-200% of the annual salary in re-recruitment, lost productivity and team damage. At an average salary, that\'s €44,000 to €175,000. And 46% of new hires fail within 18 months.'
   },
   'pain.gut.title': { nl: 'Buikgevoel in plaats van data', en: 'Gut feeling instead of data' },
   'pain.gut.desc': {
