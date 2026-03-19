@@ -453,3 +453,42 @@ lib/
 11. **Prijzen excl. BTW**: Alle prijzen op het platform zijn exclusief BTW
 12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
 13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)
+14. **Zelfstandigheid scout**: De Talent Scout werkt volledig voor eigen rekening en risico. Bepaalt zelf wanneer, hoe, hoeveel en waar opdrachten worden vervuld. Geen arbeidsrelatie met Refurzy.
+
+---
+
+## 14. Algemene Voorwaarden — Kernbepalingen
+
+De volgende bepalingen moeten worden opgenomen in de Algemene Voorwaarden:
+
+### Positie Talent Scout
+- De Talent Scout is geen werknemer van Refurzy maar een onafhankelijke opdrachtnemer
+- De Talent Scout werkt volledig voor eigen rekening en risico
+- De Talent Scout bepaalt zelf wanneer, hoe, hoeveel en waar hij/zij opdrachten vervult
+- Er is geen gezagsverhouding tussen Refurzy en de Talent Scout
+- De Talent Scout is vrij om voor meerdere opdrachtgevers en platforms te werken
+- Refurzy geeft geen instructies over de wijze waarop de werkzaamheden worden uitgevoerd
+
+### BTW & Belastingen
+- Alle genoemde prijzen en vergoedingen zijn exclusief BTW
+- Pro Scouts (met KVK) factureren 21% BTW bovenop de scout fee
+- Particuliere scouts ontvangen het bruto bedrag zonder inhouding van belasting
+- Refurzy rapporteert betalingen aan particuliere scouts jaarlijks aan de Belastingdienst (IB-47)
+- De Talent Scout is zelf verantwoordelijk voor de aangifte en afdracht van inkomstenbelasting en/of omzetbelasting
+- Bij grensoverschrijdende dienstverlening binnen de EU geldt de verleggingsregeling (reverse charge)
+
+### Facturatie & Betaling
+- Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur
+- De opdrachtgever betaalt de plaatsingsfee + BTW via creditcard bij ondertekening arbeidsovereenkomst
+- De scout fee wordt uitbetaald zodra de betaling van de opdrachtgever is ontvangen
+- Uitbetaling geschiedt op het bij Refurzy bekende IBAN van de Talent Scout
+
+### No Cure, No Pay
+- Opdrachtgever betaalt uitsluitend bij ondertekening van een arbeidsovereenkomst
+- Bemiddeling buiten het platform om resulteert in een boete van 100% van de vergoeding
+
+### Fit Garantie
+- Bij M-Score >= 80% geldt een Fit Garantie van 12 maanden
+- Dekking: vertrek wegens mismatch in cultuur, waarden of interesses
+- Uitsluitingen: reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud
+- Restitutie: 100% van de plaatsingsfee (incl. BTW)
