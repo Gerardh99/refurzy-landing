@@ -52,9 +52,9 @@ export default function ThemePreviewPage() {
     input: 'bg-white border-surface-border text-ink placeholder-ink-faint focus:border-cyan',
     tableHeader: 'bg-surface-muted text-ink-muted',
     rowHover: 'hover:bg-surface-muted/50',
-    sidebarBg: 'bg-white border-r border-surface-border',
-    sidebarActive: 'bg-purple/10 text-purple border border-purple/20',
-    sidebarInactive: 'text-ink-light hover:text-ink hover:bg-surface-muted',
+    sidebarBg: 'bg-navy-light border-r border-purple/10',
+    sidebarActive: 'bg-purple/15 text-cyan border border-purple/20',
+    sidebarInactive: 'text-gray-400 hover:text-white hover:bg-purple/5',
     badge: {
       aanbevolen: 'bg-cyan/10 text-cyan-dark',
       bekijk: 'bg-purple/10 text-purple',
@@ -90,17 +90,8 @@ export default function ThemePreviewPage() {
         {/* Sidebar preview */}
         <aside className={`w-64 min-h-[calc(100vh-52px)] flex flex-col ${t.sidebarBg} transition-colors duration-300`}>
           <div className={`p-6 border-b ${t.border}`}>
-            {theme === 'dark' ? (
-              <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-8" />
-            ) : (
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan via-blue to-purple flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">R</span>
-                </div>
-                <span className={`font-bold text-lg ${t.title}`}>Refurzy</span>
-              </div>
-            )}
-            <div className="mt-3 px-2 py-1 bg-purple/10 rounded text-purple text-xs font-medium inline-block">
+            <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-8" />
+            <div className="mt-3 px-2 py-1 bg-purple/10 rounded text-purple-light text-xs font-medium inline-block">
               Opdrachtgever
             </div>
           </div>
