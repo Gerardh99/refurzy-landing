@@ -51,8 +51,8 @@ export const translations = {
   // Pain points
   'pain.agencies.title': { nl: 'Dure bureaus, nul garantie', en: 'Expensive agencies, zero guarantee' },
   'pain.agencies.desc': {
-    nl: 'Traditionele bureaus rekenen 20-25% van het jaarsalaris. Dat is €16.200 per hire — zonder garantie op een goede match. Als het misgaat, begint u opnieuw en betaalt u opnieuw.',
-    en: 'Traditional agencies charge 20-25% of annual salary. That\'s €16,200 per hire — with no guarantee of a good match. If it fails, you start over and pay again.'
+    nl: 'Traditionele bureaus rekenen 20-30% van het jaarsalaris — gemiddeld €16.000 per hire.⁴ Zonder garantie op een goede match. Als het misgaat, begint u opnieuw en betaalt u opnieuw.',
+    en: 'Traditional agencies charge 20-30% of the annual salary — on average €16,000 per hire.⁴ With no guarantee of a good match. If it fails, you start over and pay again.'
   },
   'pain.turnover.title': { nl: 'Hoog verloop door mismatches', en: 'High turnover from mismatches' },
   'pain.turnover.desc': {
