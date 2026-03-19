@@ -14,9 +14,9 @@ type WerkzaamhedenSubStep = 'ranking' | 'rating'
 
 const STEPS = [
   { nr: 1, label: 'Functie', short: 'Titel' },
-  { nr: 2, label: 'Omschrijving', short: 'Tekst' },
-  { nr: 3, label: 'Details', short: 'Info' },
-  { nr: 4, label: 'Harde criteria', short: 'Criteria' },
+  { nr: 2, label: 'Details', short: 'Info' },
+  { nr: 3, label: 'Harde criteria', short: 'Criteria' },
+  { nr: 4, label: 'Omschrijving', short: 'Tekst' },
   { nr: 5, label: 'Controleer & publiceer', short: 'Publiceer' },
   { nr: 6, label: 'Werkzaamheden', short: 'M-Score' },
 ]
@@ -55,12 +55,21 @@ export default function VacatureAanmakenPage() {
     ? calculatePrice(form.ervaring as ExperienceLevel, form.opleiding as EducationLevel, pricing)
     : 0
 
+  // Check if enough info is filled for AI generation
+  const aiReady = form.titel.length > 0 && form.locatie.length > 0 && form.opleiding !== '' && form.ervaring !== ''
+  const aiMissingFields = [
+    ...(!form.titel ? ['functietitel'] : []),
+    ...(!form.locatie ? ['locatie'] : []),
+    ...(!form.opleiding ? ['opleidingsniveau'] : []),
+    ...(!form.ervaring ? ['werkervaring'] : []),
+  ]
+
   const canProceed = () => {
     switch (step) {
       case 1: return form.titel.length > 0
-      case 2: return form.omschrijving.length > 20
-      case 3: return form.locatie.length > 0 && form.afdelingscultuur.length > 10
-      case 4: return form.opleiding !== '' && form.ervaring !== ''
+      case 2: return form.locatie.length > 0 && form.afdelingscultuur.length > 10
+      case 3: return form.opleiding !== '' && form.ervaring !== ''
+      case 4: return form.omschrijving.length > 20
       case 5: return akkoord
       case 6: {
         if (werkzaamhedenSubStep === 'ranking') {
@@ -74,13 +83,50 @@ export default function VacatureAanmakenPage() {
   }
 
   const handleAiGenerate = () => {
+    if (!aiReady) return
     setAiLoading(true)
     setTimeout(() => {
-      const titel = form.titel || 'deze functie'
-      setForm(f => ({
-        ...f,
-        omschrijving: `Als ${titel} bij ons bedrijf ben je verantwoordelijk voor het aansturen van strategische projecten en het realiseren van meetbare resultaten.\n\nJe werkt nauw samen met cross-functionele teams om innovatieve oplossingen te ontwikkelen die bijdragen aan onze groeidoelstellingen. Je combineert analytisch denken met een hands-on mentaliteit.\n\nWat je gaat doen:\n• Ontwikkelen en uitvoeren van de strategie voor jouw vakgebied\n• Aansturen van projecten van concept tot oplevering\n• Samenwerken met stakeholders op alle niveaus\n• Analyseren van data en vertalen naar actionable insights\n• Bijdragen aan de doorontwikkeling van processen en tooling\n\nWat wij bieden:\n• Een dynamische werkomgeving met ruimte voor eigen inbreng\n• Persoonlijke ontwikkeling en opleidingsbudget\n• Flexibele werkplek en -tijden\n• Competitief salaris met uitstekende secundaire arbeidsvoorwaarden`
-      }))
+      const titel = form.titel
+      const afdeling = form.afdeling || 'het team'
+      const locatie = form.locatie
+      const salaris = form.salaris || 'marktconform salaris'
+      const contract = form.contractType
+      const kantoor = form.opKantoor
+      const ervaring = EXPERIENCE_LABELS[form.ervaring as ExperienceLevel] || ''
+      const opleiding = form.opleiding
+      const cultuur = form.afdelingscultuur
+
+      let omschrijving = `Ben jij een ervaren ${titel} en zoek je een nieuwe uitdaging in ${locatie}? Wij zoeken een gedreven professional voor ${afdeling}.`
+
+      omschrijving += `\n\n`
+
+      if (cultuur) {
+        omschrijving += `Over het team\n${cultuur}\n\n`
+      }
+
+      omschrijving += `Wat ga je doen?\n`
+      omschrijving += `• Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${titel.toLowerCase()} strategie\n`
+      omschrijving += `• Samenwerken met collega's binnen ${afdeling} en cross-functionele stakeholders\n`
+      omschrijving += `• Bijdragen aan de groeidoelstellingen van de organisatie\n`
+      omschrijving += `• Analyseren van resultaten en het vertalen naar concrete verbetervoorstellen\n`
+      omschrijving += `• Rapporteren aan het management team\n`
+
+      omschrijving += `\nWat vragen wij?\n`
+      omschrijving += `• Minimaal ${ervaring.toLowerCase()} relevante werkervaring\n`
+      omschrijving += `• ${opleiding} werk- en denkniveau\n`
+      omschrijving += `• Uitstekende communicatieve vaardigheden in woord en geschrift\n`
+      omschrijving += `• Proactieve houding en teamspeler\n`
+      omschrijving += `• Affiniteit met de sector en enthousiasme voor de rol\n`
+
+      omschrijving += `\nWat bieden wij?\n`
+      omschrijving += `• Salaris: ${salaris}\n`
+      omschrijving += `• ${contract} contract\n`
+      omschrijving += `• ${kantoor}\n`
+      omschrijving += `• Locatie: ${locatie}\n`
+      omschrijving += `• 25 vakantiedagen + persoonlijk ontwikkelingsbudget\n`
+      omschrijving += `• Pensioenregeling en reiskostenvergoeding`
+
+      setForm(f => ({ ...f, omschrijving }))
       setAiLoading(false)
     }, 2000)
   }
@@ -93,7 +139,6 @@ export default function VacatureAanmakenPage() {
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     } else {
-      // All ratings filled — publish
       setPublished(true)
     }
   }
@@ -167,7 +212,7 @@ export default function VacatureAanmakenPage() {
 
       <div className="bg-white rounded-2xl border border-surface-border p-8">
 
-        {/* Step 1: Functietitel */}
+        {/* ═══ STEP 1: Functietitel ═══ */}
         {step === 1 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Functietitel &amp; afdeling</h2>
@@ -189,35 +234,8 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* Step 2: Omschrijving met AI */}
+        {/* ═══ STEP 2: Details + Afdelingscultuur ═══ */}
         {step === 2 && (
-          <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Functieomschrijving</h2>
-            <p className="text-ink-light text-sm mb-6">Schrijf een aantrekkelijke omschrijving of laat AI een concept genereren.</p>
-            <div className="flex items-center gap-3 mb-4">
-              <button onClick={handleAiGenerate} disabled={aiLoading || !form.titel}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                  aiLoading ? 'bg-purple/20 text-purple cursor-wait'
-                  : form.titel ? 'btn-gradient text-white hover:-translate-y-px'
-                  : 'bg-gray-700 text-ink-muted cursor-not-allowed'
-                }`}>
-                {aiLoading ? <><span className="animate-spin">&#10227;</span> AI schrijft...</> : <>&#10024; Schrijf met AI</>}
-              </button>
-              {!form.titel && <span className="text-xs text-ink-muted">Vul eerst een functietitel in (stap 1)</span>}
-              {form.titel && !aiLoading && <span className="text-xs text-ink-muted">Genereert een concept op basis van &ldquo;{form.titel}&rdquo;</span>}
-            </div>
-            <textarea value={form.omschrijving} onChange={e => setForm(f => ({ ...f, omschrijving: e.target.value }))} rows={14}
-              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
-              placeholder="Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt..." />
-            <div className="flex justify-between mt-2">
-              <span className="text-xs text-ink-muted">{form.omschrijving.length} tekens</span>
-              <span className="text-xs text-ink-muted">Min. 20 tekens</span>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Details + Afdelingscultuur */}
-        {step === 3 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Vacature details</h2>
             <p className="text-ink-light text-sm mb-8">Praktische informatie over de functie en de werkomgeving.</p>
@@ -279,8 +297,8 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* Step 4: Harde criteria */}
-        {step === 4 && (
+        {/* ═══ STEP 3: Harde criteria ═══ */}
+        {step === 3 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
             <p className="text-ink-light text-sm mb-8">Stel de minimale eisen in voor kandidaten op deze vacature.</p>
@@ -322,7 +340,110 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* Step 5: Samenvatting & publiceer */}
+        {/* ═══ STEP 4: Omschrijving (nu met alle context beschikbaar) ═══ */}
+        {step === 4 && (
+          <div>
+            <h2 className="text-xl font-semibold text-ink mb-2">Functieomschrijving</h2>
+            <p className="text-ink-light text-sm mb-6">
+              Schrijf een aantrekkelijke vacaturetekst of laat AI een concept genereren op basis van de informatie die u eerder heeft ingevuld.
+            </p>
+
+            {/* AI context summary */}
+            <div className="bg-surface-muted rounded-xl border border-surface-border p-4 mb-4">
+              <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-2">AI gebruikt deze context:</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <span className={form.titel ? 'text-green-500' : 'text-ink-muted'}>
+                    {form.titel ? '✓' : '○'}
+                  </span>
+                  <span className={form.titel ? 'text-ink' : 'text-ink-muted'}>
+                    {form.titel || 'Functietitel'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className={form.locatie ? 'text-green-500' : 'text-ink-muted'}>
+                    {form.locatie ? '✓' : '○'}
+                  </span>
+                  <span className={form.locatie ? 'text-ink' : 'text-ink-muted'}>
+                    {form.locatie || 'Locatie'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className={form.opleiding ? 'text-green-500' : 'text-ink-muted'}>
+                    {form.opleiding ? '✓' : '○'}
+                  </span>
+                  <span className={form.opleiding ? 'text-ink' : 'text-ink-muted'}>
+                    {form.opleiding || 'Opleiding'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className={form.ervaring ? 'text-green-500' : 'text-ink-muted'}>
+                    {form.ervaring ? '✓' : '○'}
+                  </span>
+                  <span className={form.ervaring ? 'text-ink' : 'text-ink-muted'}>
+                    {form.ervaring ? EXPERIENCE_LABELS[form.ervaring as ExperienceLevel] : 'Ervaring'}
+                  </span>
+                </div>
+                {form.afdeling && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-green-500">✓</span>
+                    <span className="text-ink">{form.afdeling}</span>
+                  </div>
+                )}
+                {form.salaris && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-green-500">✓</span>
+                    <span className="text-ink">{form.salaris}</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5">
+                  <span className="text-green-500">✓</span>
+                  <span className="text-ink">{form.contractType}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className={form.afdelingscultuur ? 'text-green-500' : 'text-ink-muted'}>
+                    {form.afdelingscultuur ? '✓' : '○'}
+                  </span>
+                  <span className={form.afdelingscultuur ? 'text-ink' : 'text-ink-muted'}>
+                    {form.afdelingscultuur ? 'Cultuur beschreven' : 'Cultuur'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* AI generate button */}
+            <div className="flex items-center gap-3 mb-4">
+              <button onClick={handleAiGenerate} disabled={aiLoading || !aiReady}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                  aiLoading ? 'bg-purple/20 text-purple cursor-wait'
+                  : aiReady ? 'btn-gradient text-white hover:-translate-y-px'
+                  : 'bg-surface-muted border border-surface-border text-ink-muted cursor-not-allowed'
+                }`}>
+                {aiLoading ? <><span className="animate-spin">&#10227;</span> AI schrijft...</> : <>&#10024; Genereer met AI</>}
+              </button>
+              {!aiReady && (
+                <span className="text-xs text-ink-muted">
+                  Vul eerst {aiMissingFields.join(', ')} in (stap 1-3)
+                </span>
+              )}
+              {aiReady && !aiLoading && (
+                <span className="text-xs text-ink-muted">
+                  Genereert een vacaturetekst op basis van alle ingevulde gegevens
+                </span>
+              )}
+            </div>
+
+            <textarea value={form.omschrijving} onChange={e => setForm(f => ({ ...f, omschrijving: e.target.value }))} rows={16}
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
+              placeholder="Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt. Of gebruik de AI-knop hierboven om automatisch een concept te genereren op basis van de stappen die u al heeft doorlopen." />
+            <div className="flex justify-between mt-2">
+              <span className="text-xs text-ink-muted">{form.omschrijving.length} tekens</span>
+              <span className="text-xs text-ink-muted">Min. 20 tekens</span>
+            </div>
+          </div>
+        )}
+
+        {/* ═══ STEP 5: Samenvatting & publiceer ═══ */}
         {step === 5 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Controleer &amp; publiceer</h2>
@@ -340,6 +461,12 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
                 <div><span className="text-ink-muted">Ervaring:</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
               </div>
+              {form.omschrijving && (
+                <div className="mt-4 pt-4 border-t border-surface-border">
+                  <span className="text-ink-muted text-sm">Vacaturetekst:</span>
+                  <p className="text-ink-light text-sm mt-1 leading-relaxed whitespace-pre-line line-clamp-6">{form.omschrijving}</p>
+                </div>
+              )}
               {form.afdelingscultuur && (
                 <div className="mt-4 pt-4 border-t border-surface-border">
                   <span className="text-ink-muted text-sm">Afdelingscultuur:</span>
@@ -366,7 +493,7 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* Step 6: Werkzaamheden profiel */}
+        {/* ═══ STEP 6: Werkzaamheden profiel ═══ */}
         {step === 6 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">
