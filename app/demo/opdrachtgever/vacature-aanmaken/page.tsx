@@ -258,7 +258,7 @@ export default function VacatureAanmakenPage() {
         {step === 4 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
-            <p className="text-ink-light text-sm mb-8">Deze criteria bepalen de plaatsingsfee bij een succesvolle match. Profielen ontgrendelen is kosteloos.</p>
+            <p className="text-ink-light text-sm mb-8">Stel de minimale eisen in voor kandidaten op deze vacature.</p>
             <div className="grid grid-cols-2 gap-8">
               <div>
                 <label className="block text-sm text-ink-light mb-3">Minimaal opleidingsniveau *</label>
@@ -289,31 +289,19 @@ export default function VacatureAanmakenPage() {
               </div>
             </div>
 
-            {form.opleiding && form.ervaring && (
-              <div className="mt-8 bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-ink-light mb-1">Plaatsingsfee bij succesvolle match (excl. BTW)</p>
-                    <div className="text-3xl font-bold text-ink">{formatPrice(price, pricing)}</div>
-                    <p className="text-xs text-ink-muted mt-1">50% Scout · 50% Refurzy</p>
-                  </div>
-                  <div className="text-right text-sm">
-                    <div className="text-ink-light">{form.opleiding} · {EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</div>
-                    {form.opleiding !== 'MBO' && form.ervaring === '10+' && (
-                      <div className="text-cyan text-xs mt-1">HBO = WO bij &gt;10 jaar ervaring</div>
-                    )}
-                  </div>
-                </div>
+            {form.opleiding && form.ervaring && form.opleiding !== 'MBO' && form.ervaring === '10+' && (
+              <div className="mt-4 bg-cyan/5 border border-cyan/20 rounded-xl p-3">
+                <p className="text-xs text-cyan">ℹ️ Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
               </div>
             )}
           </div>
         )}
 
-        {/* ═══ STEP 5: Prijs & akkoord ═══ */}
+        {/* ═══ STEP 5: Samenvatting & publiceer ═══ */}
         {step === 5 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Prijsoverzicht &amp; voorwaarden</h2>
-            <p className="text-ink-light text-sm mb-8">Controleer de details en ga akkoord met de voorwaarden.</p>
+            <h2 className="text-xl font-semibold text-ink mb-2">Controleer &amp; publiceer</h2>
+            <p className="text-ink-light text-sm mb-8">Controleer uw vacature en publiceer deze. Talent Scouts kunnen daarna kandidaten voordragen.</p>
 
             <div className="bg-surface-muted rounded-2xl border border-surface-border p-6 mb-6">
               <h3 className="text-ink font-semibold mb-4">Samenvatting vacature</h3>
@@ -335,45 +323,19 @@ export default function VacatureAanmakenPage() {
               )}
             </div>
 
-            <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-6 mb-6">
-              <div className="text-center mb-4">
-                <p className="text-sm text-ink-light mb-2">Prijs per plaatsing (excl. BTW)</p>
-                <div className="text-4xl font-bold text-ink mb-1">{formatPrice(price, pricing)}</div>
-                <p className="text-cyan text-sm font-medium">No Cure No Pay · excl. 21% BTW</p>
+            <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 mb-6 flex items-start gap-3">
+              <span className="text-lg">💡</span>
+              <div className="text-sm text-ink-light">
+                <p><strong className="text-ink">Hoe werkt het?</strong></p>
+                <p className="mt-1">Na publicatie kunnen Talent Scouts kandidaten voordragen. U ontvangt kandidaten met een anonieme M-Score. Wanneer u een profiel wilt bekijken, gaat u akkoord met de plaatsingsovereenkomst. U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).</p>
               </div>
-              <div className="grid grid-cols-3 gap-3 text-center text-xs">
-                <div className="bg-surface-muted/50 rounded-lg p-3">
-                  <div className="text-cyan font-bold">{formatPrice(price / 2, pricing)}</div>
-                  <div className="text-ink-muted">Talent Scout</div>
-                </div>
-                <div className="bg-surface-muted/50 rounded-lg p-3">
-                  <div className="text-purple font-bold">{formatPrice(price / 2, pricing)}</div>
-                  <div className="text-ink-muted">Refurzy</div>
-                </div>
-                <div className="bg-surface-muted/50 rounded-lg p-3">
-                  <div className="text-green-400 font-bold">€0</div>
-                  <div className="text-ink-muted">Geen match = gratis</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-surface-muted rounded-2xl border border-surface-border p-5 mb-6 text-sm text-ink-light max-h-40 overflow-y-auto leading-relaxed">
-              <p className="font-semibold text-ink mb-2">Voorwaarden No Cure No Pay</p>
-              <ul className="space-y-2 list-disc list-inside">
-                <li>U betaalt uitsluitend bij een succesvolle plaatsing (ondertekening arbeidsovereenkomst). Het ontgrendelen van profielen is kosteloos.</li>
-                <li>De plaatsingsfee is {formatPrice(price, pricing)} excl. BTW, op basis van {form.opleiding} + {EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}.</li>
-                <li>Alle bedragen zijn exclusief 21% BTW. 50% van de vergoeding gaat naar de Talent Scout, 50% naar Refurzy.</li>
-                <li>Bemiddeling buiten het platform om resulteert in een penalty van 100% van de vergoeding.</li>
-                <li>De factuur volgt bij ondertekening van het arbeidscontract met de kandidaat.</li>
-                <li>Optioneel: activeer exclusiviteit (+30% premium, volledig voor de Scout) voor 2 weken prioriteit.</li>
-              </ul>
             </div>
 
             <label className="flex items-start gap-3 cursor-pointer group">
               <input type="checkbox" checked={akkoord} onChange={e => setAkkoord(e.target.checked)}
                 className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-surface-muted accent-cyan" />
               <span className="text-sm text-gray-300 group-hover:text-ink transition-colors">
-                Ik ga akkoord met de No Cure No Pay voorwaarden, het penalty-beding en de AVG-bepalingen van Refurzy.
+                Ik bevestig dat de bovenstaande gegevens correct zijn en wil deze vacature publiceren.
               </span>
             </label>
           </div>
