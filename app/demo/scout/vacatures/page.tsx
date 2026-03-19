@@ -374,7 +374,7 @@ function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle
       </Link>
       <button
         onClick={onToggle}
-        className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-ink-faint hover:text-cyan/60'}`}
+        className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-ink-muted hover:text-cyan/60'}`}
         aria-label={isFav ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'}
       >
         {isFav ? '\u2605' : '\u2606'}

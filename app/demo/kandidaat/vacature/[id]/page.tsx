@@ -198,7 +198,7 @@ export default function KandidaatVacatureDetail() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
                     isDone ? 'bg-cyan/15 text-cyan' :
                     isActive ? 'bg-purple/15 text-purple ring-2 ring-purple/30' :
-                    'bg-surface-muted text-ink-faint'
+                    'bg-surface-muted text-ink-muted'
                   }`}>
                     {isDone ? '✓' : step.icon}
                   </div>
@@ -226,7 +226,7 @@ export default function KandidaatVacatureDetail() {
             <p className="text-xs text-ink-muted">
               Voorgedragen door <span className="text-ink font-medium">{vac.scoutNaam}</span>
             </p>
-            <p className="text-xs text-ink-faint mt-1">
+            <p className="text-xs text-ink-muted mt-1">
               op {new Date(vac.datum).toLocaleDateString('nl-NL')}
             </p>
           </div>

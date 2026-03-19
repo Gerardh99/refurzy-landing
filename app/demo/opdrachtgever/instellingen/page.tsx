@@ -200,8 +200,8 @@ function BedrijfTab() {
           placeholder="Beschrijf uw bedrijf, missie, cultuur en wat u een aantrekkelijke werkgever maakt..."
         />
         <div className="flex justify-between mt-2">
-          <span className="text-xs text-ink-faint">Markdown wordt ondersteund</span>
-          <span className="text-xs text-ink-faint">348 / 1000 tekens</span>
+          <span className="text-xs text-ink-muted">Markdown wordt ondersteund</span>
+          <span className="text-xs text-ink-muted">348 / 1000 tekens</span>
         </div>
       </div>
 
@@ -209,14 +209,14 @@ function BedrijfTab() {
       <div className="bg-white rounded-2xl border border-surface-border p-6">
         <h2 className="text-ink font-semibold mb-4">Bedrijfslogo</h2>
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 rounded-xl bg-surface-muted border-2 border-dashed border-surface-border flex items-center justify-center text-ink-faint">
+          <div className="w-20 h-20 rounded-xl bg-surface-muted border-2 border-dashed border-surface-border flex items-center justify-center text-ink-muted">
             <span className="text-3xl">🏢</span>
           </div>
           <div>
             <button className="bg-purple/15 text-purple px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple/25 transition-colors border border-surface-border">
               Logo uploaden
             </button>
-            <p className="text-xs text-ink-faint mt-2">PNG, JPG of SVG. Max 2MB. Aanbevolen: 400×400px</p>
+            <p className="text-xs text-ink-muted mt-2">PNG, JPG of SVG. Max 2MB. Aanbevolen: 400×400px</p>
           </div>
         </div>
       </div>
@@ -267,12 +267,12 @@ function TeamTab({
           <span className="text-sm text-ink-light flex items-center gap-2">
             <span>👥</span> 4 van 5 gebruikers inbegrepen
           </span>
-          <span className="text-xs text-ink-faint">4 / 5</span>
+          <span className="text-xs text-ink-muted">4 / 5</span>
         </div>
         <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
           <div className="h-full rounded-full bg-gradient-to-r from-cyan via-blue to-purple transition-all duration-500" style={{ width: '80%' }} />
         </div>
-        <p className="text-xs text-ink-faint mt-2">Extra gebruikers kunnen worden uitgenodigd voor €15/maand per gebruiker (ex. 21% BTW).</p>
+        <p className="text-xs text-ink-muted mt-2">Extra gebruikers kunnen worden uitgenodigd voor €15/maand per gebruiker (ex. 21% BTW).</p>
       </div>
 
       {/* Rollen uitleg */}
@@ -323,7 +323,7 @@ function TeamTab({
                     <option value="admin">Admin</option>
                     <option value="gebruiker">Gebruiker</option>
                   </select>
-                  <button className="rounded-lg p-1.5 text-ink-faint hover:bg-red-500/10 hover:text-red-400 transition-colors" title="Verwijderen">
+                  <button className="rounded-lg p-1.5 text-ink-muted hover:bg-red-500/10 hover:text-red-400 transition-colors" title="Verwijderen">
                     🗑
                   </button>
                 </>

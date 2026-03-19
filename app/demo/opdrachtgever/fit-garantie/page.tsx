@@ -83,7 +83,7 @@ function getMonthsElapsed(plaatsingsDatum: string): number {
 function CheckInIcon({ status }: { status: string }) {
   if (status === 'afgerond') return <span title="Afgerond" className="text-green-600">&#10003;</span>
   if (status === 'aankomend') return <span title="Aankomend" className="text-cyan">&#9679;</span>
-  return <span title="Toekomstig" className="text-ink-faint">&#9633;</span>
+  return <span title="Toekomstig" className="text-ink-muted">&#9633;</span>
 }
 
 function StatusBadge({ status }: { status: string }) {

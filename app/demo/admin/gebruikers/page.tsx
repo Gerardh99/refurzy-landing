@@ -201,7 +201,7 @@ export default function GebruikersPage() {
               {/* Expanded: members */}
               {expandedOrg === org.id && (
                 <div className="border-t border-surface-border px-5 pb-5">
-                  <div className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-2 text-[10px] text-ink-faint uppercase tracking-wider mt-3">
+                  <div className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-2 text-[10px] text-ink-muted uppercase tracking-wider mt-3">
                     <div>Naam</div>
                     <div>E-mail</div>
                     <div>Rol</div>

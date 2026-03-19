@@ -260,7 +260,7 @@ export default function KandidaatUitnodigen() {
               <h3 className="text-ink text-xl font-bold">Er is een vacature die bij je past!</h3>
             </div>
             {/* Email body */}
-            <div className="p-6 space-y-4 text-sm text-ink-faint">
+            <div className="p-6 space-y-4 text-sm text-ink-muted">
               <p>Hi {naam || 'kandidaat'},</p>
               <p>
                 <strong>Sophie de Graaf</strong> denkt dat onderstaande vacature goed bij jou past
@@ -285,7 +285,7 @@ export default function KandidaatUitnodigen() {
                 </div>
                 <div className="border-t pt-3 mt-2">
                   <p className="text-xs text-ink-muted font-medium mb-1">Over het team:</p>
-                  <p className="text-xs text-ink-faint">Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.</p>
+                  <p className="text-xs text-ink-muted">Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.</p>
                 </div>
               </div>
 

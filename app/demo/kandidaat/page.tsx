@@ -143,9 +143,9 @@ export default function KandidaatDashboard() {
                     ) : (
                       <span className="text-purple">{v.bedrijf}</span>
                     )}
-                    <span className="mx-2 text-ink-faint">|</span>
+                    <span className="mx-2 text-ink-muted">|</span>
                     {v.locatie}
-                    <span className="mx-2 text-ink-faint">|</span>
+                    <span className="mx-2 text-ink-muted">|</span>
                     {v.sector}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function KandidaatDashboard() {
 
               <div className="mt-3 text-xs text-ink-muted">
                 Voorgedragen door <span className="text-ink-light font-medium">{v.scoutNaam}</span>
-                <span className="mx-2 text-ink-faint">|</span>
+                <span className="mx-2 text-ink-muted">|</span>
                 {new Date(v.datum).toLocaleDateString('nl-NL')}
               </div>
             </Link>

@@ -193,7 +193,7 @@ export default function ScoutInstellingen() {
               <label className="block text-sm text-ink-light mb-1">KvK-uittreksel uploaden</label>
               <div className="border-2 border-dashed border-surface-border rounded-lg p-6 text-center hover:border-cyan/30 transition-colors cursor-pointer">
                 <p className="text-ink-light text-sm">Sleep je KvK-uittreksel hierheen of klik om te uploaden</p>
-                <p className="text-ink-faint text-xs mt-1">PDF of afbeelding, max 5MB</p>
+                <p className="text-ink-muted text-xs mt-1">PDF of afbeelding, max 5MB</p>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function ScoutInstellingen() {
         </p>
         <div className="border-2 border-dashed border-surface-border rounded-lg p-6 text-center hover:border-cyan/30 transition-colors cursor-pointer">
           <p className="text-ink-light text-sm">Upload je paspoort of ID-bewijs</p>
-          <p className="text-ink-faint text-xs mt-1">PDF of afbeelding, max 5MB</p>
+          <p className="text-ink-muted text-xs mt-1">PDF of afbeelding, max 5MB</p>
         </div>
         <div className="mt-3 flex items-center gap-2">
           <span className="text-green-400">✓</span>

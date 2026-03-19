@@ -107,9 +107,9 @@ export default function NotificatiesPage() {
                   {notificationTypeLabels[notification.type]}
                 </span>
               </div>
-              <p className="text-sm text-ink-muted">{notification.description}</p>
+              <p className="text-sm text-ink-light">{notification.description}</p>
               <div className="flex items-center gap-4 mt-2">
-                <span className="text-xs text-ink-faint">{timeAgo(notification.timestamp)}</span>
+                <span className="text-xs text-ink-muted">{timeAgo(notification.timestamp)}</span>
                 {notification.link && (
                   <Link href={notification.link} className="text-xs text-purple hover:text-purple-dark font-medium">
                     Bekijken
@@ -118,7 +118,7 @@ export default function NotificatiesPage() {
               </div>
             </div>
             <button onClick={() => toggleRead(notification.id)}
-              className="text-ink-faint hover:text-ink-muted mt-1 flex-shrink-0 p-1" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
+              className="text-ink-muted hover:text-ink-muted mt-1 flex-shrink-0 p-1" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={notification.read ? 'none' : 'currentColor'} stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
               </svg>

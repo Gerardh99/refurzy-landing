@@ -48,7 +48,7 @@ export default function ThemePreviewPage() {
     title: 'text-ink',
     body: 'text-ink-light',
     muted: 'text-ink-muted',
-    faint: 'text-ink-faint',
+    faint: 'text-ink-muted',
     input: 'bg-white border-surface-border text-ink placeholder-ink-muted focus:border-cyan',
     tableHeader: 'bg-surface-muted text-ink-muted',
     rowHover: 'hover:bg-surface-muted/50',

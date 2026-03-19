@@ -71,7 +71,7 @@ export default function ScoutMeldingen() {
               </div>
               <div className="flex-1">
                 <p className="text-ink-light text-sm">{item.bericht}</p>
-                <p className="text-ink-faint text-xs mt-1">{new Date(item.datum).toLocaleDateString('nl-NL')}</p>
+                <p className="text-ink-muted text-xs mt-1">{new Date(item.datum).toLocaleDateString('nl-NL')}</p>
               </div>
             </div>
           ))}

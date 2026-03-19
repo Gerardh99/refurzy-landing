@@ -187,8 +187,8 @@ function RatingStep({
               ))}
             </div>
             <div className="flex justify-between mt-1">
-              <span className="text-[10px] text-ink-faint">Niet belangrijk</span>
-              <span className="text-[10px] text-ink-faint">Zeer belangrijk</span>
+              <span className="text-[10px] text-ink-muted">Niet belangrijk</span>
+              <span className="text-[10px] text-ink-muted">Zeer belangrijk</span>
             </div>
           </div>
         )

@@ -70,7 +70,7 @@ export default function AdminDashboard() {
               <span className="text-ink-muted text-xs font-medium">{stat.label}</span>
             </div>
             <div className="text-2xl font-bold text-ink">{stat.value}</div>
-            <div className="text-xs text-ink-faint mt-1">{stat.sub}</div>
+            <div className="text-xs text-ink-muted mt-1">{stat.sub}</div>
           </div>
         ))}
       </div>
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                 <span className="text-base flex-shrink-0 mt-0.5">{a.icon}</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-ink leading-relaxed">{a.tekst}</p>
-                  <p className="text-xs text-ink-faint mt-0.5">{a.tijd}</p>
+                  <p className="text-xs text-ink-muted mt-0.5">{a.tijd}</p>
                 </div>
               </div>
             ))}

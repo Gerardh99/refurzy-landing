@@ -106,30 +106,30 @@ export default function OnboardingOpdrachtgever() {
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">KVK Nummer *</label>
                   <input type="text" value={form.kvkNummer} onChange={e => update('kvkNummer', e.target.value)}
-                    placeholder="Bijv. 87654321" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="Bijv. 87654321" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Bedrijfsnaam *</label>
                   <input type="text" value={form.bedrijfsnaam} onChange={e => update('bedrijfsnaam', e.target.value)}
-                    placeholder="Uw bedrijfsnaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="Uw bedrijfsnaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-ink mb-1">Adres *</label>
                     <input type="text" value={form.adres} onChange={e => update('adres', e.target.value)}
-                      placeholder="Straat + huisnummer" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                      placeholder="Straat + huisnummer" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-ink mb-1">Postcode *</label>
                     <input type="text" value={form.postcode} onChange={e => update('postcode', e.target.value)}
-                      placeholder="1234 AB" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                      placeholder="1234 AB" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-ink mb-1">Plaats *</label>
                     <input type="text" value={form.plaats} onChange={e => update('plaats', e.target.value)}
-                      placeholder="Amsterdam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                      placeholder="Amsterdam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-ink mb-1">Sector *</label>
@@ -164,22 +164,22 @@ export default function OnboardingOpdrachtgever() {
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Volledige naam *</label>
                   <input type="text" value={form.naam} onChange={e => update('naam', e.target.value)}
-                    placeholder="Voornaam + achternaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="Voornaam + achternaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">E-mailadres *</label>
                   <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
-                    placeholder="naam@bedrijf.nl" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="naam@bedrijf.nl" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Telefoonnummer *</label>
                   <input type="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
-                    placeholder="06-12345678" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="06-12345678" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Functie *</label>
                   <input type="text" value={form.functie} onChange={e => update('functie', e.target.value)}
-                    placeholder="Bijv. HR Manager" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="Bijv. HR Manager" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
               </div>
               <div className="flex justify-between mt-8">

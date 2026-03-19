@@ -90,10 +90,10 @@ export default function NotificationBell({ role }: { role: UserRole }) {
                     {!notification.read && <span className="w-2 h-2 bg-purple rounded-full flex-shrink-0" />}
                   </div>
                   <p className="text-xs text-ink-muted mt-0.5 line-clamp-2">{notification.description}</p>
-                  <p className="text-[11px] text-ink-faint mt-1">{timeAgo(notification.timestamp)}</p>
+                  <p className="text-[11px] text-ink-muted mt-1">{timeAgo(notification.timestamp)}</p>
                 </div>
                 <button onClick={(e) => { e.stopPropagation(); toggleRead(notification.id) }}
-                  className="text-ink-faint hover:text-ink-muted mt-1 flex-shrink-0" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
+                  className="text-ink-muted hover:text-ink-muted mt-1 flex-shrink-0" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill={notification.read ? 'none' : 'currentColor'} stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="10" />
                   </svg>

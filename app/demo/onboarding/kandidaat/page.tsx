@@ -123,17 +123,17 @@ export default function OnboardingKandidaat() {
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Volledige naam *</label>
                   <input type="text" value={form.naam} onChange={e => update('naam', e.target.value)}
-                    placeholder="Voornaam + achternaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="Voornaam + achternaam" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">E-mailadres *</label>
                   <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
-                    placeholder="naam@email.nl" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="naam@email.nl" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-ink mb-1">Telefoonnummer *</label>
                   <input type="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
-                    placeholder="06-12345678" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    placeholder="06-12345678" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
               </div>
               <div className="flex justify-between mt-8">

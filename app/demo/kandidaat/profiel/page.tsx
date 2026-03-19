@@ -62,13 +62,13 @@ export default function KandidaatProfiel() {
           <div className="text-ink-muted space-y-2">
             <p className="text-3xl">&#128196;</p>
             <p className="text-sm">Sleep je CV hierheen of klik om te uploaden</p>
-            <p className="text-xs text-ink-faint">PDF, DOC of DOCX (max. 5MB)</p>
+            <p className="text-xs text-ink-muted">PDF, DOC of DOCX (max. 5MB)</p>
           </div>
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-green-400">&#10003;</span>
           <span className="text-ink-light">CV_Anna_de_Jong_2026.pdf</span>
-          <span className="text-ink-faint">geupload op 5 maart 2026</span>
+          <span className="text-ink-muted">geupload op 5 maart 2026</span>
         </div>
       </div>
 

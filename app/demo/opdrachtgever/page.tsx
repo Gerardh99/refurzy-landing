@@ -35,7 +35,7 @@ export default function OpdrachtgeverDashboard() {
             <Link href="/demo/opdrachtgever/instellingen" className="bg-cyan text-navy-dark px-4 py-2 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
               Bedrijfsprofiel instellen
             </Link>
-            <button onClick={() => setShowWelcome(false)} className="text-ink-faint hover:text-ink-light transition-colors text-lg" title="Sluiten">
+            <button onClick={() => setShowWelcome(false)} className="text-ink-muted hover:text-ink-light transition-colors text-lg" title="Sluiten">
               ✕
             </button>
           </div>
@@ -119,7 +119,7 @@ export default function OpdrachtgeverDashboard() {
                         <div className="text-xs text-cyan/70">nieuw</div>
                       </div>
                     )}
-                    <span className="text-ink-faint group-hover:text-purple transition-colors text-xl">
+                    <span className="text-ink-muted group-hover:text-purple transition-colors text-xl">
                       →
                     </span>
                   </div>

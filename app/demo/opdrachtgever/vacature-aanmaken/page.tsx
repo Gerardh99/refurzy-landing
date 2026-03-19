@@ -126,11 +126,11 @@ export default function VacatureAanmakenPage() {
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors w-full ${
                 s.nr === step ? 'bg-cyan/15 text-cyan border border-cyan/20'
                 : s.nr < step ? 'bg-green-500/10 text-green-400 border border-green-500/20 cursor-pointer'
-                : 'bg-surface-muted border border-surface-border text-ink-faint'
+                : 'bg-surface-muted border border-surface-border text-ink-muted'
               }`}
             >
               <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                s.nr === step ? 'bg-cyan text-navy-dark' : s.nr < step ? 'bg-green-500 text-white' : 'bg-purple/15 text-ink-faint'
+                s.nr === step ? 'bg-cyan text-navy-dark' : s.nr < step ? 'bg-green-500 text-white' : 'bg-purple/15 text-ink-muted'
               }`}>{s.nr < step ? '✓' : s.nr}</span>
               <span className="hidden lg:inline">{s.label}</span>
               <span className="lg:hidden">{s.short}</span>
@@ -178,15 +178,15 @@ export default function VacatureAanmakenPage() {
                 }`}>
                 {aiLoading ? <><span className="animate-spin">⟳</span> AI schrijft...</> : <>✨ Schrijf met AI</>}
               </button>
-              {!form.titel && <span className="text-xs text-ink-faint">Vul eerst een functietitel in (stap 1)</span>}
+              {!form.titel && <span className="text-xs text-ink-muted">Vul eerst een functietitel in (stap 1)</span>}
               {form.titel && !aiLoading && <span className="text-xs text-ink-muted">Genereert een concept op basis van &ldquo;{form.titel}&rdquo;</span>}
             </div>
             <textarea value={form.omschrijving} onChange={e => setForm(f => ({ ...f, omschrijving: e.target.value }))} rows={14}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
               placeholder="Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt..." />
             <div className="flex justify-between mt-2">
-              <span className="text-xs text-ink-faint">{form.omschrijving.length} tekens</span>
-              <span className="text-xs text-ink-faint">Min. 20 tekens</span>
+              <span className="text-xs text-ink-muted">{form.omschrijving.length} tekens</span>
+              <span className="text-xs text-ink-muted">Min. 20 tekens</span>
             </div>
           </div>
         )}
@@ -240,15 +240,15 @@ export default function VacatureAanmakenPage() {
             {/* Afdelingscultuur */}
             <div className="border-t border-surface-border pt-6">
               <label className="block text-sm text-ink-light mb-1.5">Afdelingscultuur &amp; dynamiek *</label>
-              <p className="text-xs text-ink-faint mb-3">
+              <p className="text-xs text-ink-muted mb-3">
                 Beschrijf hoe het team samenwerkt, de sfeer, het tempo en wat het uniek maakt. Dit wordt gedeeld met kandidaten en helpt bij de M-Score matching.
               </p>
               <textarea value={form.afdelingscultuur} onChange={e => setForm(f => ({ ...f, afdelingscultuur: e.target.value }))} rows={4}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
                 placeholder="bijv. Ons marketingteam van 8 personen werkt in een informele, energieke omgeving. We combineren data-gedreven beslissingen met creatieve brainstorms. Het tempo is hoog maar de sfeer is open en ondersteunend. Fouten maken mag — leren is belangrijker dan perfect zijn." />
               <div className="flex justify-between mt-2">
-                <span className="text-xs text-ink-faint">{form.afdelingscultuur.length} tekens</span>
-                <span className="text-xs text-ink-faint">Min. 10 tekens</span>
+                <span className="text-xs text-ink-muted">{form.afdelingscultuur.length} tekens</span>
+                <span className="text-xs text-ink-muted">Min. 10 tekens</span>
               </div>
             </div>
           </div>
@@ -372,7 +372,7 @@ export default function VacatureAanmakenPage() {
                     <div className="bg-surface-muted rounded-xl border border-surface-border p-5">
                       <p className="text-sm text-ink font-medium mb-4">{q.id}. {q.question}</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-ink-faint w-20 text-right">{q.labels[0]}</span>
+                        <span className="text-[10px] text-ink-muted w-20 text-right">{q.labels[0]}</span>
                         <div className="flex-1 flex justify-between">
                           {[1, 2, 3, 4, 5].map(val => (
                             <button key={val} onClick={() => setMscoreAnswers(a => ({ ...a, [q.id]: val }))}
@@ -383,7 +383,7 @@ export default function VacatureAanmakenPage() {
                               }`}>{val}</button>
                           ))}
                         </div>
-                        <span className="text-[10px] text-ink-faint w-20">{q.labels[2]}</span>
+                        <span className="text-[10px] text-ink-muted w-20">{q.labels[2]}</span>
                       </div>
                     </div>
                   </div>
@@ -397,7 +397,7 @@ export default function VacatureAanmakenPage() {
         <div className="flex justify-between mt-8 pt-6 border-t border-surface-border">
           <button onClick={() => setStep((step - 1) as Step)} disabled={step === 1}
             className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-              step === 1 ? 'text-ink-faint cursor-not-allowed' : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink'
+              step === 1 ? 'text-ink-muted cursor-not-allowed' : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink'
             }`}>← Vorige</button>
 
           {step < 6 ? (

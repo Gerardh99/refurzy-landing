@@ -162,7 +162,7 @@ export default function PricingAdminPage() {
                 <span className="text-sm text-ink-light w-16">{EDUCATION_LABELS[edu]}</span>
                 <div className="flex items-center gap-2">
                   <div>
-                    <label className="text-[10px] text-ink-faint block text-center">Normaal</label>
+                    <label className="text-[10px] text-ink-muted block text-center">Normaal</label>
                     <input
                       type="number"
                       step="0.5"
@@ -172,7 +172,7 @@ export default function PricingAdminPage() {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] text-ink-faint block text-center">&gt;10 jaar</label>
+                    <label className="text-[10px] text-ink-muted block text-center">&gt;10 jaar</label>
                     <input
                       type="number"
                       step="0.5"
