@@ -8,6 +8,7 @@ import FitScore from '@/components/FitScore'
 import StarRating from '@/components/StarRating'
 import StatusBadge from '@/components/StatusBadge'
 import Link from 'next/link'
+import { logConsent } from '@/lib/consent-log'
 
 
 function isNewScout(scoutNaam: string) {
@@ -32,13 +33,16 @@ export default function VacatureDetailPage() {
   }
 
   const handleUnlock = (kandidaatId: string) => {
+    // Log consent for plaatsingsovereenkomst
+    logConsent('demo@bedrijf.nl', 'opdrachtgever', 'plaatsingsovereenkomst', true, 'checkbox')
+
     setKandidaten((prev) =>
       prev.map((k) => (k.id === kandidaatId ? { ...k, unlocked: true, anoniem: false } : k))
     )
     setContractModal(null)
     setAkkoord(false)
-    setToast('Profiel ontgrendeld!')
-    setTimeout(() => setToast(null), 3000)
+    setToast('Profiel ontgrendeld — plaatsingsovereenkomst getekend!')
+    setTimeout(() => setToast(null), 4000)
   }
 
   const handleAfwijzen = (kandidaatId: string) => {
@@ -256,7 +260,10 @@ export default function VacatureDetailPage() {
               <label className="flex items-start gap-3 mb-4 cursor-pointer group">
                 <input type="checkbox" checked={akkoord} onChange={(e) => setAkkoord(e.target.checked)} className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-surface-muted accent-cyan" />
                 <span className="text-sm text-ink-light group-hover:text-ink transition-colors">
-                  Ik ga akkoord met de plaatsingsovereenkomst, het penalty-beding en de AVG-bepalingen
+                  Ik ga akkoord met de{' '}
+                  <a href="/juridisch/plaatsingsovereenkomst" target="_blank" rel="noopener noreferrer" className="text-cyan underline hover:text-cyan/80">Plaatsingsovereenkomst</a>
+                  {' '}(v1.0), het penalty-beding en de{' '}
+                  <a href="/juridisch/privacybeleid" target="_blank" rel="noopener noreferrer" className="text-cyan underline hover:text-cyan/80">AVG-bepalingen</a>
                 </span>
               </label>
 

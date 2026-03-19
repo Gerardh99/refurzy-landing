@@ -523,3 +523,53 @@ De volgende bepalingen moeten worden opgenomen in de Algemene Voorwaarden:
 - Dekking: vertrek wegens mismatch in cultuur, waarden of interesses
 - Uitsluitingen: reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud
 - Restitutie: 100% van de plaatsingsfee (incl. BTW)
+
+---
+
+## 15. Juridische Documenten & Consent Logging
+
+### Documenten overzicht
+
+| Nr | Document | Partijen | Wanneer akkoord? |
+|----|----------|----------|-----------------|
+| 01 | Algemene Voorwaarden | Alle gebruikers | Bij registratie |
+| 02 | Plaatsingsovereenkomst | Refurzy ↔ Opdrachtgever | Bij profiel ontgrendelen (per kandidaat) |
+| 03 | Scoutovereenkomst | Refurzy ↔ Talent Scout | Bij registratie als scout |
+| 04 | Privacybeleid | Alle bezoekers | Bij eerste bezoek (cookie-banner) |
+| 05 | Verwerkersovereenkomst (OG) | Refurzy ↔ Opdrachtgever | Bij registratie |
+| 06 | Verwerkersovereenkomst (Scout) | Refurzy ↔ Scout | Bij registratie |
+| 07 | Toestemmingsverklaring | Kandidaat | Bij start Matching Scan |
+| 08 | Cookiebeleid | Alle bezoekers | Bij eerste bezoek |
+| 09 | Verwerkersovereenkomst VU | Refurzy ↔ VU Amsterdam | Bij aangaan licentie (eenmalig) |
+
+### Consent per rol bij registratie
+
+| Rol | Documenten |
+|-----|-----------|
+| Opdrachtgever | Algemene Voorwaarden + Privacybeleid + Verwerkersovereenkomst |
+| Talent Scout | Scoutovereenkomst + Algemene Voorwaarden + Privacybeleid + Verwerkersovereenkomst |
+| Kandidaat | Toestemmingsverklaring + Privacybeleid |
+
+### Consent Logging — Verplichte velden
+
+Elk akkoord moet worden gelogd met:
+
+| Veld | Type | Beschrijving |
+|------|------|-------------|
+| consent_id | string | Uniek ID |
+| user_id | string | ID van de gebruiker |
+| user_email | string | E-mailadres |
+| user_role | enum | opdrachtgever / scout / kandidaat / admin |
+| document_type | enum | Type document (bijv. 'algemene_voorwaarden') |
+| document_version | string | Versienummer (bijv. '1.0') |
+| consent_given | boolean | true/false |
+| consent_timestamp | ISO 8601 | Exacte datum en tijd van akkoord |
+| ip_address | string | IP-adres op moment van akkoord |
+| user_agent | string | Browser user agent |
+| method | enum | checkbox / click / signature |
+
+### Versioning
+
+- Bij een nieuwe versie van een document moet de gebruiker opnieuw akkoord gaan
+- Het oude akkoord blijft bewaard in de log (nooit overschrijven)
+- De huidige documentversie wordt centraal beheerd in `lib/consent-log.ts`

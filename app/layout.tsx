@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import CookieBanner from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: 'Refurzy — Demo',
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="nl">
-      <body className="bg-navy-dark text-white antialiased">{children}</body>
+      <body className="bg-navy-dark text-white antialiased">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   )
 }
