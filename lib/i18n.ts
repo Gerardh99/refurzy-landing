@@ -1,0 +1,147 @@
+export type Lang = 'nl' | 'en'
+
+export const translations = {
+  // ─── Navigation ────────────────────────────────────────────────────────────
+  'nav.howItWorks': { nl: 'Hoe het werkt', en: 'How it works' },
+  'nav.forWhom': { nl: 'Voor wie', en: 'For whom' },
+  'nav.pricing': { nl: 'Pricing', en: 'Pricing' },
+  'nav.faq': { nl: 'FAQ', en: 'FAQ' },
+  'nav.science': { nl: 'Wetenschap', en: 'Science' },
+  'nav.login': { nl: 'Inloggen', en: 'Log in' },
+  'nav.getStarted': { nl: 'Gratis starten', en: 'Get started free' },
+  'nav.dashboard': { nl: 'Ga naar dashboard →', en: 'Go to dashboard →' },
+
+  // ─── Hero ──────────────────────────────────────────────────────────────────
+  'hero.tagline': { nl: 'Redefining Recruitment. Forever.', en: 'Redefining Recruitment. Forever.' },
+  'hero.h1a': { nl: 'Werving gebouwd op wetenschap.', en: 'Recruitment built on science.' },
+  'hero.h1b': { nl: 'Niet op buikgevoel.', en: 'Not on gut feeling.' },
+  'hero.roi': { nl: 'ROI vanaf 336%. No cure, no pay.', en: 'ROI from 336%. No cure, no pay.' },
+  'hero.sub1': {
+    nl: '46% van nieuwe medewerkers faalt binnen 18 maanden — niet door gebrek aan kwalificaties, maar door een mismatch in cultuur en waarden.',
+    en: '46% of new hires fail within 18 months — not due to lack of qualifications, but because of a mismatch in culture and values.'
+  },
+  'hero.sub2': {
+    nl: 'De Matching Scan, ontwikkeld met de Vrije Universiteit Amsterdam, meet die match vóór de aanname. Wetenschappelijk bewezen. No cure, no pay.',
+    en: 'The Matching Scan, developed with Vrije Universiteit Amsterdam, measures that match before hiring. Scientifically proven. No cure, no pay.'
+  },
+  'hero.ctaEmployer': { nl: 'Start als opdrachtgever →', en: 'Start as employer →' },
+  'hero.ctaScout': { nl: 'Word Talent Scout', en: 'Become a Talent Scout' },
+  'hero.trust1': { nl: '🎓 VU Amsterdam', en: '🎓 VU Amsterdam' },
+  'hero.trust2': { nl: '🔬 35-vragen Matching Scan', en: '🔬 35-question Matching Scan' },
+  'hero.trust3': { nl: '💰 No Cure No Pay', en: '💰 No Cure No Pay' },
+  'hero.sources': {
+    nl: 'Bronnen: Leadership IQ · SHRM 2024 · VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024',
+    en: 'Sources: Leadership IQ · SHRM 2024 · VU Amsterdam (De Vries, 2026; N=309) · Resume Genius 2024'
+  },
+
+  // ─── Social proof bar ──────────────────────────────────────────────────────
+  'stats.mishireCost': { nl: 'kosten per mis-hire (SHRM, 2024)', en: 'cost per mis-hire (SHRM, 2024)' },
+  'stats.failRate': { nl: 'van hires faalt binnen 18 maanden', en: 'of hires fail within 18 months' },
+  'stats.roi': { nl: 'ROI bij inzet Refurzy (conservatief)', en: 'ROI with Refurzy (conservative)' },
+  'stats.doubt': { nl: 'managers twijfelt over aannamebeslissing', en: 'of managers doubt their hiring decision' },
+
+  // ─── Problem section ───────────────────────────────────────────────────────
+  'problem.label': { nl: 'De uitdaging', en: 'The challenge' },
+  'problem.title': { nl: 'Werving is achterhaald', en: 'Recruitment is outdated' },
+  'problem.subtitle': {
+    nl: 'De arbeidsmarkt is drastisch veranderd. De manier waarop we talent werven niet. Processen die ontworpen zijn voor een markt die niet meer bestaat, kosten u meer dan u denkt.',
+    en: 'The labor market has changed drastically. The way we recruit talent has not. Processes designed for a market that no longer exists cost you more than you think.'
+  },
+
+  // Pain points
+  'pain.agencies.title': { nl: 'Dure bureaus, nul garantie', en: 'Expensive agencies, zero guarantee' },
+  'pain.agencies.desc': {
+    nl: 'Traditionele bureaus rekenen 20-25% van het jaarsalaris. Dat is €16.200 per hire — zonder garantie op een goede match. Als het misgaat, begint u opnieuw en betaalt u opnieuw.',
+    en: 'Traditional agencies charge 20-25% of annual salary. That\'s €16,200 per hire — with no guarantee of a good match. If it fails, you start over and pay again.'
+  },
+  'pain.turnover.title': { nl: 'Hoog verloop door mismatches', en: 'High turnover from mismatches' },
+  'pain.turnover.desc': {
+    nl: 'Eén verkeerde hire kost €44.000 tot €175.000 aan herwervingskosten, productiviteitsverlies en teamschade. En het gebeurt vaker dan u denkt: 46% van nieuwe medewerkers faalt binnen 18 maanden.',
+    en: 'One wrong hire costs €44,000 to €175,000 in re-recruitment, lost productivity and team damage. And it happens more often than you think: 46% of new hires fail within 18 months.'
+  },
+  'pain.gut.title': { nl: 'Buikgevoel in plaats van data', en: 'Gut feeling instead of data' },
+  'pain.gut.desc': {
+    nl: '81% van hiring managers is zo onzeker over hun keuze dat ze kandidaten ghosten. Niet uit onwil, maar uit gebrek aan objectieve informatie over wie écht bij de organisatie past.',
+    en: '81% of hiring managers are so uncertain about their choice that they ghost candidates. Not from unwillingness, but from lack of objective information about who truly fits the organization.'
+  },
+  'pain.expensive.title': { nl: 'Steeds korter, steeds duurder', en: 'Shorter tenure, higher costs' },
+  'pain.expensive.desc': {
+    nl: 'Een medewerker bleef vroeger zes jaar. Vandaag is dat anderhalf tot twee jaar. Maar de wervingskosten zijn niet gedaald — ze zijn gestegen. De terugverdientijd is korter dan de fee.',
+    en: 'An employee used to stay six years. Today it\'s one and a half to two years. But recruitment costs haven\'t dropped — they\'ve increased. The payback period is shorter than the fee.'
+  },
+  'pain.managers.title': { nl: 'Managers willen het niet doen', en: 'Managers don\'t want to do it' },
+  'pain.managers.desc': {
+    nl: 'Werven is niet waarvoor managers zijn aangenomen. Ze vinden het tijdrovend, onzeker en frustrerend. Als ze het leuk hadden gevonden, waren ze wel recruiter geworden.',
+    en: 'Recruiting is not what managers were hired for. They find it time-consuming, uncertain and frustrating. If they had enjoyed it, they would have become recruiters.'
+  },
+  'pain.market.title': { nl: 'Krappe markt, dezelfde vijver', en: 'Tight market, same pond' },
+  'pain.market.desc': {
+    nl: 'De arbeidsmarkt is krapper dan ooit. Bureaus vissen in dezelfde vijver. Refurzy zet ervaren Talent Scouts in — professionals die al jaren netwerken hebben opgebouwd en weten waar het talent zit.',
+    en: 'The labor market is tighter than ever. Agencies fish in the same pond. Refurzy deploys experienced Talent Scouts — professionals who have built networks for years and know where the talent is.'
+  },
+
+  // ─── How it works ──────────────────────────────────────────────────────────
+  'how.title': { nl: 'Hoe Refurzy werkt', en: 'How Refurzy works' },
+  'how.subtitle': {
+    nl: 'Drie rollen, één platform. Elke stap is ontworpen om werving sneller, objectiever en eerlijker te maken.',
+    en: 'Three roles, one platform. Every step is designed to make recruitment faster, more objective and fairer.'
+  },
+  'how.employer': { nl: 'Opdrachtgever', en: 'Employer' },
+  'how.employer.1': { nl: 'Plaats een vacature en vul het profiel in', en: 'Post a vacancy and fill in the profile' },
+  'how.employer.2': { nl: 'Bekijk geanonimiseerde kandidaten met M-Score', en: 'View anonymized candidates with M-Score' },
+  'how.employer.3': { nl: 'Ontgrendel profielen — betaal alleen bij een match', en: 'Unlock profiles — pay only on a match' },
+  'how.scout': { nl: 'Talent Scout', en: 'Talent Scout' },
+  'how.scout.1': { nl: 'Bouw je eigen talent pool op', en: 'Build your own talent pool' },
+  'how.scout.2': { nl: 'Match kandidaten aan openstaande vacatures', en: 'Match candidates to open vacancies' },
+  'how.scout.3': { nl: 'Verdien 50% van de fee bij een succesvolle plaatsing', en: 'Earn 50% of the fee on a successful placement' },
+  'how.candidate': { nl: 'Kandidaat', en: 'Candidate' },
+  'how.candidate.1': { nl: 'Word uitgenodigd door een Talent Scout', en: 'Get invited by a Talent Scout' },
+  'how.candidate.2': { nl: 'Vul de 35-vragen Matching Scan in', en: 'Complete the 35-question Matching Scan' },
+  'how.candidate.3': { nl: 'Word objectief gematcht aan passende vacatures', en: 'Get objectively matched to suitable vacancies' },
+
+  // ─── Solution section ──────────────────────────────────────────────────────
+  'solution.label': { nl: 'De oplossing', en: 'The solution' },
+  'solution.title': { nl: 'Refurzy draait het om', en: 'Refurzy turns it around' },
+  'solution.subtitle': {
+    nl: 'Traditionele werving ontdekt of iemand past bij uw cultuur nádat u heeft geïnvesteerd. Refurzy meet die match vóór de aanname.',
+    en: 'Traditional recruitment discovers whether someone fits your culture after you\'ve invested. Refurzy measures that match before hiring.'
+  },
+
+  // ─── Pricing ───────────────────────────────────────────────────────────────
+  'pricing.title': { nl: 'Transparante pricing', en: 'Transparent pricing' },
+  'pricing.subtitle': {
+    nl: 'Geen abonnement. Geen verborgen kosten. U betaalt alleen bij een succesvolle plaatsing.',
+    en: 'No subscription. No hidden costs. You only pay on a successful placement.'
+  },
+
+  // ─── CTA ───────────────────────────────────────────────────────────────────
+  'cta.title': { nl: 'Stop met gokken op talent.', en: 'Stop gambling on talent.' },
+  'cta.subtitle': {
+    nl: 'Elke dag dat u werft op buikgevoel kost het u geld. Start vandaag met wetenschappelijk onderbouwde werving. Geen verplichtingen, geen opstartkosten.',
+    en: 'Every day you recruit on gut feeling costs you money. Start today with scientifically backed recruitment. No obligations, no setup costs.'
+  },
+
+  // ─── FAQ ───────────────────────────────────────────────────────────────────
+  'faq.title': { nl: 'Veelgestelde vragen', en: 'Frequently asked questions' },
+
+  // ─── Footer ────────────────────────────────────────────────────────────────
+  'footer.platform': { nl: 'Platform', en: 'Platform' },
+  'footer.company': { nl: 'Bedrijf', en: 'Company' },
+  'footer.legal': { nl: 'Legal', en: 'Legal' },
+  'footer.forEmployers': { nl: 'Voor opdrachtgevers', en: 'For employers' },
+  'footer.forScouts': { nl: 'Voor Talent Scouts', en: 'For Talent Scouts' },
+  'footer.forCandidates': { nl: 'Voor kandidaten', en: 'For candidates' },
+  'footer.about': { nl: 'Over Refurzy', en: 'About Refurzy' },
+  'footer.science': { nl: 'Wetenschap', en: 'Science' },
+  'footer.contact': { nl: 'Contact', en: 'Contact' },
+  'footer.privacy': { nl: 'Privacy Policy', en: 'Privacy Policy' },
+  'footer.terms': { nl: 'Algemene Voorwaarden', en: 'Terms & Conditions' },
+  'footer.cookies': { nl: 'Cookie Policy', en: 'Cookie Policy' },
+  'footer.rights': { nl: '© 2026 Refurzy B.V. — Alle rechten voorbehouden', en: '© 2026 Refurzy B.V. — All rights reserved' },
+} as const
+
+export type TranslationKey = keyof typeof translations
+
+export function t(key: TranslationKey, lang: Lang): string {
+  return translations[key]?.[lang] ?? key
+}
