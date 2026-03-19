@@ -23,6 +23,11 @@ export default function VacatureDetailPage() {
   const [akkoord, setAkkoord] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [exclusief, setExclusief] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [beschrijving, setBeschrijving] = useState(
+    `We zoeken een ervaren ${vacature?.title || 'professional'} die ons team versterkt. De ideale kandidaat combineert vakkennis met een sterke culturele fit.\n\nWat ga je doen?\n• Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${vacature?.title || ''} strategie\n• Samenwerken met interne stakeholders en externe partners\n• Bijdragen aan de groeidoelstellingen van de organisatie\n• Rapporteren aan het management team\n\nWat vragen wij?\n• Minimaal ${vacature?.hardeCriteria?.minimaleErvaring || '5 jaar'} relevante werkervaring\n• ${vacature?.hardeCriteria?.opleidingsniveau || 'HBO'} werk- en denkniveau\n• Uitstekende communicatieve vaardigheden in woord en geschrift\n• Proactieve houding en teamspeler\n\nWat bieden wij?\n• Salaris: ${vacature?.salaris || 'Marktconform'}\n• ${vacature?.hardeCriteria?.opKantoor || 'Hybride werken'}\n• 25 vakantiedagen + 13 ADV-dagen\n• Pensioenregeling en reiskostenvergoeding`
+  )
+  const [savedToast, setSavedToast] = useState(false)
 
   if (!vacature) {
     return (
@@ -92,6 +97,58 @@ export default function VacatureDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Vacaturebeschrijving */}
+      <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-ink font-semibold">Vacaturebeschrijving</h2>
+          {!editing ? (
+            <button
+              onClick={() => setEditing(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple border border-purple/20 rounded-lg hover:bg-purple/5 transition-colors"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
+              Bewerken
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setEditing(false)}
+                className="px-3 py-1.5 text-xs font-medium text-ink-light border border-surface-border rounded-lg hover:text-ink transition-colors"
+              >
+                Annuleren
+              </button>
+              <button
+                onClick={() => {
+                  setEditing(false)
+                  setSavedToast(true)
+                  setTimeout(() => setSavedToast(false), 3000)
+                }}
+                className="px-3 py-1.5 text-xs font-medium text-white bg-purple rounded-lg hover:bg-purple/90 transition-colors"
+              >
+                Opslaan
+              </button>
+            </div>
+          )}
+        </div>
+        {editing ? (
+          <textarea
+            value={beschrijving}
+            onChange={(e) => setBeschrijving(e.target.value)}
+            className="w-full min-h-[280px] px-4 py-3 border border-surface-border rounded-xl text-sm text-ink leading-relaxed placeholder-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple resize-y"
+          />
+        ) : (
+          <div className="text-sm text-ink-light leading-relaxed whitespace-pre-line">
+            {beschrijving}
+          </div>
+        )}
+      </div>
+
+      {savedToast && (
+        <div className="fixed top-6 right-6 z-50 bg-purple text-white px-6 py-3 rounded-xl shadow-lg font-semibold text-sm">
+          ✓ Vacaturebeschrijving opgeslagen
+        </div>
+      )}
 
       {/* Exclusiviteit banner */}
       {exclusief && (
