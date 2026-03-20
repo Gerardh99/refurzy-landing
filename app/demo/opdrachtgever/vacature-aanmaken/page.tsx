@@ -9,6 +9,176 @@ import {
   type ScaleOption,
 } from '@/lib/matching-scan'
 
+// ─── Role-specific task templates (simulates AI web search for similar vacancies) ───
+
+const ROLE_TASK_TEMPLATES: Record<string, string[]> = {
+  'marketing manager': [
+    'Ontwikkelen en uitvoeren van de marketingstrategie, zowel online als offline',
+    'Aansturen van het marketingteam en externe bureaus (SEO, SEA, social media)',
+    'Analyseren van campagneresultaten, conversiedata en ROI; bijsturen waar nodig',
+    'Beheren van het marketingbudget en rapporteren aan het managementteam',
+    'Positioneren van het merk in de markt en ontwikkelen van content- en communicatieplannen',
+    'Samenwerken met Sales en Product om go-to-market strategieën te ontwikkelen',
+  ],
+  'software developer': [
+    'Ontwerpen, bouwen en onderhouden van schaalbare webapplicaties en API\'s',
+    'Schrijven van kwalitatief hoogwaardige, testbare code volgens best practices',
+    'Deelnemen aan code reviews, sprint planningen en technische architectuurdiscussies',
+    'Samenwerken met UX/UI designers om intuïtieve gebruikerservaringen te realiseren',
+    'Troubleshooten van bugs en performance-issues in productieomgevingen',
+    'Bijdragen aan de technische roadmap en continu verbeteren van de development workflow',
+  ],
+  'senior software developer': [
+    'Leiden van technische architectuurbeslissingen en het ontwerpen van complexe systemen',
+    'Mentoren en coachen van junior en medior developers binnen het team',
+    'Bouwen van schaalbare microservices, API\'s en cloud-native applicaties',
+    'Uitvoeren van code reviews en waarborgen van codekwaliteit en security standaarden',
+    'Samenwerken met Product Owners om technische haalbaarheid en prioritering te bepalen',
+    'Evalueren en introduceren van nieuwe technologieën en frameworks',
+  ],
+  'financial controller': [
+    'Opstellen van maand-, kwartaal- en jaarrapportages conform IFRS/Dutch GAAP',
+    'Bewaken van budgetten, forecasts en cashflowprognoses',
+    'Analyseren van financiële afwijkingen en adviseren van het management over verbetermaatregelen',
+    'Coördineren van de jaarlijkse accountantscontrole en contact met externe auditors',
+    'Doorontwikkelen van financiële processen, systemen en interne controles',
+    'Opstellen van business cases en financiële modellen voor strategische beslissingen',
+  ],
+  'sales manager': [
+    'Ontwikkelen en uitvoeren van de salesstrategie om omzetdoelstellingen te realiseren',
+    'Aansturen, coachen en motiveren van het salesteam',
+    'Opbouwen en onderhouden van relaties met key accounts en strategische partners',
+    'Analyseren van verkoopdata, pipeline en conversieratio\'s; vertalen naar acties',
+    'Identificeren van nieuwe marktmogelijkheden en het ontwikkelen van proposities',
+    'Rapporteren aan de directie over salesresultaten, forecasts en marktontwikkelingen',
+  ],
+  'hr manager': [
+    'Ontwikkelen en implementeren van HR-beleid op het gebied van werving, ontwikkeling en retentie',
+    'Adviseren van het managementteam over organisatieontwikkeling en verandermanagement',
+    'Begeleiden van het recruitment- en onboardingproces voor nieuwe medewerkers',
+    'Opzetten van beoordelings- en ontwikkelcycli en talent management programma\'s',
+    'Waarborgen van naleving van arbeidsrechtelijke wet- en regelgeving',
+    'Beheren van arbeidsvoorwaarden, verzuim en salarisadministratie',
+  ],
+  'project manager': [
+    'Plannen, coördineren en bewaken van projecten van initiatie tot oplevering',
+    'Managen van scope, budget, planning en risico\'s binnen het projectportfolio',
+    'Aansturen van multidisciplinaire projectteams en externe leveranciers',
+    'Opstellen van projectplannen, voortgangsrapportages en stuurgroeppresentaties',
+    'Signaleren van risico\'s en bottlenecks en proactief escaleren waar nodig',
+    'Implementeren van verbeteringen in projectmethodieken (Agile, Prince2, Waterfall)',
+  ],
+  'data analyst': [
+    'Verzamelen, opschonen en analyseren van grote datasets uit diverse bronnen',
+    'Bouwen van dashboards en rapportages in tools als Power BI, Tableau of Looker',
+    'Vertalen van data-inzichten naar concrete aanbevelingen voor stakeholders',
+    'Ontwikkelen van KPI-frameworks en monitoren van business performance',
+    'Uitvoeren van ad-hoc analyses, A/B-testen en statistische modellen',
+    'Samenwerken met IT en Data Engineering aan datainfrastructuur en datakwaliteit',
+  ],
+  'accountmanager': [
+    'Beheren en uitbouwen van een eigen klantenportefeuille',
+    'Signaleren van commerciële kansen en vertalen naar concrete proposities',
+    'Onderhouden van langdurige klantrelaties en fungeren als eerste aanspreekpunt',
+    'Opstellen van offertes, onderhandelen over voorwaarden en sluiten van deals',
+    'Samenwerken met interne teams (operations, product, marketing) om klantbehoeften te realiseren',
+    'Bijhouden van CRM, rapporteren op KPI\'s en bijdragen aan de teamtargets',
+  ],
+  'product manager': [
+    'Definiëren van de productstrategie en roadmap op basis van markt- en gebruikersonderzoek',
+    'Vertalen van klantbehoeften naar user stories, features en acceptatiecriteria',
+    'Prioriteren van de product backlog in samenwerking met engineering en design',
+    'Analyseren van productmetrics, gebruikersdata en concurrentie om kansen te identificeren',
+    'Coördineren van go-to-market lanceringen met marketing, sales en customer success',
+    'Faciliteren van stakeholder alignment en communiceren van productupdates aan de organisatie',
+  ],
+}
+
+const ROLE_REQUIREMENT_TEMPLATES: Record<string, string[]> = {
+  'marketing manager': [
+    'Aantoonbare ervaring met digitale marketing (SEO, SEA, social media, email marketing)',
+    'Data-gedreven mindset; ervaring met Google Analytics, HubSpot of vergelijkbare tools',
+    'Sterke communicatieve vaardigheden in woord en geschrift (NL en EN)',
+  ],
+  'software developer': [
+    'Ervaring met moderne frameworks (React, Next.js, Node.js of vergelijkbaar)',
+    'Kennis van databases (SQL en/of NoSQL), REST API\'s en CI/CD pipelines',
+    'Teamspeler met goede communicatieve vaardigheden en oog voor kwaliteit',
+  ],
+  'senior software developer': [
+    'Diepgaande kennis van software architectuur, design patterns en cloud platforms (AWS/Azure/GCP)',
+    'Ervaring met het aansturen van technische projecten en mentoren van teamleden',
+    'Sterke analytische vaardigheden en vermogen om complexe problemen op te lossen',
+  ],
+  'financial controller': [
+    'RC/RA opleiding (of gevorderde studie) is een pré',
+    'Ervaring met ERP-systemen (SAP, Exact, NetSuite) en advanced Excel',
+    'Nauwkeurig, analytisch en in staat om financiële data te vertalen naar managementinformatie',
+  ],
+  'sales manager': [
+    'Bewezen track record in het behalen en overtreffen van omzetdoelstellingen',
+    'Ervaring met CRM-systemen (Salesforce, HubSpot) en data-gedreven salesprocessen',
+    'Coachende leiderschapsstijl en vermogen om een team te inspireren en ontwikkelen',
+  ],
+  'hr manager': [
+    'Kennis van Nederlands arbeidsrecht en relevante wet- en regelgeving',
+    'Ervaring met HRIS-systemen en HR-analytics',
+    'Uitstekende gespreksvaardigheden en vermogen om vertrouwen op te bouwen',
+  ],
+  'project manager': [
+    'Certificering in projectmanagement (Prince2, PMP, Scrum Master) is een pré',
+    'Ervaring met projectmanagementtools (Jira, Asana, MS Project)',
+    'Resultaatgericht, stressbestendig en in staat om meerdere projecten tegelijk te managen',
+  ],
+  'data analyst': [
+    'Ervaring met SQL, Python of R en visualisatietools (Power BI, Tableau)',
+    'Kennis van statistische methoden en data modelling',
+    'Vermogen om complexe analyses helder te presenteren aan niet-technische stakeholders',
+  ],
+  'accountmanager': [
+    'Commercieel inzicht en ervaring met consultative selling',
+    'Ervaring met CRM-systemen en het beheren van een salesfunnel',
+    'Resultaatgericht, proactief en in staat om zelfstandig relaties te onderhouden',
+  ],
+  'product manager': [
+    'Ervaring met Agile/Scrum methodieken en backlog management',
+    'Data-gedreven aanpak; ervaring met productanalytics (Amplitude, Mixpanel, GA)',
+    'Uitstekend vermogen om technische en commerciële belangen te verbinden',
+  ],
+}
+
+function getRoleSpecificTasks(title: string): string[] {
+  const normalized = title.toLowerCase().trim()
+  // Direct match
+  if (ROLE_TASK_TEMPLATES[normalized]) return ROLE_TASK_TEMPLATES[normalized]
+  // Partial match — find the best matching template
+  for (const [key, tasks] of Object.entries(ROLE_TASK_TEMPLATES)) {
+    if (normalized.includes(key) || key.includes(normalized)) return tasks
+  }
+  // Fallback: generic but professional tasks
+  return [
+    `Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${title.toLowerCase()} strategie`,
+    `Samenwerken met interne teams en externe stakeholders om doelen te realiseren`,
+    `Analyseren van resultaten, signaleren van trends en vertalen naar concrete verbeterplannen`,
+    `Bijdragen aan innovatie en procesoptimalisatie binnen het team`,
+    `Rapporteren over voortgang, KPI's en resultaten aan het managementteam`,
+    `Opbouwen en onderhouden van relevante interne en externe relaties`,
+  ]
+}
+
+function getRoleSpecificRequirements(title: string): string[] {
+  const normalized = title.toLowerCase().trim()
+  if (ROLE_REQUIREMENT_TEMPLATES[normalized]) return ROLE_REQUIREMENT_TEMPLATES[normalized]
+  for (const [key, reqs] of Object.entries(ROLE_REQUIREMENT_TEMPLATES)) {
+    if (normalized.includes(key) || key.includes(normalized)) return reqs
+  }
+  return [
+    'Uitstekende communicatieve vaardigheden in woord en geschrift',
+    'Proactieve houding, teamspeler en resultaatgericht',
+    'Affiniteit met de sector en enthousiasme voor de rol',
+  ]
+}
+
 type Step = 1 | 2 | 3 | 4 | 5 | 6
 type WerkzaamhedenSubStep = 'ranking' | 'rating'
 
@@ -33,6 +203,8 @@ export default function VacatureAanmakenPage() {
     omschrijving: '',
     locatie: '',
     salaris: '',
+    salarisPeriode: 'maand' as 'maand' | 'jaar',
+    taken: '',
     contractType: 'Vast',
     opKantoor: 'Hybride (3 dagen)',
     maxReistijd: '45 minuten',
@@ -89,12 +261,20 @@ export default function VacatureAanmakenPage() {
       const titel = form.titel
       const afdeling = form.afdeling || 'het team'
       const locatie = form.locatie
-      const salaris = form.salaris || 'marktconform salaris'
+      const salarisLabel = form.salaris
+        ? `${form.salaris} bruto per ${form.salarisPeriode}`
+        : 'marktconform salaris'
       const contract = form.contractType
       const kantoor = form.opKantoor
       const ervaring = EXPERIENCE_LABELS[form.ervaring as ExperienceLevel] || ''
       const opleiding = form.opleiding
       const cultuur = form.afdelingscultuur
+
+      // Use user-entered tasks if available, otherwise use role-specific templates
+      const userTaken = form.taken.trim()
+      const takenList = userTaken
+        ? userTaken.split('\n').map(t => t.replace(/^[•\-\*]\s*/, '').trim()).filter(Boolean)
+        : getRoleSpecificTasks(titel)
 
       let omschrijving = `Ben jij een ervaren ${titel} en zoek je een nieuwe uitdaging in ${locatie}? Wij zoeken een gedreven professional voor ${afdeling}.`
 
@@ -105,21 +285,15 @@ export default function VacatureAanmakenPage() {
       }
 
       omschrijving += `Wat ga je doen?\n`
-      omschrijving += `• Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${titel.toLowerCase()} strategie\n`
-      omschrijving += `• Samenwerken met collega's binnen ${afdeling} en cross-functionele stakeholders\n`
-      omschrijving += `• Bijdragen aan de groeidoelstellingen van de organisatie\n`
-      omschrijving += `• Analyseren van resultaten en het vertalen naar concrete verbetervoorstellen\n`
-      omschrijving += `• Rapporteren aan het management team\n`
+      omschrijving += takenList.map(t => `• ${t}`).join('\n')
 
-      omschrijving += `\nWat vragen wij?\n`
+      omschrijving += `\n\nWat vragen wij?\n`
       omschrijving += `• Minimaal ${ervaring.toLowerCase()} relevante werkervaring\n`
       omschrijving += `• ${opleiding} werk- en denkniveau\n`
-      omschrijving += `• Uitstekende communicatieve vaardigheden in woord en geschrift\n`
-      omschrijving += `• Proactieve houding en teamspeler\n`
-      omschrijving += `• Affiniteit met de sector en enthousiasme voor de rol\n`
+      omschrijving += getRoleSpecificRequirements(titel).map(r => `• ${r}`).join('\n')
 
-      omschrijving += `\nWat bieden wij?\n`
-      omschrijving += `• Salaris: ${salaris}\n`
+      omschrijving += `\n\nWat bieden wij?\n`
+      omschrijving += `• Salaris: ${salarisLabel}\n`
       omschrijving += `• ${contract} contract\n`
       omschrijving += `• ${kantoor}\n`
       omschrijving += `• Locatie: ${locatie}\n`
@@ -247,10 +421,26 @@ export default function VacatureAanmakenPage() {
                   placeholder="bijv. Amsterdam" />
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie</label>
-                <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="bijv. &euro;4.000 - &euro;5.500" />
+                <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie (bruto)</label>
+                <div className="flex gap-2">
+                  <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
+                    className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
+                    placeholder={form.salarisPeriode === 'maand' ? 'bijv. \u20AC4.000 - \u20AC5.500' : 'bijv. \u20AC48.000 - \u20AC66.000'} />
+                  <div className="flex rounded-lg border border-surface-border overflow-hidden shrink-0">
+                    <button type="button" onClick={() => setForm(f => ({ ...f, salarisPeriode: 'maand' }))}
+                      className={`px-3 py-3 text-xs font-medium transition-colors ${
+                        form.salarisPeriode === 'maand' ? 'bg-cyan/15 text-cyan border-r border-cyan/20' : 'bg-surface-muted text-ink-muted hover:text-ink border-r border-surface-border'
+                      }`}>
+                      /maand
+                    </button>
+                    <button type="button" onClick={() => setForm(f => ({ ...f, salarisPeriode: 'jaar' }))}
+                      className={`px-3 py-3 text-xs font-medium transition-colors ${
+                        form.salarisPeriode === 'jaar' ? 'bg-cyan/15 text-cyan' : 'bg-surface-muted text-ink-muted hover:text-ink'
+                      }`}>
+                      /jaar
+                    </button>
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Contracttype</label>
@@ -277,6 +467,21 @@ export default function VacatureAanmakenPage() {
                 <label className="block text-sm text-ink-light mb-1.5">Gewenste startdatum</label>
                 <input type="date" value={form.startdatum} onChange={e => setForm(f => ({ ...f, startdatum: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors" />
+              </div>
+            </div>
+
+            {/* Taken & verantwoordelijkheden */}
+            <div className="border-t border-surface-border pt-6">
+              <label className="block text-sm text-ink-light mb-1.5">Taken &amp; verantwoordelijkheden</label>
+              <p className="text-xs text-ink-muted mb-3">
+                Beschrijf de belangrijkste taken voor deze functie. Dit wordt door AI gebruikt om de vacaturetekst te genereren. Laat leeg om AI suggesties te krijgen op basis van de functietitel.
+              </p>
+              <textarea value={form.taken} onChange={e => setForm(f => ({ ...f, taken: e.target.value }))} rows={4}
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
+                placeholder={"bijv.\n• Ontwikkelen en uitvoeren van de marketingstrategie\n• Aansturen van het marketingteam en externe bureaus\n• Analyseren van campagneresultaten en ROI"} />
+              <div className="flex justify-between mt-2">
+                <span className="text-xs text-ink-muted">{form.taken.length} tekens</span>
+                <span className="text-xs text-ink-muted">Optioneel</span>
               </div>
             </div>
 
@@ -393,7 +598,13 @@ export default function VacatureAanmakenPage() {
                 {form.salaris && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-green-500">✓</span>
-                    <span className="text-ink">{form.salaris}</span>
+                    <span className="text-ink">{form.salaris} /{form.salarisPeriode}</span>
+                  </div>
+                )}
+                {form.taken && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-green-500">✓</span>
+                    <span className="text-ink">Eigen taken opgegeven</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">
@@ -455,7 +666,7 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Functie:</span> <span className="text-ink font-medium">{form.titel}</span></div>
                 <div><span className="text-ink-muted">Afdeling:</span> <span className="text-ink">{form.afdeling || '—'}</span></div>
                 <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
-                <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink">{form.salaris || '—'}</span></div>
+                <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink">{form.salaris ? `${form.salaris} bruto p/${form.salarisPeriode === 'maand' ? 'mnd' : 'jr'}` : '—'}</span></div>
                 <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>
                 <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
