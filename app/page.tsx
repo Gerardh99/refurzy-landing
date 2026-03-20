@@ -96,7 +96,7 @@ export default function LandingPage() {
         <h1><span className="gradient-text">Redefining Recruitment.</span> Forever.</h1>
 
         <p className="subtitle">
-          Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een modaal salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²
+          Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²
         </p>
 
         <p className="body-text">
