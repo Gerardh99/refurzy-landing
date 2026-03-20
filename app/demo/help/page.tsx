@@ -61,6 +61,11 @@ const faqItems: FaqItem[] = [
     a: 'Ja, u kunt zoveel vacatures aanmaken als u wilt. Elke vacature krijgt een eigen M-Score profiel en kan onafhankelijk kandidaten ontvangen van verschillende Talent Scouts.',
     roles: ['opdrachtgever'],
   },
+  {
+    q: 'Wat is de exclusiviteitsoptie?',
+    a: 'Bij het aanmaken van een vacature kunt u exclusiviteit activeren (+25% op de plaatsingsfee). Kandidaten die worden voorgedragen zijn dan minimaal 14 dagen exclusief beschikbaar voor uw vacature en worden niet aan andere opdrachtgevers aangeboden. Let op: exclusiviteit is onherroepelijk — eenmaal geactiveerd kan het niet meer worden uitgeschakeld voor die vacature.',
+    roles: ['opdrachtgever'],
+  },
 
   // ── Scout ──
   {
@@ -85,7 +90,17 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat gebeurt er als een voordracht verloopt?',
-    a: 'Als een opdrachtgever niet binnen 7 dagen reageert op een voordracht, wordt deze automatisch geannuleerd. De kandidaat keert terug naar uw talent pool en kan opnieuw worden voorgedragen voor een andere vacature.',
+    a: 'Als een opdrachtgever niet binnen 7 dagen reageert op een voordracht, wordt deze automatisch geannuleerd. De kandidaat keert terug naar uw talent pool en kan opnieuw worden voorgedragen voor een andere vacature. Uitzondering: bij een exclusieve vacature blijft de kandidaat geblokkeerd tot de 14-dagen exclusiviteitsperiode is verstreken.',
+    roles: ['scout'],
+  },
+  {
+    q: 'Kan ik een kandidaat op meerdere vacatures tegelijk voordragen?',
+    a: 'Nee. Zodra een kandidaat is voorgedragen op een vacature, is deze geblokkeerd voor andere voordrachten zolang het proces loopt. Na een afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt. U ziet in uw talent pool een indicator wanneer een kandidaat geblokkeerd is.',
+    roles: ['scout'],
+  },
+  {
+    q: 'Wat betekent het als een vacature exclusief is?',
+    a: 'Bij een exclusieve vacature betaalt de opdrachtgever 25% extra bij een succesvolle plaatsing. In ruil daarvoor zijn voorgedragen kandidaten minimaal 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden. Dit betekent ook dat uw kandidaat niet elders kan worden ingezet gedurende die periode. De exclusiviteitstoeslag wordt 50/50 verdeeld, dus u ontvangt ook meer fee.',
     roles: ['scout'],
   },
   {

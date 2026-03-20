@@ -76,6 +76,33 @@ Bij het aanmaken van een vacature kan de opdrachtgever exclusiviteit activeren:
 
 **Voorbeeld**: WO + 5-10 jaar = €10.800 basisfee → met exclusiviteit: €10.800 + €2.700 = €13.500 excl. BTW
 
+### Kandidaat-blokkade bij voordracht
+
+Zodra een kandidaat wordt voorgedragen op een vacature, wordt deze geblokkeerd voor voordracht op andere vacatures. De duur van de blokkade hangt af van het type vacature en de uitkomst van het proces:
+
+#### Standaard vacature (zonder exclusiviteit)
+| Situatie | Blokkade |
+|----------|----------|
+| Kandidaat is voorgedragen en in actieve pipeline | Geblokkeerd zolang het proces loopt |
+| Kandidaat wordt afgewezen | Direct vrij voor nieuwe voordrachten |
+| Voordracht verloopt (opdrachtgever reageert niet binnen 7 dagen) | Direct vrij voor nieuwe voordrachten |
+| Kandidaat wordt aangenomen | Permanent geblokkeerd (uit talent pool) |
+
+#### Exclusieve vacature (+25%)
+| Situatie | Blokkade |
+|----------|----------|
+| Kandidaat is voorgedragen | Geblokkeerd voor minimaal 14 dagen, óók als afgewezen binnen die 14 dagen |
+| Na 14 dagen + afwijzing | Direct vrij voor nieuwe voordrachten |
+| Na 14 dagen + nog in actieve pipeline | Geblokkeerd tot einde proces |
+| Voordracht verloopt (7 dagen geen review) | Exclusiviteitsblokkade blijft gelden tot dag 14 |
+| Kandidaat wordt aangenomen | Permanent geblokkeerd (uit talent pool) |
+
+#### Technische afdwinging
+- Bij het voordragen van een kandidaat checkt het platform of de kandidaat al in een actief proces zit of onder een exclusiviteitsblokkade valt
+- Scouts zien in hun talent pool een duidelijke indicator wanneer een kandidaat geblokkeerd is, inclusief verwachte einddatum
+- De scout kan een geblokkeerde kandidaat **niet** selecteren voor voordracht totdat de blokkade is verlopen
+- Bij exclusieve vacatures start de 14-dagenklok op het moment van voordracht, ongeacht wat er daarna in de pipeline gebeurt
+
 ### 15 Landen
 Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactoren.
 
@@ -738,12 +765,13 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 15. **VU Amsterdam licentie**: Refurzy betaalt de VU per afgenomen Matching Scan. Intern testgebruik wordt uitgefilterd op basis van test-emailadressen. Alle afnames worden gelogd met datum, type, gebruiker en status.
 16. **Profiel hergebruik**: Kandidaat vult scan 1x in → profiel herbruikbaar over alle vacatures. Organisatie: waarden + kenmerken (dim 2+3, 16 vragen) herbruikbaar over vacatures, alleen werkzaamheden (dim 1, 19 vragen) per vacature opnieuw.
 17. **Scout-exclusiviteit**: Een kandidaat kan alleen worden voorgedragen door de scout die de kandidaat heeft aangebracht. Andere scouts kunnen dezelfde kandidaat niet voordragen.
+17b. **Kandidaat-blokkade bij voordracht**: Een kandidaat die is voorgedragen op een vacature kan niet tegelijkertijd op een andere vacature worden voorgedragen. De blokkade duurt zolang het proces actief is. Bij afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt ongeacht de uitkomst. Zie sectie 3 "Kandidaat-blokkade bij voordracht".
 18. **Automatische matchingsuggesties**: Scouts ontvangen automatische matchingsuggesties wanneer een vacature wordt gepubliceerd die matcht met kandidaten in hun talent pool — op basis van harde criteria (opleiding, ervaring, locatie) en M-Score. De scout kan de suggestie accepteren (= voordragen) of afwijzen.
 19. **Handmatig matchen**: Scouts kunnen kandidaten ook handmatig aan vacatures koppelen, onafhankelijk van automatische suggesties.
 20. **Introductiekorting nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. Om de drempel te verlagen: de eerste succesvolle plaatsing is met 50% korting. Zowel de scout als Refurzy dragen de korting (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt de korting automatisch. Dit wordt zichtbaar voor de opdrachtgever als "50% introductiekorting" badge bij kandidaten van nieuwe scouts, en voor de scout als incentive om de eerste match te realiseren.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
 22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
-23. **Exclusiviteit (+25%)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan 14 dagen niet aan andere vacatures aangeboden. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen.
+23. **Exclusiviteit (+25%)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan minimaal 14 dagen niet aan andere vacatures aangeboden — ook niet als ze binnen die 14 dagen worden afgewezen of als de voordracht verloopt. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen. Zie sectie 3 "Kandidaat-blokkade bij voordracht" voor alle regels.
 
 ---
 
