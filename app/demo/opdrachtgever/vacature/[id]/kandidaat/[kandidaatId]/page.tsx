@@ -245,21 +245,6 @@ export default function OpdrachtgeverKandidaatProces() {
             </div>
           </div>
 
-          {kandidaat.nudges && kandidaat.nudges.length > 0 && (
-            <div className="bg-orange/5 border border-orange/20 rounded-xl p-3 space-y-2">
-              <p className="text-xs font-medium text-orange">Herinneringen van scout:</p>
-              {kandidaat.nudges.map(n => (
-                <div key={n.id} className="flex items-start gap-2 text-sm">
-                  <span className="text-orange">{n.type === 'friendly' ? '💬' : n.type === 'urgent' ? '⚠️' : '🚨'}</span>
-                  <div>
-                    <p className="text-ink-light">{n.bericht}</p>
-                    <p className="text-xs text-ink-muted">{new Date(n.datum).toLocaleDateString('nl-NL')}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
           <button onClick={() => { setNewGesprekType('kennismaking'); setShowPlanModal(true) }}
             className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors">
             Gespreksdatum invoeren →

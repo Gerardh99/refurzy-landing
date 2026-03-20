@@ -73,9 +73,6 @@ export const vacatures: Vacature[] = [
         opleidingsniveau: 'WO', werkervaring: '10 jaar', woonplaats: 'Amsterdam',
         email: 'thomas.vdijk@email.nl', telefoon: '06-34567890',
         gesprekken: [],
-        nudges: [
-          { id: 'n-1', type: 'friendly', datum: '2026-03-16', bericht: 'Hi! Thomas van Dijk wacht op een uitnodiging voor een kennismakingsgesprek. Plan je het deze week in?', vanScout: true },
-        ],
       },
       {
         id: 'k-5', naam: 'Priya Sharma', initialen: 'P', anoniem: true,

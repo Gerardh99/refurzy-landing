@@ -184,15 +184,13 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │     ├── Filter op status                                 │
 │     └── Actie-indicatoren (oranje bij vertraging)        │
 │                                                           │
-│  7. NUDGE SYSTEEM                                        │
-│     ├── Nudge 1: Friendly reminder (💬)                  │
-│     │   "Plan je het gesprek deze week in?"              │
-│     ├── Nudge 2: Urgente herinnering (⚠️)               │
-│     │   "Kandidaat wacht al lang op reactie"             │
-│     └── Nudge 3: Rapport bij Refurzy (🚨)               │
-│         ├── Refurzy belt opdrachtgever binnen 24u        │
-│         ├── Kandidaat wordt geïnformeerd                 │
-│         └── Registratie op opdrachtgever-account         │
+│  7. AUTOMATISCH NUDGE-SYSTEEM (geen vrije berichten)     │
+│     ├── Geen directe communicatie scout↔opdrachtgever    │
+│     ├── Scout levert toelichting bij voordracht          │
+│     ├── Opdrachtgever geeft feedback bij afwijzing       │
+│     ├── Alle herinneringen automatisch door Refurzy      │
+│     ├── Escalatie naar Refurzy bij overschrijding        │
+│     └── Kanaal sluit bij aanname of afwijzing            │
 │                                                           │
 │  8. PRO SCOUT UPGRADE (na 2 plaatsingen)                │
 │     ├── Blokkade: geen nieuwe voordrachten mogelijk      │
@@ -311,9 +309,17 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 | Kandidaat uitgenodigd | Kandidaat | Uitnodigingslink + vacature-info |
 | Contract akkoord | Scout | "Opdrachtgever heeft profiel ontgrendeld" |
 | Gesprek gepland | Kandidaat, Scout | Datum + bedrijfsinfo |
-| Nudge 1 (friendly) | Opdrachtgever | "Plan het gesprek deze week in" |
-| Nudge 2 (urgent) | Opdrachtgever | "Kandidaat wacht al lang" |
-| Nudge 3 (rapport) | Refurzy Admin | "Scout rapporteert: geen reactie na 2 nudges" |
+| Auto-nudge: review dag 3 | Opdrachtgever | "Er wacht een nieuwe voordracht op uw review voor [vacaturetitel]. M-Score: [X]%." |
+| Auto-nudge: review dag 6 | Opdrachtgever | "Uw review verloopt morgen. Na 7 dagen wordt de voordracht automatisch geannuleerd." |
+| Auto-nudge: review verlopen | Scout + Opdrachtgever | Scout: "Voordracht verlopen, kandidaat terug in pool." / OG: "Voordracht geannuleerd wegens geen reactie." |
+| Auto-nudge: gesprek plannen dag 4 | Opdrachtgever | "U heeft het profiel ontgrendeld maar nog geen gesprek gepland." |
+| Auto-nudge: gesprek plannen dag 6 | Opdrachtgever | "Morgen verloopt de termijn om een gesprek te plannen." |
+| Escalatie: gesprek niet gepland | Scout + Refurzy | "Opdrachtgever plant geen gesprek na ontgrendeling." |
+| Auto-nudge: feedback dag 5 | Opdrachtgever | "Heeft het gesprek plaatsgevonden? Geef de uitkomst door." |
+| Auto-nudge: feedback dag 6 | Opdrachtgever | "Morgen verloopt de termijn om feedback te geven." |
+| Escalatie: geen feedback | Scout + Refurzy | Refurzy neemt contact op |
+| Auto-nudge: arbeidsvoorwaarden dag 10 | Opdrachtgever + Scout | "Het arbeidsvoorwaardengesprek loopt al 10 dagen. Kunnen wij iets betekenen?" |
+| Escalatie: arbeidsvoorwaarden dag 14 | Refurzy | Interventie door Refurzy |
 | Afwijzing | Scout, Kandidaat | Reden + rating |
 | **Contract getekend** | **Alle drie** | **Felicitatie + volgende stappen** |
 | Fee uitbetaald | Scout | Bedrag + factuurbevestiging |
@@ -680,6 +686,15 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 - [ ] Echte authenticatie (niet demo-accounts)
 - [ ] Database (vervangt mock-data)
 
+### Should-have (Doorontwikkeling)
+- [ ] **AI Vacaturetekst Generatie met online bronnen** — AI zoekt online naar vergelijkbare vacatures (via Perplexity API, Tavily, of Claude met web search) om de sectie "Wat ga je doen?" te vullen met realistische, functie-specifieke taken. Vereisten:
+  - Minimale input voordat AI kan genereren: functietitel, locatie, opleidingsniveau, werkervaring
+  - Context-aware generatie: AI gebruikt alle ingevulde velden (titel, afdeling, locatie, salaris, contracttype, werkregeling, afdelingscultuur, ervaring, opleiding)
+  - Web search haalt 3-5 vergelijkbare vacatures op als referentie voor taken en verantwoordelijkheden
+  - Fallback naar interne templates als web search niet beschikbaar is
+  - Gegenereerde tekst is altijd bewerkbaar door de opdrachtgever
+  - Taalmodel: Nederlands, professioneel maar toegankelijk
+
 ### Nice-to-have
 - [ ] NL/EN vertaling voor alle demo-pagina's
 - [x] Dashboard analytics voor admin
@@ -696,7 +711,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 1. **No cure, no pay**: Geen betaling zonder ondertekend arbeidscontract
 2. **Anonimiteit**: Kandidaat blijft anoniem totdat opdrachtgever contract accepteert
 3. **Pro Scout drempel**: Na 2 plaatsingen als natuurlijk persoon moet KVK worden ingevuld
-4. **Nudge escalatie**: 2 nudges van scout, daarna rapport bij Refurzy
+4. **Geen vrije berichten**: Scouts en opdrachtgevers kunnen niet rechtstreeks communiceren. Alle communicatie verloopt via gestructureerde acties (toelichting bij voordracht, feedback bij afwijzing) en automatische systeemberichten. Dit voorkomt dat contactgegevens buiten het platform worden gedeeld
 5. **Feedback verplicht**: Opdrachtgever moet feedback geven voordat volgende stap mogelijk is
 6. **Afwijzing vereist reden**: Dropdown + optionele toelichting + scout-rating (1-5)
 7. **Fee verdeling**: 50/50 scout/Refurzy
@@ -714,6 +729,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 19. **Handmatig matchen**: Scouts kunnen kandidaten ook handmatig aan vacatures koppelen, onafhankelijk van automatische suggesties.
 20. **Introductiekorting nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. Om de drempel te verlagen: de eerste succesvolle plaatsing is met 50% korting. Zowel de scout als Refurzy dragen de korting (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt de korting automatisch. Dit wordt zichtbaar voor de opdrachtgever als "50% introductiekorting" badge bij kandidaten van nieuwe scouts, en voor de scout als incentive om de eerste match te realiseren.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
+22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
 
 ---
 
@@ -1058,3 +1074,89 @@ Volledige notificatiepagina met:
 - Notificaties pagina in `app/demo/notificaties/page.tsx`
 - TopBar geupdate met NotificationBell
 - Sidebar geupdate met "Notificaties" link voor alle rollen
+
+---
+
+## 27. Communicatiemodel — Geen Vrije Berichten
+
+### Principe
+Scouts en opdrachtgevers kunnen **nooit** vrij met elkaar communiceren via het platform. Alle communicatie verloopt via:
+1. **Gestructureerde toelichting** — scout schrijft motivatie bij voordracht van kandidaat
+2. **Gestructureerde feedback** — opdrachtgever geeft reden bij afwijzing (dropdown + toelichting)
+3. **Automatische systeem-nudges** — Refurzy stuurt herinneringen bij overschrijding van doorlooptijden
+4. **Statusupdates** — scout ontvangt automatisch notificaties bij elke statuswijziging
+
+### Rationale
+- Voorkomt dat scouts contactgegevens delen en buiten het platform om opereren
+- Beschermt de anonimiteit van kandidaten (geen informele berichten die het systeem omzeilen)
+- Kwaliteitsfilter: alleen wanneer een opdrachtgever investeert (ontgrendeling) ontstaat een proces
+- Scouts hoeven niets te doen behalve kandidaten voordragen — het systeem bewaakt de voortgang
+
+### Pipeline-fases en maximale doorlooptijden
+
+| # | Fase | Status | Max doorlooptijd |
+|---|------|--------|-----------------|
+| 1 | Voorgedragen | `voorgesteld` | — |
+| 2 | Review | `voorgesteld` → `contract_akkoord` | 7 dagen |
+| 3 | Profiel ontgrendeld | `contract_akkoord` → `gesprek_plannen` | 7 dagen |
+| 4 | Gesprek plannen | `gesprek_plannen` → `gesprek_gepland` | 7 dagen |
+| 5 | Gesprek gepland | `gesprek_gepland` → `feedback_geven` | 10 dagen |
+| 6 | Feedback geven | `feedback_geven` → volgende stap | 7 dagen |
+| 7a | Vervolggesprek | `vervolggesprek` | 10 dagen |
+| 7b | Arbeidsvoorwaarden | `arbeidsvoorwaarden` | 14 dagen |
+| 8 | Aangenomen | `contract_getekend` | Einde |
+| X | Afgewezen | `afgewezen` | Einde |
+
+### Automatische systeem-nudges — exacte berichtteksten
+
+#### Fase 2: Review (na voordracht)
+
+| Dag | Aan | Bericht |
+|-----|-----|---------|
+| Dag 3 | Opdrachtgever | "Er wacht een nieuwe voordracht op uw review voor **[vacaturetitel]**. De kandidaat heeft een M-Score van **[X]%**. Bekijk de voordracht in uw dashboard." |
+| Dag 6 | Opdrachtgever | "Uw review voor een voordracht op **[vacaturetitel]** verloopt morgen. Na 7 dagen wordt de voordracht automatisch geannuleerd en keert de kandidaat terug naar de talent pool van de scout." |
+| Dag 7 | Opdrachtgever | "Een voordracht voor **[vacaturetitel]** is automatisch geannuleerd wegens geen reactie binnen 7 dagen." |
+| Dag 7 | Scout | "Uw voordracht voor **[vacaturetitel]** is verlopen omdat de opdrachtgever niet heeft gereageerd. **[Kandidaat]** is terug in uw talent pool en kan voor een andere vacature worden voorgedragen." |
+
+#### Fase 4: Gesprek plannen (na ontgrendeling)
+
+| Dag | Aan | Bericht |
+|-----|-----|---------|
+| Dag 4 | Opdrachtgever | "U heeft het profiel van **[kandidaat]** ontgrendeld voor **[vacaturetitel]**, maar er is nog geen gesprek gepland. Plan een kennismakingsgesprek om de match te beoordelen." |
+| Dag 6 | Opdrachtgever | "Morgen verloopt de termijn om een gesprek te plannen met **[kandidaat]** voor **[vacaturetitel]**. Zonder actie wordt dit geëscaleerd." |
+| Dag 7 | Scout | "De opdrachtgever heeft het profiel van **[kandidaat]** ontgrendeld voor **[vacaturetitel]**, maar plant geen gesprek. Refurzy neemt contact op met de opdrachtgever." |
+| Dag 7 | Refurzy Admin | "Escalatie: **[opdrachtgever]** heeft profiel ontgrendeld voor **[vacaturetitel]** maar plant geen gesprek na 7 dagen. Actie vereist." |
+
+#### Fase 6: Feedback geven (na gesprek)
+
+| Dag | Aan | Bericht |
+|-----|-----|---------|
+| Dag 5 | Opdrachtgever | "Heeft het gesprek met **[kandidaat]** voor **[vacaturetitel]** plaatsgevonden? Geef de uitkomst door zodat we het proces kunnen vervolgen." |
+| Dag 6 | Opdrachtgever | "Morgen verloopt de termijn om feedback te geven over uw gesprek met **[kandidaat]** voor **[vacaturetitel]**." |
+| Dag 7 | Scout | "De opdrachtgever heeft nog geen feedback gegeven over het gesprek met **[kandidaat]** voor **[vacaturetitel]**. Refurzy neemt contact op." |
+| Dag 7 | Refurzy Admin | "Escalatie: **[opdrachtgever]** geeft geen feedback na gesprek voor **[vacaturetitel]**. Actie vereist." |
+
+#### Fase 7b: Arbeidsvoorwaarden
+
+| Dag | Aan | Bericht |
+|-----|-----|---------|
+| Dag 10 | Opdrachtgever + Scout | "Het arbeidsvoorwaardengesprek voor **[kandidaat]** bij **[vacaturetitel]** loopt al 10 dagen. Kunnen wij iets voor u betekenen? Neem contact op met Refurzy als er ondersteuning nodig is." |
+| Dag 14 | Refurzy Admin | "Escalatie: arbeidsvoorwaardenfase voor **[kandidaat]** bij **[vacaturetitel]** overschrijdt 14 dagen. Interventie vereist." |
+
+### Statusupdates aan scout (automatisch)
+
+| Trigger | Bericht aan scout |
+|---------|-------------------|
+| Voordracht ingediend | "Uw voordracht van **[kandidaat]** voor **[vacaturetitel]** is ingediend. De opdrachtgever heeft 7 dagen om te reageren." |
+| Profiel ontgrendeld | "Goed nieuws! **[opdrachtgever]** heeft het profiel van **[kandidaat]** ontgrendeld voor **[vacaturetitel]**." |
+| Gesprek gepland | "**[Kandidaat]** is uitgenodigd voor een gesprek op **[datum]** bij **[opdrachtgever]**." |
+| Feedback ontvangen | "**[Opdrachtgever]** heeft feedback gegeven over het gesprek met **[kandidaat]**." |
+| Vervolggesprek | "**[Kandidaat]** is uitgenodigd voor een vervolggesprek bij **[opdrachtgever]**." |
+| Aangenomen | "Gefeliciteerd! **[Kandidaat]** is aangenomen voor **[vacaturetitel]**. Uw fee: €**[bedrag]**." |
+| Afgewezen | "**[Kandidaat]** is afgewezen voor **[vacaturetitel]**. Reden: **[categorie]**. De kandidaat is terug in uw talent pool." |
+
+### Wat niet beschikbaar is
+- ~~Vrije berichtenfunctie tussen scout en opdrachtgever~~
+- ~~Chat of directe communicatie~~
+- ~~Berichten na aanname of afwijzing~~ (kanaal sluit automatisch)
+- ~~Handmatige nudges door scouts~~ (vervangen door automatische systeem-nudges)

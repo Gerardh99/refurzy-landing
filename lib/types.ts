@@ -58,14 +58,6 @@ export interface Gesprek {
   status: 'gepland' | 'afgerond' | 'geannuleerd'
 }
 
-export interface Nudge {
-  id: string
-  type: 'friendly' | 'urgent' | 'rapport'
-  datum: string
-  bericht: string
-  vanScout: boolean        // true = from scout, false = from Refurzy
-}
-
 export interface KandidaatMatch {
   id: string
   naam: string
@@ -86,7 +78,6 @@ export interface KandidaatMatch {
   email?: string
   telefoon?: string
   gesprekken?: Gesprek[]
-  nudges?: Nudge[]
   afwijzingsReden?: AfwijzingsReden
   afwijzingsToelichting?: string
   afwijzingsRating?: number  // 1-5 stars

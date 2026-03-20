@@ -235,12 +235,12 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { icon: '🧬', title: 'Matching Scan — ontwikkeld met de VU Amsterdam', desc: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd met zeer sterke voorspellende waarde.⁵ Ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam.', source: 'VU Amsterdam, 2026 (N=309)' },
-              { icon: '💰', title: 'Gemiddeld 60% goedkoper — en no cure, no pay', desc: 'Refurzy is gemiddeld 60% goedkoper dan een traditioneel werving- en selectiebureau. Geen abonnement, geen opstartkosten, geen fee als u niemand aanneemt. U betaalt alleen bij een succesvolle plaatsing — met Fit Garantie.', source: 'Op basis van gemiddelde bureau-fee van 20-30%' },
-              { icon: '🔍', title: 'Ervaren Talent Scouts, niet een algoritme', desc: 'Onze Talent Scouts zijn veelal ervaren recruiters die al jaren in het vak zitten. Zij kennen hun netwerk, weten waar het talent zit en kunnen de strijd aan met de beste bureaus — maar werken voor u, niet voor een bureau.', },
-              { icon: '📊', title: 'Data vervangt twijfel', desc: '81% van managers twijfelt bij aannames. De M-Score geeft een objectieve, kwantitatieve indicator van de match. Geen buikgevoel meer, maar wetenschappelijk onderbouwde zekerheid vóór het eerste gesprek.', source: 'Resume Genius, 2024' },
-              { icon: '⏱️', title: 'Lager verloop, hogere retentie', desc: 'Medewerkers die passen bij de cultuur en waarden van een organisatie blijven langer en presteren beter. De Matching Scan voorkomt mis-hires en verlaagt het verloop met 10-30%.', source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
-              { icon: '🛡️', title: 'Anoniem tot ontgrendeling', desc: 'Kandidaten worden anoniem gepresenteerd. Pas na akkoord op de voorwaarden krijgt u toegang tot het profiel. Dit voorkomt bias, beschermt privacy en garandeert objectieve beoordeling.', },
+              { icon: '🧬', title: t('usp.scan.title', lang), desc: t('usp.scan.desc', lang), source: 'VU Amsterdam, 2026 (N=309)' },
+              { icon: '💰', title: t('usp.cheaper.title', lang), desc: t('usp.cheaper.desc', lang), source: lang === 'nl' ? 'Op basis van gemiddelde bureau-fee van 20-30%' : 'Based on average agency fee of 20-30%' },
+              { icon: '🔍', title: t('usp.scouts.title', lang), desc: t('usp.scouts.desc', lang) },
+              { icon: '📊', title: t('usp.data.title', lang), desc: t('usp.data.desc', lang), source: 'Resume Genius, 2024' },
+              { icon: '⏱️', title: t('usp.retention.title', lang), desc: t('usp.retention.desc', lang), source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
+              { icon: '🛡️', title: t('usp.anonymous.title', lang), desc: t('usp.anonymous.desc', lang) },
             ].map(usp => (
               <div key={usp.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex gap-5 hover:border-cyan/20 transition-colors">
                 <div className="text-3xl flex-shrink-0">{usp.icon}</div>
@@ -262,19 +262,19 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <div className="inline-block px-3 py-1 bg-cyan/15 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4">
-                  Ontwikkeld met de Vrije Universiteit Amsterdam
+                  {t('scan.badge', lang)}
                 </div>
-                <h2 className="text-3xl font-bold mb-4">De Matching Scan</h2>
+                <h2 className="text-3xl font-bold mb-4">{t('scan.title', lang)}</h2>
                 <p className="text-gray-300 mb-6 leading-relaxed">
-                  35 vragen. 5 minuten. Eén objectieve score die voorspelt hoe goed een kandidaat past bij uw organisatie — op waarden, interesses en cultuur. Niet op cv-keywords.
+                  {t('scan.desc', lang)}
                 </p>
                 <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> 19 werkinteresses — wat motiveert iemand</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> 9 kernwaarden — wat drijft iemand</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> 7 cultuurtypen — waar voelt iemand zich thuis</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> Voorspelt bevlogenheid, tevredenheid én retentie</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item1', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item2', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item3', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item4', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-600 mt-4 italic">⁵ VU Amsterdam (De Vries, 2026; N=309) — Zeer sterke voorspellende waarde voor werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid (β = .29–.30, p &lt; .01)</p>
+                <p className="text-[10px] text-gray-600 mt-4 italic">{t('scan.footnote', lang)}</p>
               </div>
               <div className="flex justify-center">
                 <div className="relative">
@@ -293,45 +293,45 @@ export default function HomePage() {
           {/* Wetenschap samenvatting */}
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-              <div className="text-3xl font-bold text-cyan mb-2">Zeer sterk</div>
-              <p className="text-sm text-gray-400">Wetenschappelijk bewezen voorspeller van werkgeluk⁵</p>
-              <p className="text-[10px] text-gray-600 mt-2">Na correctie voor leeftijd, opleiding en salaris</p>
+              <div className="text-3xl font-bold text-cyan mb-2">{t('scan.stat1.value', lang)}</div>
+              <p className="text-sm text-gray-400">{t('scan.stat1.label', lang)}</p>
+              <p className="text-[10px] text-gray-600 mt-2">{t('scan.stat1.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-purple-light mb-2">10–30%</div>
-              <p className="text-sm text-gray-400">Verwachte turnover reductie bij systematische inzet</p>
-              <p className="text-[10px] text-gray-600 mt-2">SHRM 2023 · Aberdeen Group · Kristof-Brown et al.</p>
+              <p className="text-sm text-gray-400">{t('scan.stat2.label', lang)}</p>
+              <p className="text-[10px] text-gray-600 mt-2">{t('scan.stat2.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-orange mb-2">r = −.35</div>
-              <p className="text-sm text-gray-400">P-O fit correleert negatief met vertrekintentie</p>
-              <p className="text-[10px] text-gray-600 mt-2">Kristof-Brown et al., 2005 (meta-analyse)</p>
+              <p className="text-sm text-gray-400">{t('scan.stat3.label', lang)}</p>
+              <p className="text-[10px] text-gray-600 mt-2">{t('scan.stat3.sub', lang)}</p>
             </div>
           </div>
 
           {/* Hoe het verschilt */}
           <div className="mt-12 bg-navy-light rounded-2xl border border-purple/10 p-8">
-            <h3 className="text-xl font-bold text-white mb-6 text-center">Vóór de aanname weten, niet achteraf ontdekken</h3>
+            <h3 className="text-xl font-bold text-white mb-6 text-center">{t('scan.compare.title', lang)}</h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="border border-red-500/20 rounded-xl p-5 bg-red-500/5">
-                <p className="text-red-400 font-semibold text-sm mb-3">❌ Traditioneel</p>
+                <p className="text-red-400 font-semibold text-sm mb-3">{t('scan.trad.label', lang)}</p>
                 <ul className="space-y-2 text-sm text-gray-400">
-                  <li>Cultuurfit wordt pas ontdekt na aanname</li>
-                  <li>Bureau kent uw organisatie nauwelijks</li>
-                  <li>Fee betaald, ongeacht uitkomst</li>
-                  <li>Gemiddeld 68,5 dagen time-to-hire</li>
-                  <li>46% faalt binnen 18 maanden</li>
+                  <li>{t('scan.trad.1', lang)}</li>
+                  <li>{t('scan.trad.2', lang)}</li>
+                  <li>{t('scan.trad.3', lang)}</li>
+                  <li>{t('scan.trad.4', lang)}</li>
+                  <li>{t('scan.trad.5', lang)}</li>
                 </ul>
                 <p className="text-[10px] text-gray-600 mt-3 italic">SHRM 2025 · Leadership IQ</p>
               </div>
               <div className="border border-cyan/20 rounded-xl p-5 bg-cyan/5">
-                <p className="text-cyan font-semibold text-sm mb-3">✓ Refurzy</p>
+                <p className="text-cyan font-semibold text-sm mb-3">{t('scan.ref.label', lang)}</p>
                 <ul className="space-y-2 text-sm text-gray-400">
-                  <li>Cultuurfit gemeten vóór het eerste gesprek</li>
-                  <li>Ervaren Talent Scouts die uw profiel kennen</li>
-                  <li>No cure, no pay — nul risico</li>
-                  <li>Objectieve M-Score als beslissingsgrond</li>
-                  <li>10-30% minder verloop, aantoonbaar</li>
+                  <li>{t('scan.ref.1', lang)}</li>
+                  <li>{t('scan.ref.2', lang)}</li>
+                  <li>{t('scan.ref.3', lang)}</li>
+                  <li>{t('scan.ref.4', lang)}</li>
+                  <li>{t('scan.ref.5', lang)}</li>
                 </ul>
                 <p className="text-[10px] text-gray-600 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
               </div>
@@ -352,7 +352,7 @@ export default function HomePage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-purple/10">
-                  <th className="text-left py-3 px-4 text-gray-500 font-medium">Werkervaring</th>
+                  <th className="text-left py-3 px-4 text-gray-500 font-medium">{t('pricing.colExp', lang)}</th>
                   <th className="text-center py-3 px-4 text-gray-500 font-medium">MBO</th>
                   <th className="text-center py-3 px-4 text-gray-500 font-medium">HBO</th>
                   <th className="text-center py-3 px-4 text-gray-500 font-medium">WO</th>
@@ -360,10 +360,10 @@ export default function HomePage() {
               </thead>
               <tbody>
                 {[
-                  { exp: '0-2 jaar', mbo: '€1.800', hbo: '€2.400', wo: '€3.600' },
-                  { exp: '2-5 jaar', mbo: '€3.600', hbo: '€4.800', wo: '€7.200' },
-                  { exp: '5-10 jaar', mbo: '€5.400', hbo: '€7.200', wo: '€10.800' },
-                  { exp: '>10 jaar', mbo: '€7.200', hbo: '€12.000', wo: '€12.000', equal: true },
+                  { exp: t('pricing.row1', lang), mbo: '€1.800', hbo: '€2.400', wo: '€3.600' },
+                  { exp: t('pricing.row2', lang), mbo: '€3.600', hbo: '€4.800', wo: '€7.200' },
+                  { exp: t('pricing.row3', lang), mbo: '€5.400', hbo: '€7.200', wo: '€10.800' },
+                  { exp: t('pricing.row4', lang), mbo: '€7.200', hbo: '€12.000', wo: '€12.000', equal: true },
                 ].map(row => (
                   <tr key={row.exp} className="border-b border-purple/5">
                     <td className="py-3 px-4 text-gray-300 font-medium">{row.exp}</td>
@@ -379,15 +379,15 @@ export default function HomePage() {
           <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
             <div className="bg-navy rounded-xl border border-cyan/20 p-4">
               <div className="text-lg font-bold text-cyan">50%</div>
-              <div className="text-[10px] text-gray-500">naar Scout</div>
+              <div className="text-[10px] text-gray-500">{t('pricing.toScout', lang)}</div>
             </div>
             <div className="bg-navy rounded-xl border border-purple/20 p-4">
               <div className="text-lg font-bold text-purple-light">50%</div>
-              <div className="text-[10px] text-gray-500">naar Refurzy</div>
+              <div className="text-[10px] text-gray-500">{t('pricing.toRefurzy', lang)}</div>
             </div>
             <div className="bg-navy rounded-xl border border-orange/20 p-4">
               <div className="text-lg font-bold text-orange">+30%</div>
-              <div className="text-[10px] text-gray-500">exclusiviteit (optioneel)</div>
+              <div className="text-[10px] text-gray-500">{t('pricing.exclusivity', lang)}</div>
             </div>
           </div>
         </div>
@@ -399,14 +399,14 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold text-center mb-12">{t('faq.title', lang)}</h2>
           <div className="space-y-3">
             {[
-              { q: 'Wat kost het als ik geen kandidaat aanneem?', a: 'Niets. Refurzy werkt op basis van no cure, no pay. Geen abonnement, geen opstartkosten. U betaalt alleen wanneer u daadwerkelijk een kandidaat aanneemt. Vergelijk dat met een traditioneel bureau dat gemiddeld €16.000 per hire rekent — ongeacht het resultaat.' },
-              { q: 'Hoe werkt de Matching Scan?', a: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld met de Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). Het meet de match op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkgeluk, tevredenheid en retentie zeer sterk voorspelt.⁵' },
-              { q: 'Hoe betrouwbaar is de M-Score?', a: 'De Matching Scan is gevalideerd door de VU Amsterdam in een onderzoek met 309 respondenten. De voorspellende waarde is zeer sterk — sterker dan traditionele capaciteitstests.⁵ De scan vervangt interviews niet, maar geeft een objectief datapunt dat twijfel reduceert.' },
-              { q: 'Kan ik als recruiter Talent Scout worden?', a: 'Ja. Elke ervaren recruiter, HR-professional of netwerker kan zich aanmelden als Talent Scout. U bouwt uw eigen talent pool op, matcht kandidaten aan vacatures en verdient 50% van de fee bij elke succesvolle plaatsing. Hoe beter uw track record, hoe hoger uw reputatiescore.' },
-              { q: 'Waarom zijn kandidaten anoniem?', a: 'Anonimiteit voorkomt onbewuste bias (halo-effect, similarity-attraction) en zorgt voor objectieve beoordeling op basis van fit, niet op basis van naam, foto of achtergrond. Pas na akkoord op de voorwaarden krijgt u toegang tot het volledige profiel.' },
-              { q: 'Hoeveel kan ik besparen?', a: 'Conservatief scenario: ROI vanaf 336%. Voor een klein bedrijf met 3 hires per jaar betekent dit €44.000–€85.000 netto besparing. Voor organisaties met 100+ medewerkers: €72.000–€668.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.' },
-              { q: 'Geven jullie garantie op resultaat?', a: 'Ja. Refurzy werkt op basis van no cure, no pay — u betaalt dus nooit voor een kandidaat die u niet aanneemt. Daarbovenop bieden wij de Fit Garantie: neemt u een kandidaat aan met een M-Score van 80% of hoger en vertrekt deze binnen 12 maanden door een mismatch in cultuur of waarden, dan leveren wij kosteloos een vervangende kandidaat. Vertrek door reorganisatie, ziekte, verhuizing, gewijzigde werkinhoud of andere persoonlijke omstandigheden valt hier niet onder. Wij durven dit aan te bieden omdat de wetenschap aantoont dat een hoge M-Score samenhangt met significant hogere retentie.' },
-              { q: 'In welke landen is Refurzy beschikbaar?', a: 'Refurzy start in Nederland en België. Daarna volgt een uitrol naar 13 andere Europese landen, elk met lokale taal, valuta en pricing.' },
+              { q: t('faq.q1', lang), a: t('faq.a1', lang) },
+              { q: t('faq.q2', lang), a: t('faq.a2', lang) },
+              { q: t('faq.q3', lang), a: t('faq.a3', lang) },
+              { q: t('faq.q4', lang), a: t('faq.a4', lang) },
+              { q: t('faq.q5', lang), a: t('faq.a5', lang) },
+              { q: t('faq.q6', lang), a: t('faq.a6', lang) },
+              { q: t('faq.q7', lang), a: t('faq.a7', lang) },
+              { q: t('faq.q8', lang), a: t('faq.a8', lang) },
             ].map((faq, i) => (
               <div key={i} className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
                 <button
@@ -436,10 +436,10 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/login" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-              Start als opdrachtgever →
+              {t('cta.btnEmployer', lang)}
             </Link>
             <Link href="/login" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
-              Word Talent Scout
+              {t('cta.btnScout', lang)}
             </Link>
           </div>
         </div>

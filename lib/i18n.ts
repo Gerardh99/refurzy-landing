@@ -121,8 +121,130 @@ export const translations = {
     en: 'Every day you recruit on gut feeling costs you money. Start today with scientifically backed recruitment. No obligations, no setup costs.'
   },
 
+  // ─── Solution USPs ────────────────────────────────────────────────────────
+  'usp.scan.title': { nl: 'Matching Scan — ontwikkeld met de VU Amsterdam', en: 'Matching Scan — developed with VU Amsterdam' },
+  'usp.scan.desc': {
+    nl: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd met zeer sterke voorspellende waarde.⁵ Ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam.',
+    en: 'The Matching Scan measures the fit between candidate and organization on values, interests and culture. 35 questions, 5 minutes, scientifically validated with very strong predictive value.⁵ Developed in collaboration with Prof. Dr. R.E. de Vries of Vrije Universiteit Amsterdam.'
+  },
+  'usp.cheaper.title': { nl: 'Gemiddeld 60% goedkoper — en no cure, no pay', en: 'On average 60% cheaper — and no cure, no pay' },
+  'usp.cheaper.desc': {
+    nl: 'Refurzy is gemiddeld 60% goedkoper dan een traditioneel werving- en selectiebureau. Geen abonnement, geen opstartkosten, geen fee als u niemand aanneemt. U betaalt alleen bij een succesvolle plaatsing — met Fit Garantie.',
+    en: 'Refurzy is on average 60% cheaper than a traditional recruitment agency. No subscription, no setup costs, no fee if you don\'t hire anyone. You only pay on a successful placement — with Fit Guarantee.'
+  },
+  'usp.scouts.title': { nl: 'Ervaren Talent Scouts, niet een algoritme', en: 'Experienced Talent Scouts, not an algorithm' },
+  'usp.scouts.desc': {
+    nl: 'Onze Talent Scouts zijn veelal ervaren recruiters die al jaren in het vak zitten. Zij kennen hun netwerk, weten waar het talent zit en kunnen de strijd aan met de beste bureaus — maar werken voor u, niet voor een bureau.',
+    en: 'Our Talent Scouts are mostly experienced recruiters who have been in the field for years. They know their network, know where the talent is and can compete with the best agencies — but work for you, not for an agency.'
+  },
+  'usp.data.title': { nl: 'Data vervangt twijfel', en: 'Data replaces doubt' },
+  'usp.data.desc': {
+    nl: '81% van managers twijfelt bij aannames. De M-Score geeft een objectieve, kwantitatieve indicator van de match. Geen buikgevoel meer, maar wetenschappelijk onderbouwde zekerheid vóór het eerste gesprek.',
+    en: '81% of managers doubt their hiring decisions. The M-Score provides an objective, quantitative indicator of the match. No more gut feeling, but scientifically backed certainty before the first interview.'
+  },
+  'usp.retention.title': { nl: 'Lager verloop, hogere retentie', en: 'Lower turnover, higher retention' },
+  'usp.retention.desc': {
+    nl: 'Medewerkers die passen bij de cultuur en waarden van een organisatie blijven langer en presteren beter. De Matching Scan voorkomt mis-hires en verlaagt het verloop met 10-30%.',
+    en: 'Employees who fit the culture and values of an organization stay longer and perform better. The Matching Scan prevents mis-hires and reduces turnover by 10-30%.'
+  },
+  'usp.anonymous.title': { nl: 'Anoniem tot ontgrendeling', en: 'Anonymous until unlocked' },
+  'usp.anonymous.desc': {
+    nl: 'Kandidaten worden anoniem gepresenteerd. Pas na akkoord op de voorwaarden krijgt u toegang tot het profiel. Dit voorkomt bias, beschermt privacy en garandeert objectieve beoordeling.',
+    en: 'Candidates are presented anonymously. Only after agreeing to the terms you get access to the profile. This prevents bias, protects privacy and guarantees objective assessment.'
+  },
+
+  // ─── Matching Scan section ───────────────────────────────────────────────
+  'scan.badge': { nl: 'Ontwikkeld met de Vrije Universiteit Amsterdam', en: 'Developed with Vrije Universiteit Amsterdam' },
+  'scan.title': { nl: 'De Matching Scan', en: 'The Matching Scan' },
+  'scan.desc': {
+    nl: '35 vragen. 5 minuten. Eén objectieve score die voorspelt hoe goed een kandidaat past bij uw organisatie — op waarden, interesses en cultuur. Niet op cv-keywords.',
+    en: '35 questions. 5 minutes. One objective score that predicts how well a candidate fits your organization — on values, interests and culture. Not on CV keywords.'
+  },
+  'scan.item1': { nl: '19 werkinteresses — wat motiveert iemand', en: '19 work interests — what motivates someone' },
+  'scan.item2': { nl: '9 kernwaarden — wat drijft iemand', en: '9 core values — what drives someone' },
+  'scan.item3': { nl: '7 cultuurtypen — waar voelt iemand zich thuis', en: '7 culture types — where someone feels at home' },
+  'scan.item4': { nl: 'Voorspelt bevlogenheid, tevredenheid én retentie', en: 'Predicts engagement, satisfaction and retention' },
+  'scan.footnote': {
+    nl: '⁵ VU Amsterdam (De Vries, 2026; N=309) — Zeer sterke voorspellende waarde voor werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid (β = .29–.30, p < .01)',
+    en: '⁵ VU Amsterdam (De Vries, 2026; N=309) — Very strong predictive value for work engagement, job satisfaction and organizational commitment (β = .29–.30, p < .01)'
+  },
+  'scan.stat1.value': { nl: 'Zeer sterk', en: 'Very strong' },
+  'scan.stat1.label': { nl: 'Wetenschappelijk bewezen voorspeller van werkgeluk⁵', en: 'Scientifically proven predictor of work happiness⁵' },
+  'scan.stat1.sub': { nl: 'Na correctie voor leeftijd, opleiding en salaris', en: 'After correction for age, education and salary' },
+  'scan.stat2.label': { nl: 'Verwachte turnover reductie bij systematische inzet', en: 'Expected turnover reduction with systematic use' },
+  'scan.stat2.sub': { nl: 'SHRM 2023 · Aberdeen Group · Kristof-Brown et al.', en: 'SHRM 2023 · Aberdeen Group · Kristof-Brown et al.' },
+  'scan.stat3.label': { nl: 'P-O fit correleert negatief met vertrekintentie', en: 'P-O fit correlates negatively with turnover intention' },
+  'scan.stat3.sub': { nl: 'Kristof-Brown et al., 2005 (meta-analyse)', en: 'Kristof-Brown et al., 2005 (meta-analysis)' },
+  'scan.compare.title': { nl: 'Vóór de aanname weten, niet achteraf ontdekken', en: 'Know before hiring, not discover after' },
+  'scan.trad.label': { nl: '❌ Traditioneel', en: '❌ Traditional' },
+  'scan.trad.1': { nl: 'Cultuurfit wordt pas ontdekt na aanname', en: 'Culture fit is only discovered after hiring' },
+  'scan.trad.2': { nl: 'Bureau kent uw organisatie nauwelijks', en: 'Agency barely knows your organization' },
+  'scan.trad.3': { nl: 'Fee betaald, ongeacht uitkomst', en: 'Fee paid, regardless of outcome' },
+  'scan.trad.4': { nl: 'Gemiddeld 68,5 dagen time-to-hire', en: 'Average 68.5 days time-to-hire' },
+  'scan.trad.5': { nl: '46% faalt binnen 18 maanden', en: '46% fail within 18 months' },
+  'scan.ref.label': { nl: '✓ Refurzy', en: '✓ Refurzy' },
+  'scan.ref.1': { nl: 'Cultuurfit gemeten vóór het eerste gesprek', en: 'Culture fit measured before the first interview' },
+  'scan.ref.2': { nl: 'Ervaren Talent Scouts die uw profiel kennen', en: 'Experienced Talent Scouts who know your profile' },
+  'scan.ref.3': { nl: 'No cure, no pay — nul risico', en: 'No cure, no pay — zero risk' },
+  'scan.ref.4': { nl: 'Objectieve M-Score als beslissingsgrond', en: 'Objective M-Score as decision basis' },
+  'scan.ref.5': { nl: '10-30% minder verloop, aantoonbaar', en: '10-30% less turnover, demonstrable' },
+
+  // ─── Pricing table ───────────────────────────────────────────────────────
+  'pricing.colExp': { nl: 'Werkervaring', en: 'Experience' },
+  'pricing.row1': { nl: '0-2 jaar', en: '0-2 years' },
+  'pricing.row2': { nl: '2-5 jaar', en: '2-5 years' },
+  'pricing.row3': { nl: '5-10 jaar', en: '5-10 years' },
+  'pricing.row4': { nl: '>10 jaar', en: '>10 years' },
+  'pricing.toScout': { nl: 'naar Scout', en: 'to Scout' },
+  'pricing.toRefurzy': { nl: 'naar Refurzy', en: 'to Refurzy' },
+  'pricing.exclusivity': { nl: 'exclusiviteit (optioneel)', en: 'exclusivity (optional)' },
+
   // ─── FAQ ───────────────────────────────────────────────────────────────────
   'faq.title': { nl: 'Veelgestelde vragen', en: 'Frequently asked questions' },
+  'faq.q1': { nl: 'Wat kost het als ik geen kandidaat aanneem?', en: 'What does it cost if I don\'t hire a candidate?' },
+  'faq.a1': {
+    nl: 'Niets. Refurzy werkt op basis van no cure, no pay. Geen abonnement, geen opstartkosten. U betaalt alleen wanneer u daadwerkelijk een kandidaat aanneemt. Vergelijk dat met een traditioneel bureau dat gemiddeld €16.000 per hire rekent — ongeacht het resultaat.',
+    en: 'Nothing. Refurzy works on a no cure, no pay basis. No subscription, no setup costs. You only pay when you actually hire a candidate. Compare that to a traditional agency that charges an average of €16,000 per hire — regardless of the outcome.'
+  },
+  'faq.q2': { nl: 'Hoe werkt de Matching Scan?', en: 'How does the Matching Scan work?' },
+  'faq.a2': {
+    nl: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld met de Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). Het meet de match op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkgeluk, tevredenheid en retentie zeer sterk voorspelt.⁵',
+    en: 'The Matching Scan is a scientific assessment of 35 questions, developed with Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). It measures the match on work interests (19 items), core values (9 items) and culture preference (7 types). The result is an objective M-Score that very strongly predicts work happiness, satisfaction and retention.⁵'
+  },
+  'faq.q3': { nl: 'Hoe betrouwbaar is de M-Score?', en: 'How reliable is the M-Score?' },
+  'faq.a3': {
+    nl: 'De Matching Scan is gevalideerd door de VU Amsterdam in een onderzoek met 309 respondenten. De voorspellende waarde is zeer sterk — sterker dan traditionele capaciteitstests.⁵ De scan vervangt interviews niet, maar geeft een objectief datapunt dat twijfel reduceert.',
+    en: 'The Matching Scan has been validated by VU Amsterdam in a study with 309 respondents. The predictive value is very strong — stronger than traditional aptitude tests.⁵ The scan doesn\'t replace interviews, but provides an objective data point that reduces doubt.'
+  },
+  'faq.q4': { nl: 'Kan ik als recruiter Talent Scout worden?', en: 'Can I become a Talent Scout as a recruiter?' },
+  'faq.a4': {
+    nl: 'Ja. Elke ervaren recruiter, HR-professional of netwerker kan zich aanmelden als Talent Scout. U bouwt uw eigen talent pool op, matcht kandidaten aan vacatures en verdient 50% van de fee bij elke succesvolle plaatsing. Hoe beter uw track record, hoe hoger uw reputatiescore.',
+    en: 'Yes. Any experienced recruiter, HR professional or networker can sign up as a Talent Scout. You build your own talent pool, match candidates to vacancies and earn 50% of the fee on every successful placement. The better your track record, the higher your reputation score.'
+  },
+  'faq.q5': { nl: 'Waarom zijn kandidaten anoniem?', en: 'Why are candidates anonymous?' },
+  'faq.a5': {
+    nl: 'Anonimiteit voorkomt onbewuste bias (halo-effect, similarity-attraction) en zorgt voor objectieve beoordeling op basis van fit, niet op basis van naam, foto of achtergrond. Pas na akkoord op de voorwaarden krijgt u toegang tot het volledige profiel.',
+    en: 'Anonymity prevents unconscious bias (halo effect, similarity-attraction) and ensures objective assessment based on fit, not on name, photo or background. Only after agreeing to the terms do you get access to the full profile.'
+  },
+  'faq.q6': { nl: 'Hoeveel kan ik besparen?', en: 'How much can I save?' },
+  'faq.a6': {
+    nl: 'Conservatief scenario: ROI vanaf 336%. Voor een klein bedrijf met 3 hires per jaar betekent dit €44.000–€85.000 netto besparing. Voor organisaties met 100+ medewerkers: €72.000–€668.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.',
+    en: 'Conservative scenario: ROI from 336%. For a small company with 3 hires per year, this means €44,000–€85,000 net savings. For organizations with 100+ employees: €72,000–€668,000 per year, depending on turnover reduction and cost per mis-hire.'
+  },
+  'faq.q7': { nl: 'Geven jullie garantie op resultaat?', en: 'Do you guarantee results?' },
+  'faq.a7': {
+    nl: 'Ja. Refurzy werkt op basis van no cure, no pay — u betaalt dus nooit voor een kandidaat die u niet aanneemt. Daarbovenop bieden wij de Fit Garantie: neemt u een kandidaat aan met een M-Score van 80% of hoger en vertrekt deze binnen 12 maanden door een mismatch in cultuur of waarden, dan leveren wij kosteloos een vervangende kandidaat. Vertrek door reorganisatie, ziekte, verhuizing, gewijzigde werkinhoud of andere persoonlijke omstandigheden valt hier niet onder. Wij durven dit aan te bieden omdat de wetenschap aantoont dat een hoge M-Score samenhangt met significant hogere retentie.',
+    en: 'Yes. Refurzy works on a no cure, no pay basis — so you never pay for a candidate you don\'t hire. On top of that, we offer the Fit Guarantee: if you hire a candidate with an M-Score of 80% or higher and they leave within 12 months due to a mismatch in culture or values, we provide a replacement candidate free of charge. Departure due to reorganization, illness, relocation, changed job content or other personal circumstances is not covered. We dare to offer this because science shows that a high M-Score correlates with significantly higher retention.'
+  },
+  'faq.q8': { nl: 'In welke landen is Refurzy beschikbaar?', en: 'In which countries is Refurzy available?' },
+  'faq.a8': {
+    nl: 'Refurzy start in Nederland en België. Daarna volgt een uitrol naar 13 andere Europese landen, elk met lokale taal, valuta en pricing.',
+    en: 'Refurzy launches in the Netherlands and Belgium. After that, a rollout to 13 other European countries follows, each with local language, currency and pricing.'
+  },
+
+  // ─── CTA buttons ─────────────────────────────────────────────────────────
+  'cta.btnEmployer': { nl: 'Start als opdrachtgever →', en: 'Start as employer →' },
+  'cta.btnScout': { nl: 'Word Talent Scout', en: 'Become a Talent Scout' },
 
   // ─── Footer ────────────────────────────────────────────────────────────────
   'footer.platform': { nl: 'Platform', en: 'Platform' },

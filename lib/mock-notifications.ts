@@ -33,7 +33,7 @@ export { notificationIcons, notificationTypeLabels }
 export const mockNotifications: Record<UserRole, Notification[]> = {
   opdrachtgever: [
     { id: 'n-og-1', type: 'match', title: 'Nieuwe kandidaat voorgedragen', description: 'Kandidaat M is voorgedragen voor Marketing Manager met een M-Score van 71%.', timestamp: '2026-03-19T09:15:00Z', read: false, link: '/demo/opdrachtgever/vacature/vac-1' },
-    { id: 'n-og-2', type: 'message', title: 'Nudge van Talent Scout', description: 'Sophie de Graaf vraagt of u het gesprek met Thomas van Dijk kunt inplannen.', timestamp: '2026-03-18T14:30:00Z', read: false, link: '/demo/opdrachtgever/vacature/vac-2' },
+    { id: 'n-og-2', type: 'system', title: 'Herinnering: gesprek plannen', description: 'Thomas van Dijk wacht op een uitnodiging voor een kennismakingsgesprek voor Senior Software Developer. Plan het gesprek deze week in.', timestamp: '2026-03-18T14:30:00Z', read: false, link: '/demo/opdrachtgever/vacature/vac-2' },
     { id: 'n-og-3', type: 'contract', title: 'Contract klaar voor ondertekening', description: 'Het contract voor Anna de Jong (Marketing Manager) staat klaar ter ondertekening.', timestamp: '2026-03-17T11:00:00Z', read: false, link: '/demo/opdrachtgever/contracten' },
     { id: 'n-og-4', type: 'vacancy', title: 'Vacature verloopt binnenkort', description: 'De deadline voor Senior Software Developer is over 6 weken.', timestamp: '2026-03-16T08:00:00Z', read: true, link: '/demo/opdrachtgever/vacature/vac-2' },
     { id: 'n-og-5', type: 'match', title: 'Nieuwe kandidaat voorgedragen', description: 'Kandidaat P is voorgedragen voor Senior Software Developer met M-Score 68%.', timestamp: '2026-03-15T16:45:00Z', read: true, link: '/demo/opdrachtgever/vacature/vac-2' },
