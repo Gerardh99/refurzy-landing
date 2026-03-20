@@ -99,6 +99,16 @@ export interface TalentScout {
   zakelijkIban?: string
 }
 
+export type KandidaatPoolStatus = 'beschikbaar' | 'in_proces' | 'geplaatst' | 'inactief'
+
+export interface Plaatsing {
+  vacatureTitle: string
+  bedrijf: string
+  datum: string
+  fee: number
+  scoutFee: number
+}
+
 export interface Kandidaat {
   id: string
   naam: string
@@ -112,6 +122,10 @@ export interface Kandidaat {
   scanCompleted: boolean
   cvUploaded: boolean
   scoutId: string
+  poolStatus?: KandidaatPoolStatus
+  plaatsing?: Plaatsing
+  inactiefReden?: string
+  inactiefDatum?: string
 }
 
 export interface Sollicitatie {

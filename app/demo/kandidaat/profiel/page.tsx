@@ -75,6 +75,39 @@ export default function KandidaatProfiel() {
       <button className="px-6 py-3 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors">
         Profiel opslaan
       </button>
+
+      {/* Beschikbaarheid & Account */}
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-5">
+        <h2 className="text-lg font-semibold text-ink">Beschikbaarheid</h2>
+        <p className="text-ink-light text-sm">
+          Beheer je beschikbaarheidsstatus. Als je tijdelijk niet beschikbaar bent, kun je je profiel op pauze zetten.
+          Je Talent Scout wordt hiervan op de hoogte gesteld en je wordt niet voorgedragen voor nieuwe vacatures.
+        </p>
+
+        <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
+          <div className="flex items-center gap-3">
+            <span className="w-3 h-3 rounded-full bg-green-400"></span>
+            <div>
+              <p className="text-ink font-medium text-sm">Beschikbaar voor vacatures</p>
+              <p className="text-ink-muted text-xs">Je kunt worden voorgedragen door je Talent Scout</p>
+            </div>
+          </div>
+          <button className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-all">
+            Pauzeer profiel
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-red-100 p-6 space-y-4">
+        <h2 className="text-lg font-semibold text-ink">Account verwijderen</h2>
+        <p className="text-ink-light text-sm">
+          Je kunt je volledig terugtrekken uit Refurzy. Je profiel, Matching Scan resultaten en alle gegevens worden permanent verwijderd.
+          Eventuele actieve processen in de pipeline worden geannuleerd. Dit kan niet ongedaan worden gemaakt.
+        </p>
+        <button className="px-4 py-2 rounded-lg text-sm font-medium bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-all">
+          Account verwijderen
+        </button>
+      </div>
     </div>
   )
 }
