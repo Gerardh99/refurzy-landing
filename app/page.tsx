@@ -8,7 +8,7 @@ const texts = {
   nl: {
     login: 'Inloggen',
     subtitle: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
-    body: 'De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay. ROI vanaf 336%.³',
+    body: 'Refurzy combineert ervaren recruiters met wetenschappelijk bewezen matching — ontwikkeld met de Vrije Universiteit Amsterdam. U ontvangt alleen kandidaten die écht passen. Gemiddeld 60% goedkoper. No cure, no pay.³',
     sources: '¹ SHRM, 2024 \u00a0·\u00a0 ² Leadership IQ \u00a0·\u00a0 ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam',
     ctaLabel: 'Binnenkort live — Wees er als eerste bij',
     tabEmployer: 'Opdrachtgever',
@@ -25,7 +25,7 @@ const texts = {
   en: {
     login: 'Log in',
     subtitle: 'One wrong hire costs 50-200% of the annual salary.¹ At an average salary, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²',
-    body: 'The Matching Scan — developed with Vrije Universiteit Amsterdam — measures before hiring whether someone fits your organization. Scientifically proven. No cure, no pay. ROI from 336%.³',
+    body: 'Refurzy combines experienced recruiters with scientifically proven matching — developed with Vrije Universiteit Amsterdam. You only receive candidates who truly fit. On average 60% cheaper. No cure, no pay.³',
     sources: '¹ SHRM, 2024 \u00a0·\u00a0 ² Leadership IQ \u00a0·\u00a0 ³ Based on SHRM, Kristof-Brown et al. and VU Amsterdam',
     ctaLabel: 'Coming soon — Be the first to know',
     tabEmployer: 'Employer',
