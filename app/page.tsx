@@ -1,9 +1,61 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import type { Lang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    login: 'Inloggen',
+    subtitle: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
+    body: 'De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay. ROI vanaf 336%.³',
+    sources: '¹ SHRM, 2024 \u00a0·\u00a0 ² Leadership IQ \u00a0·\u00a0 ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam',
+    ctaLabel: 'Binnenkort live — Wees er als eerste bij',
+    tabEmployer: 'Opdrachtgever',
+    tabScout: 'Talent Scout',
+    namePlaceholder: 'Je naam',
+    emailPlaceholder: 'Je e-mailadres',
+    submit: 'Houd mij op de hoogte',
+    sending: 'Verzenden...',
+    thanks: (name: string) => `Bedankt ${name}! We houden je op de hoogte.`,
+    invalidEmail: 'Vul een geldig e-mailadres in.',
+    invalidName: 'Vul je naam in.',
+    footer: '© 2026 Refurzy B.V. — Alle rechten voorbehouden',
+  },
+  en: {
+    login: 'Log in',
+    subtitle: 'One wrong hire costs 50-200% of the annual salary.¹ At an average salary, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²',
+    body: 'The Matching Scan — developed with Vrije Universiteit Amsterdam — measures before hiring whether someone fits your organization. Scientifically proven. No cure, no pay. ROI from 336%.³',
+    sources: '¹ SHRM, 2024 \u00a0·\u00a0 ² Leadership IQ \u00a0·\u00a0 ³ Based on SHRM, Kristof-Brown et al. and VU Amsterdam',
+    ctaLabel: 'Coming soon — Be the first to know',
+    tabEmployer: 'Employer',
+    tabScout: 'Talent Scout',
+    namePlaceholder: 'Your name',
+    emailPlaceholder: 'Your email address',
+    submit: 'Keep me posted',
+    sending: 'Sending...',
+    thanks: (name: string) => `Thanks ${name}! We'll keep you posted.`,
+    invalidEmail: 'Please enter a valid email address.',
+    invalidName: 'Please enter your name.',
+    footer: '© 2026 Refurzy B.V. — All rights reserved',
+  },
+}
 
 export default function LandingPage() {
+  const [lang, setLang] = useState<Lang>('nl')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('refurzy_lang') as Lang
+    if (saved === 'en' || saved === 'nl') setLang(saved)
+  }, [])
+
+  const switchLang = (l: Lang) => {
+    setLang(l)
+    localStorage.setItem('refurzy_lang', l)
+  }
+
+  const t = texts[lang]
+
   useEffect(() => {
     const pageLoadTime = Date.now()
     const formTime = document.getElementById('formTime') as HTMLInputElement
@@ -31,14 +83,14 @@ export default function LandingPage() {
       const elapsed = Date.now() - pageLoadTime
 
       if (!email || !email.includes('@') || !email.includes('.')) {
-        showMessage('Vul een geldig e-mailadres in.', 'error'); return
+        showMessage(t.invalidEmail, 'error'); return
       }
-      if (!name) { showMessage('Vul je naam in.', 'error'); return }
+      if (!name) { showMessage(t.invalidName, 'error'); return }
       if (honeypot || elapsed < 2000) {
-        showMessage('Bedankt! We houden je op de hoogte.', 'success'); return
+        showMessage(t.thanks(name), 'success'); return
       }
 
-      if (btn) { (btn as HTMLButtonElement).disabled = true; btn.innerHTML = '<span class="spinner"></span>Verzenden...' }
+      if (btn) { (btn as HTMLButtonElement).disabled = true; btn.innerHTML = `<span class="spinner"></span>${t.sending}` }
 
       try {
         const res = await fetch('/api/subscribe', {
@@ -47,7 +99,7 @@ export default function LandingPage() {
         })
         const data = await res.json()
         if (res.ok) {
-          showMessage('Bedankt ' + name + '! We houden je op de hoogte.', 'success')
+          showMessage(t.thanks(name), 'success')
           ;(form as HTMLFormElement).reset()
           document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'))
           document.querySelector('[data-role="opdrachtgever"]')?.classList.add('active')
@@ -59,32 +111,59 @@ export default function LandingPage() {
         showMessage('Er ging iets mis. Probeer het later opnieuw.', 'error')
       }
 
-      if (btn) { (btn as HTMLButtonElement).disabled = false; btn.textContent = 'Houd mij op de hoogte' }
+      if (btn) { (btn as HTMLButtonElement).disabled = false; btn.textContent = t.submit }
     })
 
     function showMessage(text: string, type: string) {
       if (msg) { msg.textContent = text; msg.className = 'message ' + type }
     }
-  }, [])
+  }, [t])
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: landingCSS }} />
 
-      {/* Subtiele inlogknop rechtsboven */}
-      <Link
-        href="/login"
-        style={{
-          position: 'fixed', top: '20px', right: '24px', zIndex: 10,
-          color: 'rgba(249,251,255,0.3)', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
-          textDecoration: 'none', letterSpacing: '0.5px', transition: 'color 0.3s ease',
-          padding: '6px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)',
-        }}
-        onMouseOver={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.6)')}
-        onMouseOut={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.3)')}
-      >
-        Inloggen
-      </Link>
+      {/* Top-right: lang toggle + login */}
+      <div style={{ position: 'fixed', top: '20px', right: '24px', zIndex: 10, display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', borderRadius: '8px', padding: '2px', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <button
+            onClick={() => switchLang('nl')}
+            style={{
+              padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+              fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
+              background: lang === 'nl' ? 'rgba(255,255,255,0.15)' : 'transparent',
+              color: lang === 'nl' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.35)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            NL
+          </button>
+          <button
+            onClick={() => switchLang('en')}
+            style={{
+              padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+              fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
+              background: lang === 'en' ? 'rgba(255,255,255,0.15)' : 'transparent',
+              color: lang === 'en' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.35)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            EN
+          </button>
+        </div>
+        <Link
+          href="/login"
+          style={{
+            color: 'rgba(249,251,255,0.3)', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
+            textDecoration: 'none', letterSpacing: '0.5px', transition: 'color 0.3s ease',
+            padding: '6px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)',
+          }}
+          onMouseOver={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.6)')}
+          onMouseOut={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.3)')}
+        >
+          {t.login}
+        </Link>
+      </div>
 
       <div className="bg-orb bg-orb-1" />
       <div className="bg-orb bg-orb-2" />
@@ -95,38 +174,34 @@ export default function LandingPage() {
 
         <h1><span className="gradient-text">Redefining Recruitment.</span> Forever.</h1>
 
-        <p className="subtitle">
-          Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²
-        </p>
+        <p className="subtitle">{t.subtitle}</p>
 
-        <p className="body-text">
-          De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay. ROI vanaf 336%.³
-        </p>
+        <p className="body-text">{t.body}</p>
 
         <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.45)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
-          ¹ SHRM, 2024 &nbsp;·&nbsp; ² Leadership IQ &nbsp;·&nbsp; ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam
+          {t.sources}
         </p>
 
         <div className="divider" />
 
         <div className="cta-section">
-          <p className="cta-label">Binnenkort live — Wees er als eerste bij</p>
+          <p className="cta-label">{t.ctaLabel}</p>
 
           <form id="interestForm" noValidate>
             <div className="role-tabs">
-              <button type="button" className="role-tab active" data-role="opdrachtgever">Opdrachtgever</button>
-              <button type="button" className="role-tab" data-role="talent-scout">Talent Scout</button>
+              <button type="button" className="role-tab active" data-role="opdrachtgever">{t.tabEmployer}</button>
+              <button type="button" className="role-tab" data-role="talent-scout">{t.tabScout}</button>
             </div>
 
             <input type="hidden" name="role" id="roleInput" defaultValue="opdrachtgever" />
 
             <div className="name-row">
-              <input type="text" name="name" id="nameInput" placeholder="Je naam" required autoComplete="name" />
+              <input type="text" name="name" id="nameInput" placeholder={t.namePlaceholder} required autoComplete="name" />
             </div>
 
             <div className="form-row">
               <div className="input-wrapper">
-                <input type="email" name="email" id="emailInput" placeholder="Je e-mailadres" required autoComplete="email" />
+                <input type="email" name="email" id="emailInput" placeholder={t.emailPlaceholder} required autoComplete="email" />
               </div>
             </div>
 
@@ -136,13 +211,13 @@ export default function LandingPage() {
             </div>
             <input type="hidden" name="t" id="formTime" defaultValue="" />
 
-            <button type="submit" className="btn-submit" id="submitBtn">Houd mij op de hoogte</button>
+            <button type="submit" className="btn-submit" id="submitBtn">{t.submit}</button>
 
             <div className="message" id="formMessage" />
           </form>
         </div>
 
-        <div className="footer">&copy; 2026 Refurzy B.V. — Alle rechten voorbehouden</div>
+        <div className="footer">{t.footer}</div>
       </div>
     </>
   )
