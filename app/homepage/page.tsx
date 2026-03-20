@@ -48,7 +48,7 @@ export default function HomePage() {
                 <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
                   {t('nav.login', lang)}
                 </Link>
-                <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+                <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
                   {t('nav.getStarted', lang)}
                 </Link>
               </>
@@ -88,10 +88,10 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-            <Link href="/login" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+            <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
               {t('hero.ctaEmployer', lang)}
             </Link>
-            <Link href="/login" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
+            <Link href="/demo/onboarding/scout" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
               {t('hero.ctaScout', lang)}
             </Link>
           </div>
@@ -435,10 +435,10 @@ export default function HomePage() {
             {t('cta.subtitle', lang)}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/login" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+            <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
               {t('cta.btnEmployer', lang)}
             </Link>
-            <Link href="/login" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
+            <Link href="/demo/onboarding/scout" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
               {t('cta.btnScout', lang)}
             </Link>
           </div>

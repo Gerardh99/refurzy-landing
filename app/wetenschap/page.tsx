@@ -39,7 +39,7 @@ export default function WetenschapPage() {
               </Link>
             </div>
           ) : (
-            <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+            <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
               Gratis starten
             </Link>
           )}
