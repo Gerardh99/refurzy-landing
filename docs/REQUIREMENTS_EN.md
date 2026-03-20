@@ -306,9 +306,16 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 │     └── Overview of all users per role                    │
 │                                                           │
 │  5. PAYOUTS                                              │
-│     ├── Filter by country and year                        │
+│     ├── Filter by country, year and relationship type     │
+│     │   └── Private (logging required) / Business         │
+│     ├── Logging status banner                            │
+│     │   ├── Amber: # payments private (IB-47)            │
+│     │   └── Green: # payments business (no logging)      │
 │     ├── Summary per scout (aggregated)                    │
 │     ├── Detail per transaction                            │
+│     ├── Logging column in both tables                    │
+│     │   ├── Private (no CoC): "IB-47 required"           │
+│     │   └── Business (with CoC): "Not required"          │
 │     ├── CSV export for tax returns                        │
 │     │   ├── NL: IB-47 format                              │
 │     │   ├── DE: §93c AO format                            │
@@ -750,7 +757,7 @@ In-platform messaging system, accessible from all roles.
 
 1. **No cure, no pay**: No payment without signed employment contract
 2. **Anonymity**: Candidate remains anonymous until employer accepts the contract
-3. **Pro Scout threshold**: After 2 placements as individual, CoC must be registered
+3. **CoC and relationship type**: Chamber of Commerce number is requested during onboarding (optional). With CoC = business relationship (no IB-47 logging required), without CoC = private individual (IB-47 logging required). After 2 placements as private individual, CoC must be registered (Pro Scout upgrade)
 4. **No free messages**: Scouts and employers cannot communicate directly. All communication runs through structured actions (explanation at nomination, feedback at rejection) and automatic system messages. This prevents contact details from being shared outside the platform
 5. **Feedback required**: Employer must give feedback before next step is possible
 6. **Rejection requires reason**: Dropdown + optional explanation + scout rating (1-5)
@@ -986,10 +993,17 @@ Multi-step registration wizard for new Talent Scouts.
 
 | Step | Name | Fields |
 |------|------|--------|
-| 1 | Personal Details | Name, email, phone, city, country |
+| 1 | Personal Details | Name, email, phone, city, country, Chamber of Commerce number (optional) |
 | 2 | Professional Profile | Sector expertise (multi-select), years of experience, LinkedIn URL |
 | 3 | Terms | Scout Agreement, Privacy Policy, Data Processing Agreement (checkboxes) |
 | 4 | Account Created | Confirmation page, redirect to scout dashboard |
+
+**Chamber of Commerce number and relationship type (Step 1):**
+- Chamber of Commerce (CoC/KVK) number is optional and accepts a maximum of 8 digits
+- **With CoC number** → scout is registered as a business relationship (freelancer/sole proprietor). Payments do not need to be reported to the tax authorities.
+- **Without CoC number** → scout is registered as a private individual. Payments are logged and reported annually to the tax authorities (IB-47 in the Netherlands).
+- Visual indicator switches in real-time when filling in: amber badge ("Private individual") ↔ cyan badge ("Business relationship")
+- This field determines the `typeRelatie` field in the database (`natuurlijk_persoon` | `zzp`)
 
 ### 24.3 Candidate Onboarding
 

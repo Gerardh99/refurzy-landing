@@ -12,14 +12,22 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   const router = useRouter()
   const pathname = usePathname()
 
+  const isOnboarding = pathname?.startsWith('/demo/onboarding')
+
   useEffect(() => {
+    if (isOnboarding) return // Onboarding pages don't require auth
     const u = getUser()
     if (!u) {
       router.push('/login')
       return
     }
     setUser(u)
-  }, [router])
+  }, [router, isOnboarding])
+
+  // Onboarding pages render without sidebar/topbar
+  if (isOnboarding) {
+    return <>{children}</>
+  }
 
   if (!user) {
     return (

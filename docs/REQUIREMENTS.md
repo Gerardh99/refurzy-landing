@@ -306,9 +306,16 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │     └── Overzicht alle gebruikers per rol                │
 │                                                           │
 │  5. UITBETALINGEN                                        │
-│     ├── Filter op land en jaar                           │
+│     ├── Filter op land, jaar en type relatie             │
+│     │   └── Particulier (logging vereist) / Zakelijk     │
+│     ├── Logging status banner                            │
+│     │   ├── Amber: # betalingen particulier (IB-47)      │
+│     │   └── Groen: # betalingen zakelijk (geen logging)  │
 │     ├── Samenvatting per scout (geaggregeerd)            │
 │     ├── Detail per transactie                            │
+│     ├── Logging kolom in beide tabellen                  │
+│     │   ├── Particulier (geen KVK): "IB-47 vereist"     │
+│     │   └── Zakelijk (met KVK): "Niet vereist"          │
 │     ├── CSV export voor belastingaangifte                │
 │     │   ├── NL: IB-47 formaat                            │
 │     │   ├── DE: §93c AO formaat                          │
@@ -750,7 +757,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 
 1. **No cure, no pay**: Geen betaling zonder ondertekend arbeidscontract
 2. **Anonimiteit**: Kandidaat blijft anoniem totdat opdrachtgever contract accepteert
-3. **Pro Scout drempel**: Na 2 plaatsingen als natuurlijk persoon moet KVK worden ingevuld
+3. **KVK en type relatie**: KVK-nummer wordt al bij onboarding gevraagd (optioneel). Met KVK = zakelijke relatie (geen IB-47 logging), zonder KVK = particuliere relatie (IB-47 logging vereist). Na 2 plaatsingen als particulier moet KVK alsnog worden ingevuld (Pro Scout upgrade)
 4. **Geen vrije berichten**: Scouts en opdrachtgevers kunnen niet rechtstreeks communiceren. Alle communicatie verloopt via gestructureerde acties (toelichting bij voordracht, feedback bij afwijzing) en automatische systeemberichten. Dit voorkomt dat contactgegevens buiten het platform worden gedeeld
 5. **Feedback verplicht**: Opdrachtgever moet feedback geven voordat volgende stap mogelijk is
 6. **Afwijzing vereist reden**: Dropdown + optionele toelichting + scout-rating (1-5)
@@ -986,10 +993,17 @@ Multi-step registratie wizard voor nieuwe Talent Scouts.
 
 | Stap | Naam | Velden |
 |------|------|--------|
-| 1 | Persoonlijke gegevens | Naam, email, telefoon, woonplaats, land |
+| 1 | Persoonlijke gegevens | Naam, email, telefoon, woonplaats, land, KVK-nummer (optioneel) |
 | 2 | Professioneel profiel | Sector expertise (multi-select), jaren ervaring, LinkedIn URL |
 | 3 | Voorwaarden | Scoutovereenkomst, Privacyverklaring, Verwerkersovereenkomst (checkboxes) |
 | 4 | Account aangemaakt | Bevestigingspagina, doorverwijzing naar scout dashboard |
+
+**KVK-nummer en type relatie (Stap 1):**
+- KVK-nummer is optioneel en accepteert maximaal 8 cijfers
+- **Met KVK-nummer** → scout wordt geregistreerd als zakelijke relatie (ZZP/eenmanszaak). Betalingen hoeven niet gelogd te worden voor de Belastingdienst.
+- **Zonder KVK-nummer** → scout wordt geregistreerd als particuliere relatie (natuurlijk persoon). Betalingen worden gelogd en jaarlijks gerapporteerd aan de Belastingdienst via IB-47.
+- Visuele indicator wisselt real-time bij invullen: amber badge ("Particuliere relatie") ↔ cyan badge ("Zakelijke relatie")
+- Dit veld bepaalt het `typeRelatie` veld in de database (`natuurlijk_persoon` | `zzp`)
 
 ### 24.3 Kandidaat Onboarding
 

@@ -1,4 +1,15 @@
+import { useState, useEffect } from 'react'
+
 export type Lang = 'nl' | 'en'
+
+export function useLang() {
+  const [lang, setLang] = useState<Lang>('nl')
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('refurzy_lang') as Lang : null
+    if (saved === 'en' || saved === 'nl') setLang(saved)
+  }, [])
+  return { lang }
+}
 
 export const translations = {
   // ─── Navigation ────────────────────────────────────────────────────────────
