@@ -63,6 +63,19 @@ Fee = Ervaringspunten × Opleidingspunten × Waarde per punt (€1.200 NL)
 ### No Cure, No Pay
 Opdrachtgever betaalt alleen bij ondertekening arbeidsovereenkomst.
 
+### Exclusiviteit (optioneel, +25%)
+
+Bij het aanmaken van een vacature kan de opdrachtgever exclusiviteit activeren:
+
+- **Werking**: Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden
+- **Toeslag**: +25% bovenop de standaard plaatsingsfee (berekend over de basisfee excl. BTW)
+- **Onherroepelijk**: Eenmaal geactiveerd kan exclusiviteit **niet** meer worden uitgeschakeld voor die vacature
+- **Rationale**: Onherroepelijkheid voorkomt gaming (exclusiviteit aanzetten om kandidaten te blokkeren, dan uitzetten voor ontgrendeling om de toeslag te vermijden)
+- **Verdeling toeslag**: 50/50 scout/Refurzy (zelfde verdeling als de basisfee)
+- **Zichtbaarheid**: Scouts zien dat een vacature exclusief is → extra motivatie om sterke kandidaten voor te dragen
+
+**Voorbeeld**: WO + 5-10 jaar = €10.800 basisfee → met exclusiviteit: €10.800 + €2.700 = €13.500 excl. BTW
+
 ### 15 Landen
 Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactoren.
 
@@ -730,6 +743,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 20. **Introductiekorting nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. Om de drempel te verlagen: de eerste succesvolle plaatsing is met 50% korting. Zowel de scout als Refurzy dragen de korting (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt de korting automatisch. Dit wordt zichtbaar voor de opdrachtgever als "50% introductiekorting" badge bij kandidaten van nieuwe scouts, en voor de scout als incentive om de eerste match te realiseren.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
 22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
+23. **Exclusiviteit (+25%)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan 14 dagen niet aan andere vacatures aangeboden. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen.
 
 ---
 

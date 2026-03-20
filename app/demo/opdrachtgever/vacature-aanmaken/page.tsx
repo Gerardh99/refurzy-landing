@@ -212,6 +212,7 @@ export default function VacatureAanmakenPage() {
     afdelingscultuur: '',
     opleiding: '' as EducationLevel | '',
     ervaring: '' as ExperienceLevel | '',
+    exclusief: false,
   })
 
   // Werkzaamheden state (step 6)
@@ -223,9 +224,11 @@ export default function VacatureAanmakenPage() {
   const orgProfileFilled = true
 
   const pricing = COUNTRIES.find(c => c.code === 'NL')!.pricing
-  const price = form.opleiding && form.ervaring
+  const basePrice = form.opleiding && form.ervaring
     ? calculatePrice(form.ervaring as ExperienceLevel, form.opleiding as EducationLevel, pricing)
     : 0
+  const exclusiviteitToeslag = form.exclusief ? Math.round(basePrice * 0.25) : 0
+  const price = basePrice + exclusiviteitToeslag
 
   // Check if enough info is filled for AI generation
   const aiReady = form.titel.length > 0 && form.locatie.length > 0 && form.opleiding !== '' && form.ervaring !== ''
@@ -343,6 +346,8 @@ export default function VacatureAanmakenPage() {
               <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
               <div><span className="text-ink-muted">Opleiding:</span> <span className="text-ink">{form.opleiding}</span></div>
               <div><span className="text-ink-muted">Ervaring:</span> <span className="text-ink">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
+              <div><span className="text-ink-muted">Exclusief:</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? 'Ja (+25%)' : 'Nee'}</span></div>
+              <div><span className="text-ink-muted">Fee:</span> <span className="text-ink font-medium">{formatPrice(price, pricing)}</span></div>
             </div>
           </div>
           <Link href="/demo/opdrachtgever" className="btn-gradient text-white font-semibold px-6 py-3 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
@@ -542,6 +547,69 @@ export default function VacatureAanmakenPage() {
                 <p className="text-xs text-cyan">&#8505;&#65039; Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
               </div>
             )}
+
+            {/* Exclusiviteit optie */}
+            <div className="mt-8 pt-6 border-t border-surface-border">
+              <label className="block text-sm text-ink-light mb-3">Exclusiviteit</label>
+              <div
+                onClick={() => { if (!form.exclusief) setForm(f => ({ ...f, exclusief: true })) }}
+                className={`rounded-xl border-2 p-5 transition-all ${
+                  form.exclusief
+                    ? 'bg-purple/5 border-purple/30'
+                    : 'bg-surface-muted border-surface-border hover:border-purple/30 cursor-pointer'
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                    form.exclusief ? 'bg-purple border-purple text-white' : 'border-surface-border'
+                  }`}>
+                    {form.exclusief && <span className="text-xs font-bold">&#10003;</span>}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-ink font-semibold text-sm">Exclusieve kandidaten</span>
+                      <span className="px-2 py-0.5 bg-purple/10 text-purple text-[10px] font-bold rounded-full uppercase tracking-wider">+25%</span>
+                    </div>
+                    <p className="text-xs text-ink-muted mt-1.5 leading-relaxed">
+                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
+                    </p>
+                    {form.exclusief && (
+                      <div className="mt-3 bg-orange/5 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
+                        <span className="text-orange text-xs">&#9888;&#65039;</span>
+                        <p className="text-xs text-orange">
+                          <strong>Let op:</strong> exclusiviteit kan na activering niet meer worden uitgeschakeld voor deze vacature.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Live prijsindicatie */}
+              {form.opleiding && form.ervaring && (
+                <div className="mt-4 bg-white rounded-xl border border-surface-border p-4">
+                  <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">Prijsindicatie (no cure, no pay)</p>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-ink">{formatPrice(price, pricing)}</span>
+                        <span className="text-xs text-ink-muted">excl. BTW</span>
+                      </div>
+                      {form.exclusief && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-xs text-ink-muted line-through">{formatPrice(basePrice, pricing)}</span>
+                          <span className="text-xs text-purple font-medium">+ {formatPrice(exclusiviteitToeslag, pricing)} exclusiviteit</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-right text-xs text-ink-muted">
+                      <p>Scout: {formatPrice(Math.round(price / 2), pricing)}</p>
+                      <p>Refurzy: {formatPrice(Math.round(price / 2), pricing)}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -671,6 +739,8 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>
                 <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
                 <div><span className="text-ink-muted">Ervaring:</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
+                <div><span className="text-ink-muted">Exclusiviteit:</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? 'Ja (14 dagen, +25%)' : 'Nee'}</span></div>
+                <div><span className="text-ink-muted">Plaatsingsfee:</span> <span className="text-ink font-medium">{formatPrice(price, pricing)} <span className="text-ink-muted font-normal">excl. BTW</span></span></div>
               </div>
               {form.omschrijving && (
                 <div className="mt-4 pt-4 border-t border-surface-border">
