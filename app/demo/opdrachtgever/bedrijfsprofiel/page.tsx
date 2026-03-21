@@ -23,7 +23,7 @@ const factuurgegevens = {
 }
 
 const contactpersonen = [
-  { naam: 'Jan van der Berg', email: 'jan@techventures.nl', rol: 'Beheerder', actiefSinds: '2025-09-01' },
+  { naam: 'Daan Verhoeven', email: 'jan@techventures.nl', rol: 'Beheerder', actiefSinds: '2025-09-01' },
   { naam: 'Lisa Bakker', email: 'lisa@techventures.nl', rol: 'Hiring Manager', actiefSinds: '2025-11-15' },
   { naam: 'Pieter de Vries', email: 'pieter@techventures.nl', rol: 'HR Manager', actiefSinds: '2026-01-10' },
 ]

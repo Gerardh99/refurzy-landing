@@ -42,7 +42,7 @@ const mockOrganizations: Organization[] = [
   {
     id: 'org-1', naam: 'TechVentures B.V.', kvk: '12345678', status: 'actief', aangemeld: '2026-01-10', plan: 'Professional', vacatures: 3, plaatsingen: 1,
     leden: [
-      { id: '1', naam: 'Jan van der Berg', email: 'jan@techventures.nl', role: 'owner', laatsteActiviteit: '2026-03-18', status: 'actief' },
+      { id: '1', naam: 'Daan Verhoeven', email: 'jan@techventures.nl', role: 'owner', laatsteActiviteit: '2026-03-18', status: 'actief' },
       { id: '2', naam: 'Lisa van Dijk', email: 'lisa@techventures.nl', role: 'admin', laatsteActiviteit: '2026-03-17', status: 'actief' },
       { id: '3', naam: 'Mark de Boer', email: 'mark@techventures.nl', role: 'gebruiker', laatsteActiviteit: '2026-03-15', status: 'actief' },
     ],

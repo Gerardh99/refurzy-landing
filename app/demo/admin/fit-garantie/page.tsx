@@ -21,7 +21,7 @@ const mockClaims: FitGarantieClaim[] = [
   {
     id: 'claim-1',
     kandidaatNaam: 'Peter Hendriks',
-    opdrachtgeverNaam: 'Jan van der Berg',
+    opdrachtgeverNaam: 'Daan Verhoeven',
     opdrachtgeverBedrijf: 'TechVentures B.V.',
     vacature: 'UX Designer',
     plaatsingsDatum: '2025-08-15',
@@ -54,7 +54,7 @@ const mockClaims: FitGarantieClaim[] = [
   {
     id: 'claim-3',
     kandidaatNaam: 'Kevin de Boer',
-    opdrachtgeverNaam: 'Jan van der Berg',
+    opdrachtgeverNaam: 'Daan Verhoeven',
     opdrachtgeverBedrijf: 'TechVentures B.V.',
     vacature: 'Data Analyst',
     plaatsingsDatum: '2025-04-01',

@@ -36,7 +36,7 @@ const DOC_URLS: Record<DocumentType, string> = {
 }
 
 const PROFILE_CARDS = [
-  { icon: '\uD83D\uDC54', label: 'Opdrachtgever', name: 'Jan van der Berg', email: 'demo@bedrijf.nl', color: 'from-cyan/20 to-cyan/5', border: 'border-cyan/30', hoverBorder: 'hover:border-cyan/60' },
+  { icon: '\uD83D\uDC54', label: 'Opdrachtgever', name: 'Daan Verhoeven', email: 'demo@bedrijf.nl', color: 'from-cyan/20 to-cyan/5', border: 'border-cyan/30', hoverBorder: 'hover:border-cyan/60' },
   { icon: '\uD83D\uDD0D', label: 'Talent Scout', name: 'Lisa de Groot', email: 'scout@refurzy.com', color: 'from-purple/20 to-purple/5', border: 'border-purple/30', hoverBorder: 'hover:border-purple/60' },
   { icon: '\uD83D\uDC64', label: 'Kandidaat', name: 'Thomas Bakker', email: 'kandidaat@email.com', color: 'from-blue-400/20 to-blue-400/5', border: 'border-blue-400/30', hoverBorder: 'hover:border-blue-400/60' },
   { icon: '\u2699\uFE0F', label: 'Admin', name: 'Refurzy Admin', email: 'admin@refurzy.com', color: 'from-gray-400/20 to-gray-400/5', border: 'border-gray-400/30', hoverBorder: 'hover:border-gray-400/60' },

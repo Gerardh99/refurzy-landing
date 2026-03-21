@@ -10,7 +10,7 @@ const DEMO_USERS: Record<string, User> = {
   },
   'demo@bedrijf.nl': {
     email: 'demo@bedrijf.nl',
-    name: 'Jan van der Berg',
+    name: 'Daan Verhoeven',
     role: 'opdrachtgever',
     company: 'TechVentures B.V.',
   },
