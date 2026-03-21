@@ -663,7 +663,7 @@ a. Detailgerichtheid, b. Klantgerichtheid, c. Resultaatgerichtheid, d. Stabilite
 Uitgebreide zoek- en filterfunctionaliteit voor de vacaturebrowser.
 
 #### Filters (inklapbaar filterpaneel)
-- Sector dropdown: IT, Marketing, Finance, HR, Sales, Operations, Overig
+- Sector dropdown (18 sectoren): Technologie & Software, Financiële Dienstverlening, Gezondheidszorg & Farma, Transport & Logistiek, Onderwijs & Onderzoek, Bouw & Vastgoed, Detailhandel & E-commerce, Energie & Duurzaamheid, Horeca & Toerisme, Industrie & Productie, Juridisch & Consultancy, Landbouw & Voeding, Media & Entertainment, Non-profit & Overheid, Telecom & IT-infrastructuur, Uitzend & Bemiddeling, Zakelijke Dienstverlening, Overig
 - Salaris range: min-max invoervelden
 - Contract type: Vast, Tijdelijk, Freelance
 - Werkmodel: Op kantoor, Hybride, Volledig remote

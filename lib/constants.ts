@@ -49,6 +49,51 @@ export const LANDEN = [
 
 export type Land = (typeof LANDEN)[number]
 
+// ─── Sectoren (industry sectors) ────────────────────────────────────────────
+export const SECTOREN = [
+  'Technologie & Software',
+  'Financiële Dienstverlening',
+  'Gezondheidszorg & Farma',
+  'Transport & Logistiek',
+  'Onderwijs & Onderzoek',
+  'Bouw & Vastgoed',
+  'Detailhandel & E-commerce',
+  'Energie & Duurzaamheid',
+  'Horeca & Toerisme',
+  'Industrie & Productie',
+  'Juridisch & Consultancy',
+  'Landbouw & Voeding',
+  'Media & Entertainment',
+  'Non-profit & Overheid',
+  'Telecom & IT-infrastructuur',
+  'Uitzend & Bemiddeling',
+  'Zakelijke Dienstverlening',
+  'Overig',
+] as const
+
+export type Sector = (typeof SECTOREN)[number]
+
+export const SECTOREN_EN: Record<string, string> = {
+  'Technologie & Software': 'Technology & Software',
+  'Financiële Dienstverlening': 'Financial Services',
+  'Gezondheidszorg & Farma': 'Healthcare & Pharma',
+  'Transport & Logistiek': 'Transport & Logistics',
+  'Onderwijs & Onderzoek': 'Education & Research',
+  'Bouw & Vastgoed': 'Construction & Real Estate',
+  'Detailhandel & E-commerce': 'Retail & E-commerce',
+  'Energie & Duurzaamheid': 'Energy & Sustainability',
+  'Horeca & Toerisme': 'Hospitality & Tourism',
+  'Industrie & Productie': 'Manufacturing & Production',
+  'Juridisch & Consultancy': 'Legal & Consulting',
+  'Landbouw & Voeding': 'Agriculture & Food',
+  'Media & Entertainment': 'Media & Entertainment',
+  'Non-profit & Overheid': 'Non-profit & Government',
+  'Telecom & IT-infrastructuur': 'Telecom & IT Infrastructure',
+  'Uitzend & Bemiddeling': 'Staffing & Recruitment',
+  'Zakelijke Dienstverlening': 'Business Services',
+  'Overig': 'Other',
+}
+
 // ─── Talen (languages) ─────────────────────────────────────────────────────
 export const TALEN = [
   'Nederlands',

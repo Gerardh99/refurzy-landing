@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/i18n'
+import { SECTOREN, SECTOREN_EN } from '@/lib/constants'
 
 const texts = {
   nl: {
@@ -21,12 +22,6 @@ const texts = {
     cityLabel: 'Plaats *',
     sectorLabel: 'Sector *',
     sectorDefault: 'Selecteer sector',
-    sectorTech: 'Technologie',
-    sectorFinance: 'Financieel',
-    sectorHealth: 'Gezondheidszorg',
-    sectorLogistics: 'Logistiek',
-    sectorEducation: 'Onderwijs',
-    sectorOther: 'Overig',
     next: 'Volgende',
     // Step 2
     step2Title: 'Contactpersoon',
@@ -87,12 +82,6 @@ const texts = {
     cityLabel: 'City *',
     sectorLabel: 'Sector *',
     sectorDefault: 'Select sector',
-    sectorTech: 'Technology',
-    sectorFinance: 'Financial',
-    sectorHealth: 'Healthcare',
-    sectorLogistics: 'Logistics',
-    sectorEducation: 'Education',
-    sectorOther: 'Other',
     next: 'Next',
     // Step 2
     step2Title: 'Contact Person',
@@ -265,13 +254,9 @@ export default function OnboardingOpdrachtgever() {
                     <select value={form.sector} onChange={e => update('sector', e.target.value)}
                       className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
                       <option value="">{t.sectorDefault}</option>
-                      <option value="tech">{t.sectorTech}</option>
-                      <option value="finance">{t.sectorFinance}</option>
-                      <option value="health">{t.sectorHealth}</option>
-                      <option value="retail">Retail</option>
-                      <option value="logistics">{t.sectorLogistics}</option>
-                      <option value="education">{t.sectorEducation}</option>
-                      <option value="overig">{t.sectorOther}</option>
+                      {SECTOREN.map(s => (
+                        <option key={s} value={s}>{lang === 'en' ? (SECTOREN_EN[s] || s) : s}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
