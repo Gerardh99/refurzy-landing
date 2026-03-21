@@ -6,7 +6,7 @@ import { vacatures } from '@/lib/mock-data'
 import { KandidaatMatch } from '@/lib/types'
 import FitScore from '@/components/FitScore'
 import StarRating from '@/components/StarRating'
-import StatusBadge from '@/components/StatusBadge'
+// StatusBadge removed — scores tell the full story
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import Link from 'next/link'
 import { logConsent } from '@/lib/consent-log'
@@ -60,7 +60,12 @@ export default function VacatureDetailPage() {
   }
 
   // Sort by M-Score descending
-  const sorted = [...kandidaten].sort((a, b) => b.deVriesFit - a.deVriesFit)
+  // Sort by combined score: hard criteria (40%) + M-Score (40%) + scout rating normalized (20%)
+  const sorted = [...kandidaten].sort((a, b) => {
+    const scoreA = a.hardeCriteriaMatch * 0.4 + a.deVriesFit * 0.4 + (a.scoutRating / 5) * 100 * 0.2
+    const scoreB = b.hardeCriteriaMatch * 0.4 + b.deVriesFit * 0.4 + (b.scoutRating / 5) * 100 * 0.2
+    return scoreB - scoreA
+  })
 
   return (
     <div>
@@ -236,12 +241,11 @@ export default function VacatureDetailPage() {
           <h2 className="text-ink font-semibold">Kandidaten ({kandidaten.length})</h2>
         </div>
 
-        <div className="hidden md:grid grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1fr_2fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
+        <div className="hidden md:grid grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
           <div>Kandidaat</div>
           <div className="text-center">Harde Criteria</div>
           <div className="text-center">M-Score</div>
           <div className="text-center">Scout Rating</div>
-          <div className="text-center">Status</div>
           <div className="text-right">Acties</div>
         </div>
 
@@ -250,7 +254,11 @@ export default function VacatureDetailPage() {
           const isMaster = k.scoutRating >= 3.5
 
           return (
-            <div key={k.id} className="grid grid-cols-1 md:grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1fr_2fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors">
+            <Link
+              key={k.id}
+              href={`/demo/opdrachtgever/vacature/${vacature.id}/kandidaat/${k.id}`}
+              className="grid grid-cols-1 md:grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors cursor-pointer"
+            >
               {/* Kandidaat */}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple font-bold text-sm">
@@ -283,29 +291,24 @@ export default function VacatureDetailPage() {
                 <StarRating rating={k.scoutRating} />
               </div>
 
-              {/* Status */}
-              <div className="flex justify-center">
-                <StatusBadge status={k.status} />
-              </div>
-
               {/* Acties */}
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-end gap-2" onClick={e => e.stopPropagation()}>
                 {k.unlocked ? (
-                  <Link href={`/demo/opdrachtgever/vacature/${vacature.id}/kandidaat/${k.id}`} className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan/25 transition-colors border border-cyan/20">
+                  <span className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold border border-cyan/20">
                     Bekijk proces →
-                  </Link>
+                  </span>
                 ) : (
-                  <Link href={`/demo/opdrachtgever/vacature/${vacature.id}/kandidaat/${k.id}`} className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
+                  <span className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold">
                     Bekijk & ontgrendel →
-                  </Link>
+                  </span>
                 )}
                 {k.status !== 'afgewezen' && (
-                  <button onClick={() => handleAfwijzen(k.id)} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
+                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAfwijzen(k.id) }} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
                     Afwijzen
                   </button>
                 )}
               </div>
-            </div>
+            </Link>
           )
         })}
 
