@@ -133,7 +133,7 @@ export default function WetenschapPage() {
               },
               {
                 title: 'Snellere besluitvorming',
-                description: 'De gemiddelde time-to-hire is 68,5 dagen. 81% van hiring managers twijfelt over de juiste keuze. De fit-score geeft zekerheid en versnelt beslissingen.',
+                description: 'De gemiddelde time-to-hire is 68,5 dagen. 81% van hiring managers twijfelt over de juiste keuze. De M-Score geeft zekerheid en versnelt beslissingen.',
                 source: 'SHRM, 2025; Resume Genius, 2024'
               },
               {
