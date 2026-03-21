@@ -19,7 +19,15 @@ export const vacatures: Vacature[] = [
       locatie: 'Amsterdam',
       opKantoor: 'Hybride (3 dagen)',
       maxReistijd: '45 minuten',
+      salarisMin: 4500,
+      salarisMax: 6000,
+      talen: [
+        { taal: 'Nederlands', minimaalNiveau: 'C1' },
+        { taal: 'Engels', minimaalNiveau: 'B2' },
+      ],
     },
+    salarisMin: 4500,
+    salarisMax: 6000,
     kandidaten: [
       {
         id: 'k-1', naam: 'Anna de Jong', initialen: 'A', anoniem: false,
@@ -77,7 +85,14 @@ export const vacatures: Vacature[] = [
       locatie: 'Amsterdam / Remote',
       opKantoor: 'Hybride (2 dagen)',
       maxReistijd: '60 minuten',
+      salarisMin: 5500,
+      salarisMax: 7500,
+      talen: [
+        { taal: 'Engels', minimaalNiveau: 'C1' },
+      ],
     },
+    salarisMin: 5500,
+    salarisMax: 7500,
     kandidaten: [
       {
         id: 'k-4', naam: 'Thomas van Dijk', initialen: 'T', anoniem: false,
@@ -125,7 +140,15 @@ export const allVacatures: Vacature[] = [
       locatie: 'Rotterdam',
       opKantoor: 'Op kantoor (5 dagen)',
       maxReistijd: '30 minuten',
+      salarisMin: 4000,
+      salarisMax: 5500,
+      talen: [
+        { taal: 'Nederlands', minimaalNiveau: 'C1' },
+        { taal: 'Engels', minimaalNiveau: 'B1' },
+      ],
     },
+    salarisMin: 4000,
+    salarisMax: 5500,
     kandidaten: [],
   },
   {
@@ -146,7 +169,15 @@ export const allVacatures: Vacature[] = [
       locatie: 'Eindhoven',
       opKantoor: 'Hybride (3 dagen)',
       maxReistijd: '45 minuten',
+      salarisMin: 5000,
+      salarisMax: 6500,
+      talen: [
+        { taal: 'Nederlands', minimaalNiveau: 'C1' },
+        { taal: 'Engels', minimaalNiveau: 'B2' },
+      ],
     },
+    salarisMin: 5000,
+    salarisMax: 6500,
     kandidaten: [],
   },
 ]
@@ -171,7 +202,15 @@ export const archiefVacatures: Vacature[] = [
       locatie: 'Amsterdam',
       opKantoor: 'Hybride (3 dagen)',
       maxReistijd: '45 minuten',
+      salarisMin: 4500,
+      salarisMax: 6000,
+      talen: [
+        { taal: 'Nederlands', minimaalNiveau: 'C1' },
+        { taal: 'Engels', minimaalNiveau: 'B2' },
+      ],
     },
+    salarisMin: 4500,
+    salarisMax: 6000,
     kandidaten: [
       {
         id: 'k-arch-1', naam: 'Sanne Visser', initialen: 'S', anoniem: false,
@@ -202,7 +241,15 @@ export const archiefVacatures: Vacature[] = [
       locatie: 'Amsterdam',
       opKantoor: 'Hybride (2 dagen)',
       maxReistijd: '60 minuten',
+      salarisMin: 4000,
+      salarisMax: 5500,
+      talen: [
+        { taal: 'Nederlands', minimaalNiveau: 'B2' },
+        { taal: 'Engels', minimaalNiveau: 'B2' },
+      ],
     },
+    salarisMin: 4000,
+    salarisMax: 5500,
     kandidaten: [
       {
         id: 'k-arch-2', naam: 'Jamal Usan', initialen: 'J', anoniem: false,

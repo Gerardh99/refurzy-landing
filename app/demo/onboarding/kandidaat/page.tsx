@@ -3,11 +3,13 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/i18n'
+import { TALEN, TAALNIVEAUS, TAALNIVEAU_LABELS } from '@/lib/constants'
+import type { TaalBeheersing } from '@/lib/types'
 
 const texts = {
   nl: {
     header: 'Kandidaat registratie',
-    steps: ['Welkom', 'Persoonlijke gegevens', 'Toestemming', 'Account aangemaakt'],
+    steps: ['Welkom', 'Gegevens', 'Voorkeuren', 'Toestemming', 'Klaar'],
     welcomeTitle: 'Welkom!',
     welcomeInvite: (scout: string, title: string, company: string) =>
       <>Je bent uitgenodigd door <span className="font-semibold text-purple">{scout}</span> voor de functie van <span className="font-semibold text-ink">{title}</span> bij <span className="font-semibold text-ink">{company}</span>.</>,
@@ -32,6 +34,15 @@ const texts = {
       <>Ik geef toestemming aan Refurzy om mijn profielgegevens en Matching Scan resultaten te delen met Talent Scout {scout} en potentiele opdrachtgevers (geanonimiseerd). Zie de volledige <span className="text-purple underline">Toestemmingsverklaring</span>.</>,
     privacyStatement: 'Privacyverklaring',
     privacyText: <>Ik heb de <span className="text-purple underline">Privacyverklaring</span> gelezen en begrijp hoe mijn gegevens worden verwerkt.</>,
+    preferencesTitle: 'Werkvoorkeuren',
+    preferencesSub: 'Vul je voorkeuren in zodat we je met de juiste vacatures kunnen matchen.',
+    salaryLabel: 'Salarisverwachting (bruto per maand)',
+    salaryMin: 'Minimum',
+    salaryMax: 'Maximum',
+    travelLabel: 'Maximale reistijd',
+    officeLabel: 'Bereidheid op kantoor',
+    languagesLabel: 'Talen die je beheerst',
+    addLanguage: 'Taal toevoegen',
     createAccount: 'Account aanmaken',
     accountCreatedTitle: 'Account aangemaakt!',
     accountCreatedText: (naam: string) =>
@@ -40,7 +51,7 @@ const texts = {
   },
   en: {
     header: 'Candidate Registration',
-    steps: ['Welcome', 'Personal Details', 'Consent', 'Account Created'],
+    steps: ['Welcome', 'Details', 'Preferences', 'Consent', 'Done'],
     welcomeTitle: 'Welcome!',
     welcomeInvite: (scout: string, title: string, company: string) =>
       <>You&apos;ve been invited by <span className="font-semibold text-purple">{scout}</span> for the position of <span className="font-semibold text-ink">{title}</span> at <span className="font-semibold text-ink">{company}</span>.</>,
@@ -65,6 +76,15 @@ const texts = {
       <>I consent to Refurzy sharing my profile data and Matching Scan results with Talent Scout {scout} and potential employers (anonymised). See the full <span className="text-purple underline">Consent Statement</span>.</>,
     privacyStatement: 'Privacy Policy',
     privacyText: <>I have read the <span className="text-purple underline">Privacy Policy</span> and understand how my data is processed.</>,
+    preferencesTitle: 'Work Preferences',
+    preferencesSub: 'Fill in your preferences so we can match you with the right vacancies.',
+    salaryLabel: 'Salary expectation (gross per month)',
+    salaryMin: 'Minimum',
+    salaryMax: 'Maximum',
+    travelLabel: 'Maximum commute time',
+    officeLabel: 'Willingness to work in office',
+    languagesLabel: 'Languages you speak',
+    addLanguage: 'Add language',
     createAccount: 'Create account',
     accountCreatedTitle: 'Account created!',
     accountCreatedText: (naam: string) =>
@@ -85,9 +105,14 @@ export default function OnboardingKandidaat() {
     naam: '',
     email: '',
     telefoon: '',
+    salarisMin: '',
+    salarisMax: '',
+    maxReistijd: '45 minuten',
+    opKantoor: 'Hybride (3 dagen)',
     toestemmingsverklaring: false,
     privacyverklaring: false,
   })
+  const [talen, setTalen] = useState<TaalBeheersing[]>([{ taal: 'Nederlands', niveau: 'C2' }])
 
   const update = (field: string, value: string | boolean) =>
     setForm(prev => ({ ...prev, [field]: value }))
@@ -212,8 +237,92 @@ export default function OnboardingKandidaat() {
             </div>
           )}
 
-          {/* Step 3: Consent */}
+          {/* Step 3: Preferences */}
           {currentStep === 2 && (
+            <div>
+              <h2 className="text-xl font-semibold text-ink mb-1">{t.preferencesTitle}</h2>
+              <p className="text-sm text-ink-muted mb-6">{t.preferencesSub}</p>
+              <div className="space-y-5">
+                {/* Salary */}
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.salaryLabel}</label>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                      <input type="number" value={form.salarisMin} onChange={e => update('salarisMin', e.target.value)}
+                        placeholder={t.salaryMin} className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    </div>
+                    <span className="text-ink-muted">–</span>
+                    <div className="flex-1 relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                      <input type="number" value={form.salarisMax} onChange={e => update('salarisMax', e.target.value)}
+                        placeholder={t.salaryMax} className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Travel time */}
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.travelLabel}</label>
+                  <select value={form.maxReistijd} onChange={e => update('maxReistijd', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                    <option>15 minuten</option><option>30 minuten</option><option>45 minuten</option><option>60 minuten</option><option>Niet van toepassing</option>
+                  </select>
+                </div>
+
+                {/* Office days */}
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.officeLabel}</label>
+                  <select value={form.opKantoor} onChange={e => update('opKantoor', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                    <option>Op kantoor (5 dagen)</option><option>Hybride (3 dagen)</option><option>Hybride (2 dagen)</option><option>Volledig remote</option>
+                  </select>
+                </div>
+
+                {/* Languages */}
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.languagesLabel}</label>
+                  {talen.map((taalItem, idx) => (
+                    <div key={idx} className="flex items-center gap-2 mb-2">
+                      <select value={taalItem.taal} onChange={e => {
+                        const updated = [...talen]; updated[idx] = { ...updated[idx], taal: e.target.value }; setTalen(updated)
+                      }} className="flex-1 px-4 py-2.5 rounded-lg border border-surface-border bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                        <option value="">Selecteer...</option>
+                        {TALEN.filter(t => t === taalItem.taal || !talen.some(x => x.taal === t)).map(t => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <select value={taalItem.niveau} onChange={e => {
+                        const updated = [...talen]; updated[idx] = { ...updated[idx], niveau: e.target.value as TaalBeheersing['niveau'] }; setTalen(updated)
+                      }} className="w-44 px-4 py-2.5 rounded-lg border border-surface-border bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                        {TAALNIVEAUS.map(n => <option key={n} value={n}>{n} — {TAALNIVEAU_LABELS[n]}</option>)}
+                      </select>
+                      {talen.length > 1 && (
+                        <button type="button" onClick={() => setTalen(prev => prev.filter((_, i) => i !== idx))}
+                          className="p-1.5 text-red-400 hover:text-red-500 rounded transition-colors" title="Verwijderen">✕</button>
+                      )}
+                    </div>
+                  ))}
+                  <button type="button" onClick={() => setTalen(prev => [...prev, { taal: '', niveau: 'B1' }])}
+                    className="mt-1 flex items-center gap-2 text-sm text-purple hover:text-purple-dark font-medium transition-colors">
+                    <span className="w-5 h-5 rounded-full border-2 border-purple/40 flex items-center justify-center text-xs">+</span>
+                    {t.addLanguage}
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-between mt-8">
+                <button onClick={prev} className="px-6 py-2.5 border border-surface-border text-ink rounded-lg font-medium hover:bg-surface-muted transition-colors">
+                  {t.previous}
+                </button>
+                <button onClick={next} className="px-6 py-2.5 bg-purple text-white rounded-lg font-medium hover:bg-purple-dark transition-colors">
+                  {t.next}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Consent */}
+          {currentStep === 3 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.consentTitle}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.consentSub}</p>
@@ -252,8 +361,8 @@ export default function OnboardingKandidaat() {
             </div>
           )}
 
-          {/* Step 4: Account created */}
-          {currentStep === 3 && (
+          {/* Step 5: Account created */}
+          {currentStep === 4 && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">🎉</span>

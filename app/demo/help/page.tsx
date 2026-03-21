@@ -39,6 +39,11 @@ const faqItems: FaqItem[] = [
     a: 'Talent Scouts worden beoordeeld door opdrachtgevers na elk afwijzingsmoment. Hoe verder een kandidaat in het proces komt, hoe hoger de minimale beoordeling voor de scout — omdat de kwaliteit van de voordracht bewezen is.\n\nBij een succesvolle plaatsing krijgt de scout automatisch 5 sterren. De gemiddelde scout-rating is zichtbaar bij elke voordracht.',
     roles: 'all',
   },
+  {
+    q: 'Hoe werkt de match op harde criteria?',
+    a: 'Naast de M-Score (cultuurmatch) berekent Refurzy ook een match op harde criteria. Dit is het percentage van de objectieve eisen waaraan een kandidaat voldoet.\n\nDe harde criteria zijn:\n• Opleidingsniveau — kandidaat moet minimaal het vereiste niveau hebben\n• Werkervaring — kandidaat moet voldoende jaren ervaring hebben\n• Salarisindicatie — de salarisbandbreedte van vacature en kandidaat moet overlappen\n• Max reistijd — de reistijd van de kandidaat mag niet hoger zijn dan wat de vacature toestaat\n• Op kantoor — de kandidaat moet bereid zijn het vereiste aantal kantoordagen te werken\n• Talen — de kandidaat moet alle vereiste talen beheersen op minimaal het opgegeven ERK-niveau (A2 t/m C2)\n\nElk criterium is pass/fail. De score is het percentage voldane criteria. Bij 80% of hoger verschijnt een groen vinkje, daaronder een oranje waarschuwing.\n\nVoorbeeld: een vacature vereist HBO, 5+ jaar ervaring, €4.500-€6.000, max 45 min reistijd, 3 dagen kantoor, en Nederlands C1 + Engels B2. Een kandidaat die aan 5 van de 6 criteria voldoet scoort 83% → groen vinkje.',
+    roles: 'all',
+  },
 
   // ── Opdrachtgever ──
   {

@@ -16,6 +16,8 @@ export interface Vacature {
   land: string
   vakgebied: string
   salaris: string
+  salarisMin?: number
+  salarisMax?: number
   deadline: string
   status: 'open' | 'gesloten' | 'vervuld'
   hardeCriteria: HardeCriteria
@@ -24,12 +26,25 @@ export interface Vacature {
   pmsCompleted: boolean
 }
 
+export interface TaalEis {
+  taal: string
+  minimaalNiveau: 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+}
+
+export interface TaalBeheersing {
+  taal: string
+  niveau: 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+}
+
 export interface HardeCriteria {
   opleidingsniveau: 'MBO' | 'HBO' | 'WO'
   minimaleErvaring: string
   locatie: string
   opKantoor: string
   maxReistijd: string
+  salarisMin?: number          // bruto per maand in euros
+  salarisMax?: number          // bruto per maand in euros
+  talen?: TaalEis[]            // required languages with minimum level
 }
 
 // ─── Pipeline statuses (ordered) ────────────────────────────────────────────
@@ -133,6 +148,12 @@ export interface Kandidaat {
   werkervaring: string
   huidigeRol: string
   voorkeursFunctie: string
+  // ─── Hard criteria matching fields ───
+  salarisMin?: number            // bruto per maand verwachting
+  salarisMax?: number            // bruto per maand verwachting
+  maxReistijd?: string           // e.g. '45 minuten'
+  opKantoor?: string             // e.g. 'Hybride (3 dagen)'
+  talen?: TaalBeheersing[]       // languages with proficiency level
   scanCompleted: boolean
   cvUploaded: boolean
   scoutIds: string[]        // Multi-scout: kandidaat kan door meerdere scouts bemiddeld worden

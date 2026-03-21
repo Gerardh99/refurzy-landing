@@ -7,6 +7,7 @@ import { KandidaatMatch } from '@/lib/types'
 import FitScore from '@/components/FitScore'
 import StarRating from '@/components/StarRating'
 import StatusBadge from '@/components/StatusBadge'
+import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import Link from 'next/link'
 import { logConsent } from '@/lib/consent-log'
 
@@ -268,13 +269,8 @@ export default function VacatureDetailPage() {
               </div>
 
               {/* Harde Criteria */}
-              <div className="flex items-center justify-center gap-1.5">
-                <span className={k.hardeCriteriaIcon === 'check' ? 'text-green-400' : 'text-orange'}>
-                  {k.hardeCriteriaIcon === 'check' ? '✓' : '⚠'}
-                </span>
-                <span className={`text-sm font-semibold ${k.hardeCriteriaIcon === 'check' ? 'text-green-400' : 'text-orange'}`}>
-                  {k.hardeCriteriaMatch}%
-                </span>
+              <div className="flex items-center justify-center">
+                <HardeCriteriaDetail kandidaat={k} hardeCriteria={vacature.hardeCriteria} size="sm" />
               </div>
 
               {/* M-Score */}

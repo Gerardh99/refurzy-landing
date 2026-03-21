@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { vacatures, pipelineSteps, afwijzingsRedenen, calculateFee } from '@/lib/mock-data'
 import { ProcesStatus, AfwijzingsReden, Gesprek } from '@/lib/types'
 import FitScore from '@/components/FitScore'
+import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import PipelineTracker from '@/components/PipelineTracker'
 
 export default function OpdrachtgeverKandidaatProces() {
@@ -169,7 +170,7 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-center gap-3">
             <FitScore score={kandidaat.hardeCriteriaMatch} size="lg" />
             <div>
-              <p className="text-ink font-semibold">{kandidaat.hardeCriteriaMatch}%</p>
+              <HardeCriteriaDetail kandidaat={kandidaat} hardeCriteria={vacature?.hardeCriteria} size="lg" />
               <p className="text-xs text-ink-muted">{kandidaat.opleidingsniveau} · {kandidaat.werkervaring}</p>
             </div>
           </div>

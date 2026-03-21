@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { allVacatures, scoutKandidaten, calculateFee } from '@/lib/mock-data'
 import { Kandidaat } from '@/lib/types'
 import FitScore from '@/components/FitScore'
+import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import StatusBadge from '@/components/StatusBadge'
 
 export default function ScoutVacatureDetail() {
@@ -136,9 +137,7 @@ export default function ScoutVacatureDetail() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FitScore score={k.hardeCriteriaMatch} size="sm" />
-                        {k.hardeCriteriaIcon === 'warning' && (
-                          <span className="text-orange text-xs">!</span>
-                        )}
+                        <HardeCriteriaDetail kandidaat={k} hardeCriteria={vacature?.hardeCriteria} size="sm" />
                       </div>
                     </td>
                     <td className="px-6 py-4">

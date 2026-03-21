@@ -8,7 +8,8 @@ import {
   werkzaamhedenRatingScale,
   type ScaleOption,
 } from '@/lib/matching-scan'
-import { VAKGEBIEDEN, LANDEN } from '@/lib/constants'
+import type { TaalEis } from '@/lib/types'
+import { VAKGEBIEDEN, LANDEN, TALEN, TAALNIVEAUS, TAALNIVEAU_LABELS } from '@/lib/constants'
 
 // ─── Role-specific task templates (simulates AI web search for similar vacancies) ───
 
@@ -205,8 +206,8 @@ export default function VacatureAanmakenPage() {
     locatie: '',
     land: 'Nederland',
     vakgebied: '',
-    salaris: '',
-    salarisPeriode: 'maand' as 'maand' | 'jaar',
+    salarisMin: '',
+    salarisMax: '',
     taken: '',
     contractType: 'Vast',
     opKantoor: 'Hybride (3 dagen)',
@@ -217,10 +218,8 @@ export default function VacatureAanmakenPage() {
     ervaring: '' as ExperienceLevel | '',
     exclusief: false,
   })
-  const [vakgebiedOpen, setVakgebiedOpen] = useState(false)
-  const vakgebiedSuggestions = form.vakgebied.length > 0
-    ? VAKGEBIEDEN.filter(v => v.toLowerCase().includes(form.vakgebied.toLowerCase()))
-    : VAKGEBIEDEN
+  const [taalEisen, setTaalEisen] = useState<TaalEis[]>([])
+
 
   // Werkzaamheden state (step 6)
   const [werkzaamhedenSubStep, setWerkzaamhedenSubStep] = useState<WerkzaamhedenSubStep>('ranking')
@@ -271,8 +270,8 @@ export default function VacatureAanmakenPage() {
       const titel = form.titel
       const afdeling = form.afdeling || 'het team'
       const locatie = form.locatie
-      const salarisLabel = form.salaris
-        ? `${form.salaris} bruto per ${form.salarisPeriode}`
+      const salarisLabel = form.salarisMin && form.salarisMax
+        ? `€${form.salarisMin} - €${form.salarisMax} bruto per maand`
         : 'marktconform salaris'
       const contract = form.contractType
       const kantoor = form.opKantoor
@@ -439,54 +438,34 @@ export default function VacatureAanmakenPage() {
                   {LANDEN.map(l => <option key={l} value={l}>{l}</option>)}
                 </select>
               </div>
-              <div className="col-span-2 relative">
+              <div className="col-span-2">
                 <label className="block text-sm text-ink font-medium mb-1.5">Vakgebied *</label>
-                <input
-                  type="text"
+                <select
                   value={form.vakgebied}
-                  onChange={e => { setForm(f => ({ ...f, vakgebied: e.target.value })); setVakgebiedOpen(true) }}
-                  onFocus={() => setVakgebiedOpen(true)}
-                  onBlur={() => setTimeout(() => setVakgebiedOpen(false), 200)}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="Begin te typen om een vakgebied te selecteren..."
-                />
-                {vakgebiedOpen && vakgebiedSuggestions.length > 0 && (
-                  <div className="absolute z-20 left-0 right-0 mt-1 bg-white border border-surface-border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {vakgebiedSuggestions.map(v => (
-                      <button
-                        key={v}
-                        type="button"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => { setForm(f => ({ ...f, vakgebied: v })); setVakgebiedOpen(false) }}
-                        className={`w-full text-left px-4 py-2.5 text-sm hover:bg-cyan/10 transition-colors ${
-                          form.vakgebied === v ? 'bg-cyan/10 text-cyan font-medium' : 'text-ink'
-                        }`}
-                      >
-                        {v}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  onChange={e => setForm(f => ({ ...f, vakgebied: e.target.value }))}
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors"
+                >
+                  <option value="">Selecteer een vakgebied...</option>
+                  {VAKGEBIEDEN.map(v => (
+                    <option key={v} value={v}>{v}</option>
+                  ))}
+                </select>
               </div>
-              <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Salarisindicatie (bruto)</label>
-                <div className="flex gap-2">
-                  <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
-                    className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                    placeholder={form.salarisPeriode === 'maand' ? 'bijv. \u20AC4.000 - \u20AC5.500' : 'bijv. \u20AC48.000 - \u20AC66.000'} />
-                  <div className="flex rounded-lg border border-surface-border overflow-hidden shrink-0">
-                    <button type="button" onClick={() => setForm(f => ({ ...f, salarisPeriode: 'maand' }))}
-                      className={`px-3 py-3 text-xs font-medium transition-colors ${
-                        form.salarisPeriode === 'maand' ? 'bg-cyan/15 text-cyan border-r border-cyan/20' : 'bg-surface-muted text-ink-muted hover:text-ink border-r border-surface-border'
-                      }`}>
-                      /maand
-                    </button>
-                    <button type="button" onClick={() => setForm(f => ({ ...f, salarisPeriode: 'jaar' }))}
-                      className={`px-3 py-3 text-xs font-medium transition-colors ${
-                        form.salarisPeriode === 'jaar' ? 'bg-cyan/15 text-cyan' : 'bg-surface-muted text-ink-muted hover:text-ink'
-                      }`}>
-                      /jaar
-                    </button>
+              <div className="col-span-2">
+                <label className="block text-sm text-ink font-medium mb-1.5">Salarisindicatie (bruto per maand) *</label>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                    <input type="number" value={form.salarisMin} onChange={e => setForm(f => ({ ...f, salarisMin: e.target.value }))}
+                      className="w-full bg-surface-muted border border-surface-border rounded-lg pl-8 pr-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
+                      placeholder="min. bijv. 4000" />
+                  </div>
+                  <span className="text-ink-muted text-sm">–</span>
+                  <div className="flex-1 relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                    <input type="number" value={form.salarisMax} onChange={e => setForm(f => ({ ...f, salarisMax: e.target.value }))}
+                      className="w-full bg-surface-muted border border-surface-border rounded-lg pl-8 pr-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
+                      placeholder="max. bijv. 5500" />
                   </div>
                 </div>
               </div>
@@ -585,6 +564,58 @@ export default function VacatureAanmakenPage() {
               </div>
             </div>
 
+            {/* Talen vereisten */}
+            <div className="mt-8 pt-6 border-t border-surface-border">
+              <label className="block text-sm text-ink-light mb-1">Vereiste talen</label>
+              <p className="text-xs text-ink-muted mb-3">Voeg talen toe die de kandidaat minimaal moet beheersen.</p>
+
+              {taalEisen.map((eis, idx) => (
+                <div key={idx} className="flex items-center gap-3 mb-2">
+                  <select
+                    value={eis.taal}
+                    onChange={e => {
+                      const updated = [...taalEisen]
+                      updated[idx] = { ...updated[idx], taal: e.target.value }
+                      setTaalEisen(updated)
+                    }}
+                    className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors"
+                  >
+                    <option value="">Selecteer taal...</option>
+                    {TALEN.filter(t => t === eis.taal || !taalEisen.some(e => e.taal === t)).map(t => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={eis.minimaalNiveau}
+                    onChange={e => {
+                      const updated = [...taalEisen]
+                      updated[idx] = { ...updated[idx], minimaalNiveau: e.target.value as TaalEis['minimaalNiveau'] }
+                      setTaalEisen(updated)
+                    }}
+                    className="w-48 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors"
+                  >
+                    {TAALNIVEAUS.map(n => (
+                      <option key={n} value={n}>{n} — {TAALNIVEAU_LABELS[n]}</option>
+                    ))}
+                  </select>
+                  <button type="button" onClick={() => setTaalEisen(prev => prev.filter((_, i) => i !== idx))}
+                    className="p-2 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Verwijderen">
+                    ✕
+                  </button>
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => setTaalEisen(prev => [...prev, { taal: '', minimaalNiveau: 'B2' }])}
+                className="mt-2 flex items-center gap-2 text-sm text-cyan hover:text-cyan/80 font-medium transition-colors"
+              >
+                <span className="w-5 h-5 rounded-full border-2 border-cyan/40 flex items-center justify-center text-xs">+</span>
+                Taal toevoegen
+              </button>
+            </div>
+
             {form.opleiding && form.ervaring && form.opleiding !== 'MBO' && form.ervaring === '10+' && (
               <div className="mt-4 bg-cyan/5 border border-cyan/20 rounded-xl p-3">
                 <p className="text-xs text-cyan">&#8505;&#65039; Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
@@ -613,19 +644,19 @@ export default function VacatureAanmakenPage() {
                       <span className="text-ink font-semibold text-sm">Exclusieve kandidaten</span>
                       <span className="px-2 py-0.5 bg-purple/10 text-purple text-[10px] font-bold rounded-full uppercase tracking-wider">+25%</span>
                     </div>
-                    <p className="text-xs text-ink-muted mt-1.5 leading-relaxed">
+                    <p className="text-xs text-ink-light mt-1.5 leading-relaxed">
                       Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
                     </p>
-                    <div className="mt-3 bg-cyan/5 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
-                      <span className="text-cyan text-xs">🚀</span>
-                      <p className="text-xs text-cyan">
+                    <div className="mt-3 bg-cyan/10 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
+                      <span className="text-cyan-700 text-xs">🚀</span>
+                      <p className="text-xs text-cyan-700">
                         <strong>Meer kandidaten:</strong> de hogere fee motiveert Talent Scouts extra om voor uw vacature aan de slag te gaan. Exclusieve vacatures ontvangen gemiddeld aanzienlijk meer voorgedragen kandidaten.
                       </p>
                     </div>
                     {form.exclusief && (
-                      <div className="mt-3 bg-orange/5 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
-                        <span className="text-orange text-xs">&#9888;&#65039;</span>
-                        <p className="text-xs text-orange">
+                      <div className="mt-3 bg-orange/10 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
+                        <span className="text-orange-700 text-xs">&#9888;&#65039;</span>
+                        <p className="text-xs text-orange-700">
                           <strong>Let op:</strong> na publicatie kan exclusiviteit niet meer worden uitgeschakeld voor deze vacature.
                         </p>
                       </div>
@@ -712,10 +743,10 @@ export default function VacatureAanmakenPage() {
                     <span className="text-ink">{form.afdeling}</span>
                   </div>
                 )}
-                {form.salaris && (
+                {(form.salarisMin || form.salarisMax) && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-green-500">✓</span>
-                    <span className="text-ink">{form.salaris} /{form.salarisPeriode}</span>
+                    <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : 'Salaris deels ingevuld'}</span>
                   </div>
                 )}
                 {form.taken && (
@@ -785,11 +816,14 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
                 <div><span className="text-ink-muted">Land:</span> <span className="text-ink">{form.land}</span></div>
                 <div><span className="text-ink-muted">Vakgebied:</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
-                <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink">{form.salaris ? `${form.salaris} bruto p/${form.salarisPeriode === 'maand' ? 'mnd' : 'jr'}` : '—'}</span></div>
+                <div><span className="text-ink-muted">Salarisindicatie:</span> <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : 'Niet ingevuld'}</span></div>
                 <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>
                 <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
                 <div><span className="text-ink-muted">Ervaring:</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
+                {taalEisen.length > 0 && (
+                  <div><span className="text-ink-muted">Talen:</span> <span className="text-ink">{taalEisen.filter(e => e.taal).map(e => `${e.taal} (${e.minimaalNiveau})`).join(', ')}</span></div>
+                )}
                 <div><span className="text-ink-muted">Exclusiviteit:</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? 'Ja (14 dagen, +25%)' : 'Nee'}</span></div>
                 <div><span className="text-ink-muted">Plaatsingsfee:</span> <span className="text-ink font-medium">{formatPrice(price, pricing)} <span className="text-ink-muted font-normal">excl. BTW</span></span></div>
               </div>
