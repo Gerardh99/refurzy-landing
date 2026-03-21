@@ -155,8 +155,8 @@ export default function WetenschapPage() {
               <tbody className="text-gray-400">
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Kosten per hire</td>
-                  <td className="px-6 py-3 text-center text-red-400">15–27% jaarsalaris<br/><span className="text-[10px] text-gray-600">gem. €16.000</span></td>
-                  <td className="px-6 py-3 text-center text-cyan">Vast tarief<br/><span className="text-[10px] text-gray-500">gem. €4.333</span></td>
+                  <td className="px-6 py-3 text-center text-red-400">20–30% bruto jaarsalaris<br/><span className="text-[10px] text-gray-400">gem. €16.000</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">Vast tarief<br/><span className="text-[10px] text-gray-400">gem. €4.333</span></td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Wetenschappelijke matching</td>
@@ -170,17 +170,22 @@ export default function WetenschapPage() {
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Betalingsmodel</td>
-                  <td className="px-6 py-3 text-center text-gray-500">Fee bij plaatsing</td>
-                  <td className="px-6 py-3 text-center text-cyan">No cure, no pay</td>
+                  <td className="px-6 py-3 text-center text-red-400">Retainer verplicht<br/><span className="text-[10px] text-gray-400">kwijt bij eigen match</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">No cure, no pay<br/><span className="text-[10px] text-gray-400">geen retainer</span></td>
+                </tr>
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Exclusiviteit</td>
+                  <td className="px-6 py-3 text-center text-red-400">Vaak verplicht<br/><span className="text-[10px] text-gray-400">je zit vast aan het bureau</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">Niet verplicht<br/><span className="text-[10px] text-gray-400">vrij om parallel te werven</span></td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Voorspelling van werkgeluk</td>
-                  <td className="px-6 py-3 text-center text-gray-600">Niet gemeten</td>
+                  <td className="px-6 py-3 text-center text-gray-400">Niet gemeten</td>
                   <td className="px-6 py-3 text-center text-cyan">M-Score (0–100%)</td>
                 </tr>
                 <tr>
                   <td className="px-6 py-3">Fit Garantie</td>
-                  <td className="px-6 py-3 text-center text-gray-600">Zelden</td>
+                  <td className="px-6 py-3 text-center text-gray-400">Zelden</td>
                   <td className="px-6 py-3 text-center text-cyan">Standaard</td>
                 </tr>
               </tbody>
