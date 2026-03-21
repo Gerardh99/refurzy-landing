@@ -13,6 +13,8 @@ export interface Vacature {
   title: string
   company: string
   location: string
+  land: string
+  vakgebied: string
   salaris: string
   deadline: string
   status: 'open' | 'gesloten' | 'vervuld'

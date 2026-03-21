@@ -8,6 +8,7 @@ import {
   werkzaamhedenRatingScale,
   type ScaleOption,
 } from '@/lib/matching-scan'
+import { VAKGEBIEDEN, LANDEN } from '@/lib/constants'
 
 // ─── Role-specific task templates (simulates AI web search for similar vacancies) ───
 
@@ -202,6 +203,8 @@ export default function VacatureAanmakenPage() {
     afdeling: '',
     omschrijving: '',
     locatie: '',
+    land: 'Nederland',
+    vakgebied: '',
     salaris: '',
     salarisPeriode: 'maand' as 'maand' | 'jaar',
     taken: '',
@@ -214,6 +217,10 @@ export default function VacatureAanmakenPage() {
     ervaring: '' as ExperienceLevel | '',
     exclusief: false,
   })
+  const [vakgebiedOpen, setVakgebiedOpen] = useState(false)
+  const vakgebiedSuggestions = form.vakgebied.length > 0
+    ? VAKGEBIEDEN.filter(v => v.toLowerCase().includes(form.vakgebied.toLowerCase()))
+    : VAKGEBIEDEN
 
   // Werkzaamheden state (step 6)
   const [werkzaamhedenSubStep, setWerkzaamhedenSubStep] = useState<WerkzaamhedenSubStep>('ranking')
@@ -242,7 +249,7 @@ export default function VacatureAanmakenPage() {
   const canProceed = () => {
     switch (step) {
       case 1: return form.titel.length > 0
-      case 2: return form.locatie.length > 0 && form.afdelingscultuur.length > 10
+      case 2: return form.locatie.length > 0 && form.vakgebied.length > 0 && form.afdelingscultuur.length > 10
       case 3: return form.opleiding !== '' && form.ervaring !== ''
       case 4: return form.omschrijving.length > 20
       case 5: return akkoord
@@ -424,6 +431,42 @@ export default function VacatureAanmakenPage() {
                 <input type="text" value={form.locatie} onChange={e => setForm(f => ({ ...f, locatie: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Amsterdam" />
+              </div>
+              <div>
+                <label className="block text-sm text-ink-light mb-1.5">Land *</label>
+                <select value={form.land} onChange={e => setForm(f => ({ ...f, land: e.target.value }))}
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
+                  {LANDEN.map(l => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+              <div className="col-span-2 relative">
+                <label className="block text-sm text-ink-light mb-1.5">Vakgebied *</label>
+                <input
+                  type="text"
+                  value={form.vakgebied}
+                  onChange={e => { setForm(f => ({ ...f, vakgebied: e.target.value })); setVakgebiedOpen(true) }}
+                  onFocus={() => setVakgebiedOpen(true)}
+                  onBlur={() => setTimeout(() => setVakgebiedOpen(false), 200)}
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
+                  placeholder="Begin te typen om een vakgebied te selecteren..."
+                />
+                {vakgebiedOpen && vakgebiedSuggestions.length > 0 && (
+                  <div className="absolute z-20 left-0 right-0 mt-1 bg-white border border-surface-border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {vakgebiedSuggestions.map(v => (
+                      <button
+                        key={v}
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => { setForm(f => ({ ...f, vakgebied: v })); setVakgebiedOpen(false) }}
+                        className={`w-full text-left px-4 py-2.5 text-sm hover:bg-cyan/10 transition-colors ${
+                          form.vakgebied === v ? 'bg-cyan/10 text-cyan font-medium' : 'text-ink'
+                        }`}
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie (bruto)</label>
@@ -740,6 +783,8 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Functie:</span> <span className="text-ink font-medium">{form.titel}</span></div>
                 <div><span className="text-ink-muted">Afdeling:</span> <span className="text-ink">{form.afdeling || '—'}</span></div>
                 <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
+                <div><span className="text-ink-muted">Land:</span> <span className="text-ink">{form.land}</span></div>
+                <div><span className="text-ink-muted">Vakgebied:</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
                 <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink">{form.salaris ? `${form.salaris} bruto p/${form.salarisPeriode === 'maand' ? 'mnd' : 'jr'}` : '—'}</span></div>
                 <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>

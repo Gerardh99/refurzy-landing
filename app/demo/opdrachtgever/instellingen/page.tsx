@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { LANDEN } from '@/lib/constants'
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type Tab = 'bedrijf' | 'team' | 'betaling'
@@ -139,6 +140,13 @@ function BedrijfTab() {
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Postcode &amp; Plaats</label>
             <input type="text" defaultValue="1016 BR Amsterdam" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted" />
+          </div>
+          <div>
+            <label className="text-xs text-ink-muted mb-1.5 block">Land</label>
+            <select defaultValue="Nederland" className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
+              {LANDEN.map(l => <option key={l} value={l}>{l}</option>)}
+            </select>
+            <p className="text-xs text-ink-muted mt-1">Dit land wordt standaard ingesteld bij nieuwe vacatures</p>
           </div>
           <div>
             <label className="text-xs text-ink-muted mb-1.5 block">Website</label>

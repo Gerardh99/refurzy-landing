@@ -3,8 +3,8 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { allVacatures } from '@/lib/mock-data'
+import { VAKGEBIEDEN, LANDEN } from '@/lib/constants'
 
-const SECTORS = ['IT', 'Marketing', 'Finance', 'HR', 'Sales', 'Operations', 'Overig']
 const CONTRACT_TYPES = ['Vast', 'Tijdelijk', 'Freelance']
 const WERKMODELLEN = ['Op kantoor', 'Hybride', 'Volledig remote']
 const OPLEIDINGEN = ['MBO', 'HBO', 'WO']
@@ -15,13 +15,7 @@ const SORT_OPTIONS = [
   { value: 'deadline', label: 'Deadline' },
 ]
 
-// Map vacatures to sectors for demo
-const vacatureSectors: Record<string, string> = {
-  'vac-1': 'Marketing',
-  'vac-2': 'IT',
-  'vac-3': 'HR',
-  'vac-4': 'Finance',
-}
+// Legacy mappings for vacatures without explicit fields
 const vacatureContractTypes: Record<string, string> = {
   'vac-1': 'Vast',
   'vac-2': 'Vast',
@@ -36,7 +30,8 @@ const vacatureWerkmodellen: Record<string, string> = {
 }
 
 interface Filters {
-  sector: string
+  vakgebied: string
+  land: string
   salarisMin: string
   salarisMax: string
   contractType: string
@@ -46,7 +41,8 @@ interface Filters {
 }
 
 const emptyFilters: Filters = {
-  sector: '',
+  vakgebied: '',
+  land: '',
   salarisMin: '',
   salarisMax: '',
   contractType: '',
@@ -94,7 +90,8 @@ export default function ScoutVacatures() {
 
   const activeFilterChips = useMemo(() => {
     const chips: { key: keyof Filters; label: string }[] = []
-    if (filters.sector) chips.push({ key: 'sector', label: `Sector: ${filters.sector}` })
+    if (filters.vakgebied) chips.push({ key: 'vakgebied', label: `Vakgebied: ${filters.vakgebied}` })
+    if (filters.land) chips.push({ key: 'land', label: `Land: ${filters.land}` })
     if (filters.salarisMin) chips.push({ key: 'salarisMin', label: `Min salaris: \u20AC${filters.salarisMin}` })
     if (filters.salarisMax) chips.push({ key: 'salarisMax', label: `Max salaris: \u20AC${filters.salarisMax}` })
     if (filters.contractType) chips.push({ key: 'contractType', label: `Contract: ${filters.contractType}` })
@@ -108,7 +105,8 @@ export default function ScoutVacatures() {
     let result = allVacatures.filter((v) => {
       const matchSearch = !search || v.title.toLowerCase().includes(search.toLowerCase()) || v.company.toLowerCase().includes(search.toLowerCase())
       const matchLocation = !locationFilter || v.location.toLowerCase().includes(locationFilter.toLowerCase())
-      const matchSector = !filters.sector || vacatureSectors[v.id] === filters.sector
+      const matchVakgebied = !filters.vakgebied || v.vakgebied === filters.vakgebied
+      const matchLand = !filters.land || v.land === filters.land
       const matchContract = !filters.contractType || vacatureContractTypes[v.id] === filters.contractType
       const matchWerkmodel = !filters.werkmodel || vacatureWerkmodellen[v.id] === filters.werkmodel
       const matchOpleiding = !filters.opleiding || v.hardeCriteria.opleidingsniveau === filters.opleiding
@@ -125,7 +123,7 @@ export default function ScoutVacatures() {
         matchSalarisMax = parseSalarisMin(v.salaris) <= max
       }
 
-      return matchSearch && matchLocation && matchSector && matchContract && matchWerkmodel && matchOpleiding && matchErvaring && matchSalarisMin && matchSalarisMax
+      return matchSearch && matchLocation && matchVakgebied && matchLand && matchContract && matchWerkmodel && matchOpleiding && matchErvaring && matchSalarisMin && matchSalarisMax
     })
 
     // Sort
@@ -191,16 +189,29 @@ export default function ScoutVacatures() {
       {filtersOpen && (
         <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Sector */}
+            {/* Vakgebied */}
             <div>
-              <label className="block text-xs font-medium text-ink-light mb-1.5">Sector</label>
+              <label className="block text-xs font-medium text-ink-light mb-1.5">Vakgebied</label>
               <select
-                value={filters.sector}
-                onChange={(e) => updateFilter('sector', e.target.value)}
+                value={filters.vakgebied}
+                onChange={(e) => updateFilter('vakgebied', e.target.value)}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50"
               >
-                <option value="">Alle sectoren</option>
-                {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
+                <option value="">Alle vakgebieden</option>
+                {VAKGEBIEDEN.map((v) => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+
+            {/* Land */}
+            <div>
+              <label className="block text-xs font-medium text-ink-light mb-1.5">Land</label>
+              <select
+                value={filters.land}
+                onChange={(e) => updateFilter('land', e.target.value)}
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50"
+              >
+                <option value="">Alle landen</option>
+                {LANDEN.map((l) => <option key={l} value={l}>{l}</option>)}
               </select>
             </div>
 
@@ -348,7 +359,6 @@ export default function ScoutVacatures() {
 }
 
 function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle: () => void }) {
-  const sector = vacatureSectors[v.id] || 'Overig'
   const contractType = vacatureContractTypes[v.id] || 'Vast'
   const werkmodel = vacatureWerkmodellen[v.id] || 'Hybride'
 
@@ -360,12 +370,13 @@ function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle
           <span className="text-xs text-purple bg-purple/10 px-2 py-0.5 rounded-full">{v.company}</span>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink-light">
-          <span>{v.location}</span>
+          <span>{v.location}, {v.land}</span>
           <span>{v.salaris}</span>
           <span>Deadline: {new Date(v.deadline).toLocaleDateString('nl-NL')}</span>
         </div>
         <div className="flex flex-wrap gap-2 mt-1">
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{sector}</span>
+          <span className="text-xs bg-cyan/10 text-cyan px-2 py-0.5 rounded-full font-medium">{v.vakgebied}</span>
+          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{v.land}</span>
           <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{contractType}</span>
           <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{werkmodel}</span>
           <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{v.hardeCriteria.opleidingsniveau}</span>
