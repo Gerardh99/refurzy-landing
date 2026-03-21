@@ -128,7 +128,7 @@ export default function WetenschapPage() {
             </button>
             {showWetenschapMisHire && (
               <div className="mt-2 bg-navy-light rounded-xl border border-purple/10 p-4 text-xs text-gray-400 space-y-1.5">
-                <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris. Bij een bruto maandsalaris van €5.000 (totale loonkosten: €87.480/jaar) is dat €44.000–€175.000. Opgebouwd uit:</p>
+                <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris. Bij een bruto maandsalaris van €5.000 bedragen de totale loonkosten €87.480/jaar (€60.000 salaris + €4.800 vakantiegeld + €22.680 werkgeverslasten). 50% daarvan = €44.000, 200% = €175.000. Opgebouwd uit:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, gehele selectieprocedure opnieuw</li>
                   <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken tot maanden onder niveau, de positie staat vervolgens maanden open</li>
