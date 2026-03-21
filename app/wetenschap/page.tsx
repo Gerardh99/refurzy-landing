@@ -137,7 +137,7 @@ export default function WetenschapPage() {
                   <li><strong className="text-gray-300">Teamschade</strong> — verloop ondermijnt het moreel en de productiviteit van het hele team. Kennis en relaties verdwijnen</li>
                   <li><strong className="text-gray-300">Ontslagkosten (VSO/transitievergoeding)</strong> — in Nederland moet bij gedwongen vertrek vaak een vaststellingsovereenkomst worden gesloten, gemiddeld 1–3 bruto maandsalarissen extra</li>
                 </ul>
-                <p className="text-yellow-500/80 text-[11px] mt-2">⚠️ Let op: de SHRM-schatting van 50–200% is gebaseerd op Amerikaans onderzoek, waar ontslagkosten lager zijn. In Nederland komen hier vaak nog VSO-kosten bovenop. De werkelijke kosten per mis-hire liggen daarmee waarschijnlijk nóg hoger.</p>
+                <p className="text-yellow-500/80 text-[11px] mt-2">⚠️ Let op: de SHRM-schatting van 50–200% is gebaseerd op Amerikaans onderzoek, waar ontslagkosten lager zijn. In Nederland komen hier vaak nog VSO-kosten bovenop. De werkelijke kosten per mis-hire liggen daarmee gemiddeld genomen nóg hoger.</p>
                 <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
               </div>
             )}
