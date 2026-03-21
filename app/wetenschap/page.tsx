@@ -252,6 +252,32 @@ export default function WetenschapPage() {
             <h2 className="text-2xl font-bold">Business cases</h2>
           </div>
 
+          <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 mb-6">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              De financiële impact van Refurzy komt uit <strong className="text-white">twee bronnen</strong>:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-navy rounded-xl border border-cyan/15 p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-cyan text-lg">📉</span>
+                  <h4 className="text-white font-semibold text-sm">Minder mis-hires</h4>
+                </div>
+                <p className="text-gray-400 text-xs leading-relaxed">
+                  Eén verkeerde aanname kost 50–200% van het jaarsalaris (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit dalen mis-hire percentages met 20–30%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
+                </p>
+              </div>
+              <div className="bg-navy rounded-xl border border-cyan/15 p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-cyan text-lg">💰</span>
+                  <h4 className="text-white font-semibold text-sm">Lagere wervingskosten</h4>
+                </div>
+                <p className="text-gray-400 text-xs leading-relaxed">
+                  Traditionele bureaus rekenen 15–27% van het bruto jaarsalaris. Refurzy werkt met vaste, transparante tarieven per plaatsing op basis van opleidingsniveau en ervaring — gemiddeld 60% goedkoper. No cure, no pay: u betaalt alleen bij een succesvolle plaatsing.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
               <h3 className="text-white font-semibold mb-1">Middelgroot bedrijf</h3>
