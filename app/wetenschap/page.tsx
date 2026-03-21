@@ -195,8 +195,8 @@ export default function WetenschapPage() {
               },
               {
                 title: 'Competenties (9 vragen) — bewust NIET gebruikt voor matching',
-                desc: 'Verrassend: uit het VU-onderzoek blijkt dat zelfgerapporteerde competenties géén verband hebben met werkgeluk of retentie. Daarom gebruikt Refurzy deze niet voor matching. Competenties beoordeelt u zelf via cv, gesprek en proefopdracht.',
-                stats: 'Geen verband met werkgeluk of retentie',
+                desc: 'Verrassend: uit het VU-onderzoek blijkt dat de overlap tussen gewenste en zelfgerapporteerde competenties géén verband heeft met werkgeluk of retentie. Anders gezegd: of iemand denkt de juiste vaardigheden te hebben voor een rol, voorspelt niet of diegene er gelukkig van wordt of blijft. Wat wél voorspelt of iemand gelukkig wordt: of de waarden, interesses en cultuurvoorkeur overeenkomen. Niet "kan iemand dit?" maar "past iemand hier?". Competenties beoordeelt u zelf via cv, gesprek en proefopdracht.',
+                stats: 'Geen verband tussen competentie-match en werkgeluk of retentie',
                 regression: '',
                 color: 'gray',
               },
