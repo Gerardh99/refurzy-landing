@@ -32,7 +32,7 @@ export default function LandenPage() {
           ← Terug naar admin
         </Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Landen configuratie</h1>
-        <p className="text-ink-light mt-1">Beheer de internationale uitrol van Refurzy</p>
+        <p className="text-ink-light font-medium mt-1">Beheer de internationale uitrol van Refurzy</p>
       </div>
 
       {/* Samenvatting */}

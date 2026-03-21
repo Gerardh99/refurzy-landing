@@ -123,7 +123,7 @@ export default function GebruikersPage() {
           ← Terug naar admin
         </Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Gebruikers overzicht</h1>
-        <p className="text-ink-light mt-1">Gegroepeerd per organisatie en type</p>
+        <p className="text-ink-light font-medium mt-1">Gegroepeerd per organisatie en type</p>
       </div>
 
       {/* Stats */}
@@ -285,7 +285,7 @@ export default function GebruikersPage() {
             <h3 className="text-xl font-bold text-ink mb-2">
               {blockModal.action === 'unblock' ? 'Deblokkeren' : blockModal.action === 'perm' ? 'Permanent blokkeren' : 'Tijdelijk blokkeren'}
             </h3>
-            <p className="text-ink-light text-sm mb-4">{blockModal.naam}</p>
+            <p className="text-ink-light font-medium text-sm mb-4">{blockModal.naam}</p>
 
             {blockModal.action === 'perm' && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3 mb-4">

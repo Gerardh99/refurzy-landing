@@ -307,7 +307,7 @@ export default function AdminUitbetalingen() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-ink">Uitbetalingen</h1>
-        <p className="text-ink-light mt-1">
+        <p className="text-ink-light font-medium mt-1">
           Overzicht van alle uitbetalingen aan Talent Scouts. Exporteer per land voor belastingaangifte (IB-47 / lokaal equivalent).
         </p>
       </div>

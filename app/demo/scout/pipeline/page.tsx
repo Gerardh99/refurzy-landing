@@ -34,7 +34,7 @@ export default function ScoutPipeline() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn Pipeline</h1>
-        <p className="text-ink-light mt-1">Volg de voortgang van al je voorgedragen kandidaten</p>
+        <p className="text-ink-light font-medium mt-1">Volg de voortgang van al je voorgedragen kandidaten</p>
       </div>
 
       {/* Stats */}

@@ -98,7 +98,7 @@ export default function AdminFitGarantie() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-ink">Fit Garantie Beheer</h1>
-        <p className="text-ink-light mt-1">Beheer en beoordeel Fit Garantie claims</p>
+        <p className="text-ink-light font-medium mt-1">Beheer en beoordeel Fit Garantie claims</p>
       </div>
 
       {/* Stats */}

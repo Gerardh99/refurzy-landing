@@ -112,7 +112,7 @@ export default function KandidaatPipeline() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn voortgang</h1>
-        <p className="text-ink-light mt-1">Volg de status van al je sollicitaties in real-time</p>
+        <p className="text-ink-light font-medium mt-1">Volg de status van al je sollicitaties in real-time</p>
       </div>
 
       {/* Filters */}

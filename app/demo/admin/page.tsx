@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Refurzy Admin Dashboard</h1>
-        <p className="text-ink-light mt-1">Platform overzicht en beheer</p>
+        <p className="text-ink-light font-medium mt-1">Platform overzicht en beheer</p>
       </div>
 
       {/* KPI Cards */}

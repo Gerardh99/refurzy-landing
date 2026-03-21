@@ -79,7 +79,7 @@ export default function InstellingenPage() {
           ← Terug naar dashboard
         </Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Instellingen</h1>
-        <p className="text-ink-light mt-1">Beheer uw bedrijfsprofiel, team en betaalgegevens</p>
+        <p className="text-ink-light font-medium mt-1">Beheer uw bedrijfsprofiel, team en betaalgegevens</p>
       </div>
 
       {/* Tabs */}
@@ -377,7 +377,7 @@ function TeamTab({
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-md w-full shadow-2xl">
             <h3 className="text-xl font-bold text-ink mb-2">Teamlid uitnodigen</h3>
-            <p className="text-ink-light text-sm mb-6">Stuur een uitnodiging per e-mail. De link is 7 dagen geldig.</p>
+            <p className="text-ink-light font-medium text-sm mb-6">Stuur een uitnodiging per e-mail. De link is 7 dagen geldig.</p>
 
             <div className="space-y-5">
               <div>

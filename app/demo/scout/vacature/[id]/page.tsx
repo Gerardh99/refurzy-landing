@@ -173,7 +173,7 @@ export default function ScoutVacatureDetail() {
                   </svg>
                 </button>
               </div>
-              <p className="text-sm text-ink-light mt-1">
+              <p className="text-sm text-ink-light font-medium mt-1">
                 {vacature.title} bij {vacature.company}
               </p>
             </div>

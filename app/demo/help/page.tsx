@@ -207,7 +207,7 @@ export default function HelpPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-ink">Help & Ondersteuning</h1>
-        <p className="text-ink-light mt-1">Vind antwoorden op veelgestelde vragen of neem contact met ons op.</p>
+        <p className="text-ink-light font-medium mt-1">Vind antwoorden op veelgestelde vragen of neem contact met ons op.</p>
       </div>
 
       {/* Quick links */}
@@ -290,7 +290,7 @@ export default function HelpPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Onderwerp *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Onderwerp *</label>
                 <select
                   value={contactForm.onderwerp}
                   onChange={e => setContactForm(f => ({ ...f, onderwerp: e.target.value }))}
@@ -309,7 +309,7 @@ export default function HelpPage() {
               </div>
 
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Uw bericht *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Uw bericht *</label>
                 <textarea
                   value={contactForm.bericht}
                   onChange={e => setContactForm(f => ({ ...f, bericht: e.target.value }))}

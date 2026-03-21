@@ -89,7 +89,7 @@ export default function OpdrachtgeverKandidaten() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Kandidaten</h1>
-        <p className="text-ink-light mt-1">Overzicht van alle voorgedragen kandidaten voor uw vacatures</p>
+        <p className="text-ink-light font-medium mt-1">Overzicht van alle voorgedragen kandidaten voor uw vacatures</p>
       </div>
 
       {/* Filter panel */}

@@ -21,7 +21,7 @@ export default function KandidaatProfiel() {
     <div className="space-y-8 max-w-2xl">
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn Profiel</h1>
-        <p className="text-ink-light mt-1">Beheer je persoonlijke en professionele gegevens</p>
+        <p className="text-ink-light font-medium mt-1">Beheer je persoonlijke en professionele gegevens</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">

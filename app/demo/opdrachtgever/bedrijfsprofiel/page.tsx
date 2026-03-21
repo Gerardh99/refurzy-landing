@@ -101,7 +101,7 @@ export default function BedrijfsprofielPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Bedrijfsprofiel</h1>
-        <p className="text-ink-light mt-1">Beheer uw bedrijfsgegevens, facturatie en M-Score profiel</p>
+        <p className="text-ink-light font-medium mt-1">Beheer uw bedrijfsgegevens, facturatie en M-Score profiel</p>
       </div>
 
       {/* 1. Bedrijfsgegevens */}

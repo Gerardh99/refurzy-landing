@@ -370,7 +370,7 @@ export default function VacatureAanmakenPage() {
       <div className="mb-8">
         <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">&larr; Terug naar dashboard</Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Vacature aanmaken</h1>
-        <p className="text-ink-light mt-1">Doorloop de stappen om uw vacature te publiceren</p>
+        <p className="text-ink-light font-medium mt-1">Doorloop de stappen om uw vacature te publiceren</p>
       </div>
 
       {/* Step indicator */}
@@ -402,16 +402,16 @@ export default function VacatureAanmakenPage() {
         {step === 1 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Functietitel &amp; afdeling</h2>
-            <p className="text-ink-light text-sm mb-8">Geef de functie een duidelijke titel zodat Talent Scouts de juiste kandidaten kunnen vinden.</p>
+            <p className="text-ink-light text-sm font-medium mb-8">Geef de functie een duidelijke titel zodat Talent Scouts de juiste kandidaten kunnen vinden.</p>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Functietitel *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Functietitel *</label>
                 <input type="text" value={form.titel} onChange={e => setForm(f => ({ ...f, titel: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Marketing Manager, Senior Developer, Sales Lead" />
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Afdeling / Team</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Afdeling / Team</label>
                 <input type="text" value={form.afdeling} onChange={e => setForm(f => ({ ...f, afdeling: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Marketing, Engineering, Sales" />
@@ -424,23 +424,23 @@ export default function VacatureAanmakenPage() {
         {step === 2 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Vacature details</h2>
-            <p className="text-ink-light text-sm mb-8">Praktische informatie over de functie en de werkomgeving.</p>
+            <p className="text-ink-light text-sm font-medium mb-8">Praktische informatie over de functie en de werkomgeving.</p>
             <div className="grid grid-cols-2 gap-5 mb-6">
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Locatie *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Locatie *</label>
                 <input type="text" value={form.locatie} onChange={e => setForm(f => ({ ...f, locatie: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
                   placeholder="bijv. Amsterdam" />
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Land *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Land *</label>
                 <select value={form.land} onChange={e => setForm(f => ({ ...f, land: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
                   {LANDEN.map(l => <option key={l} value={l}>{l}</option>)}
                 </select>
               </div>
               <div className="col-span-2 relative">
-                <label className="block text-sm text-ink-light mb-1.5">Vakgebied *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Vakgebied *</label>
                 <input
                   type="text"
                   value={form.vakgebied}
@@ -469,7 +469,7 @@ export default function VacatureAanmakenPage() {
                 )}
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Salarisindicatie (bruto)</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Salarisindicatie (bruto)</label>
                 <div className="flex gap-2">
                   <input type="text" value={form.salaris} onChange={e => setForm(f => ({ ...f, salaris: e.target.value }))}
                     className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
@@ -491,28 +491,28 @@ export default function VacatureAanmakenPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Contracttype</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Contracttype</label>
                 <select value={form.contractType} onChange={e => setForm(f => ({ ...f, contractType: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
                   <option>Vast</option><option>Tijdelijk</option><option>Freelance / ZZP</option><option>Stage</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Op kantoor</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Op kantoor</label>
                 <select value={form.opKantoor} onChange={e => setForm(f => ({ ...f, opKantoor: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
                   <option>Op kantoor (5 dagen)</option><option>Hybride (3 dagen)</option><option>Hybride (2 dagen)</option><option>Volledig remote</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Max reistijd</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Max reistijd</label>
                 <select value={form.maxReistijd} onChange={e => setForm(f => ({ ...f, maxReistijd: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
                   <option>15 minuten</option><option>30 minuten</option><option>45 minuten</option><option>60 minuten</option><option>Niet van toepassing</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-1.5">Gewenste startdatum</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Gewenste startdatum</label>
                 <input type="date" value={form.startdatum} onChange={e => setForm(f => ({ ...f, startdatum: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors" />
               </div>
@@ -520,7 +520,7 @@ export default function VacatureAanmakenPage() {
 
             {/* Taken & verantwoordelijkheden */}
             <div className="border-t border-surface-border pt-6">
-              <label className="block text-sm text-ink-light mb-1.5">Taken &amp; verantwoordelijkheden</label>
+              <label className="block text-sm text-ink font-medium mb-1.5">Taken &amp; verantwoordelijkheden</label>
               <p className="text-xs text-ink-muted mb-3">
                 Beschrijf de belangrijkste taken voor deze functie. Dit wordt door AI gebruikt om de vacaturetekst te genereren. Laat leeg om AI suggesties te krijgen op basis van de functietitel.
               </p>
@@ -535,7 +535,7 @@ export default function VacatureAanmakenPage() {
 
             {/* Afdelingscultuur */}
             <div className="border-t border-surface-border pt-6">
-              <label className="block text-sm text-ink-light mb-1.5">Afdelingscultuur &amp; dynamiek *</label>
+              <label className="block text-sm text-ink font-medium mb-1.5">Afdelingscultuur &amp; dynamiek *</label>
               <p className="text-xs text-ink-muted mb-3">
                 Beschrijf hoe het team samenwerkt, de sfeer, het tempo en wat het uniek maakt. Dit wordt gedeeld met kandidaten en helpt bij de M-Score matching.
               </p>
@@ -554,7 +554,7 @@ export default function VacatureAanmakenPage() {
         {step === 3 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
-            <p className="text-ink-light text-sm mb-8">Stel de minimale eisen in voor kandidaten op deze vacature.</p>
+            <p className="text-ink-light text-sm font-medium mb-8">Stel de minimale eisen in voor kandidaten op deze vacature.</p>
             <div className="grid grid-cols-2 gap-8">
               <div>
                 <label className="block text-sm text-ink-light mb-3">Minimaal opleidingsniveau *</label>
@@ -775,7 +775,7 @@ export default function VacatureAanmakenPage() {
         {step === 5 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">Controleer &amp; publiceer</h2>
-            <p className="text-ink-light text-sm mb-8">Controleer uw vacature en publiceer deze. Talent Scouts kunnen daarna kandidaten voordragen.</p>
+            <p className="text-ink-light text-sm font-medium mb-8">Controleer uw vacature en publiceer deze. Talent Scouts kunnen daarna kandidaten voordragen.</p>
 
             <div className="bg-surface-muted rounded-2xl border border-surface-border p-6 mb-6">
               <h3 className="text-ink font-semibold mb-4">Samenvatting vacature</h3>

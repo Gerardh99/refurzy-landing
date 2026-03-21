@@ -133,7 +133,7 @@ export default function OpdrachtgeverFitGarantie() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-ink">Fit Garantie</h1>
-        <p className="text-ink-light mt-1">Overzicht van alle Fit Garanties voor uw plaatsingen</p>
+        <p className="text-ink-light font-medium mt-1">Overzicht van alle Fit Garanties voor uw plaatsingen</p>
       </div>
 
       {/* Active guarantees */}
@@ -155,7 +155,7 @@ export default function OpdrachtgeverFitGarantie() {
                         <span className="font-semibold text-ink">{g.kandidaatNaam}</span>
                         <StatusBadge status={g.status} />
                       </div>
-                      <p className="text-sm text-ink-light mt-1">{g.vacature}</p>
+                      <p className="text-sm text-ink-light font-medium mt-1">{g.vacature}</p>
                       <p className="text-xs text-ink-muted mt-0.5">
                         Geplaatst: {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
                       </p>
@@ -228,7 +228,7 @@ export default function OpdrachtgeverFitGarantie() {
                       <span className="font-semibold text-ink">{g.kandidaatNaam}</span>
                       <StatusBadge status={g.status} />
                     </div>
-                    <p className="text-sm text-ink-light mt-1">{g.vacature}</p>
+                    <p className="text-sm text-ink-light font-medium mt-1">{g.vacature}</p>
                     <p className="text-xs text-ink-muted mt-0.5">
                       Geplaatst: {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
                     </p>

@@ -70,7 +70,7 @@ export default function ScoutFacturen() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn Facturen</h1>
-        <p className="text-ink-light mt-1">Overzicht van alle gegenereerde facturen en uitbetalingen</p>
+        <p className="text-ink-light font-medium mt-1">Overzicht van alle gegenereerde facturen en uitbetalingen</p>
       </div>
 
       {/* Stats */}

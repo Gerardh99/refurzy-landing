@@ -51,7 +51,7 @@ export default function OpdrachtgeverDashboard() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-ink">Dashboard</h1>
-        <p className="text-ink-light mt-1">Overzicht van uw vacatures en kandidaten</p>
+        <p className="text-ink-light font-medium mt-1">Overzicht van uw vacatures en kandidaten</p>
       </div>
 
       {/* Stats */}

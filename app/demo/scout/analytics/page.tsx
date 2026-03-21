@@ -44,7 +44,7 @@ export default function ScoutAnalyticsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Analytics</h1>
-        <p className="text-ink-light mt-1">Jouw prestaties en statistieken als Talent Scout</p>
+        <p className="text-ink-light font-medium mt-1">Jouw prestaties en statistieken als Talent Scout</p>
       </div>
 
       {/* Stat cards */}

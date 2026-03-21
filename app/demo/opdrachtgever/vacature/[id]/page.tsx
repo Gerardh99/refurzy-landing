@@ -77,7 +77,7 @@ export default function VacatureDetailPage() {
         <div className="flex items-start justify-between mt-3">
           <div>
             <h1 className="text-2xl font-bold text-ink">{vacature.title}</h1>
-            <p className="text-ink-light mt-1">{vacature.company} &middot; {vacature.location}</p>
+            <p className="text-ink-light font-medium mt-1">{vacature.company} &middot; {vacature.location}</p>
           </div>
           <div className="flex items-center gap-4">
             {/* Exclusiviteit toggle */}
@@ -326,7 +326,7 @@ export default function VacatureDetailPage() {
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-lg w-full shadow-2xl">
               <h3 className="text-xl font-bold text-ink mb-2">Profiel ontgrendelen</h3>
-              <p className="text-ink-light text-sm mb-4">
+              <p className="text-ink-light font-medium text-sm mb-4">
                 Om het profiel en contactgegevens te bekijken, gaat u akkoord met de plaatsingsovereenkomst. Het ontgrendelen is kosteloos — u betaalt alleen bij een succesvolle match.
               </p>
 

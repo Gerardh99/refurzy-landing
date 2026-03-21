@@ -44,7 +44,7 @@ export default function ScoutDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn Talent Pool</h1>
-        <p className="text-ink-light mt-1">{scoutKandidaten.length} kandidaten in je netwerk</p>
+        <p className="text-ink-light font-medium mt-1">{scoutKandidaten.length} kandidaten in je netwerk</p>
       </div>
 
       {/* Introductiekorting banner */}

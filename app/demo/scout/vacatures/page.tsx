@@ -145,7 +145,7 @@ export default function ScoutVacatures() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-ink">Vacatures</h1>
-        <p className="text-ink-light mt-1">Bekijk openstaande vacatures en bewaar je favorieten</p>
+        <p className="text-ink-light font-medium mt-1">Bekijk openstaande vacatures en bewaar je favorieten</p>
       </div>
 
       {/* Search bar + location + sort */}

@@ -247,7 +247,7 @@ export default function KandidaatVacatureDetail() {
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold text-ink">{vac.vacatureTitle}</h1>
-            <p className="text-ink-light mt-1">
+            <p className="text-ink-light font-medium mt-1">
               {vac.bedrijfAnoniem ? (
                 <span className="text-ink-muted italic">Bedrijfsnaam wordt zichtbaar bij contract</span>
               ) : (

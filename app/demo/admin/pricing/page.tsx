@@ -64,7 +64,7 @@ export default function PricingAdminPage() {
           ← Terug naar admin
         </Link>
         <h1 className="text-2xl font-bold text-ink mt-3">Pricing beheer</h1>
-        <p className="text-ink-light mt-1">No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt</p>
+        <p className="text-ink-light font-medium mt-1">No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt</p>
       </div>
 
       {/* Land selector */}

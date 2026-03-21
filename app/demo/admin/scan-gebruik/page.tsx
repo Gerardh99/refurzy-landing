@@ -128,7 +128,7 @@ export default function AdminScanGebruik() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-ink">Matching Scan Gebruik</h1>
-        <p className="text-ink-light mt-1">
+        <p className="text-ink-light font-medium mt-1">
           Log van alle Matching Scan afnames. Facturabel gebruik wordt gerapporteerd aan de VU Amsterdam.
         </p>
       </div>

@@ -54,7 +54,7 @@ export default function KandidaatUitnodigen() {
 
       <div>
         <h1 className="text-2xl font-bold text-ink">Kandidaat uitnodigen</h1>
-        <p className="text-ink-light mt-1">Nodig kandidaten uit voor je talent pool of voor een specifieke vacature</p>
+        <p className="text-ink-light font-medium mt-1">Nodig kandidaten uit voor je talent pool of voor een specifieke vacature</p>
       </div>
 
       {/* Type selector */}

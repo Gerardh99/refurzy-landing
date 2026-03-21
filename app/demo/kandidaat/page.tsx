@@ -301,7 +301,7 @@ export default function KandidaatDashboard() {
       {/* Welcome */}
       <div>
         <h1 className="text-2xl font-bold text-ink">Welkom, Anna</h1>
-        <p className="text-ink-light mt-1">Bekijk voorgestelde vacatures, volg je processen en beheer je scouts.</p>
+        <p className="text-ink-light font-medium mt-1">Bekijk voorgestelde vacatures, volg je processen en beheer je scouts.</p>
       </div>
 
       {/* Quick stats */}
