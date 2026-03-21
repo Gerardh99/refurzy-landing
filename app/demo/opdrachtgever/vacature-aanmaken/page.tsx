@@ -573,6 +573,12 @@ export default function VacatureAanmakenPage() {
                     <p className="text-xs text-ink-muted mt-1.5 leading-relaxed">
                       Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
                     </p>
+                    <div className="mt-3 bg-cyan/5 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
+                      <span className="text-cyan text-xs">🚀</span>
+                      <p className="text-xs text-cyan">
+                        <strong>Meer kandidaten:</strong> de hogere fee motiveert Talent Scouts extra om voor uw vacature aan de slag te gaan. Exclusieve vacatures ontvangen gemiddeld aanzienlijk meer voorgedragen kandidaten.
+                      </p>
+                    </div>
                     {form.exclusief && (
                       <div className="mt-3 bg-orange/5 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
                         <span className="text-orange text-xs">&#9888;&#65039;</span>
