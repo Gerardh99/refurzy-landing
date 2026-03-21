@@ -242,13 +242,14 @@ export default function VacatureDetailPage() {
       {/* Harde Criteria Summary */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <h2 className="text-ink font-semibold mb-4">Harde Criteria</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {[
             { label: 'Opleiding', value: vacature.hardeCriteria.opleidingsniveau },
             { label: 'Ervaring', value: vacature.hardeCriteria.minimaleErvaring },
             { label: 'Locatie', value: vacature.hardeCriteria.locatie },
             { label: 'Op kantoor', value: vacature.hardeCriteria.opKantoor },
             { label: 'Max reistijd', value: vacature.hardeCriteria.maxReistijd },
+            { label: 'Salaris', value: vacature.salarisMin && vacature.salarisMax ? `€${vacature.salarisMin.toLocaleString('nl-NL')} – €${vacature.salarisMax.toLocaleString('nl-NL')}` : vacature.salaris },
           ].map((item) => (
             <div key={item.label}>
               <div className="text-xs text-ink-muted mb-1">{item.label}</div>
@@ -256,6 +257,18 @@ export default function VacatureDetailPage() {
             </div>
           ))}
         </div>
+        {vacature.hardeCriteria.talen && vacature.hardeCriteria.talen.length > 0 && (
+          <div>
+            <div className="text-xs text-ink-muted mb-2">Vereiste talen</div>
+            <div className="flex flex-wrap gap-2">
+              {vacature.hardeCriteria.talen.map((t, i) => (
+                <span key={i} className="px-2.5 py-1 bg-purple/10 text-purple text-xs rounded-lg font-medium border border-purple/20">
+                  {t.taal} — min. {t.minimaalNiveau}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Score legenda */}

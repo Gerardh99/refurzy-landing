@@ -85,7 +85,7 @@ export default function ScoutVacatureDetail() {
 
       <div className="bg-white rounded-2xl border border-surface-border p-6">
         <h2 className="text-sm font-medium text-ink-muted mb-3">Harde Criteria</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
           <div>
             <span className="text-ink-muted">Opleiding</span>
             <p className="text-ink">{vacature.hardeCriteria.opleidingsniveau}</p>
@@ -106,7 +106,23 @@ export default function ScoutVacatureDetail() {
             <span className="text-ink-muted">Max. reistijd</span>
             <p className="text-ink">{vacature.hardeCriteria.maxReistijd}</p>
           </div>
+          <div>
+            <span className="text-ink-muted">Salaris</span>
+            <p className="text-ink">{vacature.salarisMin && vacature.salarisMax ? `€${vacature.salarisMin.toLocaleString('nl-NL')} – €${vacature.salarisMax.toLocaleString('nl-NL')}` : vacature.salaris}</p>
+          </div>
         </div>
+        {vacature.hardeCriteria.talen && vacature.hardeCriteria.talen.length > 0 && (
+          <div>
+            <span className="text-ink-muted text-sm">Vereiste talen</span>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {vacature.hardeCriteria.talen.map((t, i) => (
+                <span key={i} className="px-2.5 py-1 bg-purple/10 text-purple text-xs rounded-lg font-medium border border-purple/20">
+                  {t.taal} — min. {t.minimaalNiveau}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="space-y-4">
