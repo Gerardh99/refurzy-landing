@@ -563,7 +563,7 @@ export default function HomePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  {lang === 'nl' ? 'Gemiddeld bruto maandsalaris' : 'Average gross monthly salary'}
+                  {lang === 'nl' ? 'Gemiddeld bruto maandsalaris (ex. vakantiegeld)' : 'Average gross monthly salary (excl. holiday allowance)'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">&euro;</span>
