@@ -36,8 +36,8 @@ const DOC_URLS: Record<DocumentType, string> = {
 }
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('demo@bedrijf.nl')
+  const [password, setPassword] = useState('Nummer1platform')
   const [error, setError] = useState('')
   const [showRegister, setShowRegister] = useState(false)
   const [consents, setConsents] = useState<Record<string, boolean>>({})
@@ -85,7 +85,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-10 mx-auto mb-2" />
-          <p className="text-gray-500 text-sm">Demo Platform</p>
+          <p className="text-gray-500 text-sm">Platform</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-navy-light rounded-2xl p-8 border border-purple/20">
@@ -145,29 +145,10 @@ export default function LoginPage() {
 
         </form>
 
-        {/* Demo accounts */}
-        <div className="mt-6 bg-navy-light/50 rounded-2xl p-5 border border-purple/10">
-          <p className="text-xs text-gray-600 mb-3 font-medium uppercase tracking-wider">Demo accounts</p>
-          <div className="space-y-2">
-            {[
-              { email: 'demo@bedrijf.nl', label: 'Opdrachtgever', icon: '🏢' },
-              { email: 'scout@refurzy.nl', label: 'Talent Scout', icon: '🔍' },
-              { email: 'kandidaat@refurzy.nl', label: 'Kandidaat', icon: '👤' },
-              { email: 'admin@refurzy.nl', label: 'Refurzy Admin', icon: '⚙️' },
-            ].map(acc => (
-              <button
-                key={acc.email}
-                onClick={() => handleDemoClick(acc.email)}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-purple/10 transition-colors text-left"
-              >
-                <span>{acc.icon}</span>
-                <span className="flex-1">{acc.label}</span>
-                <span className="text-xs text-gray-600">{acc.email}</span>
-              </button>
-            ))}
-          </div>
-          <p className="text-[10px] text-gray-700 mt-3">Klik op een account → ga akkoord met de voorwaarden → log in.</p>
-        </div>
+        {/* Wachtwoord vergeten link voor productie-look */}
+        <p className="text-center mt-4">
+          <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Wachtwoord vergeten?</a>
+        </p>
       </div>
     </div>
   )

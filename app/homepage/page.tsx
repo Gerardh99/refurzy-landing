@@ -27,11 +27,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-navy text-white font-[Poppins]">
       {/* ═══ NAVIGATION ═══ */}
       <nav className="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md border-b border-purple/10">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <Link href="/homepage">
             <img src="/logo-white.png" alt="Refurzy" className="h-7" />
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
+          <div className="hidden md:flex items-center gap-6 text-sm text-gray-400 absolute left-1/2 -translate-x-1/2">
             <a href="#hoe-het-werkt" className="hover:text-white transition-colors">{t('nav.howItWorks', lang)}</a>
             <a href="#pricing" className="hover:text-white transition-colors">{t('nav.pricing', lang)}</a>
             <Link href="/wetenschap" className="hover:text-white transition-colors">{t('nav.science', lang)}</Link>
@@ -39,20 +39,9 @@ export default function HomePage() {
           </div>
           <div className="flex items-center gap-3">
             <LangToggle lang={lang} setLang={changeLang} />
-            {user ? (
-              <Link href={getRolePath(user.role)} className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-                {t('nav.dashboard', lang)}
-              </Link>
-            ) : (
-              <>
-                <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors px-4 py-2">
-                  {t('nav.login', lang)}
-                </Link>
-                <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-                  {t('nav.getStarted', lang)}
-                </Link>
-              </>
-            )}
+            <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+              {t('nav.login', lang)}
+            </Link>
           </div>
         </div>
       </nav>
