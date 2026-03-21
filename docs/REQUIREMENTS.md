@@ -1602,7 +1602,7 @@ Het voordracht-proces verloopt in 6 fasen, waarbij de kandidaat een actieve rol 
 - Bedrijfsnaam is anoniem tot de gespreksfase
 - **Kandidaat kiest:**
   - **[Interesse]** → door naar fase 4 (Matching Scan)
-  - **[Niet interesse]** → reden selecteren (zie afwijzingsredenen), kandidaat terug in pool, scout ontvangt feedback
+  - **[Geen interesse]** → reden selecteren (zie afwijzingsredenen), kandidaat terug in pool, scout ontvangt feedback
   - **[Later bekijken]** → blijft in inbox
 
 #### Afwijzingsredenen kandidaat
@@ -1652,7 +1652,7 @@ Het kandidaat-dashboard is opgebouwd rond een workflow-inbox met tabs:
 
 | Tab | Inhoud |
 |-----|--------|
-| **Nieuw** | Voorgestelde vacatures die wachten op reactie (Interesse/Niet interesse/Later) |
+| **Nieuw** | Voorgestelde vacatures die wachten op reactie (Interesse/Geen interesse/Later) |
 | **Actief** | Vacatures waarvoor de kandidaat interesse heeft getoond of in de pipeline zit |
 | **Afgerond** | Afgewezen, verlopen of geplaatste vacatures |
 | **Scouts** | Overzicht van alle Talent Scouts die de kandidaat bemiddelen |

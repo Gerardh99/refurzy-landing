@@ -132,7 +132,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Kan ik zelf vacatures zoeken?',
-    a: 'Nee, het matching-proces loopt via uw Talent Scout. Uw scout stelt vacatures aan u voor op basis van uw profiel. U ontvangt een notificatie bij elk nieuw voorstel en kunt kiezen: Interesse (ga door), Niet interesse (met reden), of Later bekijken. Na uw interesse vult u de Matching Scan in en wordt u officieel voorgedragen.',
+    a: 'Nee, het matching-proces loopt via uw Talent Scout. Uw scout stelt vacatures aan u voor op basis van uw profiel. U ontvangt een notificatie bij elk nieuw voorstel en kunt kiezen: Interesse (ga door), Geen interesse (met reden), of Later bekijken. Na uw interesse vult u de Matching Scan in en wordt u officieel voorgedragen.',
     roles: ['kandidaat'],
   },
   {

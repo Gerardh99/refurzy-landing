@@ -418,7 +418,7 @@ export default function KandidaatDashboard() {
                     onClick={() => handleReject(v.id)}
                     className="px-4 py-2 text-sm border border-red-200 text-red-600 rounded-xl hover:bg-red-50 transition-colors"
                   >
-                    Niet interesse
+                    Geen interesse
                   </button>
                   <button
                     onClick={() => setActiveTab('actief')}
@@ -559,7 +559,7 @@ export default function KandidaatDashboard() {
                         v.status === 'verlopen' ? 'bg-gray-100 text-ink-muted' :
                         'bg-gray-100 text-ink-muted'
                       }`}>
-                        {rejected.has(v.id) ? 'Niet interesse' :
+                        {rejected.has(v.id) ? 'Geen interesse' :
                          v.status === 'afgewezen' ? 'Niet geselecteerd' :
                          v.status === 'verlopen' ? 'Verlopen' : v.status}
                       </span>
@@ -650,7 +650,7 @@ export default function KandidaatDashboard() {
       {rejectingId && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-ink">Niet interesse</h3>
+            <h3 className="text-lg font-semibold text-ink">Geen interesse</h3>
             <p className="text-sm text-ink-light">
               Laat je scout weten waarom deze vacature niet past. Dit helpt bij toekomstige voorstellen.
             </p>
