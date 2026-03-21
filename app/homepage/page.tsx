@@ -11,6 +11,8 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [lang, setLang] = useState<Lang>('nl')
+  const [showMisHireDetail, setShowMisHireDetail] = useState(false)
+  const [showCalcDetail, setShowCalcDetail] = useState(false)
 
   // Calculator state
   const [calcHires, setCalcHires] = useState(5)
@@ -318,6 +320,22 @@ export default function HomePage() {
                   ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, daalt het verloop met 39–59%. Dat bespaart tot €1.370.000 per jaar per 100 medewerkers.'
                   : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, turnover drops 39–59%. That saves up to €1,370,000 per year per 100 employees.'}
               </p>
+              <button onClick={() => setShowMisHireDetail(!showMisHireDetail)} className="text-cyan text-xs mt-2 hover:underline">
+                {showMisHireDetail ? 'Minder tonen ↑' : 'Waarom zo hoog? ↓'}
+              </button>
+              {showMisHireDetail && (
+                <div className="mt-2 text-xs text-gray-500 space-y-1 text-left">
+                  <p>Een mis-hire kost 50–200% van het jaarsalaris, opgebouwd uit:</p>
+                  <ul className="list-disc list-inside space-y-0.5">
+                    <li>Herwervingskosten — vacature, jobboards, selectie opnieuw</li>
+                    <li>Verloren productiviteit — onderprestatie + maanden vacature open</li>
+                    <li>Onboarding en training — investering verloren</li>
+                    <li>Managementtijd — coaching en afhandeling vertrek</li>
+                    <li>Teamschade — moreel, kennis en relaties verdwijnen</li>
+                  </ul>
+                  <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
+                </div>
+              )}
               <p className="text-[10px] text-gray-600 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>
 
@@ -607,6 +625,26 @@ export default function HomePage() {
                   ? '* Berekeningen o.b.v. bruto maandsalaris van \u20AC5.000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reductie (Aberdeen Group, Gallup), bureau fee van 25%.'
                   : '* Calculations based on gross monthly salary of \u20AC5,000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reduction (Aberdeen Group, Gallup), agency fee of 25%.'}
               </p>
+
+              {/* Mis-hire cost breakdown */}
+              <div className="mt-4 text-center">
+                <button onClick={() => setShowCalcDetail(!showCalcDetail)} className="text-cyan text-xs hover:underline">
+                  {showCalcDetail ? 'Minder tonen ↑' : 'Hoe zijn de kosten van een mis-hire opgebouwd? ↓'}
+                </button>
+                {showCalcDetail && (
+                  <div className="mt-3 bg-navy-light rounded-xl border border-purple/10 p-4 text-left text-xs text-gray-400 space-y-1.5">
+                    <p className="text-gray-300 font-medium">Een mis-hire kost 50–200% van het jaarsalaris (SHRM). Dit is opgebouwd uit:</p>
+                    <ul className="list-disc list-inside space-y-1">
+                      <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, selectieprocedure opnieuw doorlopen</li>
+                      <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken onder niveau, de positie staat maanden open</li>
+                      <li><strong className="text-gray-300">Onboarding en training</strong> — alles wat u investeerde in inwerken, cursussen en begeleiding is verloren</li>
+                      <li><strong className="text-gray-300">Managementtijd</strong> — leidinggevenden besteden honderden uren aan coaching en afhandeling</li>
+                      <li><strong className="text-gray-300">Teamschade</strong> — verloop ondermijnt moreel en productiviteit. Kennis en relaties verdwijnen</li>
+                    </ul>
+                    <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
+                  </div>
+                )}
+              </div>
 
               {/* CTA button */}
               <div className="text-center">

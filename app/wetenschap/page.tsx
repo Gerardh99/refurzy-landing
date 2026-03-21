@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 export default function WetenschapPage() {
+  const [showWetenschapMisHire, setShowWetenschapMisHire] = useState(false)
 
   return (
     <div className="min-h-screen bg-navy text-white font-[Poppins]">
@@ -118,6 +120,25 @@ export default function WetenschapPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-3 ml-12">
+            <button onClick={() => setShowWetenschapMisHire(!showWetenschapMisHire)} className="text-cyan text-xs hover:underline">
+              {showWetenschapMisHire ? 'Kostenopbouw verbergen ↑' : 'Hoe is €44.000–€175.000 opgebouwd? ↓'}
+            </button>
+            {showWetenschapMisHire && (
+              <div className="mt-2 bg-navy-light rounded-xl border border-purple/10 p-4 text-xs text-gray-400 space-y-1.5">
+                <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris. Bij een bruto maandsalaris van €5.000 (totale loonkosten: €87.480/jaar) is dat €44.000–€175.000. Opgebouwd uit:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, gehele selectieprocedure opnieuw</li>
+                  <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken tot maanden onder niveau, de positie staat vervolgens maanden open</li>
+                  <li><strong className="text-gray-300">Onboarding en training</strong> — alles wat u investeerde in inwerken, cursussen en begeleiding is verloren</li>
+                  <li><strong className="text-gray-300">Managementtijd</strong> — leidinggevenden besteden honderden uren aan coaching, functioneringsgesprekken en afhandeling</li>
+                  <li><strong className="text-gray-300">Teamschade</strong> — verloop ondermijnt het moreel en de productiviteit van het hele team. Kennis en relaties verdwijnen</li>
+                </ul>
+                <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
+              </div>
+            )}
           </div>
 
           <div className="mt-6 bg-gradient-to-r from-cyan/10 to-purple/10 rounded-xl border border-cyan/20 p-5">
