@@ -3,7 +3,8 @@
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { vacatures } from '@/lib/mock-data'
-import { KandidaatMatch } from '@/lib/types'
+import { KandidaatMatch, AfwijzingsReden } from '@/lib/types'
+import { afwijzingsRedenen } from '@/lib/mock-data'
 import FitScore from '@/components/FitScore'
 import StarRating from '@/components/StarRating'
 // StatusBadge removed — scores tell the full story
@@ -24,6 +25,10 @@ export default function VacatureDetailPage() {
   const [akkoord, setAkkoord] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [exclusief, setExclusief] = useState(false)
+  const [rejectModal, setRejectModal] = useState<string | null>(null)
+  const [rejectRating, setRejectRating] = useState(0)
+  const [rejectReason, setRejectReason] = useState<AfwijzingsReden | ''>('')
+  const [rejectNote, setRejectNote] = useState('')
   const [editing, setEditing] = useState(false)
   const [beschrijving, setBeschrijving] = useState(
     `We zoeken een ervaren ${vacature?.title || 'professional'} die ons team versterkt. De ideale kandidaat combineert vakkennis met een sterke culturele fit.\n\nWat ga je doen?\n• Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${vacature?.title || ''} strategie\n• Samenwerken met interne stakeholders en externe partners\n• Bijdragen aan de groeidoelstellingen van de organisatie\n• Rapporteren aan het management team\n\nWat vragen wij?\n• Minimaal ${vacature?.hardeCriteria?.minimaleErvaring || '5 jaar'} relevante werkervaring\n• ${vacature?.hardeCriteria?.opleidingsniveau || 'HBO'} werk- en denkniveau\n• Uitstekende communicatieve vaardigheden in woord en geschrift\n• Proactieve houding en teamspeler\n\nWat bieden wij?\n• Salaris: ${vacature?.salaris || 'Marktconform'}\n• ${vacature?.hardeCriteria?.opKantoor || 'Hybride werken'}\n• 25 vakantiedagen + 13 ADV-dagen\n• Pensioenregeling en reiskostenvergoeding`
@@ -51,12 +56,39 @@ export default function VacatureDetailPage() {
     setTimeout(() => setToast(null), 4000)
   }
 
-  const handleAfwijzen = (kandidaatId: string) => {
+  // Minimum scout rating based on pipeline phase reached
+  const getMinRating = (procesStatus: string) => {
+    if (['contract_akkoord', 'gesprek_plannen', 'gesprek_gepland', 'feedback_geven'].includes(procesStatus)) return 3
+    if (procesStatus === 'arbeidsvoorwaarden') return 4
+    return 0 // voorgesteld: no minimum
+  }
+
+  const openRejectModal = (kandidaatId: string) => {
+    const k = kandidaten.find(c => c.id === kandidaatId)
+    const min = k ? getMinRating(k.procesStatus) : 0
+    setRejectModal(kandidaatId)
+    setRejectRating(min > 0 ? min : 0)
+    setRejectReason('')
+    setRejectNote('')
+  }
+
+  const handleAfwijzen = () => {
+    if (!rejectModal || !rejectReason || rejectRating === 0) return
     setKandidaten((prev) =>
       prev.map((k) =>
-        k.id === kandidaatId ? { ...k, status: 'afgewezen' as const, procesStatus: 'afgewezen' as const } : k
+        k.id === rejectModal ? {
+          ...k,
+          status: 'afgewezen' as const,
+          procesStatus: 'afgewezen' as const,
+          afwijzingsReden: rejectReason as AfwijzingsReden,
+          afwijzingsToelichting: rejectNote || undefined,
+          afwijzingsRating: rejectRating,
+        } : k
       )
     )
+    setRejectModal(null)
+    setToast('Kandidaat afgewezen — feedback opgeslagen')
+    setTimeout(() => setToast(null), 4000)
   }
 
   // Sort by M-Score descending
@@ -251,7 +283,7 @@ export default function VacatureDetailPage() {
 
         {sorted.map((k) => {
           const newScout = isNewScout(k.scoutNaam)
-          const isMaster = k.scoutRating >= 3.5
+          const isMaster = k.scoutRating >= 4.0
 
           return (
             <Link
@@ -303,7 +335,7 @@ export default function VacatureDetailPage() {
                   </span>
                 )}
                 {k.status !== 'afgewezen' && (
-                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAfwijzen(k.id) }} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
+                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); openRejectModal(k.id) }} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
                     Afwijzen
                   </button>
                 )}
@@ -369,6 +401,80 @@ export default function VacatureDetailPage() {
                 </button>
                 <button onClick={() => handleUnlock(contractModal)} disabled={!akkoord} className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${akkoord ? 'bg-cyan text-navy-dark hover:bg-cyan-light' : 'bg-surface-muted text-ink-muted cursor-not-allowed'}`}>
                   Akkoord &amp; profiel bekijken
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* ─── Reject Modal ──────────────────────────────────────────────────── */}
+      {rejectModal && (() => {
+        const k = kandidaten.find(c => c.id === rejectModal)
+        if (!k) return null
+        const minRating = getMinRating(k.procesStatus)
+        const isAutoRating = k.procesStatus === 'arbeidsvoorwaarden'
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 space-y-4">
+              <h2 className="text-lg font-bold text-ink">Kandidaat afwijzen</h2>
+              <p className="text-ink-light text-sm">
+                {k.anoniem ? `Kandidaat ${k.initialen}` : k.naam} — via {k.scoutNaam}
+              </p>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Reden van afwijzing *</label>
+                <select value={rejectReason} onChange={(e) => setRejectReason(e.target.value as AfwijzingsReden)}
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
+                  <option value="">Selecteer een reden</option>
+                  {afwijzingsRedenen.map(r => (
+                    <option key={r.key} value={r.key}>{r.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Beoordeling scout *</label>
+                {isAutoRating ? (
+                  <>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <span key={star} className={`text-2xl ${star <= 4 ? 'text-yellow-400' : 'text-surface-border'}`}>★</span>
+                      ))}
+                    </div>
+                    <p className="text-xs text-green-600 mt-1">Automatisch 4 sterren — kandidaat bereikte arbeidsvoorwaarden fase</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <button key={star} type="button"
+                          onClick={() => setRejectRating(Math.max(star, minRating))}
+                          className={`text-2xl transition-colors ${star <= rejectRating ? 'text-yellow-400' : 'text-surface-border hover:text-yellow-200'}`}>
+                          ★
+                        </button>
+                      ))}
+                    </div>
+                    {minRating >= 3 ? (
+                      <p className="text-xs text-ink-muted mt-1">Minimaal {minRating} sterren — kandidaat kwam tot gespreksfase</p>
+                    ) : (
+                      <p className="text-xs text-ink-muted mt-1">Hoe goed was de voordracht van de scout?</p>
+                    )}
+                  </>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Toelichting</label>
+                <textarea value={rejectNote} onChange={(e) => setRejectNote(e.target.value)} rows={2}
+                  placeholder="Optioneel: geef extra context"
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50 resize-none" />
+              </div>
+              <div className="flex gap-3">
+                <button onClick={() => setRejectModal(null)}
+                  className="flex-1 py-2.5 border border-surface-border text-ink-light rounded-lg text-sm hover:bg-surface-muted transition-colors">
+                  Annuleren
+                </button>
+                <button onClick={handleAfwijzen} disabled={!rejectReason || (!isAutoRating && rejectRating === 0)}
+                  className="flex-1 py-2.5 bg-red-500 text-white rounded-lg font-semibold text-sm hover:bg-red-600 transition-colors disabled:opacity-40">
+                  Afwijzen
                 </button>
               </div>
             </div>

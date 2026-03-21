@@ -1,5 +1,5 @@
 export default function StarRating({ rating, showValue = true, showMasterBadge = false }: { rating: number; showValue?: boolean; showMasterBadge?: boolean }) {
-  const isMasterMatcher = rating >= 3.5 // >70% match score threshold mapped to rating
+  const isMasterMatcher = rating >= 4.0 // MASTER scout threshold
   const stars = []
   for (let i = 1; i <= 5; i++) {
     stars.push(

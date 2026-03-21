@@ -28,7 +28,10 @@ export default function ScoutVacatureDetail() {
   }
 
   // Filter: only show candidates who completed their scan AND aren't already proposed for this vacancy
+  const scoutId = 'scout-1' // current logged-in scout
   const alVoorgedragenIds = vacature.kandidaten.map(k => k.id)
+  const aantalVoorgedragenDoorMij = vacature.kandidaten.filter(k => k.scoutId === scoutId).length
+  const maxPerScout = 2
   const beschikbareKandidaten = scoutKandidaten.filter(
     k => k.scanCompleted && !alVoorgedragenIds.includes(k.id)
   )
@@ -56,9 +59,14 @@ export default function ScoutVacatureDetail() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="px-5 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors"
+          disabled={aantalVoorgedragenDoorMij >= maxPerScout}
+          className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+            aantalVoorgedragenDoorMij >= maxPerScout
+              ? 'bg-surface-muted text-ink-muted cursor-not-allowed'
+              : 'bg-cyan text-navy-dark hover:bg-cyan/90'
+          }`}
         >
-          Kandidaat voordragen
+          {aantalVoorgedragenDoorMij >= maxPerScout ? `Max. ${maxPerScout} kandidaten voorgedragen` : 'Kandidaat voordragen'}
         </button>
       </div>
 
@@ -102,9 +110,14 @@ export default function ScoutVacatureDetail() {
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-ink">
-          Voorgedragen kandidaten ({vacature.kandidaten.length})
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-ink">
+            Voorgedragen kandidaten ({vacature.kandidaten.length})
+          </h2>
+          <span className="text-xs text-ink-muted">
+            Jouw voordrachten: {aantalVoorgedragenDoorMij}/{maxPerScout}
+          </span>
+        </div>
 
         {vacature.kandidaten.length === 0 ? (
           <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
@@ -181,7 +194,15 @@ export default function ScoutVacatureDetail() {
               <>
                 {/* Body */}
                 <div className="px-6 py-4 overflow-y-auto flex-1">
-                  {beschikbareKandidaten.length === 0 ? (
+                  {aantalVoorgedragenDoorMij >= maxPerScout ? (
+                    <div className="text-center py-8">
+                      <div className="text-4xl mb-3">🚫</div>
+                      <p className="text-ink font-medium mb-1">Maximum bereikt</p>
+                      <p className="text-sm text-ink-light">
+                        Je hebt al {maxPerScout} kandidaten voorgedragen voor deze vacature. Dit is het maximale aantal per scout.
+                      </p>
+                    </div>
+                  ) : beschikbareKandidaten.length === 0 ? (
                     <div className="text-center py-8">
                       <div className="text-4xl mb-3">👥</div>
                       <p className="text-ink font-medium mb-1">Geen beschikbare kandidaten</p>

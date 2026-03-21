@@ -32,7 +32,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-1', naam: 'Anna de Jong', initialen: 'A', anoniem: false,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 87, scoutRating: 4.9, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 87, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aanbevolen', procesStatus: 'arbeidsvoorwaarden', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '8 jaar', woonplaats: 'Amsterdam',
         email: 'anna.dejong@email.nl', telefoon: '06-12345678',
@@ -52,7 +52,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-10', naam: 'Nadia Karim', initialen: 'N', anoniem: true,
         hardeCriteriaMatch: 88, hardeCriteriaIcon: 'check',
-        deVriesFit: 73, scoutRating: 4.3, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 73, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'WO', werkervaring: '4 jaar', woonplaats: 'Leiden',
         stapStartDatum: '2026-03-18',
@@ -61,14 +61,14 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-3', naam: 'Lisa Brouwer', initialen: 'L', anoniem: true,
         hardeCriteriaMatch: 76, hardeCriteriaIcon: 'warning',
-        deVriesFit: 53, scoutRating: 3.2, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 53, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'overweeg', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '4 jaar', woonplaats: 'Den Haag',
       },
       {
         id: 'k-20', naam: 'Mees van Leeuwen', initialen: 'M', anoniem: true,
         hardeCriteriaMatch: 83, hardeCriteriaIcon: 'check',
-        deVriesFit: 79, scoutRating: 4.1, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 79, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'bekijk', procesStatus: 'contract_akkoord', unlocked: true,
         opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Haarlem',
         email: 'mees.vanleeuwen@email.nl', telefoon: '06-11223344',
@@ -78,7 +78,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-21', naam: 'Yara Bosman', initialen: 'Y', anoniem: true,
         hardeCriteriaMatch: 67, hardeCriteriaIcon: 'warning',
-        deVriesFit: 91, scoutRating: 4.6, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 91, scoutRating: 4.2, scoutNaam: 'Eva Hendriks', scoutId: 'scout-3',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'WO', werkervaring: '3 jaar', woonplaats: 'Utrecht',
         stapStartDatum: '2026-03-19',
@@ -87,7 +87,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-22', naam: 'Bram Smeets', initialen: 'B', anoniem: false,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 65, scoutRating: 3.5, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 65, scoutRating: 4.2, scoutNaam: 'Eva Hendriks', scoutId: 'scout-3',
         status: 'overweeg', procesStatus: 'gesprek_gepland', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '9 jaar', woonplaats: 'Amsterdam',
         email: 'bram.smeets@email.nl', telefoon: '06-22334455',
@@ -131,7 +131,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-4', naam: 'Thomas van Dijk', initialen: 'T', anoniem: false,
         hardeCriteriaMatch: 95, hardeCriteriaIcon: 'check',
-        deVriesFit: 82, scoutRating: 4.5, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 82, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aanbevolen', procesStatus: 'gesprek_plannen', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '10 jaar', woonplaats: 'Amsterdam',
         email: 'thomas.vdijk@email.nl', telefoon: '06-34567890',
@@ -142,7 +142,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-5', naam: 'Priya Sharma', initialen: 'P', anoniem: true,
         hardeCriteriaMatch: 88, hardeCriteriaIcon: 'check',
-        deVriesFit: 68, scoutRating: 3.8, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 68, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'bekijk', procesStatus: 'feedback_geven', unlocked: true,
         opleidingsniveau: 'HBO', werkervaring: '7 jaar', woonplaats: 'Rotterdam',
         email: 'priya.sharma@email.nl', telefoon: '06-45678901',
@@ -153,7 +153,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-23', naam: 'Milan Kuipers', initialen: 'M', anoniem: true,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 76, scoutRating: 4.2, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 76, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aanbevolen', procesStatus: 'gesprek_gepland', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '8 jaar', woonplaats: 'Utrecht',
         email: 'milan.kuipers@email.nl', telefoon: '06-33445566',
@@ -168,7 +168,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-24', naam: 'Fleur Willems', initialen: 'F', anoniem: true,
         hardeCriteriaMatch: 83, hardeCriteriaIcon: 'check',
-        deVriesFit: 62, scoutRating: 3.6, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 62, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'overweeg', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Den Haag',
         stapStartDatum: '2026-03-19',
@@ -177,7 +177,7 @@ export const vacatures: Vacature[] = [
       {
         id: 'k-25', naam: 'Jesse Mulder', initialen: 'J', anoniem: false,
         hardeCriteriaMatch: 72, hardeCriteriaIcon: 'warning',
-        deVriesFit: 88, scoutRating: 4.7, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 88, scoutRating: 4.2, scoutNaam: 'Eva Hendriks', scoutId: 'scout-3',
         status: 'bekijk', procesStatus: 'vervolggesprek', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '12 jaar', woonplaats: 'Amsterdam',
         email: 'jesse.mulder@email.nl', telefoon: '06-44556677',
@@ -228,7 +228,7 @@ export const allVacatures: Vacature[] = [
       {
         id: 'k-30', naam: 'Iris Dekker', initialen: 'I', anoniem: true,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 84, scoutRating: 4.4, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 84, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aanbevolen', procesStatus: 'gesprek_plannen', unlocked: true,
         opleidingsniveau: 'WO', werkervaring: '4 jaar', woonplaats: 'Rotterdam',
         email: 'iris.dekker@email.nl', telefoon: '06-55667788',
@@ -238,7 +238,7 @@ export const allVacatures: Vacature[] = [
       {
         id: 'k-31', naam: 'Ruben Kok', initialen: 'R', anoniem: true,
         hardeCriteriaMatch: 83, hardeCriteriaIcon: 'check',
-        deVriesFit: 71, scoutRating: 3.9, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 71, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '3 jaar', woonplaats: 'Dordrecht',
         stapStartDatum: '2026-03-19',
@@ -277,7 +277,7 @@ export const allVacatures: Vacature[] = [
       {
         id: 'k-32', naam: 'Sander de Vries', initialen: 'S', anoniem: true,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 78, scoutRating: 4.0, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 78, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aanbevolen', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'WO', werkervaring: '7 jaar', woonplaats: 'Eindhoven',
         stapStartDatum: '2026-03-18',
@@ -286,7 +286,7 @@ export const allVacatures: Vacature[] = [
       {
         id: 'k-33', naam: 'Lotte Janssen', initialen: 'L', anoniem: true,
         hardeCriteriaMatch: 67, hardeCriteriaIcon: 'warning',
-        deVriesFit: 82, scoutRating: 4.3, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 82, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'HBO', werkervaring: '5 jaar', woonplaats: 'Tilburg',
         stapStartDatum: '2026-03-20',
@@ -329,7 +329,7 @@ export const archiefVacatures: Vacature[] = [
       {
         id: 'k-arch-1', naam: 'Sanne Visser', initialen: 'S', anoniem: false,
         hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
-        deVriesFit: 74, scoutRating: 3.8, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        deVriesFit: 74, scoutRating: 3.7, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
         status: 'aangenomen', procesStatus: 'contract_getekend', unlocked: true,
         opleidingsniveau: 'HBO', werkervaring: '7 jaar', woonplaats: 'Amsterdam',
         email: 'sanne.visser@email.nl', telefoon: '06-55566677',
@@ -368,7 +368,7 @@ export const archiefVacatures: Vacature[] = [
       {
         id: 'k-arch-2', naam: 'Jamal Usan', initialen: 'J', anoniem: false,
         hardeCriteriaMatch: 92, hardeCriteriaIcon: 'check',
-        deVriesFit: 71, scoutRating: 4.1, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        deVriesFit: 71, scoutRating: 4.8, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'aangenomen', procesStatus: 'contract_getekend', unlocked: true,
         opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Utrecht',
         email: 'jamal.usan@email.nl', telefoon: '06-23456789',
