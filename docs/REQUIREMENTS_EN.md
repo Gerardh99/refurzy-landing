@@ -1561,7 +1561,7 @@ FAQ item numbering has been updated:
 
 - Login page shows **empty fields** (no pre-fill, for security reasons)
 - Hint text: *"Vraag uw demo-inloggegevens aan via info@refurzy.com"*
-- Demo credentials: `demo@refurzy.com` + `Nummer1platform!` (with exclamation mark)
+- Demo credentials: `demo@refurzy.com` + password from `DEMO_PASSWORD` env variable
 - Successful login → redirects to `/homepage`
 
 ### Profile Picker: /homepage → /login
@@ -1579,7 +1579,7 @@ When navigating from `/homepage` to `/login`, the login page shows a **profile p
 - Login → redirects to the role-specific dashboard
 
 ### Password
-All demo accounts use: **Nummer1platform!** (with exclamation mark `!`)
+All demo accounts use the password stored in `DEMO_PASSWORD` environment variable (not in source code)
 
 ---
 

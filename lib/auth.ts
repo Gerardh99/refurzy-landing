@@ -49,17 +49,22 @@ const DEMO_USERS: Record<string, User> = {
   },
 }
 
-const DEMO_PASSWORD = 'Nummer1platform!'
-
-export function login(email: string, password: string): User | null {
-  const user = DEMO_USERS[email.toLowerCase()]
-  if (user && password === DEMO_PASSWORD) {
-    if (typeof window !== 'undefined') {
+export async function login(email: string, password: string): Promise<User | null> {
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    if (!res.ok) return null
+    const { user } = await res.json()
+    if (user && typeof window !== 'undefined') {
       sessionStorage.setItem('refurzy_user', JSON.stringify(user))
     }
     return user
+  } catch {
+    return null
   }
-  return null
 }
 
 export function getUser(): User | null {

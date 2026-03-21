@@ -1516,7 +1516,7 @@ Call-to-action button onder het resultaat.
 - **refurzy.com** → `/login`
 - Login velden zijn **leeg** (geen pre-fill, om veiligheidsredenen)
 - Hint tekst: "Vraag uw demo-inloggegevens aan via info@refurzy.com"
-- Demo credentials: `demo@refurzy.com` + `Nummer1platform!` (met uitroepteken)
+- Demo credentials: `demo@refurzy.com` + wachtwoord uit `DEMO_PASSWORD` env variable
 - Na login → redirect naar `/homepage`
 
 ### Stap 2: Homepage → Rolkeuze
@@ -1525,13 +1525,13 @@ Call-to-action button onder het resultaat.
   2. **Scout**
   3. **Kandidaat**
   4. **Admin**
-- Klik op een rol → auto-fill van credentials → login → redirect naar rol-specifiek dashboard
+- Klik op een rol → auto-fill van e-mailadres (wachtwoord handmatig invullen) → login → redirect naar rol-specifiek dashboard
 
 ### Demo gebruikersnaam
 - "Daan Verhoeven" (was "Jan van der Berg")
 
 ### Wachtwoord
-- `Nummer1platform!` (met uitroepteken)
+- Opgeslagen als `DEMO_PASSWORD` environment variable (niet in broncode)
 
 ---
 

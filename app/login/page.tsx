@@ -61,7 +61,7 @@ export default function LoginPage() {
 
   const roleConsents = ROLE_CONSENTS[email]
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
       })
     }
 
-    const user = login(email, password)
+    const user = await login(email, password)
     if (user) {
       // demo@refurzy.com is the gate account — redirect to /homepage and set demo access
       if (email.toLowerCase() === 'demo@refurzy.com') {
@@ -98,7 +98,7 @@ export default function LoginPage() {
 
   function handleProfileClick(profileEmail: string) {
     setEmail(profileEmail)
-    setPassword('Nummer1platform!')
+    setPassword('')
     setSelectedProfile(profileEmail)
     setShowRegister(true)
     setConsents({})
