@@ -884,6 +884,9 @@ Per kaart wordt ook getoond: aantal dagen in huidige stap (oranje bij >5 dagen) 
 Taalniveaus zijn gebaseerd op het Europees Referentiekader (ERK/CEFR): A2 (Basis), B1 (Redelijk), B2 (Goed), C1 (Uitstekend), C2 (Moedertaal/Near-native). Opdrachtgever kan meerdere talen als verplicht instellen, elk met een eigen minimumniveau. Talen tellen als één criterium dat alleen voldaan is als ALLE vereiste talen op niveau zijn.
 
 Voorbeeld: 5 van 6 criteria voldaan → 83% → ✅ groen vinkje. 4 van 6 criteria → 67% → ⚠️ oranje waarschuwing.
+
+**Detail drill-down**: Op alle plekken waar de harde criteria score wordt getoond (opdrachtgever, scout én kandidaat) kan de gebruiker klikken op het percentage om een detailoverzicht te openen. Per criterium wordt getoond: ✅/❌ status, naam van het criterium, en de vergelijking (bijv. "Vereist: HBO, Kandidaat: WO"). Dit maakt direct inzichtelijk waarom een match afwijkt.
+
 23. **Exclusiviteit (+25%, per vakgebied)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan minimaal 14 dagen niet aan andere vacatures **in hetzelfde vakgebied** aangeboden — ook niet als ze binnen die 14 dagen worden afgewezen of als de voordracht verloopt. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen. Zie sectie 3 "Kandidaat-blokkade bij voordracht" voor alle regels.
 
 ---

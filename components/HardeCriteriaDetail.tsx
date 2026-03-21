@@ -19,6 +19,16 @@ function getMockKandidaatData(k: KandidaatMatch) {
     'k-3': { salarisMin: 4500, salarisMax: 6500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' }, { taal: 'Engels', niveau: 'B1' }] },
     'k-4': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
     'k-5': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Engels', niveau: 'C1' }] },
+    'k-20': { salarisMin: 4200, salarisMax: 5500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'B1' }] },
+    'k-21': { salarisMin: 3500, salarisMax: 4500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C1' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-22': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '30 minuten', opKantoor: 'Op kantoor (5 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-23': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
+    'k-24': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '30 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Engels', niveau: 'B2' }] },
+    'k-25': { salarisMin: 7000, salarisMax: 8500, maxReistijd: '30 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
+    'k-30': { salarisMin: 4000, salarisMax: 5000, maxReistijd: '30 minuten', opKantoor: 'Op kantoor (5 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'B2' }] },
+    'k-31': { salarisMin: 3800, salarisMax: 4800, maxReistijd: '30 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C1' }, { taal: 'Engels', niveau: 'B1' }] },
+    'k-32': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-33': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' }, { taal: 'Engels', niveau: 'B1' }] },
   }
   return mockData[k.id] || { salarisMin: 4000, salarisMax: 5500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' }, { taal: 'Engels', niveau: 'B1' }] }
 }
