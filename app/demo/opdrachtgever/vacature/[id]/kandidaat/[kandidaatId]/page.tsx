@@ -8,6 +8,155 @@ import { ProcesStatus, AfwijzingsReden, Gesprek } from '@/lib/types'
 import FitScore from '@/components/FitScore'
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import PipelineTracker from '@/components/PipelineTracker'
+import { calculateHardeCriteriaMatch } from '@/lib/matching'
+
+// ─── Mock CV data per kandidaat ──────────────────────────────────────────────
+interface CVData {
+  samenvatting: string
+  opleiding: { titel: string; instelling: string; jaar: string; extra?: string }[]
+  werkervaring: { functie: string; bedrijf: string; periode: string; beschrijving: string }[]
+  vaardigheden: string[]
+  certificeringen?: string[]
+  talen: { taal: string; niveau: string }[]
+  scoutToelichting: string
+}
+
+const mockCVData: Record<string, CVData> = {
+  'k-1': {
+    samenvatting: 'Resultaatgerichte Marketing Manager met 8 jaar ervaring in digitale marketing, merkstrategie en teamleiderschap. Bewezen trackrecord in het opzetten van succesvolle campagnes en het aansturen van multidisciplinaire teams.',
+    opleiding: [
+      { titel: 'MSc Marketing Management', instelling: 'Universiteit van Amsterdam', jaar: '2016-2018' },
+      { titel: 'BSc Bedrijfskunde', instelling: 'Universiteit van Amsterdam', jaar: '2012-2016' },
+    ],
+    werkervaring: [
+      { functie: 'Senior Marketing Manager', bedrijf: 'DigitalFirst B.V.', periode: '2021 – heden', beschrijving: 'Verantwoordelijk voor de gehele marketingstrategie met een team van 6 marketeers. Realiseerde 35% groei in online conversies en 25% toename in merkbekendheid.' },
+      { functie: 'Marketing Manager', bedrijf: 'BrandWorks Agency', periode: '2018 – 2021', beschrijving: 'Ontwikkelde en implementeerde cross-channel campagnes voor B2B en B2C klanten. Beheerde budget van €500K+.' },
+      { functie: 'Marketing Coordinator', bedrijf: 'StartupHub Amsterdam', periode: '2016 – 2018', beschrijving: 'Content marketing, social media en eventorganisatie voor een tech-incubator met 50+ startups.' },
+    ],
+    vaardigheden: ['Digitale strategie', 'Google Analytics / GA4', 'HubSpot', 'Teamleiderschap', 'Budget management', 'SEO/SEA', 'Content marketing', 'A/B testing'],
+    certificeringen: ['Google Analytics Certified', 'HubSpot Inbound Marketing', 'Meta Blueprint'],
+    talen: [{ taal: 'Nederlands', niveau: 'Moedertaal (C2)' }, { taal: 'Engels', niveau: 'Uitstekend (C1)' }],
+    scoutToelichting: 'Anna is een uitstekende match voor deze rol. Ze heeft ruime ervaring in digitale marketing en heeft bewezen dat ze een team kan aansturen. Haar trackrecord bij DigitalFirst laat zien dat ze meetbare resultaten behaalt. Cultureel past ze goed bij de innovatieve sfeer van TechVentures.',
+  },
+  'k-10': {
+    samenvatting: 'Creatieve marketeer met 4 jaar ervaring in campagnemanagement en data-gedreven marketing. Sterk in analytics en het vertalen van data naar actiegerichte inzichten.',
+    opleiding: [
+      { titel: 'MSc Communication Science', instelling: 'Universiteit Leiden', jaar: '2020-2022' },
+      { titel: 'BSc Communicatiewetenschap', instelling: 'Universiteit Leiden', jaar: '2017-2020' },
+    ],
+    werkervaring: [
+      { functie: 'Marketing Specialist', bedrijf: 'DataDriven Marketing', periode: '2022 – heden', beschrijving: 'Verantwoordelijk voor campagne-optimalisatie, A/B testing en marketing automation. Verhoogde email open rates met 40%.' },
+      { functie: 'Junior Marketeer', bedrijf: 'CreativeMinds Agency', periode: '2020 – 2022', beschrijving: 'Social media management en content creatie voor diverse klanten in retail en e-commerce.' },
+    ],
+    vaardigheden: ['Marketing automation', 'Data-analyse', 'Mailchimp/ActiveCampaign', 'Social media', 'Copywriting', 'Photoshop/Canva'],
+    certificeringen: ['Google Ads Certified', 'Mailchimp Expert'],
+    talen: [{ taal: 'Nederlands', niveau: 'Uitstekend (C1)' }, { taal: 'Engels', niveau: 'Goed (B2)' }],
+    scoutToelichting: 'Nadia is een sterke analytische marketeer die goed past bij de data-gedreven cultuur van TechVentures. Ze heeft minder leidinggevende ervaring maar compenseert dit met haar sterke technische skills en leergierigheid.',
+  },
+  'k-3': {
+    samenvatting: 'Ambitieuze marketing professional met 4 jaar ervaring, gespecialiseerd in social media en contentmarketing.',
+    opleiding: [
+      { titel: 'BSc Commerciële Economie', instelling: 'Haagse Hogeschool', jaar: '2018-2022' },
+    ],
+    werkervaring: [
+      { functie: 'Social Media Manager', bedrijf: 'SocialBuzz', periode: '2022 – heden', beschrijving: 'Beheer van social media kanalen voor 10+ klanten. Focus op TikTok en Instagram groeistrategieën.' },
+      { functie: 'Marketing Stagiair', bedrijf: 'RetailGroup NL', periode: '2021 – 2022', beschrijving: 'Ondersteuning bij campagneontwikkeling en marktonderzoek.' },
+    ],
+    vaardigheden: ['Social media management', 'Content creatie', 'Instagram/TikTok', 'Canva', 'Basis SEO'],
+    talen: [{ taal: 'Nederlands', niveau: 'Goed (B2)' }, { taal: 'Engels', niveau: 'Redelijk (B1)' }],
+    scoutToelichting: 'Lisa is een gedreven junior marketeer met veel potentieel. Ze heeft minder ervaring dan gevraagd maar haar social media expertise kan waardevol zijn voor het team.',
+  },
+  'k-20': {
+    samenvatting: 'Veelzijdige marketeer met 6 jaar ervaring in B2B marketing, leadgeneratie en marketing automation.',
+    opleiding: [
+      { titel: 'BSc Marketing Management', instelling: 'Hogeschool van Amsterdam', jaar: '2015-2019' },
+    ],
+    werkervaring: [
+      { functie: 'Marketing Manager', bedrijf: 'B2B Solutions', periode: '2021 – heden', beschrijving: 'Verantwoordelijk voor de volledige marketing funnel inclusief lead scoring, nurturing en pipeline rapportage.' },
+      { functie: 'Marketing Executive', bedrijf: 'TechScale', periode: '2019 – 2021', beschrijving: 'Opzetten van HubSpot, implementatie van marketing automation flows en content strategie.' },
+    ],
+    vaardigheden: ['HubSpot', 'Marketing automation', 'Lead generation', 'B2B marketing', 'CRM management', 'LinkedIn Ads'],
+    certificeringen: ['HubSpot Marketing Software', 'LinkedIn Marketing Certified'],
+    talen: [{ taal: 'Nederlands', niveau: 'Moedertaal (C2)' }, { taal: 'Engels', niveau: 'Redelijk (B1)' }],
+    scoutToelichting: 'Mees heeft sterke B2B marketing ervaring en is erg goed in marketing automation. Hij kan direct aan de slag met het opschalen van de marketing funnel.',
+  },
+  'k-21': {
+    samenvatting: 'Jonge, energieke marketing professional met 3 jaar ervaring in brand management en event marketing.',
+    opleiding: [
+      { titel: 'MSc Strategic Management', instelling: 'Universiteit Utrecht', jaar: '2021-2023' },
+      { titel: 'BSc Bedrijfskunde', instelling: 'Universiteit Utrecht', jaar: '2018-2021' },
+    ],
+    werkervaring: [
+      { functie: 'Brand Manager', bedrijf: 'FreshBrands NL', periode: '2023 – heden', beschrijving: 'Verantwoordelijk voor merkpositionering en marketingstrategie van 3 FMCG-merken.' },
+      { functie: 'Marketing Assistent', bedrijf: 'EventPro', periode: '2021 – 2023', beschrijving: 'Organisatie van corporate events en ondersteunende marketingactiviteiten.' },
+    ],
+    vaardigheden: ['Brand management', 'Event marketing', 'Strategisch denken', 'Presenteren', 'Adobe Creative Suite'],
+    talen: [{ taal: 'Nederlands', niveau: 'Uitstekend (C1)' }, { taal: 'Engels', niveau: 'Uitstekend (C1)' }],
+    scoutToelichting: 'Yara is strategisch sterk en heeft een frisse kijk op brand management. Ze heeft minder jaren ervaring maar haar snelle groei en WO-achtergrond compenseren dit ruimschoots.',
+  },
+  'k-22': {
+    samenvatting: 'Ervaren marketing leider met 9 jaar ervaring in zowel corporate als agency-omgevingen. Expert in merkstrategie en digitale transformatie.',
+    opleiding: [
+      { titel: 'MBA', instelling: 'Rotterdam School of Management', jaar: '2019-2021', extra: 'Specialisatie Marketing & Innovation' },
+      { titel: 'BSc Communicatiewetenschappen', instelling: 'Vrije Universiteit Amsterdam', jaar: '2013-2017' },
+    ],
+    werkervaring: [
+      { functie: 'Head of Marketing', bedrijf: 'ScaleUp Ventures', periode: '2022 – heden', beschrijving: 'Leidt een team van 8 marketeers. Verantwoordelijk voor een marketingbudget van €1.2M en realiseerde 50% groei in MQLs.' },
+      { functie: 'Senior Marketing Consultant', bedrijf: 'McKinnon & Partners', periode: '2019 – 2022', beschrijving: 'Strategisch advies aan Fortune 500 bedrijven op het gebied van digitale transformatie en merkstrategie.' },
+      { functie: 'Marketing Manager', bedrijf: 'MediaGroup NL', periode: '2017 – 2019', beschrijving: 'Opbouw en leiding van het digitale marketing team. Lancering van 3 succesvolle productlanceringen.' },
+    ],
+    vaardigheden: ['Strategisch marketing leiderschap', 'Digitale transformatie', 'Team management', 'Budget planning', 'Stakeholder management', 'Google Analytics', 'Salesforce'],
+    certificeringen: ['MBA Marketing & Innovation', 'Salesforce Marketing Cloud'],
+    talen: [{ taal: 'Nederlands', niveau: 'Moedertaal (C2)' }, { taal: 'Engels', niveau: 'Uitstekend (C1)' }],
+    scoutToelichting: 'Bram is een zeer ervaren marketing leider met een MBA en bewezen resultaten in het opschalen van marketingteams. Hij brengt zowel strategisch denken als hands-on ervaring mee.',
+  },
+  'k-4': {
+    samenvatting: 'Full-stack developer met 10 jaar ervaring in enterprise software development. Expert in React, Node.js en cloud architectuur.',
+    opleiding: [
+      { titel: 'MSc Computer Science', instelling: 'TU Delft', jaar: '2014-2016' },
+      { titel: 'BSc Informatica', instelling: 'TU Delft', jaar: '2010-2014' },
+    ],
+    werkervaring: [
+      { functie: 'Lead Developer', bedrijf: 'CloudNine Technologies', periode: '2020 – heden', beschrijving: 'Leidt een team van 5 developers. Architectuur en implementatie van microservices op AWS. Migreerde legacy monolith naar cloud-native architectuur.' },
+      { functie: 'Senior Software Developer', bedrijf: 'FinTech Innovations', periode: '2017 – 2020', beschrijving: 'Ontwikkeling van real-time trading platform in React/Node.js. Implementatie van CI/CD pipelines.' },
+      { functie: 'Software Developer', bedrijf: 'WebAgency Pro', periode: '2016 – 2017', beschrijving: 'Full-stack development van enterprise web applicaties.' },
+    ],
+    vaardigheden: ['React/Next.js', 'Node.js/TypeScript', 'AWS/Azure', 'Docker/Kubernetes', 'PostgreSQL/MongoDB', 'CI/CD', 'Agile/Scrum', 'System design'],
+    certificeringen: ['AWS Solutions Architect', 'Kubernetes Administrator (CKA)'],
+    talen: [{ taal: 'Engels', niveau: 'Moedertaal (C2)' }, { taal: 'Nederlands', niveau: 'Goed (B2)' }],
+    scoutToelichting: 'Thomas is een uitzonderlijke developer met diepe technische kennis en leidinggevende ervaring. Zijn AWS expertise en ervaring met microservices sluiten perfect aan bij de technische roadmap van TechVentures.',
+  },
+  'k-5': {
+    samenvatting: 'Backend developer met 7 jaar ervaring in Java en Python. Sterk in data engineering en API design.',
+    opleiding: [
+      { titel: 'BSc Software Engineering', instelling: 'Hogeschool Rotterdam', jaar: '2015-2019' },
+    ],
+    werkervaring: [
+      { functie: 'Senior Backend Developer', bedrijf: 'DataPipeline B.V.', periode: '2021 – heden', beschrijving: 'Ontwerp en ontwikkeling van high-throughput data pipelines. Verwerkt 10M+ events per dag.' },
+      { functie: 'Backend Developer', bedrijf: 'LogiSoft', periode: '2019 – 2021', beschrijving: 'REST API development en database optimalisatie voor logistieke software.' },
+    ],
+    vaardigheden: ['Java/Spring Boot', 'Python', 'PostgreSQL', 'Apache Kafka', 'REST APIs', 'Docker', 'Git'],
+    certificeringen: ['Oracle Java Certified Professional'],
+    talen: [{ taal: 'Engels', niveau: 'Uitstekend (C1)' }, { taal: 'Nederlands', niveau: 'Goed (B2)' }, { taal: 'Hindi', niveau: 'Moedertaal (C2)' }],
+    scoutToelichting: 'Priya is technisch sterk met veel ervaring in data-intensieve applicaties. Ze is pragmatisch, levert snel en werkt goed samen in teams.',
+  },
+}
+
+// Fallback CV generator for kandidaten without specific mock data
+function getDefaultCV(k: { naam: string; opleidingsniveau: string; werkervaring: string; woonplaats: string; scoutNaam: string }): CVData {
+  return {
+    samenvatting: `Ervaren professional met ${k.werkervaring} werkervaring op ${k.opleidingsniveau}-niveau. Zoekt een nieuwe uitdaging in de regio ${k.woonplaats}.`,
+    opleiding: [
+      { titel: k.opleidingsniveau === 'WO' ? 'MSc Bedrijfskunde' : 'BSc Bedrijfskunde', instelling: k.opleidingsniveau === 'WO' ? 'Universiteit Utrecht' : 'Hogeschool Utrecht', jaar: '2014-2018' },
+    ],
+    werkervaring: [
+      { functie: 'Senior Professional', bedrijf: 'Vorig Bedrijf B.V.', periode: '2020 – heden', beschrijving: 'Verantwoordelijk voor diverse projecten en taken binnen het vakgebied.' },
+    ],
+    vaardigheden: ['Projectmanagement', 'Communicatie', 'Analyse', 'Teamwerk'],
+    talen: [{ taal: 'Nederlands', niveau: 'Uitstekend (C1)' }, { taal: 'Engels', niveau: 'Goed (B2)' }],
+    scoutToelichting: `Kandidaat is voorgedragen door ${k.scoutNaam} vanwege een goede match met het profiel en de organisatiecultuur.`,
+  }
+}
 
 export default function OpdrachtgeverKandidaatProces() {
   const params = useParams()
@@ -50,6 +199,33 @@ export default function OpdrachtgeverKandidaatProces() {
   const fee = calculateFee(kandidaat.opleidingsniveau, kandidaat.werkervaring)
   const lastGesprek = gesprekken[gesprekken.length - 1]
   const needsFeedback = lastGesprek && lastGesprek.status === 'afgerond' && !lastGesprek.feedback
+  const cv = mockCVData[kandidaat.id] || getDefaultCV(kandidaat)
+
+  // Calculate detailed harde criteria match using same mock data as HardeCriteriaDetail
+  const mockKandidaatData: Record<string, { salarisMin: number; salarisMax: number; maxReistijd: string; opKantoor: string; talen: { taal: string; niveau: 'A2' | 'B1' | 'B2' | 'C1' | 'C2' }[] }> = {
+    'k-1': { salarisMin: 4800, salarisMax: 5800, maxReistijd: '30 minuten', opKantoor: 'Op kantoor (5 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-10': { salarisMin: 4000, salarisMax: 5000, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C1' }, { taal: 'Engels', niveau: 'B2' }] },
+    'k-3': { salarisMin: 4500, salarisMax: 6500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' }, { taal: 'Engels', niveau: 'B1' }] },
+    'k-4': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
+    'k-5': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Engels', niveau: 'C1' }] },
+    'k-20': { salarisMin: 4200, salarisMax: 5500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'B1' }] },
+    'k-21': { salarisMin: 3500, salarisMax: 4500, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C1' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-22': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '30 minuten', opKantoor: 'Op kantoor (5 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-23': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
+    'k-24': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '30 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Engels', niveau: 'B2' }] },
+    'k-25': { salarisMin: 7000, salarisMax: 8500, maxReistijd: '30 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Engels', niveau: 'C2' }] },
+    'k-30': { salarisMin: 4000, salarisMax: 5000, maxReistijd: '30 minuten', opKantoor: 'Op kantoor (5 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'B2' }] },
+    'k-31': { salarisMin: 3800, salarisMax: 4800, maxReistijd: '30 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C1' }, { taal: 'Engels', niveau: 'B1' }] },
+    'k-32': { salarisMin: 5000, salarisMax: 6500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'C2' }, { taal: 'Engels', niveau: 'C1' }] },
+    'k-33': { salarisMin: 5500, salarisMax: 7000, maxReistijd: '60 minuten', opKantoor: 'Hybride (2 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' }, { taal: 'Engels', niveau: 'B1' }] },
+  }
+  const kData = mockKandidaatData[kandidaat.id] || { salarisMin: 4000, salarisMax: 5500, maxReistijd: '45 minuten', opKantoor: 'Hybride (3 dagen)', talen: [{ taal: 'Nederlands', niveau: 'B2' as const }, { taal: 'Engels', niveau: 'B1' as const }] }
+  const hardeCriteriaResult = vacature.hardeCriteria ? calculateHardeCriteriaMatch(vacature.hardeCriteria, {
+    opleidingsniveau: kandidaat.opleidingsniveau,
+    werkervaring: kandidaat.werkervaring,
+    ...kData,
+  }) : null
+  const failedCriteria = hardeCriteriaResult?.criteria.filter(c => !c.voldaan) || []
 
   // ─── Actions ────────────────────────────────────────────────────────────────
   const handleAcceptContract = () => {
@@ -177,6 +353,139 @@ export default function OpdrachtgeverKandidaatProces() {
         </div>
       </div>
 
+      {/* ─── Scout Toelichting ──────────────────────────────────────────────── */}
+      <div className="bg-purple/5 rounded-2xl border border-purple/20 p-5">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-purple/20 text-purple flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+            {kandidaat.scoutNaam.split(' ').map(n => n[0]).join('').slice(0, 2)}
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="text-sm font-semibold text-ink">Toelichting van {kandidaat.scoutNaam}</h2>
+              <span className="text-[10px] text-ink-muted bg-surface-muted px-1.5 py-0.5 rounded">Talent Scout</span>
+            </div>
+            <p className="text-sm text-ink-light leading-relaxed">{cv.scoutToelichting}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Harde Criteria Detail (afwijkingen prominent) ──────────────────── */}
+      {hardeCriteriaResult && (
+        <div className="bg-white rounded-2xl border border-surface-border p-5">
+          <h2 className="text-sm font-semibold text-ink mb-4">Harde Criteria Match — {kandidaat.hardeCriteriaMatch}%</h2>
+          <div className="space-y-2">
+            {hardeCriteriaResult.criteria.map((c, i) => (
+              <div key={i} className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm ${
+                c.voldaan ? 'bg-green-50/50' : 'bg-red-50 border border-red-100'
+              }`}>
+                <span className={`text-base flex-shrink-0 ${c.voldaan ? 'text-green-500' : 'text-red-400'}`}>
+                  {c.voldaan ? '✓' : '✕'}
+                </span>
+                <span className={`font-medium flex-shrink-0 w-28 ${c.voldaan ? 'text-ink' : 'text-red-700'}`}>
+                  {c.naam}
+                </span>
+                <span className={`flex-1 ${c.voldaan ? 'text-ink-light' : 'text-red-600'}`}>
+                  {c.detail}
+                </span>
+              </div>
+            ))}
+          </div>
+          {failedCriteria.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-surface-border">
+              <p className="text-xs text-orange font-medium">
+                ⚠ {failedCriteria.length} {failedCriteria.length === 1 ? 'criterium wijkt af' : 'criteria wijken af'} — overweeg of dit acceptabel is voor deze rol.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── CV / Profiel ───────────────────────────────────────────────────── */}
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-ink">Curriculum Vitae</h2>
+
+        {/* Samenvatting */}
+        <div>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Profiel</h3>
+          <p className="text-sm text-ink-light leading-relaxed">{cv.samenvatting}</p>
+        </div>
+
+        {/* Werkervaring */}
+        <div>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">Werkervaring</h3>
+          <div className="space-y-4">
+            {cv.werkervaring.map((w, i) => (
+              <div key={i} className="relative pl-5 border-l-2 border-purple/20">
+                <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-purple" />
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-ink">{w.functie}</p>
+                    <p className="text-xs text-purple font-medium">{w.bedrijf}</p>
+                  </div>
+                  <span className="text-xs text-ink-muted flex-shrink-0 ml-4">{w.periode}</span>
+                </div>
+                <p className="text-sm text-ink-light mt-1 leading-relaxed">{w.beschrijving}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Opleiding */}
+        <div>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">Opleiding</h3>
+          <div className="space-y-3">
+            {cv.opleiding.map((o, i) => (
+              <div key={i} className="relative pl-5 border-l-2 border-cyan/20">
+                <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-cyan" />
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-ink">{o.titel}</p>
+                    <p className="text-xs text-cyan font-medium">{o.instelling}</p>
+                    {o.extra && <p className="text-xs text-ink-muted mt-0.5">{o.extra}</p>}
+                  </div>
+                  <span className="text-xs text-ink-muted flex-shrink-0 ml-4">{o.jaar}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Vaardigheden + Talen in 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Vaardigheden</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {cv.vaardigheden.map((v, i) => (
+                <span key={i} className="px-2.5 py-1 bg-surface-muted text-ink text-xs rounded-lg border border-surface-border">{v}</span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Talen</h3>
+            <div className="space-y-1.5">
+              {cv.talen.map((t, i) => (
+                <div key={i} className="flex items-center justify-between text-sm">
+                  <span className="text-ink">{t.taal}</span>
+                  <span className="text-ink-muted text-xs">{t.niveau}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Certificeringen */}
+        {cv.certificeringen && cv.certificeringen.length > 0 && (
+          <div>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Certificeringen</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {cv.certificeringen.map((c, i) => (
+                <span key={i} className="px-2.5 py-1 bg-cyan/10 text-cyan text-xs rounded-lg border border-cyan/20 font-medium">{c}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Contact details (only when unlocked) */}
       {unlocked && (
         <div className="bg-white rounded-2xl border border-surface-border p-5">
@@ -293,7 +602,7 @@ export default function OpdrachtgeverKandidaatProces() {
               <h2 className="text-lg font-semibold text-ink">Hoe ging het gesprek?</h2>
               <p className="text-ink-light text-sm mt-1">
                 Geef feedback over het {lastGesprek.type === 'kennismaking' ? 'kennismakings' : lastGesprek.type === 'verdieping' ? 'verdiepings' : 'arbeidsvoorwaarden'}gesprek.
-                Dit is verplicht voordat u verder kunt.
+                Dit helpt de Talent Scout u de volgende keer nog beter van dienst te zijn.
               </p>
             </div>
           </div>
