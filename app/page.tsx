@@ -132,7 +132,7 @@ export default function LandingPage() {
               padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
               fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
               background: lang === 'nl' ? 'rgba(255,255,255,0.15)' : 'transparent',
-              color: lang === 'nl' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.35)',
+              color: lang === 'nl' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.5)',
               transition: 'all 0.2s ease',
             }}
           >
@@ -144,7 +144,7 @@ export default function LandingPage() {
               padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
               fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
               background: lang === 'en' ? 'rgba(255,255,255,0.15)' : 'transparent',
-              color: lang === 'en' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.35)',
+              color: lang === 'en' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.5)',
               transition: 'all 0.2s ease',
             }}
           >
@@ -154,12 +154,12 @@ export default function LandingPage() {
         <Link
           href="/login"
           style={{
-            color: 'rgba(249,251,255,0.3)', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
+            color: 'rgba(249,251,255,0.5)', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
             textDecoration: 'none', letterSpacing: '0.5px', transition: 'color 0.3s ease',
             padding: '6px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)',
           }}
           onMouseOver={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.6)')}
-          onMouseOut={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.3)')}
+          onMouseOut={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.5)')}
         >
           {t.login}
         </Link>
@@ -178,7 +178,7 @@ export default function LandingPage() {
 
         <p className="body-text">{t.body}</p>
 
-        <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.45)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
+        <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.6)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
           {t.sources}
         </p>
 
@@ -258,7 +258,7 @@ const landingCSS = `
   .form-row { display:flex; gap:10px; }
   .input-wrapper { flex:1; position:relative; }
   input[type="email"], input[type="text"] { width:100%; padding:14px 18px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:var(--light); font-family:'Poppins',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease; }
-  input[type="email"]::placeholder, input[type="text"]::placeholder { color:rgba(249,251,255,0.35); }
+  input[type="email"]::placeholder, input[type="text"]::placeholder { color:rgba(249,251,255,0.5); }
   input[type="email"]:focus, input[type="text"]:focus { border-color:var(--blue); background:rgba(255,255,255,0.1); box-shadow:0 0 0 3px rgba(6,186,255,0.1); }
   .name-row { margin-bottom:10px; }
   .btn-submit { padding:14px 28px; background:var(--gradient); border:none; border-radius:10px; color:white; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; white-space:nowrap; width:100%; margin-top:10px; }
@@ -269,7 +269,7 @@ const landingCSS = `
   .message { text-align:center; padding:14px 20px; border-radius:10px; font-size:0.9rem; margin-top:16px; display:none; }
   .message.success { background:rgba(20,205,211,0.15); border:1px solid rgba(20,205,211,0.3); color:var(--teal); display:block; }
   .message.error { background:rgba(255,80,80,0.15); border:1px solid rgba(255,80,80,0.3); color:#ff6b6b; display:block; }
-  .footer { margin-top:60px; text-align:center; color:rgba(249,251,255,0.25); font-size:0.75rem; animation:fadeInUp 0.8s ease-out 0.8s both; }
+  .footer { margin-top:60px; text-align:center; color:rgba(249,251,255,0.5); font-size:0.75rem; animation:fadeInUp 0.8s ease-out 0.8s both; }
   .spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:white; animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:8px; }
   @keyframes spin { to{transform:rotate(360deg)} }
   @media(max-width:480px) { .container{padding:40px 20px} .logo{width:160px;margin-bottom:40px} }
