@@ -85,7 +85,7 @@ export default function WetenschapPage() {
               },
               {
                 title: '€44.000–€175.000 bespaard per voorkomen mis-hire',
-                description: '46% van alle aannames faalt binnen 18 maanden. De totale kosten per mis-hire bedragen 50–200% van het jaarsalaris (bij een bruto maandsalaris van €5.000).',
+                description: '46% van alle aannames faalt binnen 18 maanden. De totale kosten per mis-hire bedragen 50–200% van het jaarsalaris + werkgeverslasten (bij een bruto maandsalaris van €5.000).',
                 source: 'SHRM (2024); Leadership IQ'
               },
               {
@@ -128,7 +128,7 @@ export default function WetenschapPage() {
             </button>
             {showWetenschapMisHire && (
               <div className="mt-2 bg-navy-light rounded-xl border border-purple/10 p-4 text-xs text-gray-400 space-y-1.5">
-                <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris. Bij een bruto maandsalaris van €5.000 bedragen de totale loonkosten €87.480/jaar (€60.000 salaris + €4.800 vakantiegeld + €22.680 werkgeverslasten). 50% daarvan = €44.000, 200% = €175.000. Opgebouwd uit:</p>
+                <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris + werkgeverslasten. Bij een bruto maandsalaris van €5.000 bedragen de totale loonkosten €87.480/jaar (€60.000 salaris + €4.800 vakantiegeld + €22.680 werkgeverslasten). 50% daarvan = €44.000, 200% = €175.000. Opgebouwd uit:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, gehele selectieprocedure opnieuw</li>
                   <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken tot maanden onder niveau, de positie staat vervolgens maanden open</li>
@@ -367,7 +367,7 @@ export default function WetenschapPage() {
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris, o.b.v. bruto maandsalaris €5.000). Door vooraf te meten of iemand past, vermindert u dit risico met 39–59%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
+              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris + werkgeverslasten, o.b.v. bruto maandsalaris €5.000). Door vooraf te meten of iemand past, vermindert u dit risico met 39–59%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
               { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026 (N=309)' },
               { title: 'Hogere productiviteit', desc: 'Betrokken medewerkers presteren aantoonbaar beter. Werkbevlogenheid — een directe uitkomst van goede P-O fit — voorspelt hogere werkprestaties en minder verzuim.', source: 'Halbesleben & Wheeler, 2008' },
               { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Organisaties met hoge betrokkenheid hebben 59% minder verloop. Case studies tonen reducties van 40–59%.', source: 'Kristof-Brown et al., 2005 · PRADCO · ASK/AssessCandidates' },
@@ -416,7 +416,7 @@ export default function WetenschapPage() {
                   <h4 className="text-white font-semibold text-sm">Minder mis-hires</h4>
                 </div>
                 <p className="text-gray-400 text-xs leading-relaxed">
-                  Eén verkeerde aanname kost 50–200% van het jaarsalaris (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit daalt het verloop met 39–59%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
+                  Eén verkeerde aanname kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit daalt het verloop met 39–59%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
                 </p>
               </div>
               <div className="bg-navy rounded-xl border border-cyan/15 p-4">

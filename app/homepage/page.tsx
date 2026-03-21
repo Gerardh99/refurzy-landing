@@ -333,7 +333,7 @@ export default function HomePage() {
               </button>
               {showMisHireDetail && (
                 <div className="mt-2 text-xs text-gray-500 space-y-1 text-left">
-                  <p>Een mis-hire kost 50–200% van het jaarsalaris, opgebouwd uit:</p>
+                  <p>Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten, opgebouwd uit:</p>
                   <ul className="list-disc list-inside space-y-0.5">
                     <li>Herwervingskosten — vacature, jobboards, selectie opnieuw</li>
                     <li>Verloren productiviteit — onderprestatie + maanden vacature open</li>
@@ -650,7 +650,7 @@ export default function HomePage() {
                 </button>
                 {showCalcDetail && (
                   <div className="mt-3 bg-navy-light rounded-xl border border-purple/10 p-4 text-left text-xs text-gray-400 space-y-1.5">
-                    <p className="text-gray-300 font-medium">Een mis-hire kost 50–200% van het jaarsalaris (SHRM). Dit is opgebouwd uit:</p>
+                    <p className="text-gray-300 font-medium">Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM). Dit is opgebouwd uit:</p>
                     <ul className="list-disc list-inside space-y-1">
                       <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, selectieprocedure opnieuw doorlopen</li>
                       <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken onder niveau, de positie staat maanden open</li>
