@@ -15,40 +15,41 @@ export default function HomePage() {
   const [showCalcDetail, setShowCalcDetail] = useState(false)
 
   // Calculator state – string inputs for free keyboard editing, numeric values for calculation
-  const [calcHiresInput, setCalcHiresInput] = useState('5')
+  const [calcMedewerkersInput, setCalcMedewerkersInput] = useState('50')
   const [calcSalarisInput, setCalcSalarisInput] = useState('5000')
   const [calcVerloopInput, setCalcVerloopInput] = useState('10')
-  const calcHires = Math.max(1, Math.min(100, Number(calcHiresInput) || 1))
+  const calcMedewerkers = Math.max(1, Math.min(10000, Number(calcMedewerkersInput) || 1))
   const calcSalaris = Math.max(2000, Math.min(20000, Number(calcSalarisInput) || 2000))
   const calcVerloop = Math.max(1, Math.min(50, Number(calcVerloopInput) || 1))
 
   const formatEur = useMemo(() => new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }), [])
 
   const calcResults = useMemo(() => {
+    // V7 model: medewerkers × verloop% = hires per jaar
+    const hiresPerJaar = calcMedewerkers * (calcVerloop / 100)
     const jaarsalaris = calcSalaris * 12
     const jaarsalarisInclVakantiegeld = jaarsalaris * 1.08
-    const totaleLoonkosten = jaarsalarisInclVakantiegeld * 1.35
-    const kostenPerMisHireLow = totaleLoonkosten * 0.50
-    const kostenPerMisHireHigh = totaleLoonkosten * 2.00
-    // Verloop beïnvloedt het aantal vervangingshires: hoger verloop = meer hires door verloop
-    const verloopFactor = calcVerloop / 100
-    const hiresDoorbverloop = calcHires * verloopFactor
-    const totaalHires = calcHires + hiresDoorbverloop
-    const mishiresPerJaar = totaalHires * 0.46
+    const totaleLoonkosten = jaarsalarisInclVakantiegeld * 1.35 // €87.480 bij €5.000/mnd
+    const kostenPerMisHireLow = totaleLoonkosten * 0.50  // SHRM: 50% jaarsalaris
+    const kostenPerMisHireHigh = totaleLoonkosten * 2.00  // SHRM: 200% jaarsalaris
+    // 46% van nieuwe hires faalt binnen 18 maanden (Leadership IQ)
+    const mishiresPerJaar = hiresPerJaar * 0.46
+    // Refurzy voorkomt 39-59% daarvan (Aberdeen Group / Gallup)
     const voorkomenMisHiresLow = mishiresPerJaar * 0.39
     const voorkomenMisHiresHigh = mishiresPerJaar * 0.59
     const besparingMisHireLow = voorkomenMisHiresLow * kostenPerMisHireLow
     const besparingMisHireHigh = voorkomenMisHiresHigh * kostenPerMisHireHigh
-    const traditioneleBureauKosten = totaalHires * jaarsalarisInclVakantiegeld * 0.25
-    const refurzyKosten = totaalHires * 4333
+    // Directe besparing: bureau 25% vs Refurzy €4.333
+    const traditioneleBureauKosten = hiresPerJaar * jaarsalarisInclVakantiegeld * 0.25
+    const refurzyKosten = hiresPerJaar * 4333
     const directeBesparing = traditioneleBureauKosten - refurzyKosten
     const totaalBesparingLow = directeBesparing + besparingMisHireLow
     const totaalBesparingHigh = directeBesparing + besparingMisHireHigh
-    const roi = Math.round((totaalBesparingLow / refurzyKosten) * 100)
+    const roi = refurzyKosten > 0 ? Math.round((totaalBesparingLow / refurzyKosten) * 100) : 0
     const vijfJaarLow = totaalBesparingLow * 5
     const vijfJaarHigh = totaalBesparingHigh * 5
-    return { totaalBesparingLow, totaalBesparingHigh, roi, directeBesparing, vijfJaarLow, vijfJaarHigh, totaalHires: Math.round(totaalHires) }
-  }, [calcHires, calcSalaris, calcVerloop])
+    return { totaalBesparingLow, totaalBesparingHigh, roi, directeBesparing, vijfJaarLow, vijfJaarHigh, hiresPerJaar: Math.round(hiresPerJaar * 10) / 10 }
+  }, [calcMedewerkers, calcSalaris, calcVerloop])
 
   useEffect(() => {
     setUser(getUser())
@@ -548,14 +549,14 @@ export default function HomePage() {
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  {lang === 'nl' ? 'Aantal hires per jaar' : 'Number of hires per year'}
+                  {lang === 'nl' ? 'Aantal medewerkers' : 'Number of employees'}
                 </label>
                 <input
                   type="text"
                   inputMode="numeric"
-                  value={calcHiresInput}
-                  onChange={(e) => setCalcHiresInput(e.target.value.replace(/[^0-9]/g, ''))}
-                  onBlur={() => { const v = Math.max(1, Math.min(100, Number(calcHiresInput) || 1)); setCalcHiresInput(String(v)) }}
+                  value={calcMedewerkersInput}
+                  onChange={(e) => setCalcMedewerkersInput(e.target.value.replace(/[^0-9]/g, ''))}
+                  onBlur={() => { const v = Math.max(1, Math.min(10000, Number(calcMedewerkersInput) || 1)); setCalcMedewerkersInput(String(v)) }}
                   className="w-full bg-navy border border-purple/20 rounded-xl px-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                 />
               </div>
@@ -612,6 +613,13 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* Hires context */}
+              <p className="text-xs text-gray-500 text-center mb-6">
+                {lang === 'nl'
+                  ? `${calcMedewerkers} medewerkers × ${calcVerloop}% verloop = ${calcResults.hiresPerJaar} hires per jaar`
+                  : `${calcMedewerkers} employees × ${calcVerloop}% turnover = ${calcResults.hiresPerJaar} hires per year`}
+              </p>
+
               {/* Stats row */}
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="text-center">
@@ -631,8 +639,8 @@ export default function HomePage() {
               {/* Footnote */}
               <p className="text-[10px] text-gray-600 text-center leading-relaxed mb-6">
                 {lang === 'nl'
-                  ? '* Berekeningen o.b.v. bruto maandsalaris van \u20AC5.000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reductie (Aberdeen Group, Gallup), bureau fee van 25%.'
-                  : '* Calculations based on gross monthly salary of \u20AC5,000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reduction (Aberdeen Group, Gallup), agency fee of 25%.'}
+                  ? '* Berekening: medewerkers × verloop% = hires/jaar. 46% mis-hire rate (Leadership IQ), Refurzy voorkomt 39-59% (Aberdeen Group, Gallup). Mis-hire kosten: 50-200% jaarsalaris (SHRM). Bureau fee: 25% vs. Refurzy €4.333.'
+                  : '* Calculation: employees × turnover% = hires/year. 46% mis-hire rate (Leadership IQ), Refurzy prevents 39-59% (Aberdeen Group, Gallup). Mis-hire costs: 50-200% annual salary (SHRM). Agency fee: 25% vs. Refurzy €4,333.'}
               </p>
 
               {/* Mis-hire cost breakdown */}
