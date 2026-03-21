@@ -152,7 +152,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat zijn de dual-status bevestigingen?',
-    a: 'Bij elke stap in het proces (gesprek gepland, gesprek afgerond, arbeidsvoorwaarden) wordt u gevraagd om te bevestigen. Dit is vrijblijvend maar helpt de transparantie: als u bevestigt dat een gesprek heeft plaatsgevonden maar de opdrachtgever dit nog niet heeft bijgewerkt, stuurt het systeem automatisch een herinnering. U ziet de status als ✓✓ (beide bevestigd), ✓? (alleen opdrachtgever), of ?✓ (alleen u).',
+    a: 'Bij elke stap in het proces (gesprek gepland, gesprek afgerond, arbeidsvoorwaarden) wordt je gevraagd om te bevestigen. Door te bevestigen krijg je sneller duidelijkheid: het systeem stuurt automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo wordt voorkomen dat je lang in onzekerheid wacht.\n\nJe ziet de status als: ✓✓ (beide bevestigd — proces gaat door), ✓? (opdrachtgever wacht op jouw bevestiging), ?✓ (jij hebt bevestigd — opdrachtgever krijgt herinnering), of ?? (nog niemand heeft bevestigd).',
     roles: ['kandidaat'],
   },
   {

@@ -444,6 +444,15 @@ export default function KandidaatDashboard() {
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-ink">Actieve processen</h2>
 
+          {/* Incentive banner */}
+          <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-start gap-3">
+            <span className="text-lg">💡</span>
+            <div>
+              <p className="text-sm font-semibold text-ink">Sneller duidelijkheid door te bevestigen</p>
+              <p className="text-sm text-ink-light mt-0.5">Bevestig elke stap (gesprek gepland, afgerond, etc.) zodra deze heeft plaatsgevonden. Het systeem stuurt dan automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg jij sneller duidelijkheid over je sollicitatie.</p>
+            </div>
+          </div>
+
           {actieveVacatures.length === 0 ? (
             <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
               <span className="text-4xl">📂</span>
@@ -529,8 +538,9 @@ export default function KandidaatDashboard() {
                   </div>
                 )}
                 {v.status === 'gesprek' && v.dualStatus && v.dualStatus.opdrachtgever && v.dualStatus.kandidaat && (
-                  <div className="bg-blue-50 rounded-xl p-3">
-                    <p className="text-sm text-blue-700 font-medium">Bevestig na je gesprek: is het gesprek doorgegaan?</p>
+                  <div className="bg-blue-50 rounded-xl p-3 space-y-1">
+                    <p className="text-sm text-blue-700 font-semibold">Bevestig na je gesprek: is het gesprek doorgegaan?</p>
+                    <p className="text-xs text-blue-600">Jouw bevestiging zorgt ervoor dat de opdrachtgever wordt gestimuleerd om sneller een beslissing te nemen.</p>
                   </div>
                 )}
 
@@ -630,25 +640,25 @@ export default function KandidaatDashboard() {
           ))}
 
           {/* Legend dual status */}
-          <div className="bg-surface-muted rounded-2xl p-5 space-y-2">
-            <p className="text-xs font-semibold text-ink">Dual-status indicatoren</p>
-            <p className="text-[11px] text-ink-light">Bij actieve processen zie je een status-indicator die aangeeft of zowel de opdrachtgever als jij de huidige stap hebben bevestigd:</p>
+          <div className="bg-surface-muted rounded-2xl p-5 space-y-3">
+            <p className="text-sm font-semibold text-ink">Waarom bevestigen?</p>
+            <p className="text-sm text-ink-light">Wanneer jij een stap bevestigt (bijv. &quot;gesprek heeft plaatsgevonden&quot;), stuurt het systeem automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg je sneller duidelijkheid over je sollicitatie.</p>
             <div className="flex flex-wrap gap-4 mt-2">
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={true} kandidaat={true} />
-                <span className="text-[10px] text-ink-light">Beide bevestigd</span>
+                <span className="text-xs text-ink-light">Beide bevestigd — proces gaat door</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={true} kandidaat={false} />
-                <span className="text-[10px] text-ink-light">Alleen opdrachtgever</span>
+                <span className="text-xs text-ink-light">Opdrachtgever wacht op jouw bevestiging</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={false} kandidaat={true} />
-                <span className="text-[10px] text-ink-light">Alleen jij — opdrachtgever loopt achter</span>
+                <span className="text-xs text-ink-light">Jij hebt bevestigd — opdrachtgever krijgt herinnering</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={false} kandidaat={false} />
-                <span className="text-[10px] text-ink-light">Geen van beiden</span>
+                <span className="text-xs text-ink-light">Nog niemand heeft bevestigd</span>
               </div>
             </div>
           </div>
