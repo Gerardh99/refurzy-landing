@@ -365,20 +365,6 @@ export default function HomePage() {
             </table>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
-            <div className="bg-navy rounded-xl border border-cyan/20 p-4">
-              <div className="text-lg font-bold text-cyan">50%</div>
-              <div className="text-[10px] text-gray-500">{t('pricing.toScout', lang)}</div>
-            </div>
-            <div className="bg-navy rounded-xl border border-purple/20 p-4">
-              <div className="text-lg font-bold text-purple-light">50%</div>
-              <div className="text-[10px] text-gray-500">{t('pricing.toRefurzy', lang)}</div>
-            </div>
-            <div className="bg-navy rounded-xl border border-orange/20 p-4">
-              <div className="text-lg font-bold text-orange">+30%</div>
-              <div className="text-[10px] text-gray-500">{t('pricing.exclusivity', lang)}</div>
-            </div>
-          </div>
         </div>
       </section>
 
