@@ -106,14 +106,12 @@ export default function OnboardingKandidaat() {
 
   return (
     <div className="min-h-screen bg-surface flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-surface-border px-8 py-4 flex items-center justify-between">
-        <img src="/assets/refurzy-logo.png" alt="Refurzy" className="h-7" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-        <span className="text-sm text-ink-muted">{t.header}</span>
-      </header>
-
-      {/* Progress stepper */}
-      <div className="bg-white border-b border-surface-border px-8 py-6">
+      {/* Header + Progress stepper on navy background */}
+      <div className="bg-navy px-8 pt-4 pb-6">
+        <header className="flex items-center justify-between mb-6">
+          <img src="/logo-white.png" alt="Refurzy" className="h-7" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          <span className="text-sm text-white/50">{t.header}</span>
+        </header>
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between">
             {steps.map((label, i) => (
@@ -122,17 +120,17 @@ export default function OnboardingKandidaat() {
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-colors ${
                     i < currentStep ? 'bg-purple text-white border-purple' :
                     i === currentStep ? 'bg-white text-purple border-purple' :
-                    'bg-surface-muted text-ink-muted border-surface-border'
+                    'bg-white/10 text-white/40 border-white/20'
                   }`}>
                     {i < currentStep ? '✓' : i + 1}
                   </div>
                   <span className={`text-xs mt-1.5 whitespace-nowrap ${
-                    i <= currentStep ? 'text-ink font-medium' : 'text-ink-muted'
+                    i <= currentStep ? 'text-white font-medium' : 'text-white/40'
                   }`}>{label}</span>
                 </div>
                 {i < steps.length - 1 && (
                   <div className={`flex-1 h-0.5 mx-3 mt-[-1rem] ${
-                    i < currentStep ? 'bg-purple' : 'bg-surface-border'
+                    i < currentStep ? 'bg-purple' : 'bg-white/20'
                   }`} />
                 )}
               </div>
