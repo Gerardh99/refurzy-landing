@@ -433,26 +433,26 @@ export default function HomePage() {
             <div>
               <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.platform', lang)}</h4>
               <div className="space-y-2 text-xs text-gray-600">
-                <div>{t('footer.forEmployers', lang)}</div>
-                <div>{t('footer.forScouts', lang)}</div>
-                <div>{t('footer.forCandidates', lang)}</div>
-                <div>{t('nav.pricing', lang)}</div>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forEmployers', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forScouts', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forCandidates', lang)}</a>
+                <a href="#pricing" className="block hover:text-gray-400 transition-colors">{t('nav.pricing', lang)}</a>
               </div>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.company', lang)}</h4>
               <div className="space-y-2 text-xs text-gray-600">
-                <div>{t('footer.about', lang)}</div>
-                <div>{t('footer.science', lang)}</div>
-                <div>{t('footer.contact', lang)}</div>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.about', lang)}</a>
+                <Link href="/wetenschap" className="block hover:text-gray-400 transition-colors">{t('footer.science', lang)}</Link>
+                <a href="mailto:info@refurzy.com" className="block hover:text-gray-400 transition-colors">{t('footer.contact', lang)}</a>
               </div>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.legal', lang)}</h4>
               <div className="space-y-2 text-xs text-gray-600">
-                <div>{t('footer.privacy', lang)}</div>
-                <div>{t('footer.terms', lang)}</div>
-                <div>{t('footer.cookies', lang)}</div>
+                <Link href="/juridisch/privacybeleid" className="block hover:text-gray-400 transition-colors">{t('footer.privacy', lang)}</Link>
+                <Link href="/juridisch/algemene-voorwaarden" className="block hover:text-gray-400 transition-colors">{t('footer.terms', lang)}</Link>
+                <Link href="/juridisch/cookiebeleid" className="block hover:text-gray-400 transition-colors">{t('footer.cookies', lang)}</Link>
               </div>
             </div>
           </div>
