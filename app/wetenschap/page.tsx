@@ -1,48 +1,23 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { getUser, getRolePath } from '@/lib/auth'
-import { User } from '@/lib/types'
-
-const roleLabels: Record<string, string> = {
-  opdrachtgever: 'Opdrachtgever',
-  scout: 'Talent Scout',
-  kandidaat: 'Kandidaat',
-  admin: 'Refurzy Admin',
-}
-
 export default function WetenschapPage() {
-  const [user, setUser] = useState<User | null>(null)
-  useEffect(() => { setUser(getUser()) }, [])
 
   return (
     <div className="min-h-screen bg-navy text-white font-[Poppins]">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md border-b border-purple/10">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <Link href="/homepage"><img src="/logo-white.png" alt="Refurzy" className="h-7" /></Link>
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
-            <Link href="/homepage" className="hover:text-white transition-colors">Homepage</Link>
+          <div className="hidden md:flex items-center gap-6 text-sm text-gray-400 absolute left-1/2 -translate-x-1/2">
+            <Link href="/homepage#hoe-het-werkt" className="hover:text-white transition-colors">Hoe het werkt</Link>
             <Link href="/homepage#pricing" className="hover:text-white transition-colors">Pricing</Link>
             <span className="text-cyan font-medium">Wetenschap</span>
+            <Link href="/homepage#faq" className="hover:text-white transition-colors">FAQ</Link>
           </div>
-          {user ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple-light text-xs font-bold">{user.name.charAt(0)}</div>
-                <span className="text-xs text-gray-400">{user.name}</span>
-                <span className="px-1.5 py-0.5 bg-purple/10 rounded text-purple-light text-[10px] font-medium">{roleLabels[user.role]}</span>
-              </div>
-              <Link href={getRolePath(user.role)} className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-                Dashboard →
-              </Link>
-            </div>
-          ) : (
-            <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-              Gratis starten
-            </Link>
-          )}
+          <Link href="/login" className="btn-gradient text-white text-sm font-semibold px-5 py-2.5 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+            Inloggen
+          </Link>
         </div>
       </nav>
 
