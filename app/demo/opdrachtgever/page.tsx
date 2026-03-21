@@ -2,11 +2,15 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { vacatures } from '@/lib/mock-data'
+import { vacatures, archiefVacatures } from '@/lib/mock-data'
 import StatusBadge from '@/components/StatusBadge'
+
+type Tab = 'actief' | 'afgerond'
 
 export default function OpdrachtgeverDashboard() {
   const [showWelcome, setShowWelcome] = useState(true)
+  const [tab, setTab] = useState<Tab>('actief')
+
   const totalKandidaten = vacatures.reduce((sum, v) => sum + v.kandidaten.length, 0)
   const allScores = vacatures.flatMap(v => v.kandidaten.map(k => k.deVriesFit))
   const gemiddeldeFit = allScores.length > 0
@@ -18,6 +22,9 @@ export default function OpdrachtgeverDashboard() {
     { label: 'Totaal kandidaten', value: totalKandidaten, icon: '👥' },
     { label: 'Gem. M-Score', value: `${gemiddeldeFit}%`, icon: '🎯' },
   ]
+
+  const activeVacatures = vacatures
+  const archivedVacatures = archiefVacatures
 
   return (
     <div>
@@ -72,62 +79,158 @@ export default function OpdrachtgeverDashboard() {
           </Link>
         </div>
 
-        <div className="space-y-3">
-          {vacatures.map((vacature) => {
-            const nieuweKandidaten = vacature.kandidaten.filter(
-              (k) => k.procesStatus === 'voorgesteld'
-            ).length
-            const actieVereist = vacature.kandidaten.filter(
-              (k) => k.procesStatus === 'gesprek_plannen' || k.procesStatus === 'feedback_geven'
-            ).length
-
-            return (
-              <Link
-                key={vacature.id}
-                href={`/demo/opdrachtgever/vacature/${vacature.id}`}
-                className="block bg-surface-muted rounded-xl border border-surface-border p-5 hover:border-purple/25 transition-colors group"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-ink font-semibold group-hover:text-cyan transition-colors">
-                        {vacature.title}
-                      </h3>
-                      <StatusBadge status={vacature.status === 'open' ? 'nieuw' : 'afgewezen'} />
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-ink-light">
-                      <span className="flex items-center gap-1">
-                        <span className="text-purple">📍</span> {vacature.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <span className="text-purple">📅</span> Deadline: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <span className="text-purple">💰</span> {vacature.salaris}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-6 ml-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-ink">{vacature.kandidaten.length}</div>
-                      <div className="text-xs text-ink-muted">kandidaten</div>
-                    </div>
-                    {nieuweKandidaten > 0 && (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-cyan">{nieuweKandidaten}</div>
-                        <div className="text-xs text-cyan/70">nieuw</div>
-                      </div>
-                    )}
-                    <span className="text-ink-muted group-hover:text-purple transition-colors text-xl">
-                      →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            )
-          })}
+        {/* Tabs */}
+        <div className="flex gap-1 bg-surface-muted rounded-lg p-1 mb-6">
+          <button
+            onClick={() => setTab('actief')}
+            className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              tab === 'actief'
+                ? 'bg-white text-ink shadow-sm'
+                : 'text-ink-light hover:text-ink'
+            }`}
+          >
+            Actief ({activeVacatures.length})
+          </button>
+          <button
+            onClick={() => setTab('afgerond')}
+            className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              tab === 'afgerond'
+                ? 'bg-white text-ink shadow-sm'
+                : 'text-ink-light hover:text-ink'
+            }`}
+          >
+            Afgerond ({archivedVacatures.length})
+          </button>
         </div>
+
+        {/* Actieve vacatures */}
+        {tab === 'actief' && (
+          <div className="space-y-3">
+            {activeVacatures.map((vacature) => {
+              const nieuweKandidaten = vacature.kandidaten.filter(
+                (k) => k.procesStatus === 'voorgesteld'
+              ).length
+              const actieVereist = vacature.kandidaten.filter(
+                (k) => k.procesStatus === 'gesprek_plannen' || k.procesStatus === 'feedback_geven'
+              ).length
+
+              return (
+                <Link
+                  key={vacature.id}
+                  href={`/demo/opdrachtgever/vacature/${vacature.id}`}
+                  className="block bg-surface-muted rounded-xl border border-surface-border p-5 hover:border-purple/25 transition-colors group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-ink font-semibold group-hover:text-cyan transition-colors">
+                          {vacature.title}
+                        </h3>
+                        <StatusBadge status={vacature.status === 'open' ? 'nieuw' : 'afgewezen'} />
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-ink-light">
+                        <span className="flex items-center gap-1">
+                          <span className="text-purple">📍</span> {vacature.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <span className="text-purple">📅</span> Deadline: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <span className="text-purple">💰</span> {vacature.salaris}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-6 ml-6">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-ink">{vacature.kandidaten.length}</div>
+                        <div className="text-xs text-ink-muted">kandidaten</div>
+                      </div>
+                      {nieuweKandidaten > 0 && (
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-cyan">{nieuweKandidaten}</div>
+                          <div className="text-xs text-cyan/70">nieuw</div>
+                        </div>
+                      )}
+                      <span className="text-ink-muted group-hover:text-purple transition-colors text-xl">
+                        →
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+
+            {activeVacatures.length === 0 && (
+              <div className="text-center py-8 text-ink-muted">
+                <p>Geen actieve vacatures</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Afgeronde vacatures */}
+        {tab === 'afgerond' && (
+          <div className="space-y-3">
+            {archivedVacatures.length === 0 ? (
+              <div className="text-center py-8 text-ink-muted">
+                <p>Geen afgeronde vacatures</p>
+              </div>
+            ) : (
+              archivedVacatures.map((vacature) => {
+                const aangenomen = vacature.kandidaten.find(
+                  (k) => k.procesStatus === 'contract_getekend'
+                )
+
+                return (
+                  <div
+                    key={vacature.id}
+                    className="bg-surface-muted/60 rounded-xl border border-surface-border p-5 opacity-80"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-ink font-semibold">
+                            {vacature.title}
+                          </h3>
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 font-medium">
+                            ✓ Vervuld
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-ink-light">
+                          <span className="flex items-center gap-1">
+                            <span className="text-purple">📍</span> {vacature.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="text-purple">📅</span> Afgesloten: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="text-purple">💰</span> {vacature.salaris}
+                          </span>
+                        </div>
+                        {aangenomen && (
+                          <div className="mt-2 text-xs text-green-500/80">
+                            Kandidaat aangenomen: <span className="font-medium text-green-500">{aangenomen.naam}</span>
+                            {aangenomen.contractDatum && (
+                              <span> — {new Date(aangenomen.contractDatum).toLocaleDateString('nl-NL')}</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-6 ml-6">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-ink-light">{vacature.kandidaten.length}</div>
+                          <div className="text-xs text-ink-muted">kandidaten</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

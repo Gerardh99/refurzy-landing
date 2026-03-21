@@ -131,6 +131,68 @@ export const allVacatures: Vacature[] = [
   },
 ]
 
+// ─── Archived (completed) vacatures ──────────────────────────────────────────
+export const archiefVacatures: Vacature[] = [
+  {
+    id: 'vac-arch-1',
+    title: 'Product Owner',
+    company: 'TechVentures B.V.',
+    location: 'Amsterdam',
+    salaris: '€4.500 - €6.000',
+    deadline: '2025-09-15',
+    status: 'vervuld',
+    createdAt: '2025-06-01',
+    pmsCompleted: true,
+    hardeCriteria: {
+      opleidingsniveau: 'HBO',
+      minimaleErvaring: '5-10 jaar',
+      locatie: 'Amsterdam',
+      opKantoor: 'Hybride (3 dagen)',
+      maxReistijd: '45 minuten',
+    },
+    kandidaten: [
+      {
+        id: 'k-arch-1', naam: 'Sanne Visser', initialen: 'S', anoniem: false,
+        hardeCriteriaMatch: 100, hardeCriteriaIcon: 'check',
+        deVriesFit: 74, scoutRating: 3.8, scoutNaam: 'Mark Jansen', scoutId: 'scout-2',
+        status: 'aangenomen', procesStatus: 'contract_getekend', unlocked: true,
+        opleidingsniveau: 'HBO', werkervaring: '7 jaar', woonplaats: 'Amsterdam',
+        email: 'sanne.visser@email.nl', telefoon: '06-55566677',
+        contractDatum: '2025-08-20',
+      },
+    ],
+  },
+  {
+    id: 'vac-arch-2',
+    title: 'Digital Marketing Lead',
+    company: 'TechVentures B.V.',
+    location: 'Amsterdam',
+    salaris: '€4.000 - €5.500',
+    deadline: '2025-12-01',
+    status: 'vervuld',
+    createdAt: '2025-09-15',
+    pmsCompleted: true,
+    hardeCriteria: {
+      opleidingsniveau: 'HBO',
+      minimaleErvaring: '2-5 jaar',
+      locatie: 'Amsterdam',
+      opKantoor: 'Hybride (2 dagen)',
+      maxReistijd: '60 minuten',
+    },
+    kandidaten: [
+      {
+        id: 'k-arch-2', naam: 'Jamal Usan', initialen: 'J', anoniem: false,
+        hardeCriteriaMatch: 92, hardeCriteriaIcon: 'check',
+        deVriesFit: 71, scoutRating: 4.1, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        status: 'aangenomen', procesStatus: 'contract_getekend', unlocked: true,
+        opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Utrecht',
+        email: 'jamal.usan@email.nl', telefoon: '06-23456789',
+        contractDatum: '2025-11-10',
+      },
+    ],
+  },
+]
+
 export const scoutKandidaten: Kandidaat[] = [
   // === BESCHIKBAAR ===
   {

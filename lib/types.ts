@@ -15,7 +15,7 @@ export interface Vacature {
   location: string
   salaris: string
   deadline: string
-  status: 'open' | 'gesloten'
+  status: 'open' | 'gesloten' | 'vervuld'
   hardeCriteria: HardeCriteria
   kandidaten: KandidaatMatch[]
   createdAt: string

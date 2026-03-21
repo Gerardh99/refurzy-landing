@@ -5,13 +5,13 @@ import Link from 'next/link'
 
 // Mock data for kandidaten across all vacatures
 const mockKandidaten = [
-  { id: 'k-1', naam: 'Anna de Jong', anoniem: false, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 87, status: 'arbeidsvoorwaarden', scoutNaam: 'Sophie de Graaf', datum: '2026-03-08' },
-  { id: 'k-2', naam: 'Jamal Usan', anoniem: true, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 71, status: 'voorgedragen', scoutNaam: 'Sophie de Graaf', datum: '2026-03-10' },
-  { id: 'k-3', naam: 'Lisa Brouwer', anoniem: true, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 53, status: 'afgewezen', scoutNaam: 'Mark Jansen', datum: '2026-03-11' },
-  { id: 'k-4', naam: 'Thomas van Dijk', anoniem: false, vacature: 'Senior Software Developer', vacatureId: 'vac-2', mScore: 82, status: 'in gesprek', scoutNaam: 'Sophie de Graaf', datum: '2026-03-12' },
-  { id: 'k-5', naam: 'Priya Sharma', anoniem: true, vacature: 'Senior Software Developer', vacatureId: 'vac-2', mScore: 68, status: 'voorgedragen', scoutNaam: 'Mark Jansen', datum: '2026-03-14' },
-  { id: 'k-6', naam: 'Robert Bakker', anoniem: false, vacature: 'HR Business Partner', vacatureId: 'vac-3', mScore: 91, status: 'arbeidsvoorwaarden', scoutNaam: 'Sophie de Graaf', datum: '2026-03-09' },
-  { id: 'k-7', naam: 'Emma Visser', anoniem: true, vacature: 'Financial Controller', vacatureId: 'vac-4', mScore: 75, status: 'in gesprek', scoutNaam: 'Mark Jansen', datum: '2026-03-15' },
+  { id: 'k-1', naam: 'Anna de Jong', anoniem: false, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 87, hardeCriteria: 100, status: 'arbeidsvoorwaarden', scoutNaam: 'Sophie de Graaf', datum: '2026-03-08' },
+  { id: 'k-2', naam: 'Jamal Usan', anoniem: true, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 71, hardeCriteria: 92, status: 'voorgedragen', scoutNaam: 'Sophie de Graaf', datum: '2026-03-10' },
+  { id: 'k-3', naam: 'Lisa Brouwer', anoniem: true, vacature: 'Marketing Manager', vacatureId: 'vac-1', mScore: 53, hardeCriteria: 76, status: 'afgewezen', scoutNaam: 'Mark Jansen', datum: '2026-03-11' },
+  { id: 'k-4', naam: 'Thomas van Dijk', anoniem: false, vacature: 'Senior Software Developer', vacatureId: 'vac-2', mScore: 82, hardeCriteria: 95, status: 'in gesprek', scoutNaam: 'Sophie de Graaf', datum: '2026-03-12' },
+  { id: 'k-5', naam: 'Priya Sharma', anoniem: true, vacature: 'Senior Software Developer', vacatureId: 'vac-2', mScore: 68, hardeCriteria: 88, status: 'voorgedragen', scoutNaam: 'Mark Jansen', datum: '2026-03-14' },
+  { id: 'k-6', naam: 'Robert Bakker', anoniem: false, vacature: 'HR Business Partner', vacatureId: 'vac-3', mScore: 91, hardeCriteria: 100, status: 'arbeidsvoorwaarden', scoutNaam: 'Sophie de Graaf', datum: '2026-03-09' },
+  { id: 'k-7', naam: 'Emma Visser', anoniem: true, vacature: 'Financial Controller', vacatureId: 'vac-4', mScore: 75, hardeCriteria: 84, status: 'in gesprek', scoutNaam: 'Mark Jansen', datum: '2026-03-15' },
 ]
 
 const vacatureOptions = [
@@ -41,6 +41,22 @@ function mScoreBg(score: number): string {
   if (score >= 80) return 'bg-cyan/10'
   if (score >= 60) return 'bg-orange/10'
   return 'bg-red-50'
+}
+
+function hardeCriteriaColor(score: number): string {
+  if (score >= 90) return 'text-green-400'
+  if (score >= 75) return 'text-orange'
+  return 'text-red-500'
+}
+
+function hardeCriteriaBg(score: number): string {
+  if (score >= 90) return 'bg-green-400/10'
+  if (score >= 75) return 'bg-orange/10'
+  return 'bg-red-50'
+}
+
+function hardeCriteriaIcon(score: number): string {
+  return score >= 90 ? '✓' : '⚠'
 }
 
 export default function OpdrachtgeverKandidaten() {
@@ -163,7 +179,13 @@ export default function OpdrachtgeverKandidaten() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 flex-shrink-0">
+              <div className="flex items-center gap-3 flex-shrink-0">
+                {/* Harde Criteria */}
+                <div className={`px-3 py-1.5 rounded-lg ${hardeCriteriaBg(k.hardeCriteria)}`}>
+                  <span className={`text-sm font-bold ${hardeCriteriaColor(k.hardeCriteria)}`}>{hardeCriteriaIcon(k.hardeCriteria)} {k.hardeCriteria}%</span>
+                  <span className="text-xs text-ink-muted ml-1">Criteria</span>
+                </div>
+
                 {/* M-Score */}
                 <div className={`px-3 py-1.5 rounded-lg ${mScoreBg(k.mScore)}`}>
                   <span className={`text-lg font-bold ${mScoreColor(k.mScore)}`}>{k.mScore}%</span>
