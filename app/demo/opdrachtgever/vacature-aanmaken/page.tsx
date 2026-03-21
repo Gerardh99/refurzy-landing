@@ -626,7 +626,7 @@ export default function VacatureAanmakenPage() {
                       <div className="mt-3 bg-orange/5 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
                         <span className="text-orange text-xs">&#9888;&#65039;</span>
                         <p className="text-xs text-orange">
-                          <strong>Let op:</strong> exclusiviteit kan na activering niet meer worden uitgeschakeld voor deze vacature.
+                          <strong>Let op:</strong> na publicatie kan exclusiviteit niet meer worden uitgeschakeld voor deze vacature.
                         </p>
                       </div>
                     )}
