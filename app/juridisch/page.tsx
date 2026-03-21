@@ -33,7 +33,7 @@ export default function JuridischOverzicht() {
                 <h3 className="text-white font-semibold group-hover:text-cyan transition-colors">{doc.title}</h3>
                 <p className="text-gray-500 text-sm mt-0.5">{doc.audience}</p>
               </div>
-              <span className="text-xs text-gray-600 bg-purple/10 px-2 py-1 rounded">v{doc.version}</span>
+              <span className="text-xs text-gray-500 bg-purple/10 px-2 py-1 rounded">v{doc.version}</span>
             </Link>
           ))}
         </div>

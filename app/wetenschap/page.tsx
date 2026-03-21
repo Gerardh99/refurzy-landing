@@ -64,7 +64,7 @@ export default function WetenschapPage() {
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-gray-600 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
+            <p className="text-[10px] text-gray-500 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
           </div>
         </section>
 
@@ -116,7 +116,7 @@ export default function WetenschapPage() {
                 <div className="flex-1">
                   <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
-                  <p className="text-gray-600 text-[11px] mt-1.5 italic">Bron: {item.source}</p>
+                  <p className="text-gray-500 text-[11px] mt-1.5 italic">Bron: {item.source}</p>
                 </div>
               </div>
             ))}
@@ -308,7 +308,7 @@ export default function WetenschapPage() {
               <p className="text-sm text-gray-300 leading-relaxed">
                 <strong className="text-white">Wat betekent dit concreet?</strong> Een hogere M-Score betekent dat een kandidaat beter past bij uw organisatie. Dit voorspelt dat hij of zij gelukkiger, productiever en langer bij u zal werken. Het werkt beter dan traditionele selectiemethoden zoals cv-screening of ongestructureerde interviews.¹
               </p>
-              <p className="text-[10px] text-gray-600 mt-3 italic">¹ Onderzocht bij 309 werknemers door de VU Amsterdam (2026). Effect blijft na correctie voor leeftijd, opleiding, salaris en dienstjaren. Ter vergelijking: traditionele capaciteitstests voorspellen werkprestaties met r = .16 (Sackett et al., 2024).</p>
+              <p className="text-[10px] text-gray-500 mt-3 italic">¹ Onderzocht bij 309 werknemers door de VU Amsterdam (2026). Effect blijft na correctie voor leeftijd, opleiding, salaris en dienstjaren. Ter vergelijking: traditionele capaciteitstests voorspellen werkprestaties met r = .16 (Sackett et al., 2024).</p>
             </div>
           </div>
         </section>
@@ -383,7 +383,7 @@ export default function WetenschapPage() {
               <div key={v.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
                 <h3 className="text-white font-semibold mb-2 text-sm">{v.title}</h3>
                 <p className="text-gray-400 text-xs leading-relaxed mb-2">{v.desc}</p>
-                <p className="text-[10px] text-gray-600 italic">{v.source}</p>
+                <p className="text-[10px] text-gray-500 italic">{v.source}</p>
               </div>
             ))}
           </div>
@@ -394,7 +394,7 @@ export default function WetenschapPage() {
             <p className="text-gray-400 text-xs leading-relaxed mb-2">
               Een recente studie onder 1.071 werknemers bevestigt dat P-O fit zowel direct als indirect (via zingeving in het werk) negatief samenhangt met vertrekintentie. Medewerkers die passen bij hun organisatie ervaren meer betekenis in hun werk, en vertrekken daardoor minder snel.
             </p>
-            <p className="text-[10px] text-gray-600 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
+            <p className="text-[10px] text-gray-500 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
           </div>
         </section>
 
@@ -455,7 +455,7 @@ export default function WetenschapPage() {
               </div>
             </div>
           </div>
-          <p className="text-[10px] text-gray-600 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door de Vrije Universiteit Amsterdam betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
+          <p className="text-[10px] text-gray-500 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door de Vrije Universiteit Amsterdam betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
         </section>
 
         {/* 7. Beperkingen */}
@@ -505,7 +505,7 @@ export default function WetenschapPage() {
                 Bekijk tarieven
               </Link>
             </div>
-            <p className="text-[10px] text-gray-600 text-center italic mt-6">
+            <p className="text-[10px] text-gray-500 text-center italic mt-6">
               Wetenschappelijk gevalideerd door de Vrije Universiteit Amsterdam (2026, N=309).
             </p>
           </div>

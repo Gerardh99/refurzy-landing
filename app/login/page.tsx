@@ -182,7 +182,7 @@ export default function LoginPage() {
                     <a href={DOC_URLS[doc]} target="_blank" rel="noopener noreferrer" className="text-cyan underline hover:text-cyan/80">
                       {roleConsents.labels[i]}
                     </a>
-                    <span className="text-gray-600 text-xs ml-1">(v{DOCUMENT_VERSIONS[doc]})</span>
+                    <span className="text-gray-500 text-xs ml-1">(v{DOCUMENT_VERSIONS[doc]})</span>
                   </span>
                 </label>
               ))}
@@ -205,7 +205,7 @@ export default function LoginPage() {
 
         {/* Wachtwoord vergeten link voor productie-look */}
         <p className="text-center mt-4">
-          <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Wachtwoord vergeten?</a>
+          <a href="#" className="text-xs text-gray-500 hover:text-gray-400 transition-colors">Wachtwoord vergeten?</a>
         </p>
       </div>
     </div>
