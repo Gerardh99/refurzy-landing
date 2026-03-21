@@ -82,8 +82,8 @@ export const translations = {
   },
   'pain.managers.title': { nl: 'Managers willen het niet doen', en: 'Managers don\'t want to do it' },
   'pain.managers.desc': {
-    nl: 'Werven is niet waarvoor managers zijn aangenomen. Ze vinden het tijdrovend, onzeker en frustrerend. Als ze het leuk hadden gevonden, waren ze wel recruiter geworden.',
-    en: 'Recruiting is not what managers were hired for. They find it time-consuming, uncertain and frustrating. If they had enjoyed it, they would have become recruiters.'
+    nl: 'Werven is niet waarvoor managers zijn aangenomen. Ze vinden het tijdrovend, onzeker en frustrerend. Als ze het leuk hadden gevonden, waren ze wel recruiter geworden. Bovendien: een ongestructureerd sollicitatiegesprek door een onervaren interviewer heeft een voorspellende waarde van slechts r = .20 (Schmidt & Hunter, 1998). Valkuilen als confirmation bias en het halo-effect leiden ertoe dat de eerste indruk wordt bevestigd in plaats van objectief getoetst.',
+    en: 'Recruiting is not what managers were hired for. They find it time-consuming, uncertain and frustrating. If they had enjoyed it, they would have become recruiters. Moreover: an unstructured interview by an inexperienced interviewer has a predictive validity of just r = .20 (Schmidt & Hunter, 1998). Pitfalls like confirmation bias and the halo effect mean the first impression gets confirmed rather than objectively tested.'
   },
   'pain.market.title': { nl: 'Eén bureau, één vijver. Honderden scouts, oneindig bereik.', en: 'One agency, one pond. Hundreds of scouts, infinite reach.' },
   'pain.market.desc': {
