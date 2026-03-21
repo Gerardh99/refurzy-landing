@@ -614,7 +614,7 @@ export default function VacatureAanmakenPage() {
                       <span className="px-2 py-0.5 bg-purple/10 text-purple text-[10px] font-bold rounded-full uppercase tracking-wider">+25%</span>
                     </div>
                     <p className="text-xs text-ink-muted mt-1.5 leading-relaxed">
-                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
+                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
                     </p>
                     <div className="mt-3 bg-cyan/5 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
                       <span className="text-cyan text-xs">🚀</span>

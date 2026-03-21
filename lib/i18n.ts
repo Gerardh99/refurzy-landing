@@ -257,6 +257,11 @@ export const translations = {
     nl: 'Refurzy start in Nederland en België. Daarna volgt een uitrol naar 13 andere Europese landen, elk met lokale taal, valuta en pricing.',
     en: 'Refurzy launches in the Netherlands and Belgium. After that, a rollout to 13 other European countries follows, each with local language, currency and pricing.'
   },
+  'faq.q10': { nl: 'Wat houdt exclusiviteit in?', en: 'What does exclusivity mean?' },
+  'faq.a10': {
+    nl: 'Bij het aanmaken van een vacature kunt u exclusiviteit activeren (+25% op de plaatsingsfee). Voorgedragen kandidaten zijn dan 14 dagen exclusief beschikbaar voor uw vacature en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. U betaalt alleen de toeslag bij een succesvolle plaatsing (no cure, no pay).',
+    en: 'When creating a vacancy, you can activate exclusivity (+25% on the placement fee). Nominated candidates are then exclusively available for your vacancy for 14 days and will not be offered to other employers for vacancies in the same professional field. Applications in other fields continue as normal — a vacancy in a completely different field is not competing for your position. You only pay the surcharge upon a successful placement (no cure, no pay).'
+  },
 
   // ─── CTA buttons ─────────────────────────────────────────────────────────
   'cta.btnEmployer': { nl: 'Start als opdrachtgever →', en: 'Start as employer →' },

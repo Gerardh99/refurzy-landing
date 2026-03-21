@@ -694,6 +694,7 @@ export default function HomePage() {
               { q: t('faq.q7', lang), a: t('faq.a7', lang) },
               { q: t('faq.q8', lang), a: t('faq.a8', lang) },
               { q: t('faq.q9', lang), a: t('faq.a9', lang) },
+              { q: t('faq.q10', lang), a: t('faq.a10', lang) },
             ].map((faq, i) => (
               <div key={i} className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
                 <button
