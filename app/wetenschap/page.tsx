@@ -75,7 +75,7 @@ export default function WetenschapPage() {
             <p className="text-gray-400 text-sm text-center mb-6">De 5 redenen waarom Refurzy een betere keuze is dan een traditioneel bureau</p>
             <div className="space-y-4">
               {[
-                { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers.' },
+                { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie.' },
                 { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000. Refurzy vermindert dit risico met 20–30% door wetenschappelijk bewezen matching.' },
                 { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
                 { icon: '📊', text: 'ROI van 336–651% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €220.000–€465.000 besparing.' },
@@ -87,6 +87,7 @@ export default function WetenschapPage() {
                 </div>
               ))}
             </div>
+            <p className="text-[10px] text-gray-600 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
           </div>
         </section>
 
@@ -181,7 +182,7 @@ export default function WetenschapPage() {
               },
               {
                 title: 'Kernwaarden (9 vragen)',
-                desc: 'Wat vindt iemand écht belangrijk? Eerlijkheid, innovatie, zekerheid? Als de waarden van een medewerker overeenkomen met die van de organisatie, blijft iemand langer en is diegene gelukkiger.',
+                desc: 'Wat vindt iemand écht belangrijk? Eerlijkheid, innovatie, zekerheid? Als de waarden van een medewerker overeenkomen met die van de organisatie, blijft iemand langer, is diegene gelukkiger en productiever.',
                 stats: 'De sterkste voorspeller van alle drie de werkuitkomsten',
                 regression: 'Grootste effect — de belangrijkste dimensie',
                 color: 'purple',
@@ -302,12 +303,18 @@ export default function WetenschapPage() {
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
-              { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026' },
-              { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Dat scheelt opnieuw werven, inwerken en productiviteitsverlies.', source: 'Kristof-Brown et al., 2005' },
-              { title: 'Sneller beslissen', desc: '81% van hiring managers twijfelt bij aannames. De M-Score geeft een objectief datapunt naast uw eigen gevoel, zodat u sneller en zekerder kunt beslissen.', source: 'Resume Genius, 2024' },
+              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
+              { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026 (N=309)' },
+              { title: 'Hogere productiviteit', desc: 'Betrokken medewerkers presteren aantoonbaar beter. Werkbevlogenheid — een directe uitkomst van goede P-O fit — voorspelt hogere werkprestaties en minder verzuim.', source: 'Halbesleben & Wheeler, 2008' },
+              { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Organisaties met hoge betrokkenheid hebben 59% minder verloop. Case studies tonen reducties van 40–59%.', source: 'Kristof-Brown et al., 2005 · PRADCO · ASK/AssessCandidates' },
+              { title: '39% minder verloop met assessments', desc: 'Bedrijven die pre-hire assessments inzetten (zoals de Matching Scan) rapporteren gemiddeld 39% lagere turnover dan bedrijven zonder.', source: 'Aberdeen Group' },
+              { title: '4× meer kans dat mensen blijven', desc: 'Medewerkers die hun organisatiecultuur als positief beoordelen zijn bijna 4× meer geneigd om te blijven. Bij een slechte cultuur zoekt 57% actief naar een nieuwe baan.', source: 'SHRM, 2024 (N=11.080, 15 landen)' },
+              { title: 'Sneller beslissen', desc: '81% van hiring managers twijfelt bij aannames. De gemiddelde time-to-hire is 68,5 dagen. De M-Score geeft een objectief datapunt, zodat u sneller en zekerder kunt beslissen.', source: 'Resume Genius, 2024 · SHRM, 2025' },
+              { title: 'Werkt wereldwijd', desc: 'P-O fit is universeel voorspellend voor werkuitkomsten, bevestigd in Oost-Azië, Europa en Noord-Amerika. Het principe geldt ongeacht land of cultuur.', source: 'Oh et al., 2014 (meta-analyse)' },
               { title: 'Minder vooroordelen', desc: 'Traditionele sollicitatiegesprekken zijn gevoelig voor vooroordelen en eerste indrukken. De Matching Scan is gestandaardiseerd en objectief — dezelfde maatstaf voor iedereen.', source: 'Sackett et al., 2024' },
-              { title: 'Sterkere bedrijfscultuur', desc: 'Wanneer nieuwe medewerkers qua waarden beter passen, versterken zij de cultuur. Dit trekt weer betere kandidaten aan — een positieve spiraal.', source: 'SHRM, 2024' },
+              { title: 'Sterkere bedrijfscultuur', desc: 'Wanneer nieuwe medewerkers qua waarden beter passen, versterken zij de cultuur. Dit trekt weer betere kandidaten aan — een positieve spiraal die na 2–3 jaar duidelijk zichtbaar wordt.', source: 'SHRM, 2024' },
+              { title: 'Minder werkdruk voor HR', desc: 'Minder verloop betekent minder vacatures, minder inwerken en minder herhaalde selectieprocessen. Stabielere teams en minder "draaideureffect".', source: 'Wetenschappelijke onderbouwing Refurzy' },
+              { title: 'Sterker werkgeversmerk', desc: 'Betere P-O fit leidt tot hogere engagement scores, betere Glassdoor reviews en sterkere aantrekkingskracht voor toekomstige kandidaten.', source: 'Wetenschappelijke onderbouwing Refurzy' },
             ].map(v => (
               <div key={v.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
                 <h3 className="text-white font-semibold mb-2 text-sm">{v.title}</h3>
@@ -315,6 +322,15 @@ export default function WetenschapPage() {
                 <p className="text-[10px] text-gray-600 italic">{v.source}</p>
               </div>
             ))}
+          </div>
+
+          {/* Extra: Wnuk study */}
+          <div className="mt-6 bg-navy-light rounded-2xl border border-purple/10 p-6">
+            <h3 className="text-white font-semibold mb-2 text-sm">Internationaal bevestigd: P-O fit vermindert vertrekintentie via zingeving</h3>
+            <p className="text-gray-400 text-xs leading-relaxed mb-2">
+              Een recente studie onder 1.071 werknemers bevestigt dat P-O fit zowel direct als indirect (via zingeving in het werk) negatief samenhangt met vertrekintentie. Medewerkers die passen bij hun organisatie ervaren meer betekenis in hun werk, en vertrekken daardoor minder snel.
+            </p>
+            <p className="text-[10px] text-gray-600 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
           </div>
         </section>
 
@@ -434,15 +450,29 @@ export default function WetenschapPage() {
         {/* Referenties */}
         <section>
           <h2 className="text-xl font-bold mb-4">Referenties</h2>
-          <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-xs text-gray-500 leading-relaxed space-y-2">
-            <p>Arthur, W., Jr., Bell, S. T., Villado, A. J., &amp; Doverspike, D. (2006). The use of person-organization fit in employment decision making. <em>Journal of Applied Psychology, 91</em>(4), 786-801.</p>
-            <p>Vrije Universiteit Amsterdam (2026). Profiel Match Scan: empirisch onderzoek naar P-O fit en werkuitkomsten. N=309.</p>
-            <p>Funder, D. C., &amp; Ozer, D. J. (2019). Evaluating effect size in psychological research. <em>Advances in Methods and Practices in Psychological Science, 2</em>(2), 156-168.</p>
-            <p>Kristof-Brown, A. L., Zimmerman, R. D., &amp; Johnson, E. C. (2005). Consequences of individuals&apos; fit at work: A meta-analysis. <em>Personnel Psychology, 58</em>(2), 281-342.</p>
-            <p>O&apos;Reilly, C. A., Chatman, J., &amp; Caldwell, D. F. (2014). People and organizational culture. <em>Academy of Management Journal, 34</em>(3), 487-516.</p>
-            <p>Sackett, P. R., et al. (2024). Revisiting meta-analytic estimates of validity in personnel selection. <em>Journal of Applied Psychology.</em></p>
-            <p>SHRM (2024). The Real Costs of Recruitment. Society for Human Resource Management.</p>
-            <p>Wnuk, M. &amp; Chudzicka-Czupała, A. (2026). P-O fit, meaning in work and turnover intention. N=1.071.</p>
+          <div className="bg-navy-light rounded-2xl border border-purple/10 p-6">
+            <div className="space-y-3">
+              {[
+                'Aberdeen Group. Pre-hire assessments and turnover reduction benchmarks.',
+                'Arthur, W., Jr., Bell, S. T., Villado, A. J., & Doverspike, D. (2006). The use of person-organization fit in employment decision making. Journal of Applied Psychology, 91(4), 786-801.',
+                'Funder, D. C., & Ozer, D. J. (2019). Evaluating effect size in psychological research. Advances in Methods and Practices in Psychological Science, 2(2), 156-168.',
+                'Halbesleben, J. R. B., & Wheeler, A. R. (2008). The relative roles of engagement and embeddedness in predicting job performance and intention to leave. Work & Stress, 22(3), 242-256.',
+                'Kristof-Brown, A. L., Zimmerman, R. D., & Johnson, E. C. (2005). Consequences of individuals\' fit at work: A meta-analysis. Personnel Psychology, 58(2), 281-342.',
+                'Leadership IQ. Why new hires fail: 46% failure rate within 18 months. Industry report.',
+                'O\'Reilly, C. A., Chatman, J., & Caldwell, D. F. (2014). People and organizational culture. Academy of Management Journal, 34(3), 487-516.',
+                'Oh, I.-S., Guay, R. P., Kim, K., Harold, C. M., Lee, J.-H., Heo, C.-G., & Shin, K.-H. (2014). Fit happens globally: A meta-analytic comparison of the relationships of person-environment fit dimensions with work attitudes and performance across East Asia, Europe, and North America. Personnel Psychology, 67(1), 99-152.',
+                'PRADCO. Culture fit assessment case study: 40% turnover reduction.',
+                'ASK/AssessCandidates. Pre-hire culture assessment case study: 59% turnover reduction.',
+                'Resume Genius (2024). Hiring manager survey: 81% report ghosting candidates due to uncertainty.',
+                'Sackett, P. R., et al. (2024). Revisiting meta-analytic estimates of validity in personnel selection. Journal of Applied Psychology.',
+                'SHRM (2024). The Real Costs of Recruitment. N=11.080, 15 landen. Society for Human Resource Management.',
+                'SHRM (2025). Average time-to-hire benchmark: 68,5 dagen.',
+                'Vrije Universiteit Amsterdam (2026). Profiel Match Scan: empirisch onderzoek naar P-O fit en werkuitkomsten. N=309.',
+                'Wnuk, M. & Chudzicka-Czupała, A. (2026). P-O fit, meaning in work and turnover intention. N=1.071.',
+              ].map((ref, i) => (
+                <p key={i} className="text-sm text-gray-300 leading-relaxed pl-4 border-l-2 border-purple/20">{ref}</p>
+              ))}
+            </div>
           </div>
         </section>
 

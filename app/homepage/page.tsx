@@ -244,6 +244,110 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ BEWEZEN RESULTATEN ═══ */}
+      <section className="py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-block px-3 py-1 bg-cyan/10 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4 tracking-wider uppercase">
+              {lang === 'nl' ? 'Wetenschappelijk bewezen' : 'Scientifically proven'}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {lang === 'nl' ? 'Bewezen resultaten voor opdrachtgevers' : 'Proven results for employers'}
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              {lang === 'nl'
+                ? 'Onafhankelijk onderzoek van toonaangevende instituten toont aan wat betere matching oplevert.'
+                : 'Independent research from leading institutions shows what better matching delivers.'}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {/* Lager verloop */}
+            <div className="bg-navy-light rounded-2xl border border-cyan/20 p-8 text-center hover:border-cyan/40 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-cyan/15 flex items-center justify-center text-3xl mx-auto mb-5">📉</div>
+              <div className="text-4xl font-bold text-cyan mb-2">39–59%</div>
+              <p className="text-white font-semibold mb-3">
+                {lang === 'nl' ? 'Minder verloop' : 'Less turnover'}
+              </p>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                {lang === 'nl'
+                  ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
+                  : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
+              </p>
+              <p className="text-[10px] text-gray-600 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
+            </div>
+
+            {/* Lagere mis-hire kosten */}
+            <div className="bg-navy-light rounded-2xl border border-purple/20 p-8 text-center hover:border-purple/40 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-purple/15 flex items-center justify-center text-3xl mx-auto mb-5">💰</div>
+              <div className="text-4xl font-bold text-purple-light mb-2">20–30%</div>
+              <p className="text-white font-semibold mb-3">
+                {lang === 'nl' ? 'Minder mis-hires' : 'Fewer mis-hires'}
+              </p>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                {lang === 'nl'
+                  ? 'Eén verkeerde aanname kost €44.000–€175.000. Door P-O fit vooraf te meten, dalen mis-hires met 20–30%. Dat bespaart tot €668.000 per jaar per 100 medewerkers.'
+                  : 'One bad hire costs €44,000–€175,000. By measuring P-O fit upfront, mis-hires drop 20–30%. That saves up to €668,000 per year per 100 employees.'}
+              </p>
+              <p className="text-[10px] text-gray-600 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
+            </div>
+
+            {/* Hogere productiviteit */}
+            <div className="bg-navy-light rounded-2xl border border-orange/20 p-8 text-center hover:border-orange/40 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-orange/15 flex items-center justify-center text-3xl mx-auto mb-5">🚀</div>
+              <div className="text-4xl font-bold text-orange mb-2">+</div>
+              <p className="text-white font-semibold mb-3">
+                {lang === 'nl' ? 'Hogere productiviteit' : 'Higher productivity'}
+              </p>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                {lang === 'nl'
+                  ? 'Medewerkers die passen bij de organisatie zijn bevlogener, en werkbevlogenheid voorspelt direct hogere werkprestaties. Ze zijn productiever, minder vaak ziek en presteren beter in hun team.'
+                  : 'Employees who fit the organization are more engaged, and engagement directly predicts higher job performance. They are more productive, take fewer sick days, and perform better.'}
+              </p>
+              <p className="text-[10px] text-gray-600 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
+            </div>
+          </div>
+
+          {/* Extra bewijs-strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+              <div className="text-xl font-bold text-cyan">4×</div>
+              <p className="text-[11px] text-gray-500 mt-1">
+                {lang === 'nl' ? 'meer kans dat mensen blijven bij goede cultuurmatch' : 'more likely to stay with good culture match'}
+              </p>
+              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2024</p>
+            </div>
+            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+              <div className="text-xl font-bold text-purple-light">N=309</div>
+              <p className="text-[11px] text-gray-500 mt-1">
+                {lang === 'nl' ? 'werknemers gevalideerd door VU Amsterdam' : 'employees validated by VU Amsterdam'}
+              </p>
+              <p className="text-[9px] text-gray-700 mt-1">VU Amsterdam, 2026</p>
+            </div>
+            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+              <div className="text-xl font-bold text-orange">68,5</div>
+              <p className="text-[11px] text-gray-500 mt-1">
+                {lang === 'nl' ? 'dagen gemiddelde time-to-hire — sneller met data' : 'days average time-to-hire — faster with data'}
+              </p>
+              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2025</p>
+            </div>
+            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+              <div className="text-xl font-bold text-cyan">15 🌍</div>
+              <p className="text-[11px] text-gray-500 mt-1">
+                {lang === 'nl' ? 'landen bevestigen: cultuurmatch = retentie' : 'countries confirm: culture match = retention'}
+              </p>
+              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2024 · N=11.080</p>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/wetenschap" className="text-cyan text-sm font-medium hover:underline transition-colors">
+              {lang === 'nl' ? 'Bekijk alle wetenschappelijke onderbouwing →' : 'View all scientific evidence →'}
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ MATCHING SCAN + WETENSCHAP ═══ */}
       <section className="py-24">
         <div className="max-w-5xl mx-auto px-6">
