@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { getUser, getRolePath } from '@/lib/auth'
 import { User } from '@/lib/types'
@@ -11,6 +11,35 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [lang, setLang] = useState<Lang>('nl')
+
+  // Calculator state
+  const [calcHires, setCalcHires] = useState(5)
+  const [calcSalaris, setCalcSalaris] = useState(5000)
+  const [calcVerloop, setCalcVerloop] = useState(10)
+
+  const formatEur = useMemo(() => new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }), [])
+
+  const calcResults = useMemo(() => {
+    const jaarsalaris = calcSalaris * 12
+    const jaarsalarisInclVakantiegeld = jaarsalaris * 1.08
+    const totaleLoonkosten = jaarsalarisInclVakantiegeld * 1.35
+    const kostenPerMisHireLow = totaleLoonkosten * 0.50
+    const kostenPerMisHireHigh = totaleLoonkosten * 2.00
+    const mishiresPerJaar = calcHires * 0.46
+    const voorkomenMisHiresLow = mishiresPerJaar * 0.39
+    const voorkomenMisHiresHigh = mishiresPerJaar * 0.59
+    const besparingMisHireLow = voorkomenMisHiresLow * kostenPerMisHireLow
+    const besparingMisHireHigh = voorkomenMisHiresHigh * kostenPerMisHireHigh
+    const traditioneleBureauKosten = calcHires * jaarsalarisInclVakantiegeld * 0.25
+    const refurzyKosten = calcHires * 4333
+    const directeBesparing = traditioneleBureauKosten - refurzyKosten
+    const totaalBesparingLow = directeBesparing + besparingMisHireLow
+    const totaalBesparingHigh = directeBesparing + besparingMisHireHigh
+    const roi = Math.round((totaalBesparingLow / refurzyKosten) * 100)
+    const vijfJaarLow = totaalBesparingLow * 5
+    const vijfJaarHigh = totaalBesparingHigh * 5
+    return { totaalBesparingLow, totaalBesparingHigh, roi, directeBesparing, vijfJaarLow, vijfJaarHigh }
+  }, [calcHires, calcSalaris])
 
   useEffect(() => {
     setUser(getUser())
@@ -469,6 +498,127 @@ export default function HomePage() {
             </table>
           </div>
 
+        </div>
+      </section>
+
+      {/* ═══ BESPARINGSCALCULATOR ═══ */}
+      <section id="calculator" className="py-24 bg-navy-light/30">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-block px-3 py-1 bg-cyan/10 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4 tracking-wider uppercase">
+              {lang === 'nl' ? 'Besparingscalculator' : 'Savings calculator'}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {lang === 'nl' ? 'Bereken uw besparing' : 'Calculate your savings'}
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              {lang === 'nl' ? 'Ontdek hoeveel uw organisatie kan besparen met Refurzy' : 'Discover how much your organization can save with Refurzy'}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Input fields */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  {lang === 'nl' ? 'Aantal hires per jaar' : 'Number of hires per year'}
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={calcHires}
+                  onChange={(e) => setCalcHires(Math.max(1, Math.min(100, Number(e.target.value) || 1)))}
+                  className="w-full bg-navy border border-purple/20 rounded-xl px-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  {lang === 'nl' ? 'Gemiddeld bruto maandsalaris' : 'Average gross monthly salary'}
+                </label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">&euro;</span>
+                  <input
+                    type="number"
+                    min={2000}
+                    max={20000}
+                    value={calcSalaris}
+                    onChange={(e) => setCalcSalaris(Math.max(2000, Math.min(20000, Number(e.target.value) || 2000)))}
+                    className="w-full bg-navy border border-purple/20 rounded-xl pl-10 pr-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  {lang === 'nl' ? 'Huidig verloop (%)' : 'Current turnover (%)'}
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    min={1}
+                    max={50}
+                    value={calcVerloop}
+                    onChange={(e) => setCalcVerloop(Math.max(1, Math.min(50, Number(e.target.value) || 1)))}
+                    className="w-full bg-navy border border-purple/20 rounded-xl px-4 pr-10 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">%</span>
+                </div>
+                <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                  {lang === 'nl'
+                    ? 'Het gemiddelde vrijwillige verloop in Nederland is circa 10% per jaar (CBS/Intelligence Group, 2025). De verwachting is dat dit naar 19% gaat stijgen (Mercer, 2025).'
+                    : 'The average voluntary turnover in the Netherlands is approximately 10% per year (CBS/Intelligence Group, 2025). It is expected to rise to 19% (Mercer, 2025).'}
+                </p>
+              </div>
+            </div>
+
+            {/* Results display */}
+            <div className="bg-gradient-to-br from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-3xl border border-cyan/20 p-8 flex flex-col justify-center">
+              {/* Main savings number */}
+              <div className="text-center mb-8">
+                <p className="text-sm text-gray-400 mb-3 uppercase tracking-wider font-medium">
+                  {lang === 'nl' ? 'Geschatte jaarlijkse besparing' : 'Estimated annual savings'}
+                </p>
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent leading-tight">
+                  {formatEur.format(Math.round(calcResults.totaalBesparingLow))} &ndash; {formatEur.format(Math.round(calcResults.totaalBesparingHigh))}
+                </div>
+              </div>
+
+              {/* Stats row */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-cyan">{calcResults.roi}%</div>
+                  <p className="text-[11px] text-gray-500 mt-1">Return on Investment</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-white">{formatEur.format(Math.round(calcResults.directeBesparing))}</div>
+                  <p className="text-[11px] text-gray-500 mt-1">{lang === 'nl' ? 'besparing op bureau fees' : 'savings on agency fees'}</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-bold text-white leading-tight">{formatEur.format(Math.round(calcResults.vijfJaarLow))} &ndash; {formatEur.format(Math.round(calcResults.vijfJaarHigh))}</div>
+                  <p className="text-[11px] text-gray-500 mt-1">{lang === 'nl' ? 'cumulatief over 5 jaar' : 'cumulative over 5 years'}</p>
+                </div>
+              </div>
+
+              {/* Footnote */}
+              <p className="text-[10px] text-gray-600 text-center leading-relaxed mb-6">
+                {lang === 'nl'
+                  ? '* Berekeningen o.b.v. bruto maandsalaris van \u20AC5.000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reductie (Aberdeen Group, Gallup), bureau fee van 25%.'
+                  : '* Calculations based on gross monthly salary of \u20AC5,000, 46% mis-hire rate (Leadership IQ), 39-59% turnover reduction (Aberdeen Group, Gallup), agency fee of 25%.'}
+              </p>
+
+              {/* CTA button */}
+              <div className="text-center">
+                <Link
+                  href="/demo/onboarding/opdrachtgever"
+                  className="inline-block btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all"
+                >
+                  {lang === 'nl' ? 'Start vandaag \u2014 bereken uw exacte besparing \u2192' : 'Start today \u2014 calculate your exact savings \u2192'}
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

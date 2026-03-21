@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { login, getRolePath } from '@/lib/auth'
 import { logConsent, DocumentType, DOCUMENT_VERSIONS } from '@/lib/consent-log'
@@ -10,15 +10,15 @@ const ROLE_CONSENTS: Record<string, { docs: DocumentType[]; labels: string[] }> 
     docs: ['algemene_voorwaarden', 'privacybeleid', 'verwerkersovereenkomst_opdrachtgever'],
     labels: ['Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
   },
-  'scout@refurzy.nl': {
+  'scout@refurzy.com': {
     docs: ['scoutovereenkomst', 'algemene_voorwaarden', 'privacybeleid', 'verwerkersovereenkomst_scout'],
     labels: ['Scoutovereenkomst', 'Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
   },
-  'kandidaat@refurzy.nl': {
+  'kandidaat@email.com': {
     docs: ['toestemmingsverklaring_kandidaat', 'privacybeleid'],
     labels: ['Toestemmingsverklaring', 'Privacybeleid'],
   },
-  'admin@refurzy.nl': {
+  'admin@refurzy.com': {
     docs: ['algemene_voorwaarden', 'privacybeleid'],
     labels: ['Algemene Voorwaarden', 'Privacybeleid'],
   },
@@ -35,13 +35,29 @@ const DOC_URLS: Record<DocumentType, string> = {
   cookiebeleid: '/juridisch/cookiebeleid',
 }
 
+const PROFILE_CARDS = [
+  { icon: '\uD83D\uDC54', label: 'Opdrachtgever', name: 'Jan van der Berg', email: 'demo@bedrijf.nl', color: 'from-cyan/20 to-cyan/5', border: 'border-cyan/30', hoverBorder: 'hover:border-cyan/60' },
+  { icon: '\uD83D\uDD0D', label: 'Talent Scout', name: 'Lisa de Groot', email: 'scout@refurzy.com', color: 'from-purple/20 to-purple/5', border: 'border-purple/30', hoverBorder: 'hover:border-purple/60' },
+  { icon: '\uD83D\uDC64', label: 'Kandidaat', name: 'Thomas Bakker', email: 'kandidaat@email.com', color: 'from-blue-400/20 to-blue-400/5', border: 'border-blue-400/30', hoverBorder: 'hover:border-blue-400/60' },
+  { icon: '\u2699\uFE0F', label: 'Admin', name: 'Refurzy Admin', email: 'admin@refurzy.com', color: 'from-gray-400/20 to-gray-400/5', border: 'border-gray-400/30', hoverBorder: 'hover:border-gray-400/60' },
+]
+
 export default function LoginPage() {
-  const [email, setEmail] = useState('demo@bedrijf.nl')
-  const [password, setPassword] = useState('Nummer1platform')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [showRegister, setShowRegister] = useState(false)
   const [consents, setConsents] = useState<Record<string, boolean>>({})
+  const [hasDemoAccess, setHasDemoAccess] = useState(false)
+  const [selectedProfile, setSelectedProfile] = useState<string | null>(null)
   const router = useRouter()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const access = sessionStorage.getItem('refurzy_demo_access')
+      setHasDemoAccess(access === 'true')
+    }
+  }, [])
 
   const roleConsents = ROLE_CONSENTS[email]
 
@@ -68,14 +84,22 @@ export default function LoginPage() {
 
     const user = login(email, password)
     if (user) {
-      router.push(getRolePath(user.role))
+      // demo@refurzy.com is the gate account — redirect to /homepage and set demo access
+      if (email.toLowerCase() === 'demo@refurzy.com') {
+        sessionStorage.setItem('refurzy_demo_access', 'true')
+        router.push('/homepage')
+      } else {
+        router.push(getRolePath(user.role))
+      }
     } else {
       setError('Ongeldige inloggegevens.')
     }
   }
 
-  function handleDemoClick(demoEmail: string) {
-    setEmail(demoEmail)
+  function handleProfileClick(profileEmail: string) {
+    setEmail(profileEmail)
+    setPassword('Nummer1platform!')
+    setSelectedProfile(profileEmail)
     setShowRegister(true)
     setConsents({})
   }
@@ -87,6 +111,32 @@ export default function LoginPage() {
           <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-10 mx-auto mb-2" />
           <p className="text-gray-500 text-sm">Platform</p>
         </div>
+
+        {/* Profile picker — only shown when user has demo access */}
+        {hasDemoAccess && (
+          <div className="mb-6">
+            <p className="text-sm text-gray-400 text-center mb-4">Kies een profiel om in te loggen</p>
+            <div className="grid grid-cols-2 gap-3">
+              {PROFILE_CARDS.map(card => (
+                <button
+                  key={card.email}
+                  onClick={() => handleProfileClick(card.email)}
+                  className={`
+                    bg-gradient-to-br ${card.color} border ${card.border} ${card.hoverBorder}
+                    rounded-xl p-4 text-left transition-all duration-200
+                    hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple/5
+                    ${selectedProfile === card.email ? 'ring-2 ring-cyan/50 -translate-y-0.5 shadow-lg shadow-cyan/10' : ''}
+                  `}
+                >
+                  <div className="text-2xl mb-2">{card.icon}</div>
+                  <div className="text-sm font-semibold text-white">{card.label}</div>
+                  <div className="text-xs text-gray-400 mt-0.5">{card.name}</div>
+                  <div className="text-xs text-gray-500 mt-0.5 truncate">{card.email}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="bg-navy-light rounded-2xl p-8 border border-purple/20">
           <h2 className="text-xl font-semibold mb-6">Inloggen</h2>
@@ -100,7 +150,7 @@ export default function LoginPage() {
           <div className="mb-4">
             <label className="block text-sm text-gray-400 mb-1.5">E-mailadres</label>
             <input
-              type="email" value={email} onChange={e => { setEmail(e.target.value); setShowRegister(false) }}
+              type="email" value={email} onChange={e => { setEmail(e.target.value); setShowRegister(false); setSelectedProfile(null) }}
               className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
               placeholder="je@email.nl" required
             />
@@ -142,6 +192,14 @@ export default function LoginPage() {
           <button type="submit" className="w-full btn-gradient text-white font-semibold py-3 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
             {showRegister ? 'Registreren & inloggen' : 'Inloggen'}
           </button>
+
+          {/* Hint for non-demo users */}
+          {!hasDemoAccess && (
+            <p className="text-xs text-gray-500 text-center mt-4">
+              Vraag uw demo-inloggegevens aan via{' '}
+              <a href="mailto:info@refurzy.com" className="text-cyan/70 hover:text-cyan transition-colors">info@refurzy.com</a>
+            </p>
+          )}
 
         </form>
 

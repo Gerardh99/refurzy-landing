@@ -3,12 +3,34 @@
 import { User, UserRole } from './types'
 
 const DEMO_USERS: Record<string, User> = {
+  'demo@refurzy.com': {
+    email: 'demo@refurzy.com',
+    name: 'Demo Gebruiker',
+    role: 'opdrachtgever',
+  },
   'demo@bedrijf.nl': {
     email: 'demo@bedrijf.nl',
     name: 'Jan van der Berg',
     role: 'opdrachtgever',
     company: 'TechVentures B.V.',
   },
+  'scout@refurzy.com': {
+    email: 'scout@refurzy.com',
+    name: 'Lisa de Groot',
+    role: 'scout',
+  },
+  'kandidaat@email.com': {
+    email: 'kandidaat@email.com',
+    name: 'Thomas Bakker',
+    role: 'kandidaat',
+  },
+  'admin@refurzy.com': {
+    email: 'admin@refurzy.com',
+    name: 'Refurzy Admin',
+    role: 'admin',
+    company: 'Refurzy B.V.',
+  },
+  // Keep old .nl entries for backwards compatibility
   'scout@refurzy.nl': {
     email: 'scout@refurzy.nl',
     name: 'Sophie de Graaf',
@@ -27,7 +49,7 @@ const DEMO_USERS: Record<string, User> = {
   },
 }
 
-const DEMO_PASSWORD = 'Nummer1platform'
+const DEMO_PASSWORD = 'Nummer1platform!'
 
 export function login(email: string, password: string): User | null {
   const user = DEMO_USERS[email.toLowerCase()]
