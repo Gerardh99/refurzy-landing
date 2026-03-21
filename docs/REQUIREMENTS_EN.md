@@ -1,7 +1,7 @@
 # Refurzy — Product Requirements Document
 
-**Version:** 2.0
-**Date:** 20 March 2026
+**Version:** 3.0
+**Date:** 21 March 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
 ---
@@ -479,7 +479,7 @@ components/
   Sidebar.tsx                        # Navigation per role
   PipelineTracker.tsx                # Visual pipeline steps
   ProScoutUpgradeModal.tsx           # CoC upgrade after 2 placements
-  FitScore.tsx                       # M-Score circle
+  MScore.tsx                         # M-Score circle
   StatusBadge.tsx                    # Status labels
   StarRating.tsx                     # Star rating
   LangToggle.tsx                     # NL/EN switch
@@ -1216,3 +1216,171 @@ Scouts and employers can **never** freely communicate with each other via the pl
 - ~~Chat or direct communication~~
 - ~~Messages after hiring or rejection~~ (channel closes automatically)
 - ~~Manual nudges by scouts~~ (replaced by automatic system nudges)
+
+---
+
+## 28. Marketing Homepage Content & Business Case
+
+### 28.1 Turnover Reduction Percentages
+
+Based on scientific research, Refurzy reduces turnover (mis-hires) by **39–59%**:
+
+| Source | Reduction | Usage |
+|--------|-----------|-------|
+| Aberdeen Group | 39% | Conservative scenario |
+| Gallup | 59% | Optimistic scenario |
+
+> **Previous version used 10–30%.** All business case calculations have been updated accordingly.
+
+### 28.2 Mis-hire Cost Breakdown
+
+A mis-hire costs **€44,000–€175,000** (based on a gross monthly salary of €5,000). Always mention the salary basis when quoting this figure.
+
+#### Employer Cost Calculation (€87,480 breakdown)
+Shown everywhere to explain cost calculations:
+- €60,000 gross annual salary
+- €4,800 holiday allowance (8%)
+- €22,680 employer charges (social contributions, pension, etc.)
+- **= €87,480 total annual employer costs**
+
+#### 6 Cost Components of a Mis-hire
+1. **Recruitment costs** — 15–25% of annual salary
+2. **Onboarding & training** — 10–20% of annual salary
+3. **Productivity loss** — first 6–12 months underperformance
+4. **Team impact & morale loss** — disruption to existing team
+5. **Management time & guidance** — additional supervision hours
+6. **VSO/severance costs** — average 2 monthly salaries
+
+**Source:** SHRM estimates total mis-hire cost at 50–200% of annual salary (clickable link to SHRM).
+
+**VSO/severance warning:** "SHRM estimates are based on the US market. In the Netherlands, mis-hire costs are on average even higher due to stronger employment protection and statutory transition payments."
+
+#### Display Locations
+The mis-hire cost breakdown appears as an expandable explanation in 3 places:
+1. Homepage stat card
+2. Savings calculator
+3. Wetenschap (science) page
+
+Plus a dedicated FAQ item (see section 28.8).
+
+### 28.3 Business Case Calculations
+
+All scenarios use **39%** (Aberdeen Group, conservative) and **59%** (Gallup, optimistic).
+
+#### Small Organization
+| Metric | Conservative (39%) | Optimistic (59%) |
+|--------|-------------------|------------------|
+| Turnover reduction | 39% | 59% |
+| **Annual savings** | **€51K** | **€131K** |
+
+#### Large Organization
+| Metric | Conservative (39%) | Optimistic (59%) |
+|--------|-------------------|------------------|
+| Turnover reduction | 39% | 59% |
+| **Annual savings** | **€196K** | **€1,370K** |
+
+#### ROI
+Updated ROI: **396%** (was 336%).
+
+### 28.4 Turnover Data (Netherlands)
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| Current average turnover | 10% | CBS / Intelligence Group |
+| Expected future turnover | 19% | Mercer |
+
+These figures are used as defaults and context in the savings calculator.
+
+### 28.5 Savings Calculator
+
+New interactive calculator on the homepage with `id="calculator"`.
+
+#### Inputs (3 fields)
+1. **Hires per year** — number input
+2. **Gross monthly salary** — currency input
+3. **Turnover percentage** — percentage input, default: 10% (source: CBS/Intelligence Group)
+
+#### Behavior
+- Shows live calculation with "wow effect" (animated numbers)
+- Mention expected rise to 19% (source: Mercer) near the turnover input
+- Expandable mis-hire cost breakdown (6 components, see 28.2)
+- CTA button after calculation result
+
+### 28.6 Homepage Role Cards
+
+3 role cards (Employer, Scout, Candidate) use `flex-col` with `flex-1` on the content area so the colored footer text aligns vertically across all cards regardless of content height.
+
+### 28.7 Text Changes
+
+| Location | Old | New |
+|----------|-----|-----|
+| `how.subtitle` | "fairer" | "much cheaper" |
+| Demo user name | "Jan van der Berg" | "Daan Verhoeven" |
+| Everywhere | "fit-score" | "M-Score" |
+| VSO warning | "probably" | "on average" |
+
+### 28.8 FAQ Updates
+
+FAQ item numbering has been updated:
+
+| # | Question | Notes |
+|---|----------|-------|
+| q1–q6 | (unchanged) | |
+| **q7** | **"Why does a mis-hire cost €44,000–€175,000?"** | **NEW.** Contains 6 cost components + VSO + SHRM warning (see 28.2) |
+| q8 | "What guarantee do you offer?" | Was q7 |
+| q9 | "Which countries do you support?" | Was q8 |
+
+---
+
+## 29. Demo Login Flow (Option A)
+
+### Entry: refurzy.com → /login
+
+- Login page shows **empty fields** (no pre-fill, for security reasons)
+- Hint text: *"Vraag uw demo-inloggegevens aan via info@refurzy.com"*
+- Demo credentials: `demo@refurzy.com` + `Nummer1platform!` (with exclamation mark)
+- Successful login → redirects to `/homepage`
+
+### Profile Picker: /homepage → /login
+
+When navigating from `/homepage` to `/login`, the login page shows a **profile picker** with 4 role cards:
+
+| Role Card | Role |
+|-----------|------|
+| Opdrachtgever | Employer |
+| Scout | Talent Scout |
+| Kandidaat | Candidate |
+| Admin | Administrator |
+
+- Click on a role card → auto-fills the corresponding credentials
+- Login → redirects to the role-specific dashboard
+
+### Password
+All demo accounts use: **Nummer1platform!** (with exclamation mark `!`)
+
+---
+
+## 30. Wetenschap (Science) Page Updates
+
+### 30.1 Comparison Table
+
+Updated comparison between traditional recruitment bureaus and Refurzy:
+
+| Metric | Bureau | Refurzy |
+|--------|--------|---------|
+| Bureau costs | **20–30%** of gross annual salary (was 15–27%) | No cure, no pay formula |
+| Payment model | Retainer + success fee, or 100% success fee. *Retainer = fixed amount upfront, regardless of outcome.* | No cure, no pay |
+| **Exclusivity** | **Standard exclusive** | **Optional (+25%)** |
+
+> **New row added:** Exclusivity comparison.
+
+### 30.2 Gray Text Readability
+
+Fixed gray text readability: use `text-gray-400` instead of `text-gray-500` for sufficient contrast on dark backgrounds.
+
+### 30.3 Navigation Consistency
+
+Wetenschap page navigation updated to match homepage:
+- Centered menu
+- "Inloggen" button
+- No user info display

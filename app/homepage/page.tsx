@@ -14,10 +14,13 @@ export default function HomePage() {
   const [showMisHireDetail, setShowMisHireDetail] = useState(false)
   const [showCalcDetail, setShowCalcDetail] = useState(false)
 
-  // Calculator state
-  const [calcHires, setCalcHires] = useState(5)
-  const [calcSalaris, setCalcSalaris] = useState(5000)
-  const [calcVerloop, setCalcVerloop] = useState(10)
+  // Calculator state – string inputs for free keyboard editing, numeric values for calculation
+  const [calcHiresInput, setCalcHiresInput] = useState('5')
+  const [calcSalarisInput, setCalcSalarisInput] = useState('5000')
+  const [calcVerloopInput, setCalcVerloopInput] = useState('10')
+  const calcHires = Math.max(1, Math.min(100, Number(calcHiresInput) || 1))
+  const calcSalaris = Math.max(2000, Math.min(20000, Number(calcSalarisInput) || 2000))
+  const calcVerloop = Math.max(1, Math.min(50, Number(calcVerloopInput) || 1))
 
   const formatEur = useMemo(() => new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }), [])
 
@@ -186,10 +189,10 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Opdrachtgever */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-cyan/20 transition-colors group">
+            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-cyan/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-cyan/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🏢</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.employer', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400">
+              <ol className="space-y-3 text-sm text-gray-400 flex-1">
                 <li className="flex gap-3"><span className="text-cyan font-bold">1.</span> {t('how.employer.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">2.</span> {t('how.employer.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">3.</span> {t('how.employer.3', lang)}</li>
@@ -204,10 +207,10 @@ export default function HomePage() {
             </div>
 
             {/* Talent Scout */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-purple/20 transition-colors group">
+            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-purple/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-purple/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🔍</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.scout', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400">
+              <ol className="space-y-3 text-sm text-gray-400 flex-1">
                 <li className="flex gap-3"><span className="text-purple-light font-bold">1.</span> {t('how.scout.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-purple-light font-bold">2.</span> {t('how.scout.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-purple-light font-bold">3.</span> {t('how.scout.3', lang)}</li>
@@ -222,10 +225,10 @@ export default function HomePage() {
             </div>
 
             {/* Kandidaat */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-orange/20 transition-colors group">
+            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-orange/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-orange/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">👤</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.candidate', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400">
+              <ol className="space-y-3 text-sm text-gray-400 flex-1">
                 <li className="flex gap-3"><span className="text-orange font-bold">1.</span> {t('how.candidate.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">2.</span> {t('how.candidate.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">3.</span> {t('how.candidate.3', lang)}</li>
@@ -544,11 +547,11 @@ export default function HomePage() {
                   {lang === 'nl' ? 'Aantal hires per jaar' : 'Number of hires per year'}
                 </label>
                 <input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={calcHires}
-                  onChange={(e) => setCalcHires(Math.max(1, Math.min(100, Number(e.target.value) || 1)))}
+                  type="text"
+                  inputMode="numeric"
+                  value={calcHiresInput}
+                  onChange={(e) => setCalcHiresInput(e.target.value.replace(/[^0-9]/g, ''))}
+                  onBlur={() => { const v = Math.max(1, Math.min(100, Number(calcHiresInput) || 1)); setCalcHiresInput(String(v)) }}
                   className="w-full bg-navy border border-purple/20 rounded-xl px-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                 />
               </div>
@@ -560,11 +563,11 @@ export default function HomePage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">&euro;</span>
                   <input
-                    type="number"
-                    min={2000}
-                    max={20000}
-                    value={calcSalaris}
-                    onChange={(e) => setCalcSalaris(Math.max(2000, Math.min(20000, Number(e.target.value) || 2000)))}
+                    type="text"
+                    inputMode="numeric"
+                    value={calcSalarisInput}
+                    onChange={(e) => setCalcSalarisInput(e.target.value.replace(/[^0-9]/g, ''))}
+                    onBlur={() => { const v = Math.max(2000, Math.min(20000, Number(calcSalarisInput) || 2000)); setCalcSalarisInput(String(v)) }}
                     className="w-full bg-navy border border-purple/20 rounded-xl pl-10 pr-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                   />
                 </div>
@@ -576,11 +579,11 @@ export default function HomePage() {
                 </label>
                 <div className="relative">
                   <input
-                    type="number"
-                    min={1}
-                    max={50}
-                    value={calcVerloop}
-                    onChange={(e) => setCalcVerloop(Math.max(1, Math.min(50, Number(e.target.value) || 1)))}
+                    type="text"
+                    inputMode="numeric"
+                    value={calcVerloopInput}
+                    onChange={(e) => setCalcVerloopInput(e.target.value.replace(/[^0-9]/g, ''))}
+                    onBlur={() => { const v = Math.max(1, Math.min(50, Number(calcVerloopInput) || 1)); setCalcVerloopInput(String(v)) }}
                     className="w-full bg-navy border border-purple/20 rounded-xl px-4 pr-10 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">%</span>

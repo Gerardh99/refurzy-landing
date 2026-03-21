@@ -1,7 +1,7 @@
 # Refurzy — Product Requirements Document
 
-**Versie:** 1.0
-**Datum:** 19 maart 2026
+**Versie:** 2.0
+**Datum:** 21 maart 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
 ---
@@ -764,7 +764,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 7. **Fee verdeling**: 50/50 scout/Refurzy
 8. **>10 jaar regel**: HBO en WO krijgen zelfde multiplier (2.5) bij >10 jaar ervaring
 9. **Fit Garantie**: Alleen bij M-Score ≥80%, 12 maanden, alleen cultuur/waarden/interesses mismatch
-10. **Exclusiviteit**: Optioneel 2-weken exclusiviteit met 30% premium (gaat naar scout)
+10. **Exclusiviteit**: Optioneel 2-weken exclusiviteit met +25% toeslag (50/50 verdeling scout/Refurzy)
 11. **Prijzen excl. BTW**: Alle prijzen op het platform zijn exclusief BTW
 12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
 13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)
@@ -1216,3 +1216,174 @@ Scouts en opdrachtgevers kunnen **nooit** vrij met elkaar communiceren via het p
 - ~~Chat of directe communicatie~~
 - ~~Berichten na aanname of afwijzing~~ (kanaal sluit automatisch)
 - ~~Handmatige nudges door scouts~~ (vervangen door automatische systeem-nudges)
+
+---
+
+## 28. Business Case & Verloopreductie
+
+### Verlooppercentages
+
+- **Nederlandse gemiddelde verloop**: 10% (bron: CBS/Intelligence Group)
+- **Verwachte stijging**: naar 19% (bron: Mercer)
+- **Verloopreductie door betere matching**: 39-59%
+  - **39%** — Aberdeen Group (conservatief scenario)
+  - **59%** — Gallup (optimistisch scenario)
+
+### Business Case Berekeningen
+
+Alle scenario's gebruiken 39% (Aberdeen Group, conservatief) en 59% (Gallup, optimistisch) in plaats van eerdere 20%/30% schattingen.
+
+#### Werkgeverskosten breakdown
+- €60.000 bruto jaarsalaris + €4.800 vakantiegeld + €22.680 werkgeverslasten = **€87.480 totale werkgeverskosten**
+- Deze breakdown wordt overal getoond waar kostenberekeningen worden uitgelegd
+
+#### Scenario klein bedrijf
+- **Conservatief (39%)**: €51.000 besparing
+- **Optimistisch (59%)**: €131.000 besparing
+
+#### Scenario groot bedrijf
+- **Conservatief (39%)**: €196.000 besparing
+- **Optimistisch (59%)**: €1.370.000 besparing
+
+### ROI
+- **396%** (was 336%)
+
+---
+
+## 29. Mis-hire Kostenberekening
+
+### Kostenbedrag
+**€44.000–€175.000** (bij een bruto maandsalaris van €5.000). Het salaris als basis wordt altijd vermeld.
+
+### 6 Kostencomponenten
+1. **Wervingskosten** — 15-25% van het jaarsalaris
+2. **Onboarding & training** — 10-20% van het jaarsalaris
+3. **Productiviteitsverlies** — eerste 6-12 maanden
+4. **Teamimpact & moraalverlies**
+5. **Managementtijd & begeleiding**
+6. **VSO/ontslagkosten** — gemiddeld 2 maandsalarissen
+
+### Bron
+SHRM (50-200% van het jaarsalaris), weergegeven als klikbare link.
+
+### VSO/ontslagkosten — Nederlandse context
+> "SHRM-schattingen zijn gebaseerd op de Amerikaanse markt. In Nederland liggen de kosten van een mis-hire gemiddeld genomen nóg hoger door strengere ontslagbescherming en wettelijke transitievergoedingen."
+
+### Toonplaatsen (expandable uitleg)
+De 6 kostencomponenten worden als uitklapbare uitleg getoond op 3 plekken:
+1. **Homepage stat card** — bij het mis-hire kostencijfer
+2. **Besparingscalculator** — onder de berekening
+3. **Wetenschap pagina** — bij de kostenonderbouwing
+
+Plus als **FAQ item** (q7): "Waarom kost een mis-hire €44.000–€175.000?"
+
+---
+
+## 30. Besparingscalculator (Homepage)
+
+### Locatie
+Homepage, `id="calculator"`.
+
+### Inputs (3 velden)
+1. **Aantal hires per jaar** — numeriek invoerveld
+2. **Bruto maandsalaris** — numeriek invoerveld (standaard: €5.000)
+3. **Verlooppercentage** — numeriek invoerveld, standaard 10% (bron: CBS/Intelligence Group). Vermelding dat dit naar verwachting stijgt naar 19% (bron: Mercer).
+
+### Berekening
+Live berekening met wow-effect animatie. Toont besparing op basis van verloopkosten × reductiepercentages (39% en 59%).
+
+### CTA
+Call-to-action button onder het resultaat.
+
+---
+
+## 31. Demo Login Flow (Option A)
+
+### Stap 1: Landing → Login
+- **refurzy.com** → `/login`
+- Login velden zijn **leeg** (geen pre-fill, om veiligheidsredenen)
+- Hint tekst: "Vraag uw demo-inloggegevens aan via info@refurzy.com"
+- Demo credentials: `demo@refurzy.com` + `Nummer1platform!` (met uitroepteken)
+- Na login → redirect naar `/homepage`
+
+### Stap 2: Homepage → Rolkeuze
+- `/homepage` → `/login` toont een **profile picker** met 4 rolkaarten:
+  1. **Opdrachtgever**
+  2. **Scout**
+  3. **Kandidaat**
+  4. **Admin**
+- Klik op een rol → auto-fill van credentials → login → redirect naar rol-specifiek dashboard
+
+### Demo gebruikersnaam
+- "Daan Verhoeven" (was "Jan van der Berg")
+
+### Wachtwoord
+- `Nummer1platform!` (met uitroepteken)
+
+---
+
+## 32. Wetenschap Pagina — Vergelijkingstabel
+
+### Bureau vs. Refurzy vergelijking
+
+| Aspect | Traditioneel Bureau | Refurzy |
+|--------|-------------------|---------|
+| Kosten | 20-30% van bruto jaarsalaris (was 15-27%) | No cure, no pay transparante fee |
+| Betalingsmodel | Retainer + success fee, of 100% success fee. Retainer = vast bedrag vooraf, ongeacht resultaat | No cure, no pay |
+| Exclusiviteit | Standaard exclusief | Optioneel (+25%) |
+
+### Navigatie
+Wetenschap pagina navigatie is bijgewerkt naar dezelfde stijl als de homepage:
+- Gecentreerd menu
+- "Inloggen" button
+- Geen user info display
+
+### Leesbaarheid
+- Grijze tekst: `text-gray-400` in plaats van `text-gray-500` voor betere leesbaarheid
+
+---
+
+## 33. FAQ Updates
+
+### Nieuwe en hernummerde vragen
+
+| Nr | Vraag | Status |
+|----|-------|--------|
+| q1-q6 | Ongewijzigd | Bestaand |
+| **q7** | "Waarom kost een mis-hire €44.000–€175.000?" | **Nieuw** |
+| q8 | Garantie-vraag (was q7) | Hernummerd |
+| q9 | Landen-vraag (was q8) | Hernummerd |
+
+### q7 Inhoud
+- 6 kostencomponenten (zie sectie 29)
+- VSO/ontslagkosten als 6e component
+- SHRM-waarschuwing over Nederlandse markt (zie sectie 29)
+
+---
+
+## 34. Homepage Wijzigingen
+
+### Tekstwijzigingen
+- **how.subtitle**: "eerlijker" → "stukken goedkoper"
+- **M-Score**: Overal "fit-score" vervangen door "M-Score"
+
+### Card alignment
+3 rolkaarten op de homepage (Opdrachtgever, Scout, Kandidaat) gebruiken nu:
+- `flex-col` layout
+- `flex-1` op het content-gedeelte
+- Gekleurde footer-tekst aligneert verticaal over alle 3 kaarten
+
+### Navigatie consistentie
+- Homepage en wetenschap pagina gebruiken dezelfde navigatie:
+  - Gecentreerd menu
+  - "Inloggen" button
+  - Geen user info display
+
+---
+
+## 35. Verloop Data
+
+### Bronnen
+- **Huidig Nederlands gemiddelde verloop**: 10% (CBS/Intelligence Group)
+- **Verwachte stijging**: naar 19% (Mercer)
+- Standaard ingevuld als default in de besparingscalculator
