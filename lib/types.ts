@@ -123,7 +123,7 @@ export interface Kandidaat {
   voorkeursFunctie: string
   scanCompleted: boolean
   cvUploaded: boolean
-  scoutId: string
+  scoutIds: string[]        // Multi-scout: kandidaat kan door meerdere scouts bemiddeld worden
   poolStatus?: KandidaatPoolStatus
   plaatsing?: Plaatsing
   inactiefReden?: string

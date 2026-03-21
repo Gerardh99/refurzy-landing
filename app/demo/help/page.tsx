@@ -104,6 +104,11 @@ const faqItems: FaqItem[] = [
     roles: ['scout'],
   },
   {
+    q: 'Kan een kandidaat door meerdere scouts worden bemiddeld?',
+    a: 'Ja. Een kandidaat kan in de talent pool van meerdere scouts staan en door elk van hen worden voorgedragen op vacatures. Wel geldt: een kandidaat kan slechts één keer op dezelfde vacature worden voorgedragen — de scout die als eerste voordraagt wint die voordracht (first-come-first-served). De plaatsingsfee gaat naar de scout wiens voordracht leidt tot een succesvolle plaatsing. U ziet een melding "reeds voorgedragen door een andere scout" als een andere scout de kandidaat al heeft voorgedragen op dezelfde vacature.',
+    roles: ['scout'],
+  },
+  {
     q: 'Hoe werkt de Matching Scan voor mijn kandidaten?',
     a: 'U nodigt kandidaten uit via het platform. Zij ontvangen een e-mail met een link naar de Matching Scan (35 vragen, ~10 minuten). Na invulling wordt de M-Score automatisch berekend en zichtbaar in uw talent pool.',
     roles: ['scout'],
@@ -127,7 +132,22 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Kan ik zelf vacatures zoeken?',
-    a: 'Nee, het matching-proces loopt via uw Talent Scout. Uw scout draagt u voor bij passende vacatures op basis van uw M-Score en profiel. U ontvangt een notificatie wanneer u bent voorgedragen.',
+    a: 'Nee, het matching-proces loopt via uw Talent Scout. Uw scout stelt vacatures aan u voor op basis van uw profiel. U ontvangt een notificatie bij elk nieuw voorstel en kunt kiezen: Interesse (ga door), Niet interesse (met reden), of Later bekijken. Na uw interesse vult u de Matching Scan in en wordt u officieel voorgedragen.',
+    roles: ['kandidaat'],
+  },
+  {
+    q: 'Hoe werkt het voordracht-proces?',
+    a: 'Het proces verloopt in stappen: (1) Uw scout stelt een vacature voor, (2) U beoordeelt het voorstel en geeft aan of u interesse heeft, (3) U vult de Matching Scan in (of de vacature-specifieke aanvulling), (4) Bij een goede match wordt u officieel voorgedragen aan de opdrachtgever, (5) Gesprekken en arbeidsvoorwaarden, (6) Contract. U heeft 5 dagen om op een voorstel te reageren.',
+    roles: ['kandidaat'],
+  },
+  {
+    q: 'Wat zijn de dual-status bevestigingen?',
+    a: 'Bij elke stap in het proces (gesprek gepland, gesprek afgerond, arbeidsvoorwaarden) wordt u gevraagd om te bevestigen. Dit is vrijblijvend maar helpt de transparantie: als u bevestigt dat een gesprek heeft plaatsgevonden maar de opdrachtgever dit nog niet heeft bijgewerkt, stuurt het systeem automatisch een herinnering. U ziet de status als ✓✓ (beide bevestigd), ✓? (alleen opdrachtgever), of ?✓ (alleen u).',
+    roles: ['kandidaat'],
+  },
+  {
+    q: 'Kan ik door meerdere Talent Scouts worden bemiddeld?',
+    a: 'Ja. U kunt in de talent pool van meerdere scouts staan. Elke scout kan u onafhankelijk voordragen op vacatures, maar u kunt slechts één keer op dezelfde vacature worden voorgedragen. U ziet al uw scouts in uw dashboard. De fee gaat naar de scout wiens voordracht leidt tot een succesvolle plaatsing — voor u als kandidaat maakt dit geen verschil, het is altijd gratis.',
     roles: ['kandidaat'],
   },
 

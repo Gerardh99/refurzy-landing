@@ -1,6 +1,6 @@
 # Refurzy — Product Requirements Document
 
-**Version:** 3.0
+**Version:** 4.0
 **Date:** 21 March 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
@@ -67,7 +67,7 @@ Employer only pays upon signing the employment contract.
 
 When creating a vacancy, the employer can activate exclusivity:
 
-- **Mechanism**: Nominated candidates are exclusively available for 14 days and are not offered to other employers
+- **Mechanism**: Nominated candidates are exclusively available for 14 days and are not offered to other employers for vacancies in the same professional field (vakgebied). Applications in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor for your position.
 - **Surcharge**: +25% on top of the standard placement fee (calculated on the base fee excl. VAT)
 - **Irrevocable**: Once activated, exclusivity **cannot** be deactivated for that vacancy
 - **Rationale**: Irrevocability prevents gaming (turning on exclusivity to block candidates, then turning it off to avoid the surcharge)
@@ -78,12 +78,12 @@ When creating a vacancy, the employer can activate exclusivity:
 
 ### Candidate Block Upon Nomination
 
-Once a candidate is nominated for a vacancy, they are blocked from nomination to other vacancies. The duration of the block depends on the vacancy type and the outcome of the process:
+Once a candidate is nominated for a vacancy, they are blocked from nomination to other vacancies **in the same professional field (vakgebied)**. Nominations in other professional fields continue unaffected. The duration of the block depends on the vacancy type and the outcome of the process:
 
 #### Standard Vacancy (without exclusivity)
 | Situation | Block |
 |-----------|-------|
-| Candidate is nominated and in active pipeline | Blocked as long as the process runs |
+| Candidate is nominated and in active pipeline | Blocked in the same professional field as long as the process runs |
 | Candidate is rejected | Immediately available for new nominations |
 | Nomination expires (employer doesn't respond within 7 days) | Immediately available for new nominations |
 | Candidate is hired | Permanently blocked (removed from talent pool) |
@@ -91,14 +91,14 @@ Once a candidate is nominated for a vacancy, they are blocked from nomination to
 #### Exclusive Vacancy (+25%)
 | Situation | Block |
 |-----------|-------|
-| Candidate is nominated | Blocked for at least 14 days, even if rejected within those 14 days |
+| Candidate is nominated | Blocked in the same professional field for at least 14 days, even if rejected within those 14 days |
 | After 14 days + rejection | Immediately available for new nominations |
 | After 14 days + still in active pipeline | Blocked until end of process |
 | Nomination expires (7 days no review) | Exclusivity block remains in effect until day 14 |
 | Candidate is hired | Permanently blocked (removed from talent pool) |
 
 #### Technical Enforcement
-- When nominating a candidate, the platform checks whether the candidate is already in an active process or under an exclusivity block
+- When nominating a candidate, the platform checks whether the candidate is already in an active process or under an exclusivity block **in the same professional field**
 - Scouts see a clear indicator in their talent pool when a candidate is blocked, including expected end date
 - The scout **cannot** select a blocked candidate for nomination until the block has expired
 - For exclusive vacancies, the 14-day clock starts at the moment of nomination, regardless of what happens in the pipeline afterward
@@ -135,6 +135,8 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 │  2. CREATE VACANCY (6-step wizard)                       │
 │     ├── Step 1: Title & role                              │
 │     ├── Step 2: AI-generated description                  │
+│     │           + professional field (autocomplete)       │
+│     │           + country                                 │
 │     ├── Step 3: Details + culture profile                 │
 │     ├── Step 4: Hard criteria (education, experience,     │
 │     │           location, office, commute)                │
@@ -200,6 +202,7 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 │                                                           │
 │  3. VIEW VACANCIES                                       │
 │     ├── Search by title/location                          │
+│     ├── Filter by professional field and country          │
 │     ├── Mark favorites (star)                             │
 │     ├── View hard criteria                                │
 │     └── Vacancy detail with candidate list                │
@@ -216,7 +219,9 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 │  5. NOMINATE CANDIDATE                                   │
 │     ├── Manually match to vacancy                         │
 │     ├── Or via matching suggestion (step 4)               │
-│     └── Own candidates only (scout exclusivity)           │
+│     ├── Candidate can be represented by multiple scouts   │
+│     │   (multi-scout)                                    │
+│     └── One nomination per vacancy (first-come)           │
 │                                                           │
 │  6. FOLLOW PIPELINE                                      │
 │     ├── Overview of all nominated candidates              │
@@ -771,14 +776,15 @@ In-platform messaging system, accessible from all roles.
 14. **Scout independence**: The Talent Scout works entirely at their own expense and risk. Determines independently when, how, how much and where assignments are fulfilled. No employment relationship with Refurzy.
 15. **VU Amsterdam license**: Refurzy pays VU per administered Matching Scan. Internal test usage is filtered based on test email addresses. All administrations are logged with date, type, user and status.
 16. **Profile reuse**: Candidate completes scan once → profile reusable across all vacancies. Organization: values + characteristics (dim 2+3, 16 questions) reusable across vacancies, only job activities (dim 1, 19 questions) per vacancy anew.
-17. **Scout exclusivity**: A candidate can only be nominated by the scout who brought the candidate. Other scouts cannot nominate the same candidate.
-17b. **Candidate block upon nomination**: A candidate who is nominated for a vacancy cannot simultaneously be nominated for another vacancy. The block lasts as long as the process is active. Upon rejection or expired nomination, the candidate becomes immediately available — except for exclusive vacancies, where a minimum block of 14 days applies regardless of the outcome. See section 3 "Candidate Block Upon Nomination".
+17. **Multi-scout representation**: A candidate can be represented by multiple Talent Scouts simultaneously. Each scout can independently nominate the candidate for vacancies, provided the candidate has not already been nominated for that same vacancy by another scout (first-come-first-served). The fee goes to the scout whose nomination led to a successful placement. The candidate sees all their scouts in the dashboard; scouts only see a notice "already nominated by another scout" if another scout has already nominated the candidate for the same vacancy.
+17b. **Candidate block upon nomination (per professional field)**: A candidate who is nominated for a vacancy cannot simultaneously be nominated for another vacancy **in the same professional field (vakgebied)**. Nominations in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor. The block lasts as long as the process is active. Upon rejection or expired nomination, the candidate becomes immediately available — except for exclusive vacancies, where a minimum block of 14 days applies regardless of the outcome. See section 3 "Candidate Block Upon Nomination".
 18. **Automatic matching suggestions**: Scouts receive automatic matching suggestions when a vacancy is published that matches candidates in their talent pool — based on hard criteria (education, experience, location) and M-Score. The scout can accept the suggestion (= nominate) or reject.
 19. **Manual matching**: Scouts can also manually match candidates to vacancies, independent of automatic suggestions.
 20. **Introductory discount for new scout**: A scout without track record (0 completed placements) is a higher risk for employers. To lower the barrier: the first successful placement is at 50% discount. Both the scout and Refurzy bear the discount (both receive 25% instead of 50% of the normal fee). After the first successful placement, the discount expires automatically. This is visible to the employer as a "50% introductory discount" badge for candidates from new scouts, and for the scout as an incentive to realize the first match.
 21. **Return to talent pool after rejection**: When a candidate in the pipeline is rejected by the employer, the candidate automatically returns to "available" status in the scout's talent pool. The scout receives a notification. The M-Score profile remains valid and the candidate can immediately be nominated for another vacancy. Rejection reason and rating are stored (not visible to candidate, visible to scout). When a candidate withdraws (e.g., other offer), the scout can choose: "Available for other vacancies" (back to pool) or "No longer available" (inactive in pool).
 22. **Automatic reminders (auto-nudges)**: Refurzy automatically sends reminders to employers when pipeline phases take too long. Scouts don't need to take any action — the system monitors lead times. When exceeded, escalation to Refurzy occurs. See section 27 for the full communication model.
-23. **Exclusivity (+25%)**: Employers can activate exclusivity when creating a vacancy. Candidates are then not offered to other vacancies for at least 14 days — even if they are rejected within those 14 days or the nomination expires. The surcharge is 25% on top of the placement fee. Exclusivity is irrevocable per vacancy to prevent gaming. See section 3 "Candidate Block Upon Nomination" for all rules.
+22b. **Dual-status confirmation (candidate ↔ employer)**: At each pipeline step, the candidate is asked to confirm. This is a soft confirmation — the candidate is encouraged but not required. When a mismatch occurs (candidate confirms a step that the employer hasn't updated yet), the system automatically sends a nudge to the employer and a notification to the scout. The scout sees a dual indicator in the pipeline: ✓✓ = both confirmed, ✓? = employer only, ?✓ = candidate only (orange warning), ?? = neither. The candidate can also proactively report that an interview has taken place or that direct contact outside the platform has occurred (escalation to Refurzy).
+23. **Exclusivity (+25%, per professional field)**: Employers can activate exclusivity when creating a vacancy. Candidates are then not offered to other vacancies **in the same professional field** for at least 14 days — even if they are rejected within those 14 days or the nomination expires. Applications in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor for your position. The surcharge is 25% on top of the placement fee. Exclusivity is irrevocable per vacancy to prevent gaming. See section 3 "Candidate Block Upon Nomination" for all rules.
 
 ---
 
@@ -1211,6 +1217,30 @@ Scouts and employers can **never** freely communicate with each other via the pl
 | Hired | "Congratulations! **[Candidate]** has been hired for **[vacancy title]**. Your fee: €**[amount]**." |
 | Rejected | "**[Candidate]** has been rejected for **[vacancy title]**. Reason: **[category]**. The candidate is back in your talent pool." |
 
+### Candidate Confirmations
+
+After each status change by the employer, the candidate receives a confirmation request:
+
+| Trigger | Message to candidate | Upon confirmation | Upon "not correct" |
+|---------|---------------------|-------------------|-------------------|
+| Interview scheduled on [date] | "Your interview is scheduled for [date]. Is this correct?" | ✓✓ indicator | Escalation to Refurzy |
+| Interview completed | "Did your interview at [company] take place?" | ✓✓ indicator | Escalation to Refurzy |
+| Employment terms phase | "Are you discussing employment terms?" | ✓✓ indicator | Escalation to Refurzy |
+| Contract signed | "Is it correct that you've signed a contract?" | ✓✓ + start date | Escalation to Refurzy |
+
+#### Proactive Candidate Reports
+
+The candidate can also confirm a step before the employer has done so:
+- "My interview has taken place" → nudge to employer + notification to scout
+- "I've had direct contact with the employer" → automatic escalation to Refurzy (platform terms violation)
+
+#### Mismatch Detection
+
+When the candidate confirms a status that the employer hasn't updated yet:
+1. **Immediate nudge to employer**: "The candidate has reported that [action]. Please update the status."
+2. **Notification to scout**: "Note: candidate reports [action], employer has not yet updated."
+3. **With repeated failure (3+ times)**: Escalation to Refurzy for manual intervention
+
 ### What is Not Available
 - ~~Free messaging between scout and employer~~
 - ~~Chat or direct communication~~
@@ -1487,3 +1517,161 @@ My vacancies
 - `hiredCandidateId` and `hiredScoutId` are populated for `filled`
 - All nominations with status `pending` or `in_review` are automatically set to `rejected` with reason `vacancy_filled`
 - Archive queries filter on `status IN ('filled', 'closed')`, sorted by `closedAt DESC`
+
+---
+
+## 37. Professional Field & Country
+
+### Professional Field (Vakgebied)
+
+Every vacancy has a required **professional field** (vakgebied). The field is selected via an autocomplete input when creating a vacancy.
+
+**Available professional fields:**
+Accountancy & Finance, Administration, Construction & Civil Engineering, Communication & PR, Customer Service, Data & Analytics, Design & Creative, Facilities & Services, HR & Recruitment, ICT & Development, Procurement & Supply Chain, Legal, Logistics & Transport, Management & Executive, Marketing & E-commerce, Education & Training, Operations, Production & Engineering, Sales & Business Development, Healthcare & Welfare, Other.
+
+**Usage:**
+- Scouts can filter by professional field in the vacancy overview
+- Candidate blocks and exclusivity are enforced per professional field (see section 3 and business rules 17b, 23)
+- Professional field is displayed on vacancy cards and detail pages
+
+### Country
+
+Every vacancy has a **country** field. This defaults to the country the employer specified as their company address, but can be changed per vacancy.
+
+**Available countries:**
+Netherlands, Belgium, Germany, United Kingdom, France, Spain, Italy, Switzerland, Austria, Ireland, Luxembourg, Sweden, Norway, Denmark, Finland, Poland, Portugal, Other.
+
+**Usage:**
+- Scouts can filter by country in the vacancy overview
+- Country is displayed alongside the location on vacancy cards
+
+---
+
+## 38. Multi-scout Representation
+
+### Core Principles
+
+A candidate can be represented by **multiple Talent Scouts** simultaneously. This increases opportunities for the candidate and encourages competition among scouts.
+
+### Rules
+
+| Rule | Description |
+|------|-------------|
+| **Multiple scouts per candidate** | A candidate can be in the talent pool of multiple scouts |
+| **One nomination per vacancy** | A candidate can only be nominated once for the same vacancy — by the scout who nominates first (first-come-first-served) |
+| **Fee to nominating scout** | The placement fee goes to the scout whose nomination led to a successful placement |
+| **Candidate transparency** | The candidate sees all their scouts in the dashboard |
+| **Scout privacy** | A scout only sees the notice "already nominated by another scout" if another scout has already nominated the candidate for the same vacancy — not which scout |
+
+### Conflict Resolution
+
+- For simultaneous nominations on the same vacancy, the submission timestamp determines priority
+- A scout can only see that a candidate has already been nominated after selecting the vacancy for nomination
+- The system automatically blocks the nomination if another scout was faster
+
+### Impact on Exclusivity
+
+For exclusive vacancies, the same multi-scout rules apply: the scout who first nominates the candidate for the exclusive vacancy initiates the exclusivity process. Other scouts can no longer nominate the same candidate for that vacancy.
+
+---
+
+## 39. Candidate Nomination Flow
+
+### Overview
+
+The nomination process runs through 6 phases, with the candidate playing an active role via a workflow inbox.
+
+### Phase 1: Recruitment (outside platform)
+
+- Scout sends personal invitation link via email, WhatsApp or LinkedIn
+- Link opens a landing page: "[Scout name] invites you to Refurzy"
+- Candidate sees: who the scout is, what Refurzy is, what it offers, how it works
+- Candidate chooses: [Accept invitation] or [No thanks]
+- Upon acceptance → proceed to phase 2 (onboarding)
+
+### Phase 2: Onboarding
+
+- Create account (name, email, phone)
+- Give consent (privacy, profile usage)
+- Complete profile (education, experience, city, preferred role)
+- Candidate is now "in talent pool" of the inviting scout
+- Can later be approached by multiple scouts (multi-scout, see section 38)
+
+### Phase 3: Vacancy nomination (scout → candidate inbox)
+
+- Scout selects candidate + vacancy for nomination
+- Candidate receives notification: "New vacancy proposed"
+- Vacancy appears in the **candidate inbox** with status "New"
+- Candidate sees: title, professional field, location, salary, hard criteria fit, description
+- If the candidate has previously completed the Matching Scan: M-Score is shown (indicative if the job activities dimension has not yet been completed for this specific vacancy)
+- Company name is anonymous until the interview phase
+- **Candidate chooses:**
+  - **[Interested]** → proceed to phase 4 (Matching Scan)
+  - **[Not interested]** → select reason (see rejection reasons), candidate returns to pool, scout receives feedback
+  - **[Review later]** → stays in inbox
+
+#### Candidate rejection reasons
+
+- Salary not attractive
+- Location not feasible
+- Role doesn't match my ambition
+- Industry doesn't appeal to me
+- I'm already in talks for a similar role
+- Other (free text field)
+
+→ Feedback goes to the scout (not to the employer).
+
+#### Response deadline
+
+- Candidate has **5 days** to respond
+- After 3 days: automatic reminder
+- After 5 days: proposal expires, scout receives notification
+
+### Phase 4: Matching Scan
+
+- After "Interested", the candidate must complete (or supplement) the Matching Scan
+- If scan not previously completed: full scan (35 questions, ~10 minutes)
+- If scan previously completed: only job activities dimension again (19 questions, vacancy-specific)
+- M-Score is calculated and displayed
+- Candidate sees summary: "Your M-Score is 87%"
+- **Candidate chooses:**
+  - **[Confirm nomination]** → proceed to phase 5
+  - **[Cancel]** → return to pool
+
+### Phase 5: Official nomination (to employer)
+
+- Anonymous profile goes to employer
+- Employer sees: initials, M-Score, hard criteria match, scout rating
+- Pipeline starts: nominated → contract_agreed → interview → employment_terms → contract
+- Candidate receives dual-status confirmations per step (see business rule 22b)
+
+### Phase 6: Pipeline & outcome
+
+- Existing pipeline flow (interviews, feedback, contract)
+- Dual-status confirmation (candidate ↔ employer)
+- Outcome: hired (🎉) or rejected (back to pool)
+
+### Candidate Dashboard: Workflow Inbox
+
+The candidate dashboard is built around a workflow inbox with tabs:
+
+| Tab | Content |
+|-----|---------|
+| **New** | Proposed vacancies awaiting response (Interested/Not interested/Later) |
+| **Active** | Vacancies where the candidate has shown interest or is in the pipeline |
+| **Completed** | Rejected, expired or placed vacancies |
+| **Scouts** | Overview of all Talent Scouts representing the candidate |
+
+### Candidate Pipeline (7 steps, visual)
+
+From the candidate perspective, the pipeline shows 7 steps:
+
+1. **Proposed** — vacancy received from scout
+2. **Interested** — candidate confirmed interest
+3. **Scan** — Matching Scan completed (M-Score calculated)
+4. **Nominated** — officially nominated to employer
+5. **Interview** — interview(s) with employer
+6. **Terms** — discussing employment terms
+7. **Contract** — contract signed (🎉)
+
+Colors: green (✓ completed), purple (▶ current step), gray (not yet reached), orange (waiting for employer action with ?✓ indicator)

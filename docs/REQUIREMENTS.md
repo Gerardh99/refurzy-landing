@@ -1,6 +1,6 @@
 # Refurzy — Product Requirements Document
 
-**Versie:** 2.0
+**Versie:** 3.0
 **Datum:** 21 maart 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
@@ -67,7 +67,7 @@ Opdrachtgever betaalt alleen bij ondertekening arbeidsovereenkomst.
 
 Bij het aanmaken van een vacature kan de opdrachtgever exclusiviteit activeren:
 
-- **Werking**: Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden
+- **Werking**: Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie.
 - **Toeslag**: +25% bovenop de standaard plaatsingsfee (berekend over de basisfee excl. BTW)
 - **Onherroepelijk**: Eenmaal geactiveerd kan exclusiviteit **niet** meer worden uitgeschakeld voor die vacature
 - **Rationale**: Onherroepelijkheid voorkomt gaming (exclusiviteit aanzetten om kandidaten te blokkeren, dan uitzetten voor ontgrendeling om de toeslag te vermijden)
@@ -78,12 +78,12 @@ Bij het aanmaken van een vacature kan de opdrachtgever exclusiviteit activeren:
 
 ### Kandidaat-blokkade bij voordracht
 
-Zodra een kandidaat wordt voorgedragen op een vacature, wordt deze geblokkeerd voor voordracht op andere vacatures. De duur van de blokkade hangt af van het type vacature en de uitkomst van het proces:
+Zodra een kandidaat wordt voorgedragen op een vacature, wordt deze geblokkeerd voor voordracht op andere vacatures **in hetzelfde vakgebied**. Voordrachten in andere vakgebieden lopen gewoon door. De duur van de blokkade hangt af van het type vacature en de uitkomst van het proces:
 
 #### Standaard vacature (zonder exclusiviteit)
 | Situatie | Blokkade |
 |----------|----------|
-| Kandidaat is voorgedragen en in actieve pipeline | Geblokkeerd zolang het proces loopt |
+| Kandidaat is voorgedragen en in actieve pipeline | Geblokkeerd in hetzelfde vakgebied zolang het proces loopt |
 | Kandidaat wordt afgewezen | Direct vrij voor nieuwe voordrachten |
 | Voordracht verloopt (opdrachtgever reageert niet binnen 7 dagen) | Direct vrij voor nieuwe voordrachten |
 | Kandidaat wordt aangenomen | Permanent geblokkeerd (uit talent pool) |
@@ -91,14 +91,14 @@ Zodra een kandidaat wordt voorgedragen op een vacature, wordt deze geblokkeerd v
 #### Exclusieve vacature (+25%)
 | Situatie | Blokkade |
 |----------|----------|
-| Kandidaat is voorgedragen | Geblokkeerd voor minimaal 14 dagen, óók als afgewezen binnen die 14 dagen |
+| Kandidaat is voorgedragen | Geblokkeerd in hetzelfde vakgebied voor minimaal 14 dagen, óók als afgewezen binnen die 14 dagen |
 | Na 14 dagen + afwijzing | Direct vrij voor nieuwe voordrachten |
 | Na 14 dagen + nog in actieve pipeline | Geblokkeerd tot einde proces |
 | Voordracht verloopt (7 dagen geen review) | Exclusiviteitsblokkade blijft gelden tot dag 14 |
 | Kandidaat wordt aangenomen | Permanent geblokkeerd (uit talent pool) |
 
 #### Technische afdwinging
-- Bij het voordragen van een kandidaat checkt het platform of de kandidaat al in een actief proces zit of onder een exclusiviteitsblokkade valt
+- Bij het voordragen van een kandidaat checkt het platform of de kandidaat al in een actief proces zit of onder een exclusiviteitsblokkade valt **in hetzelfde vakgebied**
 - Scouts zien in hun talent pool een duidelijke indicator wanneer een kandidaat geblokkeerd is, inclusief verwachte einddatum
 - De scout kan een geblokkeerde kandidaat **niet** selecteren voor voordracht totdat de blokkade is verlopen
 - Bij exclusieve vacatures start de 14-dagenklok op het moment van voordracht, ongeacht wat er daarna in de pipeline gebeurt
@@ -135,6 +135,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │  2. VACATURE AANMAKEN (6-stappen wizard)                 │
 │     ├── Stap 1: Titel & functie                          │
 │     ├── Stap 2: AI-gegenereerde omschrijving             │
+│     │           + vakgebied (autocomplete) + land         │
 │     ├── Stap 3: Details + cultuurprofiel                 │
 │     ├── Stap 4: Harde criteria (opleiding, ervaring,     │
 │     │           locatie, kantoor, reistijd)               │
@@ -200,6 +201,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │                                                           │
 │  3. VACATURES BEKIJKEN                                   │
 │     ├── Zoeken op titel/locatie                          │
+│     ├── Filteren op vakgebied en land                    │
 │     ├── Favorieten markeren (ster)                       │
 │     ├── Harde criteria bekijken                          │
 │     └── Vacature detail met kandidatenlijst              │
@@ -216,7 +218,9 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 │  5. KANDIDAAT VOORDRAGEN                                 │
 │     ├── Handmatig matchen aan vacature                   │
 │     ├── Of via matchingsuggestie (stap 4)                │
-│     └── Alleen eigen kandidaten (scout-exclusiviteit)    │
+│     ├── Kandidaat kan door meerdere scouts bemiddeld      │
+│     │   worden (multi-scout)                             │
+│     └── Eén voordracht per vacature (first-come)         │
 │                                                           │
 │  6. PIPELINE VOLGEN                                      │
 │     ├── Overzicht alle voorgedragen kandidaten           │
@@ -771,14 +775,15 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 14. **Zelfstandigheid scout**: De Talent Scout werkt volledig voor eigen rekening en risico. Bepaalt zelf wanneer, hoe, hoeveel en waar opdrachten worden vervuld. Geen arbeidsrelatie met Refurzy.
 15. **VU Amsterdam licentie**: Refurzy betaalt de VU per afgenomen Matching Scan. Intern testgebruik wordt uitgefilterd op basis van test-emailadressen. Alle afnames worden gelogd met datum, type, gebruiker en status.
 16. **Profiel hergebruik**: Kandidaat vult scan 1x in → profiel herbruikbaar over alle vacatures. Organisatie: waarden + kenmerken (dim 2+3, 16 vragen) herbruikbaar over vacatures, alleen werkzaamheden (dim 1, 19 vragen) per vacature opnieuw.
-17. **Scout-exclusiviteit**: Een kandidaat kan alleen worden voorgedragen door de scout die de kandidaat heeft aangebracht. Andere scouts kunnen dezelfde kandidaat niet voordragen.
-17b. **Kandidaat-blokkade bij voordracht**: Een kandidaat die is voorgedragen op een vacature kan niet tegelijkertijd op een andere vacature worden voorgedragen. De blokkade duurt zolang het proces actief is. Bij afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt ongeacht de uitkomst. Zie sectie 3 "Kandidaat-blokkade bij voordracht".
+17. **Multi-scout bemiddeling**: Een kandidaat kan door meerdere Talent Scouts tegelijkertijd worden bemiddeld. Elke scout kan de kandidaat onafhankelijk voordragen op vacatures, mits de kandidaat niet al is voorgedragen op diezelfde vacature door een andere scout (first-come-first-served). De fee gaat naar de scout wiens voordracht heeft geleid tot een succesvolle plaatsing. De kandidaat ziet al zijn/haar scouts in het dashboard; scouts zien alleen een melding "reeds voorgedragen door een andere scout" als een andere scout de kandidaat al heeft voorgedragen op dezelfde vacature.
+17b. **Kandidaat-blokkade bij voordracht (per vakgebied)**: Een kandidaat die is voorgedragen op een vacature kan niet tegelijkertijd op een andere vacature **in hetzelfde vakgebied** worden voorgedragen. Voordrachten in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent. De blokkade duurt zolang het proces actief is. Bij afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt ongeacht de uitkomst. Zie sectie 3 "Kandidaat-blokkade bij voordracht".
 18. **Automatische matchingsuggesties**: Scouts ontvangen automatische matchingsuggesties wanneer een vacature wordt gepubliceerd die matcht met kandidaten in hun talent pool — op basis van harde criteria (opleiding, ervaring, locatie) en M-Score. De scout kan de suggestie accepteren (= voordragen) of afwijzen.
 19. **Handmatig matchen**: Scouts kunnen kandidaten ook handmatig aan vacatures koppelen, onafhankelijk van automatische suggesties.
 20. **Introductiekorting nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. Om de drempel te verlagen: de eerste succesvolle plaatsing is met 50% korting. Zowel de scout als Refurzy dragen de korting (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt de korting automatisch. Dit wordt zichtbaar voor de opdrachtgever als "50% introductiekorting" badge bij kandidaten van nieuwe scouts, en voor de scout als incentive om de eerste match te realiseren.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
 22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
-23. **Exclusiviteit (+25%)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan minimaal 14 dagen niet aan andere vacatures aangeboden — ook niet als ze binnen die 14 dagen worden afgewezen of als de voordracht verloopt. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen. Zie sectie 3 "Kandidaat-blokkade bij voordracht" voor alle regels.
+22b. **Dual-status bevestiging (kandidaat ↔ opdrachtgever)**: Bij elke pipeline-stap wordt de kandidaat gevraagd om te bevestigen. Dit is een zachte bevestiging — de kandidaat wordt gestimuleerd maar niet verplicht. Bij een mismatch (kandidaat bevestigt een stap die de opdrachtgever nog niet heeft bijgewerkt) stuurt het systeem automatisch een nudge naar de opdrachtgever en een notificatie naar de scout. De scout ziet een dual indicator in de pipeline: ✓✓ = beide bevestigd, ✓? = alleen opdrachtgever, ?✓ = alleen kandidaat (oranje waarschuwing), ?? = geen van beiden. De kandidaat kan ook proactief melden dat een gesprek heeft plaatsgevonden of dat er rechtstreeks contact is geweest buiten het platform (escalatie naar Refurzy).
+23. **Exclusiviteit (+25%, per vakgebied)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan minimaal 14 dagen niet aan andere vacatures **in hetzelfde vakgebied** aangeboden — ook niet als ze binnen die 14 dagen worden afgewezen of als de voordracht verloopt. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen. Zie sectie 3 "Kandidaat-blokkade bij voordracht" voor alle regels.
 
 ---
 
@@ -1211,6 +1216,30 @@ Scouts en opdrachtgevers kunnen **nooit** vrij met elkaar communiceren via het p
 | Aangenomen | "Gefeliciteerd! **[Kandidaat]** is aangenomen voor **[vacaturetitel]**. Uw fee: €**[bedrag]**." |
 | Afgewezen | "**[Kandidaat]** is afgewezen voor **[vacaturetitel]**. Reden: **[categorie]**. De kandidaat is terug in uw talent pool." |
 
+### Kandidaat Bevestigingen
+
+Na elke statuswijziging door de opdrachtgever ontvangt de kandidaat een bevestigingsverzoek:
+
+| Trigger | Bericht aan kandidaat | Bij bevestiging | Bij "klopt niet" |
+|---------|----------------------|-----------------|------------------|
+| Gesprek gepland op [datum] | "Je gesprek staat gepland op [datum]. Klopt dit?" | ✓✓ indicator | Escalatie naar Refurzy |
+| Gesprek afgerond | "Is je gesprek bij [bedrijf] doorgegaan?" | ✓✓ indicator | Escalatie naar Refurzy |
+| Arbeidsvoorwaarden fase | "Bespreken jullie arbeidsvoorwaarden?" | ✓✓ indicator | Escalatie naar Refurzy |
+| Contract getekend | "Klopt het dat je een contract hebt getekend?" | ✓✓ + startdatum | Escalatie naar Refurzy |
+
+#### Proactieve kandidaat-meldingen
+
+De kandidaat kan ook zelf een stap bevestigen voordat de opdrachtgever dit heeft gedaan:
+- "Mijn gesprek heeft plaatsgevonden" → nudge naar opdrachtgever + notificatie naar scout
+- "Ik heb rechtstreeks contact gehad met de opdrachtgever" → automatische escalatie naar Refurzy (overtreding platformvoorwaarden)
+
+#### Mismatch-detectie
+
+Wanneer de kandidaat een status bevestigt die de opdrachtgever nog niet heeft bijgewerkt:
+1. **Directe nudge naar opdrachtgever**: "De kandidaat heeft gemeld dat [actie]. Werk de status bij."
+2. **Notificatie naar scout**: "Let op: kandidaat meldt [actie], opdrachtgever heeft nog niet bijgewerkt."
+3. **Bij herhaaldelijk verzuim (3+ keer)**: Escalatie naar Refurzy voor handmatige interventie
+
 ### Wat niet beschikbaar is
 - ~~Vrije berichtenfunctie tussen scout en opdrachtgever~~
 - ~~Chat of directe communicatie~~
@@ -1483,3 +1512,161 @@ Mijn vacatures
 - `hiredCandidateId` en `hiredScoutId` worden ingevuld bij `vervuld`
 - Alle voordrachten met status `pending` of `in_review` worden automatisch op `rejected` gezet met reden `vacancy_filled`
 - Archief-queries filteren op `status IN ('vervuld', 'gesloten')`, gesorteerd op `closedAt DESC`
+
+---
+
+## 37. Vakgebied & Land
+
+### Vakgebied
+
+Elke vacature heeft een verplicht veld **vakgebied** (professioneel domein). Het vakgebied wordt geselecteerd via een autocomplete-invoerveld bij het aanmaken van een vacature.
+
+**Beschikbare vakgebieden:**
+Accountancy & Finance, Administratie, Bouw & Civiele Techniek, Communicatie & PR, Customer Service, Data & Analytics, Design & Creative, Facilitair & Services, HR & Recruitment, ICT & Development, Inkoop & Supply Chain, Juridisch, Logistiek & Transport, Management & Directie, Marketing & E-commerce, Onderwijs & Training, Operations, Productie & Techniek, Sales & Business Development, Zorg & Welzijn, Overig.
+
+**Gebruik:**
+- Scouts kunnen filteren op vakgebied in het vacature-overzicht
+- Kandidaat-blokkade en exclusiviteit worden per vakgebied afgedwongen (zie sectie 3 en business rules 17b, 23)
+- Vakgebied wordt getoond op vacaturekaarten en detailpagina's
+
+### Land
+
+Elke vacature heeft een veld **land**. Dit staat standaard op het land dat de opdrachtgever als bedrijfsadres heeft opgegeven, maar kan per vacature worden gewijzigd.
+
+**Beschikbare landen:**
+Nederland, België, Duitsland, Verenigd Koninkrijk, Frankrijk, Spanje, Italië, Zwitserland, Oostenrijk, Ierland, Luxemburg, Zweden, Noorwegen, Denemarken, Finland, Polen, Portugal, Anders.
+
+**Gebruik:**
+- Scouts kunnen filteren op land in het vacature-overzicht
+- Land wordt getoond naast de locatie op vacaturekaarten
+
+---
+
+## 38. Multi-scout Bemiddeling
+
+### Kernprincipes
+
+Een kandidaat kan door **meerdere Talent Scouts** tegelijkertijd worden bemiddeld. Dit vergroot de kansen voor de kandidaat en stimuleert concurrentie tussen scouts.
+
+### Regels
+
+| Regel | Beschrijving |
+|-------|-------------|
+| **Meerdere scouts per kandidaat** | Een kandidaat kan in de talent pool van meerdere scouts staan |
+| **Eén voordracht per vacature** | Een kandidaat kan slechts één keer op dezelfde vacature worden voorgedragen — door de scout die als eerste voordraagt (first-come-first-served) |
+| **Fee naar voordragende scout** | De plaatsingsfee gaat naar de scout wiens voordracht heeft geleid tot een succesvolle plaatsing |
+| **Transparantie kandidaat** | De kandidaat ziet al zijn/haar scouts in het dashboard |
+| **Privacy scout** | Een scout ziet alleen de melding "reeds voorgedragen door een andere scout" als een andere scout de kandidaat al heeft voorgedragen op dezelfde vacature — niet welke scout |
+
+### Conflict-afhandeling
+
+- Bij gelijktijdige voordrachten op dezelfde vacature geldt het timestamp van indiening
+- Een scout kan pas zien dat een kandidaat al is voorgedragen nadat hij/zij de vacature selecteert voor voordracht
+- Het systeem blokkeert de voordracht automatisch als een andere scout sneller was
+
+### Impact op exclusiviteit
+
+Bij exclusieve vacatures gelden dezelfde multi-scout regels: de scout die als eerste de kandidaat voordraagt op de exclusieve vacature initieert het exclusiviteitsproces. Andere scouts kunnen dezelfde kandidaat niet meer op die vacature voordragen.
+
+---
+
+## 39. Kandidaat Voordracht Flow
+
+### Overzicht
+
+Het voordracht-proces verloopt in 6 fasen, waarbij de kandidaat een actieve rol heeft via een workflow-inbox.
+
+### Fase 1: Werving (buiten platform)
+
+- Scout stuurt persoonlijke uitnodigingslink via email, WhatsApp of LinkedIn
+- Link opent een landingspagina: "[Scout naam] nodigt je uit voor Refurzy"
+- Kandidaat ziet: wie de scout is, wat Refurzy is, wat het oplevert, hoe het werkt
+- Kandidaat kiest: [Accepteer uitnodiging] of [Nee bedankt]
+- Bij acceptatie → door naar fase 2 (onboarding)
+
+### Fase 2: Onboarding
+
+- Account aanmaken (naam, email, telefoon)
+- Toestemming geven (privacy, profielgebruik)
+- Profiel invullen (opleiding, ervaring, woonplaats, voorkeursfunctie)
+- Kandidaat is nu "in talent pool" van de uitnodigende scout
+- Kan later door meerdere scouts benaderd worden (multi-scout, zie sectie 38)
+
+### Fase 3: Vacature voordracht (scout → kandidaat inbox)
+
+- Scout selecteert kandidaat + vacature voor voordracht
+- Kandidaat ontvangt notificatie: "Nieuwe vacature voorgesteld"
+- Vacature verschijnt in de **kandidaat-inbox** met status "Nieuw"
+- Kandidaat ziet: titel, vakgebied, locatie, salaris, harde criteria fit, omschrijving
+- Als de kandidaat eerder de Matching Scan heeft ingevuld: M-Score wordt getoond (indicatief als werkzaamheden-dimensie nog niet vacature-specifiek is ingevuld)
+- Bedrijfsnaam is anoniem tot de gespreksfase
+- **Kandidaat kiest:**
+  - **[Interesse]** → door naar fase 4 (Matching Scan)
+  - **[Niet interesse]** → reden selecteren (zie afwijzingsredenen), kandidaat terug in pool, scout ontvangt feedback
+  - **[Later bekijken]** → blijft in inbox
+
+#### Afwijzingsredenen kandidaat
+
+- Salaris niet aantrekkelijk
+- Locatie niet haalbaar
+- Functie past niet bij mijn ambitie
+- Sector spreekt mij niet aan
+- Ik ben al in gesprek voor een vergelijkbare rol
+- Anders (vrij tekstveld)
+
+→ Feedback gaat naar de scout (niet naar de opdrachtgever).
+
+#### Reactietermijn
+
+- Kandidaat heeft **5 dagen** om te reageren
+- Na 3 dagen: automatische herinnering
+- Na 5 dagen: voorstel verloopt, scout ontvangt melding
+
+### Fase 4: Matching Scan
+
+- Na "Interesse" moet de kandidaat de Matching Scan invullen (of aanvullen)
+- Als scan nog niet eerder ingevuld: volledige scan (35 vragen, ~10 minuten)
+- Als scan eerder ingevuld: alleen werkzaamheden-dimensie opnieuw (19 vragen, vacature-specifiek)
+- M-Score wordt berekend en getoond
+- Kandidaat ziet samenvatting: "Je M-Score is 87%"
+- **Kandidaat kiest:**
+  - **[Definitief voordragen]** → door naar fase 5
+  - **[Toch niet doorgaan]** → terug naar pool
+
+### Fase 5: Officiële voordracht (aan opdrachtgever)
+
+- Anoniem profiel gaat naar opdrachtgever
+- Opdrachtgever ziet: initialen, M-Score, harde criteria match, scout rating
+- Pipeline start: voorgesteld → contract_akkoord → gesprek → arbeidsvoorwaarden → contract
+- Kandidaat ontvangt dual-status bevestigingen per stap (zie business rule 22b)
+
+### Fase 6: Pipeline & uitkomst
+
+- Bestaande pipeline flow (gesprekken, feedback, contract)
+- Dual-status bevestiging (kandidaat ↔ opdrachtgever)
+- Uitkomst: aangenomen (🎉) of afgewezen (terug naar pool)
+
+### Kandidaat Dashboard: Workflow-inbox
+
+Het kandidaat-dashboard is opgebouwd rond een workflow-inbox met tabs:
+
+| Tab | Inhoud |
+|-----|--------|
+| **Nieuw** | Voorgestelde vacatures die wachten op reactie (Interesse/Niet interesse/Later) |
+| **Actief** | Vacatures waarvoor de kandidaat interesse heeft getoond of in de pipeline zit |
+| **Afgerond** | Afgewezen, verlopen of geplaatste vacatures |
+| **Scouts** | Overzicht van alle Talent Scouts die de kandidaat bemiddelen |
+
+### Kandidaat Pipeline (7 stappen, visueel)
+
+Vanuit kandidaat-perspectief toont de pipeline 7 stappen:
+
+1. **Voorgesteld** — vacature ontvangen van scout
+2. **Interesse** — kandidaat heeft interesse bevestigd
+3. **Scan** — Matching Scan ingevuld (M-Score berekend)
+4. **Voorgedragen** — officieel voorgedragen aan opdrachtgever
+5. **Gesprek** — gesprek(ken) met opdrachtgever
+6. **Voorwaarden** — arbeidsvoorwaarden bespreken
+7. **Contract** — contract getekend (🎉)
+
+Kleuren: groen (✓ afgerond), paars (▶ huidige stap), grijs (nog niet bereikt), oranje (wacht op actie opdrachtgever met ?✓ indicator)
