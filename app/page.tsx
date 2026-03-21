@@ -7,7 +7,7 @@ import type { Lang } from '@/lib/i18n'
 const texts = {
   nl: {
     login: 'Inloggen',
-    subtitle: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
+    subtitle: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een bruto maandsalaris van €5.000 is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
     body: 'Refurzy combineert wetenschappelijk bewezen matching — ontwikkeld met de Vrije Universiteit Amsterdam — met ervaren recruiters en AI-technologie. U ontvangt alleen kandidaten die écht passen. Gemiddeld 60% goedkoper. No cure, no pay.³',
     sources: '¹ SHRM, 2024 \u00a0·\u00a0 ² Leadership IQ \u00a0·\u00a0 ³ Op basis van SHRM, Kristof-Brown et al. en VU Amsterdam',
     ctaLabel: 'Binnenkort live — Wees er als eerste bij',

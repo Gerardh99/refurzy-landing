@@ -286,8 +286,8 @@ export default function HomePage() {
               </p>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 {lang === 'nl'
-                  ? 'Eén verkeerde aanname kost €44.000–€175.000. Door P-O fit vooraf te meten, dalen mis-hires met 20–30%. Dat bespaart tot €668.000 per jaar per 100 medewerkers.'
-                  : 'One bad hire costs €44,000–€175,000. By measuring P-O fit upfront, mis-hires drop 20–30%. That saves up to €668,000 per year per 100 employees.'}
+                  ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, dalen mis-hires met 20–30%. Dat bespaart tot €668.000 per jaar per 100 medewerkers.'
+                  : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, mis-hires drop 20–30%. That saves up to €668,000 per year per 100 employees.'}
               </p>
               <p className="text-[10px] text-gray-600 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>

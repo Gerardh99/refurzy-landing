@@ -28,8 +28,8 @@ export const translations = {
   'hero.h1b': { nl: 'Niet op buikgevoel.', en: 'Not on gut feeling.' },
   'hero.roi': { nl: 'ROI vanaf 336%. No cure, no pay.', en: 'ROI from 336%. No cure, no pay.' },
   'hero.sub1': {
-    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een gemiddeld salaris is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
-    en: 'One wrong hire costs 50-200% of the annual salary.¹ At an average salary, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²'
+    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een bruto maandsalaris van €5.000 is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
+    en: 'One wrong hire costs 50-200% of the annual salary.¹ At a gross monthly salary of €5,000, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²'
   },
   'hero.sub2': {
     nl: 'De Matching Scan — ontwikkeld met de Vrije Universiteit Amsterdam — meet vóór de aanname of iemand bij uw organisatie past. Wetenschappelijk bewezen. No cure, no pay.',
@@ -67,8 +67,8 @@ export const translations = {
   },
   'pain.turnover.title': { nl: 'Hoog verloop door mismatches', en: 'High turnover from mismatches' },
   'pain.turnover.desc': {
-    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris aan herwervingskosten, productiviteitsverlies en teamschade. Bij een gemiddeld salaris is dat €44.000 tot €175.000. En 46% van nieuwe medewerkers faalt binnen 18 maanden.',
-    en: 'One wrong hire costs 50-200% of the annual salary in re-recruitment, lost productivity and team damage. At an average salary, that\'s €44,000 to €175,000. And 46% of new hires fail within 18 months.'
+    nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris aan herwervingskosten, productiviteitsverlies en teamschade. Bij een bruto maandsalaris van €5.000 is dat €44.000 tot €175.000. En 46% van nieuwe medewerkers faalt binnen 18 maanden.',
+    en: 'One wrong hire costs 50-200% of the annual salary in re-recruitment, lost productivity and team damage. At a gross monthly salary of €5,000, that\'s €44,000 to €175,000. And 46% of new hires fail within 18 months.'
   },
   'pain.gut.title': { nl: 'Buikgevoel in plaats van data', en: 'Gut feeling instead of data' },
   'pain.gut.desc': {

@@ -76,7 +76,7 @@ export default function WetenschapPage() {
             <div className="space-y-4">
               {[
                 { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie.' },
-                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000. Refurzy vermindert dit risico met 20–30% door wetenschappelijk bewezen matching.' },
+                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000). Refurzy vermindert dit risico met 20–30% door wetenschappelijk bewezen matching.' },
                 { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
                 { icon: '📊', text: 'ROI van 336–651% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €220.000–€465.000 besparing.' },
                 { icon: '🔬', text: 'Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.' },
@@ -118,7 +118,7 @@ export default function WetenschapPage() {
               },
               {
                 title: '€44.000–€175.000 bespaard per voorkomen mis-hire',
-                description: '46% van alle aannames faalt binnen 18 maanden. De totale kosten per mis-hire bedragen 50–200% van het jaarsalaris.',
+                description: '46% van alle aannames faalt binnen 18 maanden. De totale kosten per mis-hire bedragen 50–200% van het jaarsalaris (bij een bruto maandsalaris van €5.000).',
                 source: 'SHRM (2024); Leadership IQ'
               },
               {
@@ -157,7 +157,7 @@ export default function WetenschapPage() {
 
           <div className="mt-6 bg-gradient-to-r from-cyan/10 to-purple/10 rounded-xl border border-cyan/20 p-5">
             <p className="text-gray-200 text-sm leading-relaxed text-center font-medium">
-              Kort gezegd: medewerkers die passen bij uw organisatie zijn <span className="text-cyan">productiever</span>, <span className="text-cyan">gelukkiger</span> en <span className="text-cyan">blijven langer</span> — en dat bespaart <span className="text-white font-bold">€44.000–€175.000</span> per voorkomen mis-hire.
+              Kort gezegd: medewerkers die passen bij uw organisatie zijn <span className="text-cyan">productiever</span>, <span className="text-cyan">gelukkiger</span> en <span className="text-cyan">blijven langer</span> — en dat bespaart <span className="text-white font-bold">€44.000–€175.000</span> per voorkomen mis-hire (o.b.v. bruto maandsalaris €5.000).
             </p>
           </div>
         </section>
@@ -374,7 +374,7 @@ export default function WetenschapPage() {
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
+              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris, o.b.v. bruto maandsalaris €5.000). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
               { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026 (N=309)' },
               { title: 'Hogere productiviteit', desc: 'Betrokken medewerkers presteren aantoonbaar beter. Werkbevlogenheid — een directe uitkomst van goede P-O fit — voorspelt hogere werkprestaties en minder verzuim.', source: 'Halbesleben & Wheeler, 2008' },
               { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Organisaties met hoge betrokkenheid hebben 59% minder verloop. Case studies tonen reducties van 40–59%.', source: 'Kristof-Brown et al., 2005 · PRADCO · ASK/AssessCandidates' },
