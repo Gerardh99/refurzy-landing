@@ -53,13 +53,13 @@ export default function ScoutInstellingen() {
               <h3 className="font-semibold text-red-700 mb-1">Account geblokkeerd voor nieuwe bemiddelingen</h3>
               <p className="text-red-600 text-sm mb-3">
                 Je hebt het maximum van {maxBemiddelingenParticulier} bemiddelingen als particulier bereikt.
-                Om verder te kunnen bemiddelen moet je je registreren als ZZP&apos;er bij de KvK.
+                Om verder te kunnen bemiddelen moet je je bedrijf registreren bij de KvK.
               </p>
               <button
                 onClick={() => setShowUpgrade(true)}
                 className="bg-cyan text-navy-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-cyan-light transition-colors"
               >
-                Upgrade naar ZZP
+                Upgrade naar zakelijk
               </button>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function ScoutInstellingen() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <p className="text-ink-light text-xs mb-1">Modus</p>
-          <p className="text-lg font-semibold">{mode === 'particulier' ? 'Particulier' : 'ZZP / Bedrijf'}</p>
+          <p className="text-lg font-semibold">{mode === 'particulier' ? 'Particulier' : 'Zakelijk'}</p>
           {mode === 'particulier' && <p className="text-xs text-orange mt-1">Max {maxBemiddelingenParticulier} bemiddelingen</p>}
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
@@ -149,9 +149,9 @@ export default function ScoutInstellingen() {
       {/* KVK Upgrade */}
       {(showUpgrade || mode === 'zzp') && (
         <div className="bg-white rounded-2xl border border-cyan/20 p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-2">ZZP / Bedrijfsregistratie</h2>
+          <h2 className="text-lg font-semibold mb-2">Bedrijfsregistratie</h2>
           <p className="text-sm text-ink-light mb-4">
-            Na {maxBemiddelingenParticulier} bemiddelingen als particulier is een KvK-registratie als ZZP&apos;er verplicht om verder te kunnen werken op het platform.
+            Na {maxBemiddelingenParticulier} bemiddelingen als particulier is een KvK-registratie verplicht om verder te kunnen werken op het platform.
           </p>
           <div className="space-y-4">
             <div>

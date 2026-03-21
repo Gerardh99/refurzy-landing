@@ -138,7 +138,7 @@ const jaren = ['2026', '2025', '2024']
 const landInfo: Record<string, { formulier: string; toelichting: string }> = {
   NL: {
     formulier: 'IB-47 (Opgaaf uitbetaalde bedragen aan derden)',
-    toelichting: 'Alleen verplicht voor betalingen aan natuurlijke personen (zonder KVK). Zakelijke relaties (ZZP met KVK) zijn uitgesloten van IB-47 logging. Jaarlijks vóór 1 februari in te dienen bij de Belastingdienst.',
+    toelichting: 'Alleen verplicht voor betalingen aan natuurlijke personen (zonder KVK). Zakelijke relaties (met KVK) zijn uitgesloten van IB-47 logging. Jaarlijks vóór 1 februari in te dienen bij de Belastingdienst.',
   },
   DE: {
     formulier: 'Meldung nach §93c AO',
@@ -171,7 +171,7 @@ function generateCSV(data: Uitbetaling[], landCode: string): string {
   const rows = data.map(u => [
     u.scoutNaam, u.bsn || u.tinNummer, u.geboortedatum, u.adres, u.postcode,
     u.woonplaats, u.land, u.iban, u.kvkNummer, u.btwNummer,
-    u.typeRelatie === 'natuurlijk_persoon' ? 'Natuurlijk persoon' : 'ZZP / eenmanszaak',
+    u.typeRelatie === 'natuurlijk_persoon' ? 'Natuurlijk persoon' : 'Zakelijk',
     u.vacatureTitle, u.kandidaatNaam, u.bedrag.toString(),
     u.scoutFee.toString(), u.valuta, u.datumPlaatsing, u.datumUitbetaling || '-',
     u.factuurNummer, u.status,
@@ -235,7 +235,7 @@ function aggregatePerScout(data: Uitbetaling[]): ScoutSamenvatting[] {
         bsn: u.bsn, tinNummer: u.tinNummer, geboortedatum: u.geboortedatum,
         adres: u.adres, postcode: u.postcode, woonplaats: u.woonplaats,
         land: u.land, iban: u.iban, kvkNummer: u.kvkNummer, btwNummer: u.btwNummer,
-        typeRelatie: u.typeRelatie === 'natuurlijk_persoon' ? 'Natuurlijk persoon' : 'ZZP / eenmanszaak',
+        typeRelatie: u.typeRelatie === 'natuurlijk_persoon' ? 'Natuurlijk persoon' : 'Zakelijk',
         aantalUitbetalingen: 1, totaalBedrag: u.bedrag, totaalScoutFee: u.scoutFee,
         valuta: u.valuta,
         eersteBetaling: u.datumUitbetaling || '', laatsteBetaling: u.datumUitbetaling || '',
@@ -347,7 +347,7 @@ export default function AdminUitbetalingen() {
           >
             <option value="ALL">Alle types</option>
             <option value="natuurlijk_persoon">Particulier (logging vereist)</option>
-            <option value="zzp">Zakelijk / ZZP (geen logging)</option>
+            <option value="zzp">Zakelijk (geen logging)</option>
           </select>
         </div>
         <div className="flex gap-2 ml-auto">
@@ -420,7 +420,7 @@ export default function AdminUitbetalingen() {
             <div>
               <p className="text-sm font-semibold text-green-800">Geen logging vereist (zakelijk)</p>
               <p className="text-xs text-green-700 mt-0.5">
-                {loggingNietVereist.length} betaling{loggingNietVereist.length !== 1 ? 'en' : ''} aan ZZP/zakelijke relaties (met KVK) —
+                {loggingNietVereist.length} betaling{loggingNietVereist.length !== 1 ? 'en' : ''} aan zakelijke relaties (met KVK) —
                 totaal €{loggingNietVereist.reduce((s, u) => s + u.scoutFee, 0).toLocaleString('nl-NL')}
               </p>
               <p className="text-[10px] text-green-600 mt-1">Zakelijke relaties met KVK-nummer zijn vrijgesteld van IB-47 rapportage</p>
@@ -486,7 +486,7 @@ export default function AdminUitbetalingen() {
                     <td className="px-4 py-3 text-ink font-mono text-xs">{s.iban}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        s.typeRelatie === 'ZZP / eenmanszaak'
+                        s.typeRelatie === 'Zakelijk'
                           ? 'bg-cyan/10 text-cyan'
                           : 'bg-purple/10 text-purple'
                       }`}>
@@ -613,7 +613,7 @@ export default function AdminUitbetalingen() {
             <ul className="space-y-1 text-ink-light">
               <li>• KVK-nummer (indien van toepassing)</li>
               <li>• BTW-nummer</li>
-              <li>• Type relatie (ZZP / natuurlijk persoon)</li>
+              <li>• Type relatie (zakelijk / natuurlijk persoon)</li>
             </ul>
           </div>
           <div>

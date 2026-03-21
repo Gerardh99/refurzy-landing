@@ -1000,7 +1000,7 @@ Multi-step registratie wizard voor nieuwe Talent Scouts.
 
 **KVK-nummer en type relatie (Stap 1):**
 - KVK-nummer is optioneel en accepteert maximaal 8 cijfers
-- **Met KVK-nummer** → scout wordt geregistreerd als zakelijke relatie (ZZP/eenmanszaak). Betalingen hoeven niet gelogd te worden voor de Belastingdienst.
+- **Met KVK-nummer** → scout wordt geregistreerd als zakelijke relatie. Betalingen hoeven niet gelogd te worden voor de Belastingdienst.
 - **Zonder KVK-nummer** → scout wordt geregistreerd als particuliere relatie (natuurlijk persoon). Betalingen worden gelogd en jaarlijks gerapporteerd aan de Belastingdienst via IB-47.
 - Visuele indicator wisselt real-time bij invullen: amber badge ("Particuliere relatie") ↔ cyan badge ("Zakelijke relatie")
 - Dit veld bepaalt het `typeRelatie` veld in de database (`natuurlijk_persoon` | `zzp`)

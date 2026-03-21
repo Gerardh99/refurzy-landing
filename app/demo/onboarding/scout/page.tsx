@@ -27,8 +27,8 @@ const texts = {
     },
     kvk: 'KVK-nummer (optioneel)',
     kvkPlaceholder: '12345678',
-    kvkHelp: 'Vul je KVK-nummer in als je als zelfstandige (ZZP) werkt. Zonder KVK word je als particulier behandeld en worden betalingen gelogd voor de Belastingdienst (IB-47).',
-    kvkZakelijk: 'Zakelijke relatie (ZZP/eenmanszaak)',
+    kvkHelp: 'Vul je KVK-nummer in als je een bedrijf hebt. Zonder KVK word je als particulier behandeld en worden betalingen gelogd voor de Belastingdienst (IB-47).',
+    kvkZakelijk: 'Zakelijke relatie',
     kvkParticulier: 'Particuliere relatie — betalingen worden gelogd voor belastingaangifte',
     next: 'Volgende',
     // Step 2
@@ -81,8 +81,8 @@ const texts = {
     },
     kvk: 'Chamber of Commerce number (optional)',
     kvkPlaceholder: '12345678',
-    kvkHelp: 'Enter your Chamber of Commerce number if you work as a freelancer (self-employed). Without a CoC number, you will be treated as a private individual and payments will be reported to the tax authorities.',
-    kvkZakelijk: 'Business relationship (freelancer/sole proprietor)',
+    kvkHelp: 'Enter your Chamber of Commerce number if you have a registered business. Without a CoC number, you will be treated as a private individual and payments will be reported to the tax authorities.',
+    kvkZakelijk: 'Business relationship',
     kvkParticulier: 'Private individual — payments will be logged for tax reporting',
     next: 'Next',
     // Step 2

@@ -1000,7 +1000,7 @@ Multi-step registration wizard for new Talent Scouts.
 
 **Chamber of Commerce number and relationship type (Step 1):**
 - Chamber of Commerce (CoC/KVK) number is optional and accepts a maximum of 8 digits
-- **With CoC number** → scout is registered as a business relationship (freelancer/sole proprietor). Payments do not need to be reported to the tax authorities.
+- **With CoC number** → scout is registered as a business relationship. Payments do not need to be reported to the tax authorities.
 - **Without CoC number** → scout is registered as a private individual. Payments are logged and reported annually to the tax authorities (IB-47 in the Netherlands).
 - Visual indicator switches in real-time when filling in: amber badge ("Private individual") ↔ cyan badge ("Business relationship")
 - This field determines the `typeRelatie` field in the database (`natuurlijk_persoon` | `zzp`)
