@@ -34,11 +34,11 @@ export const vacatures: Vacature[] = [
         ],
       },
       {
-        id: 'k-2', naam: 'Jamal Usan', initialen: 'M', anoniem: true,
-        hardeCriteriaMatch: 92, hardeCriteriaIcon: 'check',
-        deVriesFit: 71, scoutRating: 4.1, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
+        id: 'k-10', naam: 'Nadia Karim', initialen: 'N', anoniem: true,
+        hardeCriteriaMatch: 88, hardeCriteriaIcon: 'check',
+        deVriesFit: 73, scoutRating: 4.3, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
-        opleidingsniveau: 'HBO', werkervaring: '6 jaar', woonplaats: 'Utrecht',
+        opleidingsniveau: 'WO', werkervaring: '4 jaar', woonplaats: 'Leiden',
       },
       {
         id: 'k-3', naam: 'Lisa Brouwer', initialen: 'L', anoniem: true,

@@ -44,7 +44,7 @@ export default function ScoutPipeline() {
           <p className="text-2xl font-bold text-ink">{allKandidaten.length}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-sm text-ink-light font-medium">Actief in pipeline</p>
+          <p className="text-sm text-ink-light font-medium">In proces bij opdrachtgever</p>
           <p className="text-2xl font-bold text-cyan">{activeCount}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
