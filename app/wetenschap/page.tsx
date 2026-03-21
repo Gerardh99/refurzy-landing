@@ -61,69 +61,142 @@ export default function WetenschapPage() {
             <span className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent">Matching Scan</span>
           </h1>
           <p className="text-lg text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
-            De Matching Scan is ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam. Dit document vat de wetenschappelijke basis samen en laat zien hoe dit zich vertaalt naar het Refurzy platform.
+            De Matching Scan is ontwikkeld in samenwerking met de Vrije Universiteit Amsterdam. Dit document vat de wetenschappelijke basis samen en laat zien hoe dit zich vertaalt naar het Refurzy platform.
           </p>
         </div>
       </section>
 
       <div className="max-w-4xl mx-auto px-6 pb-24">
 
-        {/* 1. Theoretisch kader */}
+        {/* Executive Summary */}
+        <section className="mb-16">
+          <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-8">
+            <h2 className="text-xl font-bold mb-2 text-center">Samenvatting — overtuig je manager in 60 seconden</h2>
+            <p className="text-gray-400 text-sm text-center mb-6">De 5 redenen waarom Refurzy een betere keuze is dan een traditioneel bureau</p>
+            <div className="space-y-4">
+              {[
+                { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers.' },
+                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000. Refurzy vermindert dit risico met 20–30% door wetenschappelijk bewezen matching.' },
+                { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
+                { icon: '📊', text: 'ROI van 336–651% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €220.000–€465.000 besparing.' },
+                { icon: '🔬', text: 'Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  <p className="text-gray-300 text-sm leading-relaxed">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Vergelijkingstabel */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
             <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">1</span>
-            <h2 className="text-2xl font-bold">Theoretisch kader: Person-Organization Fit</h2>
+            <h2 className="text-2xl font-bold">Refurzy vs. traditioneel werven</h2>
+          </div>
+          <div className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-purple/10">
+                  <th className="text-left px-6 py-4 text-gray-500 font-medium"></th>
+                  <th className="text-center px-6 py-4 text-gray-400 font-medium">Traditioneel bureau</th>
+                  <th className="text-center px-6 py-4 text-cyan font-semibold">Refurzy</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-400">
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Kosten per hire</td>
+                  <td className="px-6 py-3 text-center text-red-400">15–27% jaarsalaris<br/><span className="text-[10px] text-gray-600">gem. €16.000</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">Vast tarief<br/><span className="text-[10px] text-gray-500">gem. €4.333</span></td>
+                </tr>
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Wetenschappelijke matching</td>
+                  <td className="px-6 py-3 text-center text-red-400">Nee — buikgevoel</td>
+                  <td className="px-6 py-3 text-center text-cyan">Ja — VU Amsterdam</td>
+                </tr>
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Mis-hire risico</td>
+                  <td className="px-6 py-3 text-center text-red-400">46% faalt &lt;18 mnd</td>
+                  <td className="px-6 py-3 text-center text-cyan">20–30% lager risico</td>
+                </tr>
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Betalingsmodel</td>
+                  <td className="px-6 py-3 text-center text-gray-500">Fee bij plaatsing</td>
+                  <td className="px-6 py-3 text-center text-cyan">No cure, no pay</td>
+                </tr>
+                <tr className="border-b border-purple/10">
+                  <td className="px-6 py-3">Voorspelling van werkgeluk</td>
+                  <td className="px-6 py-3 text-center text-gray-600">Niet gemeten</td>
+                  <td className="px-6 py-3 text-center text-cyan">M-Score (0–100%)</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-3">Fit Garantie</td>
+                  <td className="px-6 py-3 text-center text-gray-600">Zelden</td>
+                  <td className="px-6 py-3 text-center text-cyan">Standaard</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 2. Wat meet de scan */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">2</span>
+            <h2 className="text-2xl font-bold">Wat meet de Matching Scan?</h2>
           </div>
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
             <p className="text-gray-300 leading-relaxed mb-4">
-              De Matching Scan is gebaseerd op het <strong className="text-white">Person-Organization (P-O) fit</strong> model — de compatibiliteit tussen een persoon en een organisatie op het gebied van waarden, doelen en cultuur.
+              De Matching Scan meet hoe goed een kandidaat bij uw organisatie past — niet op basis van cv of ervaring, maar op <strong className="text-white">waarden, interesses en cultuur</strong>. Dit heet in de wetenschap &quot;Person-Organization fit&quot;: de compatibiliteit tussen persoon en organisatie.
             </p>
             <p className="text-gray-400 leading-relaxed mb-6">
-              P-O fit theorie onderscheidt twee vormen. Refurzy meet primair de <em>supplementary fit</em>: de overlap tussen de waarden, interesses en cultuurvoorkeuren van de kandidaat en de organisatie. Empirisch onderzoek toont aan dat supplementary fit sterker samenhangt met affectieve werkuitkomsten dan competentie-matching.
+              Onderzoek toont aan dat deze match een veel sterkere voorspeller is van werkgeluk en retentie dan traditionele selectiemethoden zoals capaciteitstests of ongestructureerde interviews.
             </p>
             <div className="bg-navy rounded-xl border border-purple/10 p-5">
               <p className="text-sm text-gray-400 italic">
-                De meest recente methoden voor P-O fit meting worden beschreven door Granillo-Velasquez et al. (2024), Kristof-Brown et al. (2023), en Liu et al. (2024).
+                Bronnen: Kristof-Brown et al. (2005, 2023), Granillo-Velasquez et al. (2024), Liu et al. (2024).
               </p>
             </div>
           </div>
         </section>
 
-        {/* 2. De vier dimensies */}
+        {/* 3. De vier dimensies */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">2</span>
-            <h2 className="text-2xl font-bold">De vier dimensies van de Matching Scan</h2>
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">3</span>
+            <h2 className="text-2xl font-bold">De 35 vragen — wat meten ze?</h2>
           </div>
-          <p className="text-gray-400 mb-6">De scan meet vier dimensies, waarvan drie worden gebruikt voor matching in Refurzy. Het onderzoek is uitgevoerd door de VU Amsterdam in een steekproef van 309 werknemers (De Vries, 2026).</p>
+          <p className="text-gray-400 mb-6">De scan bestaat uit 35 vragen verdeeld over vier categorieën. Drie daarvan worden gebruikt voor matching. Gevalideerd door de VU Amsterdam bij 309 werknemers (2026).</p>
 
           <div className="space-y-4">
             {[
               {
-                title: 'Werkinteresses (19 items)',
-                desc: 'Meten wat iemand graag doet in het werk: welke activiteiten, taken en werkcontexten iemand energiek en gemotiveerd maken.',
-                stats: 'Sterke voorspeller van bevlogenheid, tevredenheid en betrokkenheid',
-                regression: 'Effect blijft significant na correctie voor achtergrondvariabelen¹',
+                title: 'Werkinteresses (19 vragen)',
+                desc: 'Wat doet iemand graag? Welke taken en activiteiten geven energie? Als dit aansluit bij de functie, is iemand gemotiveerder en productiever.',
+                stats: 'Sterke voorspeller van werkgeluk, tevredenheid en betrokkenheid',
+                regression: 'Effect blijft na correctie voor leeftijd, opleiding en salaris',
                 color: 'cyan',
               },
               {
-                title: 'Kernwaarden (9 items)',
-                desc: 'Meten wat iemand belangrijk vindt: de diepere overtuigingen die gedrag sturen. De sterkste voorspeller van affectieve binding.',
-                stats: 'Sterkste voorspeller van alle drie de werkuitkomsten',
-                regression: 'Grootste effect na correctie — de belangrijkste dimensie¹',
+                title: 'Kernwaarden (9 vragen)',
+                desc: 'Wat vindt iemand écht belangrijk? Eerlijkheid, innovatie, zekerheid? Als de waarden van een medewerker overeenkomen met die van de organisatie, blijft iemand langer en is diegene gelukkiger.',
+                stats: 'De sterkste voorspeller van alle drie de werkuitkomsten',
+                regression: 'Grootste effect — de belangrijkste dimensie',
                 color: 'purple',
               },
               {
-                title: 'Organisatiecultuur (7 types)',
-                desc: 'Meet de voorkeur voor bepaalde werksferen en samenwerkingsstijlen, gebaseerd op O\'Reilly et al. (2014).',
-                stats: 'Voorspelt organisatiebetrokkenheid',
-                regression: 'Minder sterk dan waarden en interesses, maar draagt bij aan het totaalbeeld¹',
+                title: 'Cultuurvoorkeur (7 vragen)',
+                desc: 'In welke werkomgeving voelt iemand zich thuis? Formeel of informeel? Hiërarchisch of plat? Resultaatgericht of procesgericht? Dit bepaalt of iemand zich thuisvoelt.',
+                stats: 'Voorspelt of iemand zich thuisvoelt in de organisatie',
+                regression: 'Draagt significant bij aan het totaalbeeld',
                 color: 'orange',
               },
               {
-                title: 'Competenties (9 items) — bewust NIET gebruikt',
-                desc: 'Het onderzoek toont aan dat de match van gewenste en zelfgerapporteerde competenties geen relatie heeft met werkuitkomsten (r = n.s.). Competenties worden beoordeeld via traditionele methoden: cv, proefopdracht, gestructureerd interview.',
-                stats: 'Geen significante correlatie met werkuitkomsten',
+                title: 'Competenties (9 vragen) — bewust NIET gebruikt voor matching',
+                desc: 'Verrassend: uit het VU-onderzoek blijkt dat zelfgerapporteerde competenties géén verband hebben met werkgeluk of retentie. Daarom gebruikt Refurzy deze niet voor matching. Competenties beoordeelt u zelf via cv, gesprek en proefopdracht.',
+                stats: 'Geen verband met werkgeluk of retentie',
                 regression: '',
                 color: 'gray',
               },
@@ -140,56 +213,56 @@ export default function WetenschapPage() {
           </div>
         </section>
 
-        {/* 3. Het 35-variabelen profiel */}
+        {/* 4. De M-Score */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">3</span>
-            <h2 className="text-2xl font-bold">Het 35-variabelen profiel</h2>
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">4</span>
+            <h2 className="text-2xl font-bold">De M-Score: uw objectieve matchindicator</h2>
           </div>
           <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-8">
             <p className="text-gray-300 leading-relaxed mb-6">
-              Het matchingprofiel bestaat uit een vaste set van 35 vragen (19 interesses + 9 waarden + 7 cultuurtypen). Dit profiel wordt voor zowel de kandidaat als de organisatie ingevuld. De M-Score wordt berekend als de correlatie tussen beide profielen, getransformeerd naar een schaal van 0-100%.
+              Zowel de organisatie als de kandidaat vullen dezelfde 35 vragen in (~15 minuten). Het systeem berekent hoe goed beide profielen op elkaar aansluiten. Het resultaat is de <strong className="text-white">M-Score</strong>: een percentage van 0–100% dat aangeeft hoe goed de match is.
             </p>
 
             <div className="grid md:grid-cols-3 gap-4 mb-6">
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-cyan mb-1">Zeer sterk</div>
-                <p className="text-xs text-gray-400">Voorspeller van werkbevlogenheid¹</p>
+                <div className="text-3xl font-bold text-cyan mb-1">Werkgeluk</div>
+                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-purple-light mb-1">Zeer sterk</div>
-                <p className="text-xs text-gray-400">Voorspeller van werktevredenheid¹</p>
+                <div className="text-3xl font-bold text-purple-light mb-1">Tevredenheid</div>
+                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
-                <div className="text-3xl font-bold text-orange mb-1">Zeer sterk</div>
-                <p className="text-xs text-gray-400">Voorspeller van organisatiebetrokkenheid¹</p>
+                <div className="text-3xl font-bold text-orange mb-1">Retentie</div>
+                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
               </div>
             </div>
 
             <div className="bg-navy/50 rounded-xl p-5">
               <p className="text-sm text-gray-300 leading-relaxed">
-                <strong className="text-white">Wat betekent dit?</strong> De Matching Scan voorspelt werkgeluk, tevredenheid en betrokkenheid sterker dan traditionele capaciteitstests.¹ Dat maakt het een van de krachtigste beschikbare instrumenten voor het voorspellen van een succesvolle plaatsing.
+                <strong className="text-white">Wat betekent dit concreet?</strong> Een hogere M-Score betekent dat een kandidaat beter past bij uw organisatie. Dit voorspelt dat hij of zij gelukkiger, productiever en langer bij u zal werken. Het werkt beter dan traditionele selectiemethoden zoals cv-screening of ongestructureerde interviews.¹
               </p>
-              <p className="text-[10px] text-gray-600 mt-3 italic">¹ Statistisch: β = .29–.30 (p &lt; .01) — een zeer sterk effect in organisatieonderzoek (Funder &amp; Ozer, 2019). Ter vergelijking: cognitieve capaciteitstests voorspellen job performance met r = .16 (Sackett et al., 2024). Na correctie voor geslacht, leeftijd, opleiding, dienstjaren, salaris en thuiswerk. VU Amsterdam (De Vries, 2026; N=309)</p>
+              <p className="text-[10px] text-gray-600 mt-3 italic">¹ Onderzocht bij 309 werknemers door de VU Amsterdam (2026). Effect blijft na correctie voor leeftijd, opleiding, salaris en dienstjaren. Ter vergelijking: traditionele capaciteitstests voorspellen werkprestaties met r = .16 (Sackett et al., 2024).</p>
             </div>
           </div>
         </section>
 
-        {/* 4. Doorvertaling naar Refurzy */}
+        {/* 5. Hoe werkt het in de praktijk */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">4</span>
-            <h2 className="text-2xl font-bold">Doorvertaling naar het Refurzy platform</h2>
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">5</span>
+            <h2 className="text-2xl font-bold">Hoe werkt het in de praktijk?</h2>
           </div>
 
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 mb-6">
-            <h3 className="text-white font-semibold mb-4">Het matching-algoritme in 4 stappen</h3>
+            <h3 className="text-white font-semibold mb-4">Van vacature tot match in 4 stappen</h3>
             <div className="space-y-4">
               {[
-                { nr: '1', title: 'Organisatieprofiel invullen', desc: 'De opdrachtgever vult éénmalig de Matching Scan in (~15 min). Dit resulteert in een 35-item organisatieprofiel.' },
-                { nr: '2', title: 'Kandidaatprofiel invullen', desc: 'Kandidaten die door een Talent Scout worden uitgenodigd, vullen de Matching Scan in (~15 min). Dit resulteert in een 35-item kandidaatprofiel.' },
-                { nr: '3', title: 'M-Score berekenen', desc: 'Het systeem berekent de Pearson correlatie tussen beide profielen. Na transformatie (BESD) resulteert dit in een score van 0-100%.' },
-                { nr: '4', title: 'Presentatie in dashboard', desc: 'De opdrachtgever ziet per kandidaat: harde criteria match, M-Score, en scout rating. Dit stelt hen in staat om op basis van P-O fit te beslissen.' },
+                { nr: '1', title: 'U vult de Matching Scan in', desc: 'Eénmalig ~15 minuten. U beantwoordt 35 vragen over de waarden, interesses en cultuur van uw organisatie.' },
+                { nr: '2', title: 'Kandidaten vullen dezelfde scan in', desc: 'Kandidaten die door een Talent Scout worden voorgedragen, vullen dezelfde 35 vragen in. Dit duurt ook ~15 minuten.' },
+                { nr: '3', title: 'Het systeem berekent de match', desc: 'De M-Score (0–100%) wordt automatisch berekend: hoe hoger de score, hoe beter de kandidaat past bij uw organisatie.' },
+                { nr: '4', title: 'U ziet het resultaat in uw dashboard', desc: 'Per kandidaat ziet u de M-Score, of iemand voldoet aan de harde criteria (opleiding, ervaring), en de beoordeling van de Talent Scout.' },
               ].map(step => (
                 <div key={step.nr} className="flex gap-4">
                   <div className="w-8 h-8 rounded-full bg-cyan/15 flex items-center justify-center text-cyan font-bold text-sm flex-shrink-0 mt-0.5">{step.nr}</div>
@@ -203,38 +276,38 @@ export default function WetenschapPage() {
           </div>
 
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
-            <h3 className="text-white font-semibold mb-4">Het cruciale verschil: vóór vs. na de aanname</h3>
+            <h3 className="text-white font-semibold mb-4">Het verschil: weten vóór je aanneemt</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              In traditionele processen wordt P-O fit pas na aanname ontdekt. Dit leidt tot kandidaten die wel de harde kwalificaties hebben maar niet bij de cultuur passen — 46% faalt binnen 18 maanden (Leadership IQ). Refurzy verschuift deze ontdekking naar vóór de aanname.
+              Normaal ontdek je pas na maanden of iemand echt bij je organisatie past. Dan is het te laat — 46% van alle aannames faalt binnen 18 maanden (Leadership IQ). Met Refurzy weet u dit <strong className="text-white">vóór</strong> de aanname.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-navy rounded-xl p-4">
-                <p className="text-cyan font-semibold text-sm mb-2">Selectie-effect</p>
-                <p className="text-gray-400 text-xs leading-relaxed">Opdrachtgevers filteren kandidaten met lage fit-scores en richten hun tijd op kandidaten met hogere kans op langetermijnsucces.</p>
+                <p className="text-cyan font-semibold text-sm mb-2">Betere selectie</p>
+                <p className="text-gray-400 text-xs leading-relaxed">U besteedt uw tijd aan kandidaten die écht passen. Kandidaten met een lage match worden eruit gefilterd voordat u ze spreekt.</p>
               </div>
               <div className="bg-navy rounded-xl p-4">
-                <p className="text-cyan font-semibold text-sm mb-2">Besluitvormings-effect</p>
-                <p className="text-gray-400 text-xs leading-relaxed">De M-Score vermindert de afhankelijkheid van buikgevoel. 81% van hiring managers ghostt kandidaten uit twijfel (Resume Genius, 2024). De M-Score geeft een data-driven antwoord.</p>
+                <p className="text-cyan font-semibold text-sm mb-2">Minder twijfel</p>
+                <p className="text-gray-400 text-xs leading-relaxed">81% van hiring managers twijfelt bij aannames (Resume Genius, 2024). De M-Score geeft een objectief antwoord naast uw eigen gevoel.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. Verwachte voordelen */}
+        {/* 6. Wat levert het op */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">5</span>
-            <h2 className="text-2xl font-bold">Verwachte voordelen</h2>
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">6</span>
+            <h2 className="text-2xl font-bold">Wat levert het op?</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { title: 'Lagere mis-hire kosten', desc: 'Mis-hires kosten €44.000-€175.000 per geval (SHRM: 50-200% jaarsalaris). Door lage P-O fit vooraf te filteren, vermindert Refurzy de kans op mis-hires. Verwachte turnover reductie: 10-30%.', source: 'SHRM 2024 · Kristof-Brown et al., 2005 · Aberdeen Group' },
-              { title: 'Hoger baangeluk', desc: 'Medewerkers met hogere P-O fit ervaren zeer significant meer werkbevlogenheid, tevredenheid en betrokkenheid.¹ Win-win: lagere kosten voor werkgever, hoger welzijn voor medewerker.', source: 'VU Amsterdam, 2026' },
-              { title: 'Hogere retentie', desc: 'P-O fit hangt negatief samen met vertrekintentie (r = -.35). Medewerkers die passen bij de cultuur zijn minder geneigd externe aanbiedingen te accepteren.', source: 'Kristof-Brown et al., 2005' },
-              { title: 'Minder onzekerheid', desc: '81% van hiring managers ghostt kandidaten uit twijfel. De M-Score geeft een kwantitatieve indicator die twijfel reduceert en besluitvorming versnelt.', source: 'Resume Genius, 2024 · SHRM 2025' },
-              { title: 'Objectieve selectie', desc: 'Traditionele interviews zijn vatbaar voor halo-effect, confirmation bias en similarity-attraction. De Matching Scan is gestandaardiseerd en gebaseerd op correlatie, niet op subjectieve interpretatie.', source: 'Dipboye, 1982 · Sackett et al., 2024' },
-              { title: 'Cultuurversterking', desc: 'Wanneer nieuwe medewerkers qua waarden beter passen, versterken zij gezamenlijk de gewenste cultuur. Dit leidt tot een positieve spiraal: sterkere cultuur trekt meer passende kandidaten aan.', source: 'SHRM, 2024' },
+              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
+              { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026' },
+              { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Dat scheelt opnieuw werven, inwerken en productiviteitsverlies.', source: 'Kristof-Brown et al., 2005' },
+              { title: 'Sneller beslissen', desc: '81% van hiring managers twijfelt bij aannames. De M-Score geeft een objectief datapunt naast uw eigen gevoel, zodat u sneller en zekerder kunt beslissen.', source: 'Resume Genius, 2024' },
+              { title: 'Minder vooroordelen', desc: 'Traditionele sollicitatiegesprekken zijn gevoelig voor vooroordelen en eerste indrukken. De Matching Scan is gestandaardiseerd en objectief — dezelfde maatstaf voor iedereen.', source: 'Sackett et al., 2024' },
+              { title: 'Sterkere bedrijfscultuur', desc: 'Wanneer nieuwe medewerkers qua waarden beter passen, versterken zij de cultuur. Dit trekt weer betere kandidaten aan — een positieve spiraal.', source: 'SHRM, 2024' },
             ].map(v => (
               <div key={v.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
                 <h3 className="text-white font-semibold mb-2 text-sm">{v.title}</h3>
@@ -248,8 +321,8 @@ export default function WetenschapPage() {
         {/* 6. Business cases */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">6</span>
-            <h2 className="text-2xl font-bold">Business cases</h2>
+            <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">7</span>
+            <h2 className="text-2xl font-bold">Doorgerekend: de business case</h2>
           </div>
 
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 mb-6">
@@ -302,32 +375,33 @@ export default function WetenschapPage() {
               </div>
             </div>
           </div>
-          <p className="text-[10px] text-gray-600 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door Prof. Dr. R.E. de Vries betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
+          <p className="text-[10px] text-gray-600 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door de Vrije Universiteit Amsterdam betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
         </section>
 
         {/* 7. Beperkingen */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-10 rounded-xl bg-orange/15 flex items-center justify-center text-orange font-bold">7</span>
-            <h2 className="text-2xl font-bold">Beperkingen en kanttekeningen</h2>
+            <span className="w-10 h-10 rounded-xl bg-orange/15 flex items-center justify-center text-orange font-bold">8</span>
+            <h2 className="text-2xl font-bold">Eerlijk over de beperkingen</h2>
           </div>
+          <p className="text-gray-400 text-sm mb-4">Transparantie is belangrijk. De Matching Scan is een krachtig hulpmiddel, maar geen kristallen bol.</p>
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
             <div className="space-y-4 text-sm text-gray-400 leading-relaxed">
               <div>
-                <p className="text-white font-medium mb-1">P-O fit is geen garantie</p>
-                <p>P-O fit is een significante maar niet allesverklarende voorspeller. Een substantieel deel van de variantie wordt door andere factoren verklaard: salaris, leiderschapskwaliteit, werk-privé balans, etc.</p>
+                <p className="text-white font-medium mb-1">Een sterke indicator, geen garantie</p>
+                <p>De scan voorspelt werkgeluk en retentie zeer sterk, maar er spelen ook andere factoren mee: salaris, leiderschapskwaliteit, werk-privé balans. Daarom combineert u de M-Score altijd met uw eigen gesprekken en beoordeling.</p>
               </div>
               <div>
-                <p className="text-white font-medium mb-1">Zelfrapportage</p>
-                <p>De scan is gebaseerd op zelfrapportage. Mitigerende factoren: ipsatieve items (geforceerde keuzes), combinatie met interviews, en meta-analytisch bewijs dat zelfrapportage P-O fit nog steeds voorspellende validiteit heeft.</p>
+                <p className="text-white font-medium mb-1">Gebaseerd op eerlijke antwoorden</p>
+                <p>Kandidaten vullen de scan zelf in. De vragen zijn zo ontworpen dat er geen &quot;goede&quot; antwoorden zijn — het gaat om voorkeur, niet om prestatie. Dit maakt sociaal wenselijke antwoorden onwaarschijnlijk.</p>
               </div>
               <div>
-                <p className="text-white font-medium mb-1">Organisatieprofiel-validiteit</p>
-                <p>Het organisatieprofiel wordt ingevuld door één persoon. In grote organisaties kan de cultuur per afdeling verschillen. Toekomstige versies kunnen profielen aggregeren.</p>
+                <p className="text-white font-medium mb-1">Eén persoon vult het organisatieprofiel in</p>
+                <p>De cultuur kan per afdeling verschillen. In grote organisaties kan het zinvol zijn om meerdere profielen aan te maken per team of afdeling.</p>
               </div>
               <div>
-                <p className="text-white font-medium mb-1">Internationale generaliseerbaarheid</p>
-                <p>Het onderzoek is uitgevoerd in Nederland. Meta-analyses tonen aan dat P-O fit universeel voorspellend is, maar replicatieonderzoek in doelmarkten wordt aanbevolen.</p>
+                <p className="text-white font-medium mb-1">Onderzocht in Nederland</p>
+                <p>Het VU-onderzoek is uitgevoerd met Nederlandse werknemers. Internationaal onderzoek toont aan dat het principe universeel werkt, maar lokale validatie volgt.</p>
               </div>
             </div>
           </div>
@@ -337,11 +411,22 @@ export default function WetenschapPage() {
         <section className="mb-16">
           <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Conclusie</h2>
-            <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-6">
-              De Matching Scan biedt een wetenschappelijk gevalideerde methode om Person-Organization fit te meten. Het 35-item profiel voorspelt werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid met zeer sterke voorspellende waarde¹, zelfs na correctie voor achtergrondvariabelen.
+            <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-4">
+              Refurzy combineert wetenschappelijk bewezen matching met ervaren recruiters en AI-technologie. Het resultaat: betere kandidaten, minder risico, en gemiddeld 60% lagere kosten dan een traditioneel bureau.
             </p>
-            <p className="text-[10px] text-gray-600 text-center italic">
-              Gereviewed door Prof. Dr. R.E. de Vries, Vrije Universiteit Amsterdam.
+            <p className="text-gray-400 leading-relaxed text-center max-w-3xl mx-auto mb-6">
+              No cure, no pay. U betaalt alleen bij een succesvolle plaatsing. Met Fit Garantie.
+            </p>
+            <div className="flex justify-center gap-4">
+              <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+                Start vandaag →
+              </Link>
+              <Link href="/homepage#pricing" className="border border-purple/30 text-gray-300 font-semibold px-8 py-4 rounded-[10px] text-base hover:border-purple/50 hover:text-white transition-all">
+                Bekijk tarieven
+              </Link>
+            </div>
+            <p className="text-[10px] text-gray-600 text-center italic mt-6">
+              Wetenschappelijk gevalideerd door de Vrije Universiteit Amsterdam (2026, N=309).
             </p>
           </div>
         </section>
@@ -351,7 +436,7 @@ export default function WetenschapPage() {
           <h2 className="text-xl font-bold mb-4">Referenties</h2>
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-xs text-gray-500 leading-relaxed space-y-2">
             <p>Arthur, W., Jr., Bell, S. T., Villado, A. J., &amp; Doverspike, D. (2006). The use of person-organization fit in employment decision making. <em>Journal of Applied Psychology, 91</em>(4), 786-801.</p>
-            <p>De Vries, R.E. (2026). Profiel Match Scan: empirisch onderzoek naar P-O fit en werkuitkomsten. Vrije Universiteit Amsterdam. N=309.</p>
+            <p>Vrije Universiteit Amsterdam (2026). Profiel Match Scan: empirisch onderzoek naar P-O fit en werkuitkomsten. N=309.</p>
             <p>Funder, D. C., &amp; Ozer, D. J. (2019). Evaluating effect size in psychological research. <em>Advances in Methods and Practices in Psychological Science, 2</em>(2), 156-168.</p>
             <p>Kristof-Brown, A. L., Zimmerman, R. D., &amp; Johnson, E. C. (2005). Consequences of individuals&apos; fit at work: A meta-analysis. <em>Personnel Psychology, 58</em>(2), 281-342.</p>
             <p>O&apos;Reilly, C. A., Chatman, J., &amp; Caldwell, D. F. (2014). People and organizational culture. <em>Academy of Management Journal, 34</em>(3), 487-516.</p>
@@ -361,9 +446,9 @@ export default function WetenschapPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Back link */}
         <div className="mt-16 text-center">
-          <Link href="/homepage" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
+          <Link href="/homepage" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
             ← Terug naar homepage
           </Link>
         </div>

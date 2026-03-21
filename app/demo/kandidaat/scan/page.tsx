@@ -287,7 +287,7 @@ function IntroStep() {
 
       <div className="flex items-center gap-3 text-sm text-ink-muted">
         <span className="text-lg">&#127891;</span>
-        <span>Wetenschappelijk onderbouwd &mdash; ontwikkeld i.s.m. Prof. Dr. R.E. de Vries (VU Amsterdam)</span>
+        <span>Wetenschappelijk onderbouwd &mdash; ontwikkeld i.s.m. de Vrije Universiteit Amsterdam</span>
       </div>
 
       <p className="text-ink-muted text-sm">0/6 stappen voltooid</p>

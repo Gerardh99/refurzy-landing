@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// Refurzy Matching Scan — Based on De Vries / VU Amsterdam research
+// Refurzy Matching Scan — Based on VU Amsterdam research
 // ═══════════════════════════════════════════════════════════════════════════════
 //
 // The scan measures Person-Environment fit across 3 dimensions:

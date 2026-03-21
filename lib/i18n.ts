@@ -135,8 +135,8 @@ export const translations = {
   // ─── Solution USPs ────────────────────────────────────────────────────────
   'usp.scan.title': { nl: 'Matching Scan — ontwikkeld met de VU Amsterdam', en: 'Matching Scan — developed with VU Amsterdam' },
   'usp.scan.desc': {
-    nl: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd met zeer sterke voorspellende waarde.⁵ Ontwikkeld in samenwerking met Prof. Dr. R.E. de Vries van de Vrije Universiteit Amsterdam.',
-    en: 'The Matching Scan measures the fit between candidate and organization on values, interests and culture. 35 questions, 5 minutes, scientifically validated with very strong predictive value.⁵ Developed in collaboration with Prof. Dr. R.E. de Vries of Vrije Universiteit Amsterdam.'
+    nl: 'De Matching Scan meet de fit tussen kandidaat en organisatie op waarden, interesses en cultuur. 35 vragen, 5 minuten, wetenschappelijk gevalideerd met zeer sterke voorspellende waarde.⁵ Ontwikkeld in samenwerking met de Vrije Universiteit Amsterdam.',
+    en: 'The Matching Scan measures the fit between candidate and organization on values, interests and culture. 35 questions, 5 minutes, scientifically validated with very strong predictive value.⁵ Developed in collaboration with Vrije Universiteit Amsterdam.'
   },
   'usp.cheaper.title': { nl: 'Gemiddeld 60% goedkoper — en no cure, no pay', en: 'On average 60% cheaper — and no cure, no pay' },
   'usp.cheaper.desc': {
@@ -176,8 +176,8 @@ export const translations = {
   'scan.item3': { nl: '7 cultuurtypen — waar voelt iemand zich thuis', en: '7 culture types — where someone feels at home' },
   'scan.item4': { nl: 'Voorspelt bevlogenheid, tevredenheid én retentie', en: 'Predicts engagement, satisfaction and retention' },
   'scan.footnote': {
-    nl: '⁵ VU Amsterdam (De Vries, 2026; N=309) — Zeer sterke voorspellende waarde voor werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid (β = .29–.30, p < .01)',
-    en: '⁵ VU Amsterdam (De Vries, 2026; N=309) — Very strong predictive value for work engagement, job satisfaction and organizational commitment (β = .29–.30, p < .01)'
+    nl: '⁵ VU Amsterdam (2026; N=309) — Zeer sterke voorspellende waarde voor werkbevlogenheid, werktevredenheid en organisatiebetrokkenheid (β = .29–.30, p < .01)',
+    en: '⁵ VU Amsterdam (2026; N=309) — Very strong predictive value for work engagement, job satisfaction and organizational commitment (β = .29–.30, p < .01)'
   },
   'scan.stat1.value': { nl: 'Zeer sterk', en: 'Very strong' },
   'scan.stat1.label': { nl: 'Wetenschappelijk bewezen voorspeller van werkgeluk⁵', en: 'Scientifically proven predictor of work happiness⁵' },
@@ -219,8 +219,8 @@ export const translations = {
   },
   'faq.q2': { nl: 'Hoe werkt de Matching Scan?', en: 'How does the Matching Scan work?' },
   'faq.a2': {
-    nl: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld met de Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). Het meet de match op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkgeluk, tevredenheid en retentie zeer sterk voorspelt.⁵',
-    en: 'The Matching Scan is a scientific assessment of 35 questions, developed with Vrije Universiteit Amsterdam (Prof. Dr. R.E. de Vries). It measures the match on work interests (19 items), core values (9 items) and culture preference (7 types). The result is an objective M-Score that very strongly predicts work happiness, satisfaction and retention.⁵'
+    nl: 'De Matching Scan is een wetenschappelijk assessment van 35 vragen, ontwikkeld met de Vrije Universiteit Amsterdam. Het meet de match op werkinteresses (19 items), kernwaarden (9 items) en cultuurvoorkeur (7 types). Het resultaat is een objectieve M-Score die werkgeluk, tevredenheid en retentie zeer sterk voorspelt.⁵',
+    en: 'The Matching Scan is a scientific assessment of 35 questions, developed with Vrije Universiteit Amsterdam. It measures the match on work interests (19 items), core values (9 items) and culture preference (7 types). The result is an objective M-Score that very strongly predicts work happiness, satisfaction and retention.⁵'
   },
   'faq.q3': { nl: 'Hoe betrouwbaar is de M-Score?', en: 'How reliable is the M-Score?' },
   'faq.a3': {
