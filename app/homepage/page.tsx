@@ -30,21 +30,25 @@ export default function HomePage() {
     const totaleLoonkosten = jaarsalarisInclVakantiegeld * 1.35
     const kostenPerMisHireLow = totaleLoonkosten * 0.50
     const kostenPerMisHireHigh = totaleLoonkosten * 2.00
-    const mishiresPerJaar = calcHires * 0.46
+    // Verloop beïnvloedt het aantal vervangingshires: hoger verloop = meer hires door verloop
+    const verloopFactor = calcVerloop / 100
+    const hiresDoorbverloop = calcHires * verloopFactor
+    const totaalHires = calcHires + hiresDoorbverloop
+    const mishiresPerJaar = totaalHires * 0.46
     const voorkomenMisHiresLow = mishiresPerJaar * 0.39
     const voorkomenMisHiresHigh = mishiresPerJaar * 0.59
     const besparingMisHireLow = voorkomenMisHiresLow * kostenPerMisHireLow
     const besparingMisHireHigh = voorkomenMisHiresHigh * kostenPerMisHireHigh
-    const traditioneleBureauKosten = calcHires * jaarsalarisInclVakantiegeld * 0.25
-    const refurzyKosten = calcHires * 4333
+    const traditioneleBureauKosten = totaalHires * jaarsalarisInclVakantiegeld * 0.25
+    const refurzyKosten = totaalHires * 4333
     const directeBesparing = traditioneleBureauKosten - refurzyKosten
     const totaalBesparingLow = directeBesparing + besparingMisHireLow
     const totaalBesparingHigh = directeBesparing + besparingMisHireHigh
     const roi = Math.round((totaalBesparingLow / refurzyKosten) * 100)
     const vijfJaarLow = totaalBesparingLow * 5
     const vijfJaarHigh = totaalBesparingHigh * 5
-    return { totaalBesparingLow, totaalBesparingHigh, roi, directeBesparing, vijfJaarLow, vijfJaarHigh }
-  }, [calcHires, calcSalaris])
+    return { totaalBesparingLow, totaalBesparingHigh, roi, directeBesparing, vijfJaarLow, vijfJaarHigh, totaalHires: Math.round(totaalHires) }
+  }, [calcHires, calcSalaris, calcVerloop])
 
   useEffect(() => {
     setUser(getUser())
