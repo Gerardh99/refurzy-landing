@@ -143,34 +143,34 @@ export default function ScoutPipeline() {
               />
 
               {/* ─── Detail info block: data from opdrachtgever & kandidaat ─── */}
-              <div className="bg-slate-50 rounded-xl p-4 space-y-2">
+              <div className="bg-slate-50 rounded-xl p-4 space-y-3">
                 {/* Voorgesteld — waiting for employer to accept */}
                 {k.procesStatus === 'voorgesteld' && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-ink-muted">📋</span>
-                    <span className="text-ink-light">Wacht op reactie opdrachtgever</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg">📋</span>
+                    <span className="text-sm text-ink font-medium">Wacht op reactie opdrachtgever</span>
                   </div>
                 )}
 
                 {/* Contract akkoord — employer accepted, profile unlocked */}
                 {k.procesStatus === 'contract_akkoord' && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <span>✅</span>
-                    <span className="text-ink font-medium">Opdrachtgever heeft profiel ontgrendeld</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg">✅</span>
+                    <span className="text-sm text-ink font-semibold">Opdrachtgever heeft profiel ontgrendeld</span>
                   </div>
                 )}
 
                 {/* Gesprek plannen — waiting for employer to set date */}
                 {k.procesStatus === 'gesprek_plannen' && (
                   <>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span>📅</span>
-                      <span className="text-orange font-medium">Wacht op gespreksdatum van opdrachtgever</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">📅</span>
+                      <span className="text-sm text-orange font-semibold">Wacht op gespreksdatum van opdrachtgever</span>
                     </div>
                     {!k.gesprekDatum && dagenInStap !== null && dagenInStap >= 3 && (
-                      <div className="flex items-center gap-2 text-sm ml-6">
+                      <div className="flex items-center gap-2 ml-8">
                         <span className="text-orange">⚠️</span>
-                        <span className="text-orange text-xs">Al {dagenInStap} dagen geen actie</span>
+                        <span className="text-orange text-sm font-medium">Al {dagenInStap} dagen geen actie</span>
                       </div>
                     )}
                   </>
@@ -179,24 +179,22 @@ export default function ScoutPipeline() {
                 {/* Gesprek gepland — date set, waiting for candidate confirmation */}
                 {k.procesStatus === 'gesprek_gepland' && (
                   <>
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <span>📅</span>
-                        <span className="text-ink font-medium">
-                          Gesprek: {k.gesprekDatum ? new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '—'}
-                        </span>
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">📅</span>
+                      <span className="text-sm text-ink font-semibold">
+                        Gesprek: {k.gesprekDatum ? new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '—'}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm ml-6">
+                    <div className="flex items-center gap-2 ml-8">
                       {k.kandidaatBevestigd ? (
                         <>
-                          <span className="text-green-600">✓</span>
-                          <span className="text-green-700 text-xs font-medium">Kandidaat heeft bevestigd</span>
+                          <span className="text-green-600 font-bold">✓</span>
+                          <span className="text-green-700 text-sm font-medium">Kandidaat heeft bevestigd</span>
                         </>
                       ) : (
                         <>
                           <span className="text-orange">⏳</span>
-                          <span className="text-orange text-xs font-medium">Wacht op bevestiging kandidaat</span>
+                          <span className="text-orange text-sm font-medium">Wacht op bevestiging kandidaat</span>
                         </>
                       )}
                     </div>
@@ -206,14 +204,14 @@ export default function ScoutPipeline() {
                 {/* Feedback geven — interview done, waiting for employer feedback */}
                 {k.procesStatus === 'feedback_geven' && (
                   <>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span>💬</span>
-                      <span className="text-orange font-medium">Wacht op feedback van opdrachtgever</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">💬</span>
+                      <span className="text-sm text-orange font-semibold">Wacht op feedback van opdrachtgever</span>
                     </div>
                     {k.gesprekDatum && (
-                      <div className="flex items-center gap-2 text-sm ml-6">
-                        <span className="text-ink-muted">📅</span>
-                        <span className="text-xs text-ink-light">
+                      <div className="flex items-center gap-2 ml-8">
+                        <span>📅</span>
+                        <span className="text-sm text-ink-light font-medium">
                           Gesprek was op {new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
                         </span>
                       </div>
@@ -224,16 +222,16 @@ export default function ScoutPipeline() {
                 {/* Vervolggesprek — follow-up scheduled */}
                 {k.procesStatus === 'vervolggesprek' && (
                   <>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span>🔄</span>
-                      <span className="text-ink font-medium">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">🔄</span>
+                      <span className="text-sm text-ink font-semibold">
                         Vervolggesprek: {k.vervolggesprekDatum ? new Date(k.vervolggesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long' }) : 'datum volgt'}
                       </span>
                     </div>
                     {k.feedbackScore && (
-                      <div className="flex items-center gap-2 text-sm ml-6">
-                        <span className="text-ink-muted">⭐</span>
-                        <span className="text-xs text-ink-light">
+                      <div className="flex items-center gap-2 ml-8">
+                        <span className="text-yellow-500">⭐</span>
+                        <span className="text-sm text-ink font-medium">
                           Feedback eerste gesprek: {k.feedbackScore}/5 — {k.feedbackSamenvatting || ''}
                         </span>
                       </div>
@@ -244,9 +242,9 @@ export default function ScoutPipeline() {
                 {/* Arbeidsvoorwaarden — negotiation phase */}
                 {k.procesStatus === 'arbeidsvoorwaarden' && (
                   <>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span>💼</span>
-                      <span className="text-ink font-medium">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">💼</span>
+                      <span className="text-sm text-ink font-semibold">
                         {k.arbeidsvoorwaardenStatus === 'voorstel_verstuurd' && 'Voorstel verstuurd naar kandidaat'}
                         {k.arbeidsvoorwaardenStatus === 'in_onderhandeling' && 'In onderhandeling'}
                         {k.arbeidsvoorwaardenStatus === 'akkoord' && 'Arbeidsvoorwaarden akkoord — wacht op contract'}
@@ -254,17 +252,17 @@ export default function ScoutPipeline() {
                       </span>
                     </div>
                     {k.feedbackScore && (
-                      <div className="flex items-center gap-2 text-sm ml-6">
-                        <span className="text-ink-muted">⭐</span>
-                        <span className="text-xs text-ink-light">
+                      <div className="flex items-center gap-2 ml-8">
+                        <span className="text-yellow-500">⭐</span>
+                        <span className="text-sm text-ink font-medium">
                           Gespreksfeedback: {k.feedbackScore}/5 — {k.feedbackSamenvatting || ''}
                         </span>
                       </div>
                     )}
                     {k.gesprekken && k.gesprekken.length > 0 && (
-                      <div className="flex items-center gap-2 text-sm ml-6">
-                        <span className="text-ink-muted">🤝</span>
-                        <span className="text-xs text-ink-light">
+                      <div className="flex items-center gap-2 ml-8">
+                        <span>🤝</span>
+                        <span className="text-sm text-ink font-medium">
                           {k.gesprekken.length} gesprek{k.gesprekken.length > 1 ? 'ken' : ''} afgerond
                         </span>
                       </div>
@@ -276,19 +274,19 @@ export default function ScoutPipeline() {
                 {k.procesStatus === 'contract_getekend' && (
                   <>
                     {k.startDatum && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span>📅</span>
-                        <span className="text-green-700 font-medium">
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">📅</span>
+                        <span className="text-sm text-green-700 font-semibold">
                           Startdatum: {new Date(k.startDatum).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                         </span>
                       </div>
                     )}
                     {(k.startDatumBevestigdKandidaat !== undefined || k.startDatumBevestigdOpdrachtgever !== undefined) && (
-                      <div className="flex items-center gap-4 text-xs ml-6">
-                        <span className={k.startDatumBevestigdKandidaat ? 'text-green-600' : 'text-orange'}>
+                      <div className="flex items-center gap-4 text-sm ml-8">
+                        <span className={`font-medium ${k.startDatumBevestigdKandidaat ? 'text-green-600' : 'text-orange'}`}>
                           {k.startDatumBevestigdKandidaat ? '✓' : '⏳'} Kandidaat
                         </span>
-                        <span className={k.startDatumBevestigdOpdrachtgever ? 'text-green-600' : 'text-orange'}>
+                        <span className={`font-medium ${k.startDatumBevestigdOpdrachtgever ? 'text-green-600' : 'text-orange'}`}>
                           {k.startDatumBevestigdOpdrachtgever ? '✓' : '⏳'} Opdrachtgever
                         </span>
                       </div>
@@ -298,7 +296,7 @@ export default function ScoutPipeline() {
 
                 {/* Last activity line */}
                 {dagenSindsUpdate !== null && k.procesStatus !== 'contract_getekend' && (
-                  <div className="flex items-center gap-2 text-xs text-ink-muted mt-1 pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-2 text-sm text-ink-light font-medium mt-1 pt-2 border-t border-slate-200">
                     <span>🕐</span>
                     <span>
                       Laatst bijgewerkt: {dagenSindsUpdate === 0 ? 'vandaag' : dagenSindsUpdate === 1 ? 'gisteren' : `${dagenSindsUpdate} dagen geleden`}
