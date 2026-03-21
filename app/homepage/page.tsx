@@ -142,7 +142,7 @@ export default function HomePage() {
           {[
             { value: '50–200%', label: t('stats.mishireCost', lang) },
             { value: '46%', label: t('stats.failRate', lang) },
-            { value: '396%+', label: t('stats.roi', lang) },
+            { value: '455%+', label: t('stats.roi', lang) },
             { value: '81%', label: t('stats.doubt', lang) },
           ].map(s => (
             <div key={s.label}>

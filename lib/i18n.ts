@@ -26,7 +26,7 @@ export const translations = {
   'hero.tagline': { nl: 'Redefining Recruitment. Forever.', en: 'Redefining Recruitment. Forever.' },
   'hero.h1a': { nl: 'Werving gebouwd op wetenschap.', en: 'Recruitment built on science.' },
   'hero.h1b': { nl: 'Niet op buikgevoel.', en: 'Not on gut feeling.' },
-  'hero.roi': { nl: 'ROI vanaf 396%. No cure, no pay.', en: 'ROI from 396%. No cure, no pay.' },
+  'hero.roi': { nl: 'ROI vanaf 455%. No cure, no pay.', en: 'ROI from 455%. No cure, no pay.' },
   'hero.sub1': {
     nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris + werkgeverslasten.¹ Bij een bruto maandsalaris van €5.000 is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
     en: 'One wrong hire costs 50-200% of the annual salary + employer costs.¹ At a gross monthly salary of €5,000, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²'
@@ -239,8 +239,8 @@ export const translations = {
   },
   'faq.q6': { nl: 'Hoeveel kan ik besparen?', en: 'How much can I save?' },
   'faq.a6': {
-    nl: 'Conservatief scenario: ROI vanaf 396%. Voor een klein bedrijf met 3 hires per jaar betekent dit €51.000–€131.000 netto besparing. Voor organisaties met 100+ medewerkers: €196.000–€1.370.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.',
-    en: 'Conservative scenario: ROI from 396%. For a small company with 3 hires per year, this means €51,000–€131,000 net savings. For organizations with 100+ employees: €196,000–€1,370,000 per year, depending on turnover reduction and cost per mis-hire.'
+    nl: 'Conservatief scenario: ROI vanaf 455%. Voor een klein bedrijf met 3 hires per jaar betekent dit €59.000–€178.000 netto besparing. Voor organisaties met 100+ medewerkers: €196.000–€1.370.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.',
+    en: 'Conservative scenario: ROI from 455%. For a small company with 3 hires per year, this means €59,000–€178,000 net savings. For organizations with 100+ employees: €196,000–€1,370,000 per year, depending on turnover reduction and cost per mis-hire.'
   },
   'faq.q7': { nl: 'Waarom kost een mis-hire €44.000–€175.000?', en: 'Why does a mis-hire cost €44,000–€175,000?' },
   'faq.a7': {

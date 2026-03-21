@@ -55,7 +55,7 @@ export default function WetenschapPage() {
                 { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie.' },
                 { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000). Refurzy vermindert dit risico met 39–59% door wetenschappelijk bewezen matching.' },
                 { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
-                { icon: '📊', text: 'ROI van 396–1001% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €241.000–€556.000 besparing.' },
+                { icon: '📊', text: 'ROI van 455–1370% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €272.000–€748.000 besparing.' },
                 { icon: '🔬', text: 'Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.' },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -449,9 +449,9 @@ export default function WetenschapPage() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between"><span className="text-gray-400">Traditioneel bureau (3 hires)</span><span className="text-red-400 font-semibold">€48.600/jaar</span></div>
                 <div className="flex justify-between"><span className="text-gray-400">Refurzy (3 hires)</span><span className="text-cyan font-semibold">€12.999/jaar</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar</span><span className="text-cyan font-semibold">€51.000 – €131.000</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">ROI</span><span className="text-white font-bold">396% – 1001%</span></div>
-                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€241.000 – €556.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar</span><span className="text-cyan font-semibold">€59.000 – €178.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">ROI</span><span className="text-white font-bold">455% – 1370%</span></div>
+                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€272.000 – €748.000</span></div>
               </div>
             </div>
           </div>
