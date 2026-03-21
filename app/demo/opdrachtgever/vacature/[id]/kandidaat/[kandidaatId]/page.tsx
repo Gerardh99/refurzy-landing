@@ -34,6 +34,14 @@ export default function OpdrachtgeverKandidaatProces() {
   const [creditcardExpiry, setCreditcardExpiry] = useState('')
   const [creditcardCvc, setCreditcardCvc] = useState('')
 
+  // Minimum scout rating based on pipeline phase reached
+  const getMinRating = (status: string) => {
+    if (['contract_akkoord', 'gesprek_plannen', 'gesprek_gepland', 'feedback_geven'].includes(status)) return 3
+    if (status === 'arbeidsvoorwaarden') return 4
+    return 0 // voorgesteld: no minimum
+  }
+  const minRating = getMinRating(procesStatus)
+
   if (!vacature || !kandidaat) {
     return <div className="flex items-center justify-center h-64"><p className="text-ink-light">Kandidaat niet gevonden.</p></div>
   }
@@ -131,7 +139,7 @@ export default function OpdrachtgeverKandidaatProces() {
           </div>
         </div>
         {!isRejected && procesStatus !== 'contract_getekend' && (
-          <button onClick={() => setShowRejectModal(true)}
+          <button onClick={() => { setRejectRating(minRating > 0 ? minRating : 0); setShowRejectModal(true) }}
             className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-sm hover:bg-red-50 transition-colors">
             Afwijzen
           </button>
@@ -339,7 +347,7 @@ export default function OpdrachtgeverKandidaatProces() {
               <p className="text-sm font-medium text-ink mt-2">Arbeidsvoorwaarden bespreken</p>
               <p className="text-xs text-ink-muted mt-1">Ga naar de onderhandelingsfase</p>
             </button>
-            <button onClick={() => setShowRejectModal(true)}
+            <button onClick={() => { setRejectRating(minRating > 0 ? minRating : 0); setShowRejectModal(true) }}
               className="p-4 bg-surface-muted rounded-xl text-left hover:bg-red-50 hover:border-red-300 border border-surface-border transition-colors">
               <span className="text-lg">✕</span>
               <p className="text-sm font-medium text-ink mt-2">Afwijzen</p>
@@ -584,8 +592,25 @@ export default function OpdrachtgeverKandidaatProces() {
             </div>
             <div>
               <label className="block text-sm font-medium text-ink mb-1">Beoordeling scout *</label>
-              <StarRating value={rejectRating} onChange={setRejectRating} />
-              <p className="text-xs text-ink-muted mt-1">Hoe goed was de voordracht van de scout?</p>
+              {procesStatus === 'arbeidsvoorwaarden' ? (
+                <>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <span key={star} className={`text-2xl ${star <= 4 ? 'text-yellow-400' : 'text-surface-border'}`}>★</span>
+                    ))}
+                  </div>
+                  <p className="text-xs text-green-600 mt-1">Automatisch 4 sterren — kandidaat bereikte arbeidsvoorwaarden fase</p>
+                </>
+              ) : (
+                <>
+                  <StarRating value={rejectRating} onChange={(v) => setRejectRating(Math.max(v, minRating))} />
+                  {minRating >= 3 ? (
+                    <p className="text-xs text-ink-muted mt-1">Minimaal {minRating} sterren — kandidaat kwam tot gespreksfase</p>
+                  ) : (
+                    <p className="text-xs text-ink-muted mt-1">Hoe goed was de voordracht van de scout?</p>
+                  )}
+                </>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-ink mb-1">Toelichting</label>

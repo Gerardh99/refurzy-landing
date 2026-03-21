@@ -34,6 +34,11 @@ const faqItems: FaqItem[] = [
     a: 'Nee. Refurzy gebruikt een gestructureerd communicatiemodel zonder vrije berichten. Alle communicatie verloopt via: (1) gestructureerde toelichtingen bij voordrachten, (2) gestructureerde feedback bij afwijzingen, (3) automatische herinneringen bij vertragingen, en (4) statusnotificaties. Dit beschermt de kwaliteit van het proces en de anonimiteit van kandidaten.',
     roles: 'all',
   },
+  {
+    q: 'Hoe worden Talent Scouts beoordeeld?',
+    a: 'Talent Scouts worden beoordeeld door opdrachtgevers na elk afwijzingsmoment. Hoe verder een kandidaat in het proces komt, hoe hoger de minimale beoordeling voor de scout — omdat de kwaliteit van de voordracht bewezen is.\n\nBij een succesvolle plaatsing krijgt de scout automatisch 5 sterren. De gemiddelde scout-rating is zichtbaar bij elke voordracht.',
+    roles: 'all',
+  },
 
   // ── Opdrachtgever ──
   {
@@ -49,6 +54,11 @@ const faqItems: FaqItem[] = [
   {
     q: 'Hoe wordt de plaatsingsfee berekend?',
     a: 'De fee is gebaseerd op het opleidingsniveau en de werkervaring van de kandidaat. De exacte prijs wordt vooraf getoond bij elke vacature. Voorbeeld: een WO-kandidaat met 5-10 jaar ervaring kost \u20AC10.800 excl. BTW. Zie de pricingpagina voor het volledige overzicht.',
+    roles: ['opdrachtgever'],
+  },
+  {
+    q: 'Hoe werkt de scout-beoordeling?',
+    a: 'Bij elke afwijzing wordt u gevraagd de Talent Scout te beoordelen (1-5 sterren). Deze beoordeling telt mee in het gemiddelde van de scout en is zichtbaar voor andere opdrachtgevers.\n\nOm scouts eerlijk te beoordelen hanteert Refurzy minimumscores op basis van hoe ver de kandidaat is gekomen:\n• Afgewezen bij voordracht: u bepaalt de score (1-5)\n• Profiel ontgrendeld of na gesprek: minimaal 3 sterren\n• Arbeidsvoorwaarden bereikt: automatisch 4 sterren\n• Succesvolle plaatsing: automatisch 5 sterren\n\nU kunt altijd een hogere score geven dan het minimum. De minimumscores beschermen scouts tegen onterecht lage beoordelingen wanneer hun kandidaat aantoonbaar goed genoeg was om ver in het proces te komen.',
     roles: ['opdrachtgever'],
   },
   {
@@ -76,6 +86,11 @@ const faqItems: FaqItem[] = [
   {
     q: 'Hoe verdien ik als Talent Scout?',
     a: 'Bij elke succesvolle plaatsing ontvangt u 50% van de plaatsingsfee (excl. BTW). De uitbetaling vindt plaats nadat de kandidaat daadwerkelijk is gestart en beide partijen dit hebben bevestigd via het platform. Uw verdiensten zijn zichtbaar in het Verdiensten-dashboard.\n\nAls de opdrachtgever zich vóór de startdatum terugtrekt, wordt 50% van de fee in rekening gebracht bij de opdrachtgever. U ontvangt uw aandeel van dit bedrag — u heeft immers uw werk gedaan.',
+    roles: ['scout'],
+  },
+  {
+    q: 'Hoe wordt mijn rating berekend?',
+    a: 'Uw gemiddelde rating wordt berekend op basis van beoordelingen door opdrachtgevers. Bij elke afwijzing geeft de opdrachtgever 1-5 sterren.\n\nOm u te beschermen tegen onterecht lage beoordelingen gelden minimumscores op basis van hoe ver uw kandidaat is gekomen:\n• Afgewezen bij voordracht: opdrachtgever bepaalt (1-5)\n• Profiel ontgrendeld of na gesprek: minimaal 3 sterren\n• Arbeidsvoorwaarden bereikt: automatisch 4 sterren\n• Succesvolle plaatsing: automatisch 5 sterren\n\nDe opdrachtgever kan altijd een hogere score geven dan het minimum. Uw rating is zichtbaar voor opdrachtgevers en beïnvloedt uw zichtbaarheid op het platform.',
     roles: ['scout'],
   },
   {

@@ -85,6 +85,18 @@ export interface KandidaatMatch {
   afwijzingsRating?: number  // 1-5 stars
   contractDatum?: string     // When contract was signed
   fitGarantieStart?: string  // Start of 12-month guarantee
+  // ─── Scout pipeline detail fields (filled by opdrachtgever/kandidaat) ───
+  stapStartDatum?: string           // When current step started (ISO date)
+  laatsteActiviteit?: string        // Last update timestamp (ISO date)
+  gesprekDatum?: string             // Scheduled interview date/time
+  kandidaatBevestigd?: boolean      // Whether candidate confirmed the interview
+  feedbackScore?: number            // 1-5 score from employer
+  feedbackSamenvatting?: string     // Short feedback summary
+  vervolggesprekDatum?: string      // Follow-up interview date
+  arbeidsvoorwaardenStatus?: 'voorstel_verstuurd' | 'in_onderhandeling' | 'akkoord'
+  startDatum?: string               // First working day (confirmed)
+  startDatumBevestigdKandidaat?: boolean
+  startDatumBevestigdOpdrachtgever?: boolean
 }
 
 export interface TalentScout {

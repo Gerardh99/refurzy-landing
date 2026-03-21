@@ -32,6 +32,14 @@ export const vacatures: Vacature[] = [
           { id: 'g-1', type: 'kennismaking', datum: '2026-03-10', feedback: 'Zeer sterke kandidaat. Goede culturele fit, enthousiast over de rol. Inhoudelijk sterk.', rating: 5, status: 'afgerond' },
           { id: 'g-2', type: 'verdieping', datum: '2026-03-14', feedback: 'Team was ook enthousiast. Past goed bij de bedrijfscultuur.', rating: 5, status: 'afgerond' },
         ],
+        stapStartDatum: '2026-03-17',
+        laatsteActiviteit: '2026-03-19',
+        gesprekDatum: '2026-03-10',
+        kandidaatBevestigd: true,
+        feedbackScore: 5,
+        feedbackSamenvatting: 'Uitstekend — team unaniem positief',
+        vervolggesprekDatum: '2026-03-14',
+        arbeidsvoorwaardenStatus: 'in_onderhandeling',
       },
       {
         id: 'k-10', naam: 'Nadia Karim', initialen: 'N', anoniem: true,
@@ -39,6 +47,8 @@ export const vacatures: Vacature[] = [
         deVriesFit: 73, scoutRating: 4.3, scoutNaam: 'Sophie de Graaf', scoutId: 'scout-1',
         status: 'bekijk', procesStatus: 'voorgesteld', unlocked: false,
         opleidingsniveau: 'WO', werkervaring: '4 jaar', woonplaats: 'Leiden',
+        stapStartDatum: '2026-03-18',
+        laatsteActiviteit: '2026-03-18',
       },
       {
         id: 'k-3', naam: 'Lisa Brouwer', initialen: 'L', anoniem: true,
@@ -77,6 +87,8 @@ export const vacatures: Vacature[] = [
         opleidingsniveau: 'WO', werkervaring: '10 jaar', woonplaats: 'Amsterdam',
         email: 'thomas.vdijk@email.nl', telefoon: '06-34567890',
         gesprekken: [],
+        stapStartDatum: '2026-03-15',
+        laatsteActiviteit: '2026-03-15',
       },
       {
         id: 'k-5', naam: 'Priya Sharma', initialen: 'P', anoniem: true,

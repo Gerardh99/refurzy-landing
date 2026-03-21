@@ -236,7 +236,11 @@ The placement fee is invoiced on the candidate's first working day. Not upon con
 │     │   ├── Salary expectation too high                   │
 │     │   ├── Another candidate chosen                      │
 │     │   └── Other                                         │
-│     ├── Scout rating (1-5 stars)                          │
+│     ├── Scout rating (1-5 stars, with minimum scores)     │
+│     │   ├── Nominated: free (1-5)                         │
+│     │   ├── Contract accepted/after interview: min. 3     │
+│     │   ├── Salary negotiation: auto 4 stars              │
+│     │   └── Contract signed: auto 5 stars                 │
 │     └── Optional explanation                              │
 │                                                           │
 └─────────────────────────────────────────────────────────┘
@@ -823,7 +827,7 @@ In-platform messaging system, accessible from all roles.
 3. **CoC and relationship type**: Chamber of Commerce number is requested during onboarding (optional). With CoC = business relationship (no IB-47 logging required), without CoC = private individual (IB-47 logging required). After 2 placements as private individual, CoC must be registered (Pro Scout upgrade)
 4. **No free messages**: Scouts and employers cannot communicate directly. All communication runs through structured actions (explanation at nomination, feedback at rejection) and automatic system messages. This prevents contact details from being shared outside the platform
 5. **Feedback required**: Employer must give feedback before next step is possible
-6. **Rejection requires reason**: Dropdown + optional explanation + scout rating (1-5)
+6. **Rejection requires reason**: Dropdown + optional explanation + scout rating (1-5). Minimum scores based on phase reached: nominated=free (1-5), contract_accepted/after interview=min. 3, salary_negotiation=auto 4, contract_signed=auto 5. Employer can always give higher than the minimum.
 7. **Fee distribution**: 50/50 scout/Refurzy
 8. **>10 year rule**: HBO and WO receive the same multiplier (2.5) for >10 years of experience
 9. **Fit Guarantee**: Only at M-Score ≥80%, 12 months, only culture/values/interests mismatch
@@ -842,6 +846,33 @@ In-platform messaging system, accessible from all roles.
 21. **Return to talent pool after rejection**: When a candidate in the pipeline is rejected by the employer, the candidate automatically returns to "available" status in the scout's talent pool. The scout receives a notification. The M-Score profile remains valid and the candidate can immediately be nominated for another vacancy. Rejection reason and rating are stored (not visible to candidate, visible to scout). When a candidate withdraws (e.g., other offer), the scout can choose: "Available for other vacancies" (back to pool) or "No longer available" (inactive in pool).
 22. **Automatic reminders (auto-nudges)**: Refurzy automatically sends reminders to employers when pipeline phases take too long. Scouts don't need to take any action — the system monitors lead times. When exceeded, escalation to Refurzy occurs. See section 27 for the full communication model.
 22b. **Dual-status confirmation (candidate ↔ employer)**: At each pipeline step, the candidate is asked to confirm. This is a soft confirmation — the candidate is encouraged but not required. When a mismatch occurs (candidate confirms a step that the employer hasn't updated yet), the system automatically sends a nudge to the employer and a notification to the scout. The scout sees a dual indicator in the pipeline: ✓✓ = both confirmed, ✓? = employer only, ?✓ = candidate only (orange warning), ?? = neither. The candidate can also proactively report that an interview has taken place or that direct contact outside the platform has occurred (escalation to Refurzy).
+22c. **Scout rating calculation (minimum by phase)**: Scout rating is calculated based on employer assessments. Upon rejection, the employer gives 1-5 stars. To protect scouts from unfairly low ratings, minimum scores apply:
+
+| Phase reached at rejection | Minimum rating | Explanation |
+|---|---|---|
+| Nominated | No minimum (1-5) | Employer decides freely |
+| Contract accepted (profile unlocked) | 3 stars | Profile was interesting enough to pay for |
+| After interview (feedback phase) | 3 stars | Candidate was good enough for an interview |
+| Salary negotiation | 4 stars (automatic) | Substantively approved by employer |
+| Contract signed (placement) | 5 stars (automatic) | Successful placement |
+
+The employer can always give a higher score than the minimum. For salary negotiation and contract_signed, the score is automatically assigned without the employer being able to lower it. The average rating is visible to employers with each nomination and influences the scout's visibility on the platform.
+
+22d. **Scout pipeline detail information**: The scout sees per candidate in the pipeline the data filled in by the employer and candidate:
+
+| Pipeline step | Visible to scout |
+|---|---|
+| Nominated | Waiting for employer response + days in step |
+| Contract accepted | Profile unlocked |
+| Schedule interview | Waiting for interview date + warning at >5 days |
+| Interview scheduled | Interview date + candidate confirmation status |
+| Give feedback | Waiting for feedback + previous interview date |
+| Follow-up interview | Follow-up date + feedback score first interview |
+| Salary negotiation | Status (proposal sent / in negotiation / agreed) + feedback score + number of interviews |
+| Contract signed | Start date + confirmation status both parties |
+
+Each card also shows: number of days in current step (orange at >5 days) and 'last updated' timestamp.
+
 23. **Exclusivity (+25%, per professional field)**: Employers can activate exclusivity when creating a vacancy. Candidates are then not offered to other vacancies **in the same professional field** for at least 14 days — even if they are rejected within those 14 days or the nomination expires. Applications in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor for your position. The surcharge is 25% on top of the placement fee. Exclusivity is irrevocable per vacancy to prevent gaming. See section 3 "Candidate Block Upon Nomination" for all rules.
 
 ---
@@ -1026,13 +1057,13 @@ Performance dashboard for Talent Scouts.
 
 1. **Stat cards (4x):**
    - Total placements: 7 (with trend ↑)
-   - Average rating: 4.2/5 (from employer reviews)
+   - Average rating: 4.2/5 (from employer assessments, with minimum scores per phase reached)
    - Conversion ratio: 34% (nominated → placed)
    - Total earned: €18,400
 
 2. **Performance per month** — CSS-only bar chart, last 6 months placements.
 
-3. **Recent reviews** — Review cards with: employer (anonymous), vacancy, stars (1-5), date. Average prominently displayed.
+3. **Recent reviews** — Review cards with: employer (anonymous), vacancy, stars (1-5), phase reached, date. Average prominently displayed. Automatic ratings (salary_negotiation=4★, placement=5★) are separately marked.
 
 4. **Top specializations** — Horizontal bar chart with success rate per sector (Marketing 45%, IT 30%, Finance 25%).
 

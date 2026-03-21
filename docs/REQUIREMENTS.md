@@ -235,7 +235,11 @@ De plaatsingsvergoeding wordt gefactureerd op de eerste werkdag van de kandidaat
 │     │   ├── Salariseis te hoog                           │
 │     │   ├── Andere kandidaat gekozen                     │
 │     │   └── Anders                                       │
-│     ├── Scout-rating (1-5 sterren)                       │
+│     ├── Scout-rating (1-5 sterren, met minimumscores)    │
+│     │   ├── Voorgesteld: vrij (1-5)                      │
+│     │   ├── Contract akkoord/na gesprek: min. 3          │
+│     │   ├── Arbeidsvoorwaarden: auto 4 sterren           │
+│     │   └── Contract getekend: auto 5 sterren            │
 │     └── Optionele toelichting                            │
 │                                                           │
 └─────────────────────────────────────────────────────────┘
@@ -822,7 +826,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 3. **KVK en type relatie**: KVK-nummer wordt al bij onboarding gevraagd (optioneel). Met KVK = zakelijke relatie (geen IB-47 logging), zonder KVK = particuliere relatie (IB-47 logging vereist). Na 2 plaatsingen als particulier moet KVK alsnog worden ingevuld (Pro Scout upgrade)
 4. **Geen vrije berichten**: Scouts en opdrachtgevers kunnen niet rechtstreeks communiceren. Alle communicatie verloopt via gestructureerde acties (toelichting bij voordracht, feedback bij afwijzing) en automatische systeemberichten. Dit voorkomt dat contactgegevens buiten het platform worden gedeeld
 5. **Feedback verplicht**: Opdrachtgever moet feedback geven voordat volgende stap mogelijk is
-6. **Afwijzing vereist reden**: Dropdown + optionele toelichting + scout-rating (1-5)
+6. **Afwijzing vereist reden**: Dropdown + optionele toelichting + scout-rating (1-5). Minimumscores op basis van bereikte fase: voorgesteld=vrij (1-5), contract_akkoord/na gesprek=min. 3, arbeidsvoorwaarden=auto 4, contract_getekend=auto 5. Opdrachtgever kan altijd hoger geven dan het minimum.
 7. **Fee verdeling**: 50/50 scout/Refurzy
 8. **>10 jaar regel**: HBO en WO krijgen zelfde multiplier (2.5) bij >10 jaar ervaring
 9. **Fit Garantie**: Alleen bij M-Score ≥80%, 12 maanden, alleen cultuur/waarden/interesses mismatch
@@ -841,6 +845,31 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
 22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
 22b. **Dual-status bevestiging (kandidaat ↔ opdrachtgever)**: Bij elke pipeline-stap wordt de kandidaat gevraagd om te bevestigen. Dit is een zachte bevestiging — de kandidaat wordt gestimuleerd maar niet verplicht. Bij een mismatch (kandidaat bevestigt een stap die de opdrachtgever nog niet heeft bijgewerkt) stuurt het systeem automatisch een nudge naar de opdrachtgever en een notificatie naar de scout. De scout ziet een dual indicator in de pipeline: ✓✓ = beide bevestigd, ✓? = alleen opdrachtgever, ?✓ = alleen kandidaat (oranje waarschuwing), ?? = geen van beiden. De kandidaat kan ook proactief melden dat een gesprek heeft plaatsgevonden of dat er rechtstreeks contact is geweest buiten het platform (escalatie naar Refurzy).
+22c. **Scout rating berekening (minimum op basis van fase)**: De scout-rating wordt berekend op basis van beoordelingen door opdrachtgevers. Bij afwijzing geeft de opdrachtgever 1-5 sterren. Om scouts te beschermen tegen onterecht lage beoordelingen gelden minimumscores:
+
+| Fase bereikt bij afwijzing | Minimale rating | Toelichting |
+|---|---|---|
+| Voorgesteld | Geen minimum (1-5) | Opdrachtgever bepaalt vrij |
+| Contract akkoord (profiel ontgrendeld) | 3 sterren | Profiel was interessant genoeg om voor te betalen |
+| Na gesprek (feedback geven) | 3 sterren | Kandidaat was goed genoeg voor een gesprek |
+| Arbeidsvoorwaarden | 4 sterren (automatisch) | Inhoudelijk goedgekeurd door opdrachtgever |
+| Contract getekend (plaatsing) | 5 sterren (automatisch) | Succesvolle plaatsing |
+
+De opdrachtgever kan altijd een hogere score geven dan het minimum. Bij arbeidsvoorwaarden en contract_getekend wordt de score automatisch toegekend zonder dat de opdrachtgever deze kan verlagen. De gemiddelde rating is zichtbaar voor opdrachtgevers bij elke voordracht en beïnvloedt de zichtbaarheid van de scout op het platform.
+22d. **Scout pipeline detailinformatie**: De scout ziet per kandidaat in de pipeline de data die door de opdrachtgever en kandidaat worden ingevuld:
+
+| Pipeline-stap | Zichtbaar voor scout |
+|---|---|
+| Voorgesteld | Wacht op reactie opdrachtgever + dagen in stap |
+| Contract akkoord | Profiel ontgrendeld |
+| Gesprek plannen | Wacht op gespreksdatum + waarschuwing bij >5 dagen |
+| Gesprek gepland | Gespreksdatum + bevestigingsstatus kandidaat |
+| Feedback geven | Wacht op feedback + datum vorig gesprek |
+| Vervolggesprek | Datum vervolggesprek + feedbackscore eerste gesprek |
+| Arbeidsvoorwaarden | Status (voorstel verstuurd / in onderhandeling / akkoord) + feedbackscore + aantal gesprekken |
+| Contract getekend | Startdatum + bevestigingsstatus beide partijen |
+
+Per kaart wordt ook getoond: aantal dagen in huidige stap (oranje bij >5 dagen) en 'laatst bijgewerkt' tijdstip.
 23. **Exclusiviteit (+25%, per vakgebied)**: Opdrachtgevers kunnen bij het aanmaken van een vacature exclusiviteit activeren. Kandidaten worden dan minimaal 14 dagen niet aan andere vacatures **in hetzelfde vakgebied** aangeboden — ook niet als ze binnen die 14 dagen worden afgewezen of als de voordracht verloopt. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De toeslag is 25% bovenop de plaatsingsfee. Exclusiviteit is onherroepelijk per vacature om gaming te voorkomen. Zie sectie 3 "Kandidaat-blokkade bij voordracht" voor alle regels.
 
 ---
@@ -1025,13 +1054,13 @@ Performance dashboard voor Talent Scouts.
 
 1. **Stat cards (4x):**
    - Totaal plaatsingen: 7 (met trend ↑)
-   - Gemiddelde rating: 4.2/5 (uit opdrachtgever reviews)
+   - Gemiddelde rating: 4.2/5 (uit opdrachtgever beoordelingen, met minimumscores per bereikte fase)
    - Conversieratio: 34% (voorgedragen → geplaatst)
    - Totaal verdiend: €18.400
 
 2. **Prestaties per maand** — CSS-only bar chart, laatste 6 maanden plaatsingen.
 
-3. **Recente reviews** — Review cards met: opdrachtgever (anoniem), vacature, sterren (1-5), datum. Gemiddelde prominent weergegeven.
+3. **Recente reviews** — Review cards met: opdrachtgever (anoniem), vacature, sterren (1-5), bereikte fase, datum. Gemiddelde prominent weergegeven. Automatische ratings (arbeidsvoorwaarden=4★, plaatsing=5★) worden apart gemarkeerd.
 
 4. **Top vakgebieden** — Horizontale bar chart met success rate per sector (Marketing 45%, IT 30%, Finance 25%).
 
