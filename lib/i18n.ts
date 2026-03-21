@@ -94,8 +94,8 @@ export const translations = {
   // ─── How it works ──────────────────────────────────────────────────────────
   'how.title': { nl: 'Hoe Refurzy werkt', en: 'How Refurzy works' },
   'how.subtitle': {
-    nl: 'Drie rollen, één platform. Elke stap is ontworpen om werving sneller, objectiever en goedkoper te maken.',
-    en: 'Three roles, one platform. Every step is designed to make recruitment faster, more objective and more affordable.'
+    nl: 'Drie rollen, één platform. Elke stap is ontworpen om werving sneller, objectiever en stukken goedkoper te maken.',
+    en: 'Three roles, one platform. Every step is designed to make recruitment faster, more objective and significantly more affordable.'
   },
   'how.employer': { nl: 'Opdrachtgever', en: 'Employer' },
   'how.employer.1': { nl: 'Beschrijf uw ideale kandidaat in 5 minuten', en: 'Describe your ideal candidate in 5 minutes' },
