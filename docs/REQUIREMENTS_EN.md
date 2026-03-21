@@ -1384,3 +1384,62 @@ Wetenschap page navigation updated to match homepage:
 - Centered menu
 - "Inloggen" button
 - No user info display
+
+---
+
+## 31. Vacancy Archive After Placement
+
+### Flow Upon Candidate Hire
+
+When a candidate is hired, the vacancy automatically goes through these steps:
+
+1. **Status change**: Vacancy transitions from `open` → `filled`
+2. **Automatic actions**:
+   - All pending nominations are automatically rejected with message "Vacancy filled"
+   - Scouts and remaining candidates receive a notification
+   - Vacancy disappears from the active overview and scout feed
+3. **Archive**: The vacancy moves to the "Completed vacancies" tab in the employer dashboard
+
+### Dashboard UI — Employer
+
+```
+My vacancies
+┌─────────────────────┬──────────────────────┐
+│  Active (3)         │  Completed (12)      │
+└─────────────────────┴──────────────────────┘
+```
+
+- **Active tab** (default): Shows open and on-hold vacancies with full prominence
+- **Completed tab**: Shows filled and closed vacancies in a more compact, less prominent view (grey accents)
+  - Per vacancy visible: title, placement date, hired candidate, scout, fee
+  - Option to **reopen** vacancy (creates copy as new vacancy)
+  - Option to view details (fully readonly)
+
+### Vacancy Statuses
+
+| Status | Description | Visibility | Trigger |
+|--------|------------|------------|---------|
+| `open` | Active, scouts can nominate | Active tab, scout feed | Vacancy creation |
+| `on_hold` | Temporarily paused by employer | Active tab (dimmed), not in scout feed | Manual by employer |
+| `filled` | Candidate hired | Completed tab | Employment contract signed |
+| `closed` | Manually closed without placement | Completed tab | Manual by employer |
+
+### Scout Perspective
+
+- Filled vacancies disappear from the vacancy feed
+- In the scout dashboard under "My nominations" they remain visible with status "Placed ✓" or "Vacancy filled"
+- Under "Earnings" placed vacancies are always accessible
+
+### Candidate Perspective
+
+- Candidate receives notification when rejected due to vacancy being filled
+- Status in candidate dashboard changes to "Not selected — vacancy filled"
+- Candidate is released for new nominations (unless hired themselves)
+
+### Technical
+
+- Vacancy record maintains a `status` field: `open` | `on_hold` | `filled` | `closed`
+- `closedAt` timestamp is set upon status change to `filled` or `closed`
+- `hiredCandidateId` and `hiredScoutId` are populated for `filled`
+- All nominations with status `pending` or `in_review` are automatically set to `rejected` with reason `vacancy_filled`
+- Archive queries filter on `status IN ('filled', 'closed')`, sorted by `closedAt DESC`

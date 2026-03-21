@@ -1387,3 +1387,62 @@ Wetenschap pagina navigatie is bijgewerkt naar dezelfde stijl als de homepage:
 - **Huidig Nederlands gemiddelde verloop**: 10% (CBS/Intelligence Group)
 - **Verwachte stijging**: naar 19% (Mercer)
 - Standaard ingevuld als default in de besparingscalculator
+
+---
+
+## 36. Vacature-archief na plaatsing
+
+### Flow bij aanname kandidaat
+
+Wanneer een kandidaat wordt aangenomen, doorloopt de vacature automatisch deze stappen:
+
+1. **Status wijziging**: Vacature gaat van `open` → `vervuld`
+2. **Automatische acties**:
+   - Alle openstaande voordrachten worden automatisch afgewezen met melding "Vacature vervuld"
+   - Scouts en overige kandidaten ontvangen een notificatie
+   - Vacature verdwijnt uit het actieve overzicht en de scout-feed
+3. **Archief**: De vacature verhuist naar de tab "Afgeronde vacatures" in het opdrachtgever-dashboard
+
+### Dashboard UI — Opdrachtgever
+
+```
+Mijn vacatures
+┌─────────────────────┬──────────────────────┐
+│  Actief (3)         │  Afgerond (12)       │
+└─────────────────────┴──────────────────────┘
+```
+
+- **Actief tab** (default): Toont open en on-hold vacatures met volle prominentie
+- **Afgerond tab**: Toont vervulde en gesloten vacatures in een compactere, minder prominente weergave (grijze accenten)
+  - Per vacature zichtbaar: titel, datum plaatsing, geplaatste kandidaat, scout, fee
+  - Mogelijkheid om vacature te **heropenen** (creëert kopie als nieuwe vacature)
+  - Mogelijkheid om details te bekijken (volledig readonly)
+
+### Vacature-statussen
+
+| Status | Beschrijving | Zichtbaarheid | Trigger |
+|--------|-------------|---------------|---------|
+| `open` | Actief, scouts kunnen voordragen | Actief tab, scout-feed | Aanmaken vacature |
+| `on_hold` | Tijdelijk gepauzeerd door opdrachtgever | Actief tab (gedempt), niet in scout-feed | Handmatig door opdrachtgever |
+| `vervuld` | Kandidaat aangenomen | Afgerond tab | Ondertekening arbeidsovereenkomst |
+| `gesloten` | Handmatig gesloten zonder plaatsing | Afgerond tab | Handmatig door opdrachtgever |
+
+### Scout-perspectief
+
+- Vervulde vacatures verdwijnen uit de vacature-feed
+- In het scout-dashboard onder "Mijn voordrachten" blijven ze zichtbaar met status "Geplaatst ✓" of "Vacature vervuld"
+- Bij "Verdiensten" zijn geplaatste vacatures altijd terug te vinden
+
+### Kandidaat-perspectief
+
+- Kandidaat ontvangt notificatie bij afwijzing door vacaturevervulling
+- Status in kandidaat-dashboard wijzigt naar "Niet geselecteerd — vacature vervuld"
+- Kandidaat wordt weer vrijgegeven voor nieuwe voordrachten (tenzij zelf aangenomen)
+
+### Technisch
+
+- Vacature-record behoudt een `status` veld: `open` | `on_hold` | `vervuld` | `gesloten`
+- `closedAt` timestamp wordt gezet bij statuswijziging naar `vervuld` of `gesloten`
+- `hiredCandidateId` en `hiredScoutId` worden ingevuld bij `vervuld`
+- Alle voordrachten met status `pending` of `in_review` worden automatisch op `rejected` gezet met reden `vacancy_filled`
+- Archief-queries filteren op `status IN ('vervuld', 'gesloten')`, gesorteerd op `closedAt DESC`
