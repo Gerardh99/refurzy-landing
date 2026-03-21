@@ -169,20 +169,20 @@ function CandidateCard({ kandidaat: k, tab }: { kandidaat: Kandidaat; tab: Tab }
 
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div>
-          <span className="text-ink-muted">Woonplaats</span>
-          <p className="text-ink-light">{k.woonplaats}</p>
+          <span className="text-ink-light text-xs font-medium">Woonplaats</span>
+          <p className="text-ink font-medium">{k.woonplaats}</p>
         </div>
         <div>
-          <span className="text-ink-muted">Opleiding</span>
-          <p className="text-ink-light">{k.opleidingsniveau}</p>
+          <span className="text-ink-light text-xs font-medium">Opleiding</span>
+          <p className="text-ink font-medium">{k.opleidingsniveau}</p>
         </div>
         <div>
-          <span className="text-ink-muted">Werkervaring</span>
-          <p className="text-ink-light">{k.werkervaring}</p>
+          <span className="text-ink-light text-xs font-medium">Werkervaring</span>
+          <p className="text-ink font-medium">{k.werkervaring}</p>
         </div>
         <div>
-          <span className="text-ink-muted">CV</span>
-          <p className="text-ink-light">{k.cvUploaded ? 'Geupload' : 'Ontbreekt'}</p>
+          <span className="text-ink-light text-xs font-medium">CV</span>
+          <p className="text-ink font-medium">{k.cvUploaded ? 'Geupload' : 'Ontbreekt'}</p>
         </div>
       </div>
 
@@ -191,16 +191,16 @@ function CandidateCard({ kandidaat: k, tab }: { kandidaat: Kandidaat; tab: Tab }
         <div className="bg-green-50/50 rounded-xl p-3 space-y-2">
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <span className="text-ink-muted">Geplaatst als</span>
-              <p className="text-ink-light font-medium">{k.plaatsing.vacatureTitle}</p>
+              <span className="text-ink-light text-xs font-medium">Geplaatst als</span>
+              <p className="text-ink font-semibold">{k.plaatsing.vacatureTitle}</p>
             </div>
             <div>
-              <span className="text-ink-muted">Bij</span>
-              <p className="text-ink-light font-medium">{k.plaatsing.bedrijf}</p>
+              <span className="text-ink-light text-xs font-medium">Bij</span>
+              <p className="text-ink font-semibold">{k.plaatsing.bedrijf}</p>
             </div>
             <div>
-              <span className="text-ink-muted">Datum</span>
-              <p className="text-ink-light">{new Date(k.plaatsing.datum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              <span className="text-ink-light text-xs font-medium">Datum</span>
+              <p className="text-ink font-medium">{new Date(k.plaatsing.datum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
             <div>
               <span className="text-ink-muted">Jouw fee</span>
@@ -224,7 +224,7 @@ function CandidateCard({ kandidaat: k, tab }: { kandidaat: Kandidaat; tab: Tab }
       )}
 
       <div className="flex items-center justify-between pt-2 border-t border-surface-border">
-        <span className="text-xs text-ink-muted">{k.email}</span>
+        <span className="text-sm text-ink-light">{k.email}</span>
         {isGeplaatst ? (
           <button className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-muted text-ink-light hover:bg-surface-border transition-all">
             Bekijk details

@@ -40,19 +40,19 @@ export default function ScoutPipeline() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-xs text-ink-muted">Totaal voorgedragen</p>
+          <p className="text-sm text-ink-light font-medium">Totaal voorgedragen</p>
           <p className="text-2xl font-bold text-ink">{allKandidaten.length}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-xs text-ink-muted">Actief in pipeline</p>
+          <p className="text-sm text-ink-light font-medium">Actief in pipeline</p>
           <p className="text-2xl font-bold text-cyan">{activeCount}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-xs text-ink-muted">Succesvol geplaatst</p>
+          <p className="text-sm text-ink-light font-medium">Succesvol geplaatst</p>
           <p className="text-2xl font-bold text-green-600">{successCount}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-xs text-ink-muted">Wacht op opdrachtgever</p>
+          <p className="text-sm text-ink-light font-medium">Wacht op opdrachtgever</p>
           <p className="text-2xl font-bold text-orange">
             {allKandidaten.filter(k =>
               k.procesStatus === 'gesprek_plannen' || k.procesStatus === 'feedback_geven'
@@ -107,8 +107,8 @@ export default function ScoutPipeline() {
                     {k.initialen}
                   </div>
                   <div>
-                    <p className="text-ink font-semibold">{k.naam}</p>
-                    <p className="text-xs text-ink-muted">{k.vacatureTitle} · {k.company}</p>
+                    <p className="text-ink font-bold">{k.naam}</p>
+                    <p className="text-sm text-ink-light font-medium">{k.vacatureTitle} · {k.company}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

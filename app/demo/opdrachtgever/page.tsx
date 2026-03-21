@@ -60,7 +60,7 @@ export default function OpdrachtgeverDashboard() {
           <div key={stat.label} className="bg-white rounded-2xl border border-surface-border p-6">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl">{stat.icon}</span>
-              <span className="text-ink-light text-sm">{stat.label}</span>
+              <span className="text-ink text-sm font-medium">{stat.label}</span>
             </div>
             <div className="text-3xl font-bold text-ink">{stat.value}</div>
           </div>
@@ -123,19 +123,19 @@ export default function OpdrachtgeverDashboard() {
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-ink font-semibold group-hover:text-cyan transition-colors">
+                        <h3 className="text-lg font-bold text-ink group-hover:text-cyan transition-colors">
                           {vacature.title}
                         </h3>
                         <StatusBadge status={vacature.status === 'open' ? 'nieuw' : 'afgewezen'} />
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-ink-light">
-                        <span className="flex items-center gap-1">
+                      <div className="flex items-center gap-4 text-sm text-ink">
+                        <span className="flex items-center gap-1 font-medium">
                           <span className="text-purple">📍</span> {vacature.location}
                         </span>
                         <span className="flex items-center gap-1">
                           <span className="text-purple">📅</span> Deadline: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
                         </span>
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1 font-medium">
                           <span className="text-purple">💰</span> {vacature.salaris}
                         </span>
                       </div>
@@ -144,12 +144,12 @@ export default function OpdrachtgeverDashboard() {
                     <div className="flex items-center gap-6 ml-6">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-ink">{vacature.kandidaten.length}</div>
-                        <div className="text-xs text-ink-muted">kandidaten</div>
+                        <div className="text-sm text-ink-light font-medium">kandidaten</div>
                       </div>
                       {nieuweKandidaten > 0 && (
                         <div className="text-center">
                           <div className="text-2xl font-bold text-cyan">{nieuweKandidaten}</div>
-                          <div className="text-xs text-cyan/70">nieuw</div>
+                          <div className="text-sm text-cyan font-medium">nieuw</div>
                         </div>
                       )}
                       <span className="text-ink-muted group-hover:text-purple transition-colors text-xl">
@@ -190,27 +190,27 @@ export default function OpdrachtgeverDashboard() {
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-ink font-semibold">
+                          <h3 className="text-lg font-bold text-ink">
                             {vacature.title}
                           </h3>
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 font-medium">
+                          <span className="text-sm px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-600 font-medium">
                             ✓ Vervuld
                           </span>
                         </div>
-                        <div className="flex items-center gap-4 text-sm text-ink-light">
-                          <span className="flex items-center gap-1">
+                        <div className="flex items-center gap-4 text-sm text-ink">
+                          <span className="flex items-center gap-1 font-medium">
                             <span className="text-purple">📍</span> {vacature.location}
                           </span>
                           <span className="flex items-center gap-1">
                             <span className="text-purple">📅</span> Afgesloten: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
                           </span>
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 font-medium">
                             <span className="text-purple">💰</span> {vacature.salaris}
                           </span>
                         </div>
                         {aangenomen && (
-                          <div className="mt-2 text-xs text-green-500/80">
-                            Kandidaat aangenomen: <span className="font-medium text-green-500">{aangenomen.naam}</span>
+                          <div className="mt-2 text-sm text-green-600">
+                            Kandidaat aangenomen: <span className="font-semibold text-green-700">{aangenomen.naam}</span>
                             {aangenomen.contractDatum && (
                               <span> — {new Date(aangenomen.contractDatum).toLocaleDateString('nl-NL')}</span>
                             )}

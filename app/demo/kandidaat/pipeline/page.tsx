@@ -143,17 +143,17 @@ export default function KandidaatPipeline() {
             {/* Header */}
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-ink">{s.vacatureTitle}</h2>
-                <p className="text-ink-light text-sm">
+                <h2 className="text-xl font-bold text-ink">{s.vacatureTitle}</h2>
+                <p className="text-sm text-ink mt-1">
                   {s.bedrijfAnoniem ? (
-                    <span className="text-ink-muted italic">Anoniem bedrijf</span>
+                    <span className="text-ink-light italic">Anoniem bedrijf</span>
                   ) : (
-                    <span className="text-purple">{s.bedrijf}</span>
+                    <span className="text-purple font-medium">{s.bedrijf}</span>
                   )}
                   <span className="mx-2 text-ink-muted">·</span>
-                  {s.locatie}
+                  <span className="font-medium">{s.locatie}</span>
                   <span className="mx-2 text-ink-muted">·</span>
-                  <span className="text-cyan">{s.vakgebied}</span>
+                  <span className="text-purple font-medium">{s.vakgebied}</span>
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -196,11 +196,11 @@ export default function KandidaatPipeline() {
                   const isRejected = s.status === 'afgewezen'
                   return (
                     <div key={step.key} className="flex-1 text-center">
-                      <span className={`text-[9px] ${
+                      <span className={`text-[10px] ${
                         isRejected && i === s.pipelineStap ? 'text-red-500 font-semibold' :
                         isActive ? 'text-purple font-semibold' :
-                        isDone ? 'text-cyan' :
-                        'text-ink-muted'
+                        isDone ? 'text-cyan font-medium' :
+                        'text-ink-light'
                       }`}>
                         {isDone ? '✓ ' : isActive ? '▶ ' : ''}{step.label}
                       </span>
@@ -223,7 +223,7 @@ export default function KandidaatPipeline() {
                    s.pipelineStap === 3 ? '⏳' : 'ℹ️'}
                 </span>
                 <div>
-                  <p className={`text-xs ${s.status === 'afgewezen' ? 'text-red-700' : 'text-ink-light'}`}>
+                  <p className={`text-sm font-medium ${s.status === 'afgewezen' ? 'text-red-700' : 'text-ink-light'}`}>
                     {s.statusBericht}
                   </p>
                 </div>
@@ -234,14 +234,14 @@ export default function KandidaatPipeline() {
             {s.actieNodig && s.status !== 'afgewezen' && (
               <div className="bg-purple/5 border border-purple/15 rounded-xl p-3 flex items-center gap-2">
                 <span className="text-sm">👉</span>
-                <p className="text-xs text-purple font-medium">{s.actieNodig}</p>
-                <span className="ml-auto text-purple text-xs">→</span>
+                <p className="text-sm text-purple font-semibold">{s.actieNodig}</p>
+                <span className="ml-auto text-purple text-sm">→</span>
               </div>
             )}
 
             {/* Meta */}
-            <div className="flex items-center gap-4 text-xs text-ink-muted pt-1 border-t border-surface-border">
-              <span>Via {s.scoutNaam}</span>
+            <div className="flex items-center gap-4 text-sm text-ink-light pt-1 border-t border-surface-border">
+              <span>Via <span className="font-semibold">{s.scoutNaam}</span></span>
               <span>Voorgesteld op {new Date(s.datum).toLocaleDateString('nl-NL')}</span>
             </div>
           </Link>

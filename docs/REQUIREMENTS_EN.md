@@ -28,6 +28,14 @@ Refurzy is a recruitment platform that combines scientifically validated matchin
 - **Dimensions**: Based on Kristof-Brown et al. Person-Environment Fit theory
 - **M-Score ≥80%**: Activates Fit Guarantee (12 months)
 
+### Matching Scan Logic
+
+1. **Base Matching Scan (one-time)**: The candidate completes the full Matching Scan once (35 questions covering all dimensions: job activities, values and organization). This is the base scan.
+2. **Supplementary scan per vacancy**: Per vacancy, only the "job activities" dimension (19 questions) needs to be repeated to arrive at a definitive M-Score. Values and organization characteristics (dim 2+3, 16 questions) are reused.
+3. **Indicative M-Score**: If a candidate has completed the base scan, ALL new vacancies immediately receive an **indicative M-Score** based on available data (values + organization + most recently completed job activities). Candidates who have completed the base scan will therefore NEVER see "Complete the Matching Scan".
+4. **Vacancy status `scan_aanvullen`**: Vacancies for which the job activities dimension has not yet been completed vacancy-specifically receive the status `scan_aanvullen` (fill in supplementary questions). After completing the 19 job activities questions, the indicative M-Score is converted into a definitive M-Score.
+5. **Status `scan_nodig`**: Only candidates who have NEVER completed the base scan receive the status `scan_nodig`. Once the base scan has been completed, this status is never used again.
+
 ---
 
 ## 3. Pricing Model
@@ -775,7 +783,7 @@ In-platform messaging system, accessible from all roles.
 13. **Pro Scout VAT**: Pro Scouts receive 50% fee + 21% VAT. Individual scouts receive 50% fee gross (no withholding, IB-47 reporting)
 14. **Scout independence**: The Talent Scout works entirely at their own expense and risk. Determines independently when, how, how much and where assignments are fulfilled. No employment relationship with Refurzy.
 15. **VU Amsterdam license**: Refurzy pays VU per administered Matching Scan. Internal test usage is filtered based on test email addresses. All administrations are logged with date, type, user and status.
-16. **Profile reuse**: Candidate completes scan once → profile reusable across all vacancies. Organization: values + characteristics (dim 2+3, 16 questions) reusable across vacancies, only job activities (dim 1, 19 questions) per vacancy anew.
+16. **Profile reuse & scan status**: Candidate completes the base scan once (35 questions) → profile reusable across all vacancies. Values + characteristics (dim 2+3, 16 questions) are reused; only job activities (dim 1, 19 questions) are completed per vacancy anew. After completing the base scan, all new vacancies receive an indicative M-Score (status: `scan_aanvullen`). Only after completing the vacancy-specific job activities does the M-Score become definitive. Only candidates who have never completed the base scan see status `scan_nodig`.
 17. **Multi-scout representation**: A candidate can be represented by multiple Talent Scouts simultaneously. Each scout can independently nominate the candidate for vacancies, provided the candidate has not already been nominated for that same vacancy by another scout (first-come-first-served). The fee goes to the scout whose nomination led to a successful placement. The candidate sees all their scouts in the dashboard; scouts only see a notice "already nominated by another scout" if another scout has already nominated the candidate for the same vacancy.
 17b. **Candidate block upon nomination (per professional field)**: A candidate who is nominated for a vacancy cannot simultaneously be nominated for another vacancy **in the same professional field (vakgebied)**. Nominations in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor. The block lasts as long as the process is active. Upon rejection or expired nomination, the candidate becomes immediately available — except for exclusive vacancies, where a minimum block of 14 days applies regardless of the outcome. See section 3 "Candidate Block Upon Nomination".
 18. **Automatic matching suggestions**: Scouts receive automatic matching suggestions when a vacancy is published that matches candidates in their talent pool — based on hard criteria (education, experience, location) and M-Score. The scout can accept the suggestion (= nominate) or reject.
@@ -1603,10 +1611,13 @@ The nomination process runs through 6 phases, with the candidate playing an acti
 - Candidate receives notification: "New vacancy proposed"
 - Vacancy appears in the **candidate inbox** with status "New"
 - Candidate sees: title, professional field, location, salary, hard criteria fit, description
-- If the candidate has previously completed the Matching Scan: M-Score is shown (indicative if the job activities dimension has not yet been completed for this specific vacancy)
+- **Scan status determines display:**
+  - **`scan_nodig`** (base scan never completed): No M-Score visible. Text: "Complete the Matching Scan". Candidate must complete the full scan (35 questions) in phase 4.
+  - **`scan_aanvullen`** (base scan completed, job activities not yet vacancy-specific): Indicative M-Score is shown with label "(indicative)". Text: "Complete the supplementary questions for a definitive M-Score". Candidate only needs to complete the job activities dimension (19 questions) in phase 4.
+  - **Definitive M-Score** (job activities completed for this vacancy): Definitive M-Score is shown.
 - Company name is anonymous until the interview phase
 - **Candidate chooses:**
-  - **[Interested]** → proceed to phase 4 (Matching Scan)
+  - **[Interested]** → proceed to phase 4 (Matching Scan or supplementary questions)
   - **[Not interested]** → select reason (see rejection reasons), candidate returns to pool, scout receives feedback
   - **[Review later]** → stays in inbox
 
@@ -1630,8 +1641,8 @@ The nomination process runs through 6 phases, with the candidate playing an acti
 ### Phase 4: Matching Scan
 
 - After "Interested", the candidate must complete (or supplement) the Matching Scan
-- If scan not previously completed: full scan (35 questions, ~10 minutes)
-- If scan previously completed: only job activities dimension again (19 questions, vacancy-specific)
+- **Status `scan_nodig`** (base scan never completed): Full scan (35 questions covering all dimensions, ~10 minutes). After completion, the candidate has a complete base scan and a definitive M-Score for this vacancy.
+- **Status `scan_aanvullen`** (base scan previously completed): Only job activities dimension again (19 questions, vacancy-specific, ~5 minutes). Values and organization characteristics are reused. The indicative M-Score is converted into a definitive M-Score.
 - M-Score is calculated and displayed
 - Candidate sees summary: "Your M-Score is 87%"
 - **Candidate chooses:**

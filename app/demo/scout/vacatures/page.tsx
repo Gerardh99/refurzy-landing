@@ -366,21 +366,21 @@ function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle
     <div className="bg-white rounded-2xl border border-surface-border p-6 flex items-start justify-between gap-4 hover:border-purple/30 transition-colors">
       <Link href={`/demo/scout/vacature/${v.id}`} className="flex-1 space-y-2">
         <div className="flex items-center gap-3">
-          <h3 className="text-ink font-semibold hover:text-purple transition-colors">{v.title}</h3>
-          <span className="text-xs text-purple bg-purple/10 px-2 py-0.5 rounded-full">{v.company}</span>
+          <h3 className="text-lg font-bold text-ink hover:text-purple transition-colors">{v.title}</h3>
+          <span className="text-sm text-purple bg-purple/10 px-2.5 py-0.5 rounded-full font-medium">{v.company}</span>
         </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink-light">
-          <span>{v.location}, {v.land}</span>
-          <span>{v.salaris}</span>
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink">
+          <span className="font-medium">{v.location}, {v.land}</span>
+          <span className="font-medium">{v.salaris}</span>
           <span>Deadline: {new Date(v.deadline).toLocaleDateString('nl-NL')}</span>
         </div>
         <div className="flex flex-wrap gap-2 mt-1">
-          <span className="text-xs bg-cyan/10 text-cyan px-2 py-0.5 rounded-full font-medium">{v.vakgebied}</span>
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{v.land}</span>
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{contractType}</span>
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{werkmodel}</span>
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{v.hardeCriteria.opleidingsniveau}</span>
-          <span className="text-xs bg-surface-muted text-ink-light px-2 py-0.5 rounded-full">{v.hardeCriteria.minimaleErvaring}</span>
+          <span className="text-sm bg-cyan/10 text-cyan px-2.5 py-0.5 rounded-full font-medium">{v.vakgebied}</span>
+          <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{v.land}</span>
+          <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{contractType}</span>
+          <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{werkmodel}</span>
+          <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{v.hardeCriteria.opleidingsniveau}</span>
+          <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{v.hardeCriteria.minimaleErvaring}</span>
         </div>
       </Link>
       <button

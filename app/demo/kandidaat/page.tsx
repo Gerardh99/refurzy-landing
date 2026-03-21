@@ -224,9 +224,9 @@ function PipelineBar({ step, status }: { step: number; status: VacatureStatus })
         {pipelineSteps.map((s, i) => {
           const isActive = i === step
           return (
-            <span key={s.key} className={`text-[8px] flex-1 ${
+            <span key={s.key} className={`text-[10px] flex-1 ${
               isAfgewezen && i === step ? 'text-red-500 font-semibold' :
-              isActive ? 'text-purple font-semibold' : 'text-ink-muted'
+              isActive ? 'text-purple font-semibold' : 'text-ink-light'
             }`}>
               {i < step ? '✓' : ''} {s.label}
             </span>
@@ -346,24 +346,24 @@ export default function KandidaatDashboard() {
             </div>
           ) : (
             nieuweVacatures.map(v => (
-              <div key={v.id} className="bg-white rounded-2xl border-2 border-purple/20 p-6 space-y-4">
+              <div key={v.id} className="bg-white rounded-2xl border-2 border-purple/20 p-6 space-y-5">
                 {/* Header */}
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs bg-purple/10 text-purple px-2 py-0.5 rounded-full font-medium">Nieuw</span>
-                      <span className="text-[10px] text-ink-muted">{dagenGeleden(v.datum)}</span>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs bg-purple/15 text-purple px-2.5 py-1 rounded-full font-semibold">Nieuw</span>
+                      <span className="text-xs text-ink-light">{dagenGeleden(v.datum)}</span>
                       {v.verloopdatum && (
-                        <span className="text-[10px] text-orange font-medium">· Verloopt {dagenTot(v.verloopdatum)}</span>
+                        <span className="text-xs text-orange font-semibold">· Verloopt {dagenTot(v.verloopdatum)}</span>
                       )}
                     </div>
-                    <h3 className="text-lg font-semibold text-ink">{v.vacatureTitle}</h3>
-                    <p className="text-ink-light text-sm">
-                      <span className="text-ink-muted italic">Anoniem bedrijf</span>
+                    <h3 className="text-xl font-bold text-ink">{v.vacatureTitle}</h3>
+                    <p className="text-sm text-ink mt-1">
+                      <span className="text-ink-light italic">Anoniem bedrijf</span>
                       <span className="mx-2 text-ink-muted">·</span>
-                      {v.locatie}, {v.land}
+                      <span className="font-medium">{v.locatie}, {v.land}</span>
                       <span className="mx-2 text-ink-muted">·</span>
-                      <span className="text-cyan">{v.vakgebied}</span>
+                      <span className="text-purple font-medium">{v.vakgebied}</span>
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -378,22 +378,22 @@ export default function KandidaatDashboard() {
                 </div>
 
                 {/* Details row */}
-                <div className="flex flex-wrap gap-3 text-xs">
-                  <span className="bg-surface-muted px-2.5 py-1 rounded-lg text-ink-light">💰 {v.salaris}</span>
-                  <span className="bg-surface-muted px-2.5 py-1 rounded-lg text-ink-light">📋 {v.opleiding}</span>
-                  <span className="bg-surface-muted px-2.5 py-1 rounded-lg text-ink-light">📍 {v.locatie}</span>
-                  <span className={`px-2.5 py-1 rounded-lg font-medium ${
-                    v.hardeCriteriaFit >= 90 ? 'bg-green-100 text-green-700' :
-                    v.hardeCriteriaFit >= 75 ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-red-100 text-red-700'
+                <div className="flex flex-wrap gap-2.5 text-sm">
+                  <span className="bg-slate-100 px-3 py-1.5 rounded-lg text-ink font-medium">💰 {v.salaris}</span>
+                  <span className="bg-slate-100 px-3 py-1.5 rounded-lg text-ink font-medium">📋 {v.opleiding}</span>
+                  <span className="bg-slate-100 px-3 py-1.5 rounded-lg text-ink font-medium">📍 {v.locatie}</span>
+                  <span className={`px-3 py-1.5 rounded-lg font-semibold ${
+                    v.hardeCriteriaFit >= 90 ? 'bg-green-100 text-green-800' :
+                    v.hardeCriteriaFit >= 75 ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
                   }`}>
                     Harde criteria: {v.hardeCriteriaFit}%
                   </span>
                   {v.mScore !== null && (
-                    <span className={`px-2.5 py-1 rounded-lg font-medium ${
-                      v.mScore >= 75 ? 'bg-cyan/10 text-cyan' :
-                      v.mScore >= 50 ? 'bg-purple/10 text-purple' :
-                      'bg-orange/10 text-orange'
+                    <span className={`px-3 py-1.5 rounded-lg font-semibold ${
+                      v.mScore >= 75 ? 'bg-cyan/15 text-cyan' :
+                      v.mScore >= 50 ? 'bg-purple/15 text-purple' :
+                      'bg-orange/15 text-orange'
                     }`}>
                       M-Score: {v.mScore}%{v.mScoreIndicatief ? ' (indicatief)' : ''}
                     </span>
@@ -401,34 +401,34 @@ export default function KandidaatDashboard() {
                 </div>
 
                 {/* Scout info */}
-                <div className="text-xs text-ink-muted">
-                  Voorgedragen door <span className="text-ink-light font-medium">{v.scoutNaam}</span>
+                <div className="text-sm text-ink-light">
+                  Voorgedragen door <span className="text-ink font-semibold">{v.scoutNaam}</span>
                 </div>
 
                 {/* Action buttons */}
-                <div className="flex items-center gap-3 pt-2 border-t border-surface-border">
+                <div className="flex items-center gap-3 pt-3 border-t border-surface-border">
                   <Link
                     href={`/demo/kandidaat/vacature/${v.id}`}
-                    className="text-xs text-cyan hover:underline font-medium"
+                    className="text-sm text-purple hover:underline font-semibold"
                   >
                     Bekijk details →
                   </Link>
                   <div className="flex-1" />
                   <button
                     onClick={() => handleReject(v.id)}
-                    className="px-4 py-2 text-sm border border-red-200 text-red-600 rounded-xl hover:bg-red-50 transition-colors"
+                    className="px-4 py-2.5 text-sm border border-red-300 text-red-600 rounded-xl hover:bg-red-50 transition-colors font-medium"
                   >
                     Geen interesse
                   </button>
                   <button
                     onClick={() => setActiveTab('actief')}
-                    className="text-xs text-ink-muted hover:text-ink-light px-3 py-2"
+                    className="text-sm text-ink-light hover:text-ink px-3 py-2.5 font-medium"
                   >
-                    Later bekijken
+                    Later
                   </button>
                   <button
                     onClick={() => handleAccept(v.id)}
-                    className="px-6 py-2 text-sm bg-purple text-white rounded-xl hover:bg-purple/90 transition-colors font-medium"
+                    className="px-6 py-2.5 text-sm bg-purple text-white rounded-xl hover:bg-purple/90 transition-colors font-semibold shadow-sm"
                   >
                     ✓ Interesse
                   </button>
@@ -479,17 +479,17 @@ export default function KandidaatDashboard() {
                       </span>
                       {v.dualStatus && <DualStatusBadge opdrachtgever={v.dualStatus.opdrachtgever} kandidaat={v.dualStatus.kandidaat} />}
                     </div>
-                    <h3 className="text-ink font-semibold">{v.vacatureTitle}</h3>
-                    <p className="text-ink-light text-sm">
+                    <h3 className="text-lg font-bold text-ink">{v.vacatureTitle}</h3>
+                    <p className="text-sm text-ink mt-1">
                       {v.bedrijfAnoniem ? (
-                        <span className="text-ink-muted italic">Bedrijfsnaam zichtbaar na gespreksfase</span>
+                        <span className="text-ink-light italic">Bedrijfsnaam zichtbaar na gespreksfase</span>
                       ) : (
-                        <span className="text-purple">{v.bedrijf}</span>
+                        <span className="text-purple font-medium">{v.bedrijf}</span>
                       )}
                       <span className="mx-2 text-ink-muted">·</span>
-                      {v.locatie}
+                      <span className="font-medium">{v.locatie}</span>
                       <span className="mx-2 text-ink-muted">·</span>
-                      <span className="text-cyan">{v.vakgebied}</span>
+                      <span className="text-purple font-medium">{v.vakgebied}</span>
                     </p>
                   </div>
                   {v.mScore !== null ? (
@@ -508,15 +508,15 @@ export default function KandidaatDashboard() {
                 {(v.status === 'scan_aanvullen' || accepted.has(v.id)) && (
                   <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
                     <span>🧪</span>
-                    <p className="text-xs text-orange font-medium">Vul de aanvullende vragen in voor een definitieve M-Score</p>
-                    <span className="ml-auto text-xs text-orange">→</span>
+                    <p className="text-sm text-orange font-medium">Vul de aanvullende vragen in voor een definitieve M-Score</p>
+                    <span className="ml-auto text-sm text-orange">→</span>
                   </div>
                 )}
                 {v.status === 'scan_nodig' && (
                   <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
                     <span>🧪</span>
-                    <p className="text-xs text-orange font-medium">Vul de Matching Scan in om voorgedragen te worden</p>
-                    <span className="ml-auto text-xs text-orange">→</span>
+                    <p className="text-sm text-orange font-medium">Vul de Matching Scan in om voorgedragen te worden</p>
+                    <span className="ml-auto text-sm text-orange">→</span>
                   </div>
                 )}
                 {v.dualStatusLabel && (
@@ -525,19 +525,19 @@ export default function KandidaatDashboard() {
                       ? 'bg-orange/10' : 'bg-surface-muted'
                   }`}>
                     <span>{v.status === 'gesprek' ? '🤝' : v.status === 'voorgedragen' ? '⏳' : '💼'}</span>
-                    <p className="text-xs text-ink-light">{v.dualStatusLabel}</p>
+                    <p className="text-sm text-ink-light font-medium">{v.dualStatusLabel}</p>
                   </div>
                 )}
                 {v.status === 'gesprek' && v.dualStatus && v.dualStatus.opdrachtgever && v.dualStatus.kandidaat && (
                   <div className="bg-blue-50 rounded-xl p-3">
-                    <p className="text-xs text-blue-700 font-medium">Bevestig na je gesprek: is het gesprek doorgegaan?</p>
+                    <p className="text-sm text-blue-700 font-medium">Bevestig na je gesprek: is het gesprek doorgegaan?</p>
                   </div>
                 )}
 
                 {/* Meta */}
-                <div className="text-xs text-ink-muted">
-                  Via <span className="text-ink-light font-medium">{v.scoutNaam}</span>
-                  <span className="mx-2">·</span>
+                <div className="text-sm text-ink-light">
+                  Via <span className="text-ink font-semibold">{v.scoutNaam}</span>
+                  <span className="mx-2 text-ink-muted">·</span>
                   {new Date(v.datum).toLocaleDateString('nl-NL')}
                 </div>
               </Link>
@@ -558,35 +558,35 @@ export default function KandidaatDashboard() {
             </div>
           ) : (
             afgerondeVacatures.map(v => (
-              <div key={v.id} className="bg-white rounded-2xl border border-surface-border p-6 space-y-3 opacity-75">
+              <div key={v.id} className="bg-white rounded-2xl border border-surface-border p-6 space-y-3 opacity-80">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        rejected.has(v.id) ? 'bg-gray-100 text-ink-muted' :
+                      <span className={`text-sm px-2.5 py-0.5 rounded-full font-medium ${
+                        rejected.has(v.id) ? 'bg-gray-100 text-gray-600' :
                         v.status === 'afgewezen' ? 'bg-red-100 text-red-700' :
-                        v.status === 'verlopen' ? 'bg-gray-100 text-ink-muted' :
-                        'bg-gray-100 text-ink-muted'
+                        v.status === 'verlopen' ? 'bg-gray-100 text-gray-600' :
+                        'bg-gray-100 text-gray-600'
                       }`}>
                         {rejected.has(v.id) ? 'Geen interesse' :
                          v.status === 'afgewezen' ? 'Niet geselecteerd' :
                          v.status === 'verlopen' ? 'Verlopen' : v.status}
                       </span>
                     </div>
-                    <h3 className="text-ink font-semibold">{v.vacatureTitle}</h3>
-                    <p className="text-ink-light text-sm">
-                      {v.bedrijfAnoniem ? 'Anoniem bedrijf' : v.bedrijf}
+                    <h3 className="text-lg font-bold text-ink">{v.vacatureTitle}</h3>
+                    <p className="text-sm text-ink mt-1">
+                      {v.bedrijfAnoniem ? <span className="text-ink-light italic">Anoniem bedrijf</span> : <span className="font-medium">{v.bedrijf}</span>}
                       <span className="mx-2 text-ink-muted">·</span>
-                      {v.locatie}
+                      <span className="font-medium">{v.locatie}</span>
                       <span className="mx-2 text-ink-muted">·</span>
-                      {v.vakgebied}
+                      <span className="text-purple font-medium">{v.vakgebied}</span>
                     </p>
                   </div>
                   {v.mScore !== null && <MScoreCircle score={v.mScore} />}
                 </div>
                 {!rejected.has(v.id) && <PipelineBar step={v.pipelineStap} status={v.status} />}
-                <div className="text-xs text-ink-muted">
-                  Via {v.scoutNaam} · {new Date(v.datum).toLocaleDateString('nl-NL')}
+                <div className="text-sm text-ink-light">
+                  Via <span className="font-semibold">{v.scoutNaam}</span> · {new Date(v.datum).toLocaleDateString('nl-NL')}
                 </div>
               </div>
             ))

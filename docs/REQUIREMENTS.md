@@ -28,6 +28,14 @@ Refurzy is een wervingsplatform dat wetenschappelijk onderbouwde matching (Match
 - **Dimensies**: Gebaseerd op Kristof-Brown et al. Person-Environment Fit theorie
 - **M-Score ≥80%**: Activeert Fit Garantie (12 maanden)
 
+### Matching Scan logica
+
+1. **Basis Matching Scan (eenmalig)**: De kandidaat vult de volledige Matching Scan 1x in (35 vragen over alle dimensies: werkzaamheden, waarden en organisatie). Dit is de basisscan.
+2. **Aanvullende scan per vacature**: Per vacature hoeft alleen de dimensie "werkzaamheden" (19 vragen) opnieuw te worden ingevuld om tot een definitieve M-Score te komen. Waarden en organisatiekenmerken (dim 2+3, 16 vragen) worden hergebruikt.
+3. **Indicatieve M-Score**: Heeft een kandidaat de basisscan afgerond, dan krijgen ALLE nieuwe vacatures direct een **indicatieve M-Score** op basis van de beschikbare data (waarden + organisatie + de laatst ingevulde werkzaamheden). Er wordt dus nooit "Vul de Matching Scan in" getoond aan kandidaten die de basisscan al hebben afgerond.
+4. **Vacature-status `scan_aanvullen`**: Vacatures waarvoor de werkzaamheden-dimensie nog niet vacature-specifiek is ingevuld krijgen de status `scan_aanvullen` (aanvullende vragen invullen). Na het invullen van de 19 werkzaamheden-vragen wordt de indicatieve M-Score omgezet in een definitieve M-Score.
+5. **Status `scan_nodig`**: Alleen kandidaten die de basisscan nog NOOIT hebben ingevuld krijgen de status `scan_nodig`. Zodra de basisscan eenmaal is afgerond, wordt deze status nooit meer gebruikt.
+
 ---
 
 ## 3. Pricing Model
@@ -774,7 +782,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 13. **Pro Scout BTW**: Pro Scouts ontvangen 50% fee + 21% BTW. Particuliere scouts ontvangen 50% fee bruto (geen inhouding, IB-47 rapportage)
 14. **Zelfstandigheid scout**: De Talent Scout werkt volledig voor eigen rekening en risico. Bepaalt zelf wanneer, hoe, hoeveel en waar opdrachten worden vervuld. Geen arbeidsrelatie met Refurzy.
 15. **VU Amsterdam licentie**: Refurzy betaalt de VU per afgenomen Matching Scan. Intern testgebruik wordt uitgefilterd op basis van test-emailadressen. Alle afnames worden gelogd met datum, type, gebruiker en status.
-16. **Profiel hergebruik**: Kandidaat vult scan 1x in → profiel herbruikbaar over alle vacatures. Organisatie: waarden + kenmerken (dim 2+3, 16 vragen) herbruikbaar over vacatures, alleen werkzaamheden (dim 1, 19 vragen) per vacature opnieuw.
+16. **Profiel hergebruik & scan-status**: Kandidaat vult de basisscan 1x in (35 vragen) → profiel herbruikbaar over alle vacatures. Waarden + kenmerken (dim 2+3, 16 vragen) worden hergebruikt; alleen werkzaamheden (dim 1, 19 vragen) worden per vacature opnieuw ingevuld. Na afronding van de basisscan krijgen alle nieuwe vacatures een indicatieve M-Score (status: `scan_aanvullen`). Pas na het invullen van de vacature-specifieke werkzaamheden wordt de M-Score definitief. Alleen kandidaten die de basisscan nog nooit hebben ingevuld zien status `scan_nodig`.
 17. **Multi-scout bemiddeling**: Een kandidaat kan door meerdere Talent Scouts tegelijkertijd worden bemiddeld. Elke scout kan de kandidaat onafhankelijk voordragen op vacatures, mits de kandidaat niet al is voorgedragen op diezelfde vacature door een andere scout (first-come-first-served). De fee gaat naar de scout wiens voordracht heeft geleid tot een succesvolle plaatsing. De kandidaat ziet al zijn/haar scouts in het dashboard; scouts zien alleen een melding "reeds voorgedragen door een andere scout" als een andere scout de kandidaat al heeft voorgedragen op dezelfde vacature.
 17b. **Kandidaat-blokkade bij voordracht (per vakgebied)**: Een kandidaat die is voorgedragen op een vacature kan niet tegelijkertijd op een andere vacature **in hetzelfde vakgebied** worden voorgedragen. Voordrachten in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent. De blokkade duurt zolang het proces actief is. Bij afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt ongeacht de uitkomst. Zie sectie 3 "Kandidaat-blokkade bij voordracht".
 18. **Automatische matchingsuggesties**: Scouts ontvangen automatische matchingsuggesties wanneer een vacature wordt gepubliceerd die matcht met kandidaten in hun talent pool — op basis van harde criteria (opleiding, ervaring, locatie) en M-Score. De scout kan de suggestie accepteren (= voordragen) of afwijzen.
@@ -1598,10 +1606,13 @@ Het voordracht-proces verloopt in 6 fasen, waarbij de kandidaat een actieve rol 
 - Kandidaat ontvangt notificatie: "Nieuwe vacature voorgesteld"
 - Vacature verschijnt in de **kandidaat-inbox** met status "Nieuw"
 - Kandidaat ziet: titel, vakgebied, locatie, salaris, harde criteria fit, omschrijving
-- Als de kandidaat eerder de Matching Scan heeft ingevuld: M-Score wordt getoond (indicatief als werkzaamheden-dimensie nog niet vacature-specifiek is ingevuld)
+- **Scan-status bepaalt weergave:**
+  - **`scan_nodig`** (basisscan nog nooit ingevuld): Geen M-Score zichtbaar. Tekst: "Vul de Matching Scan in". Kandidaat moet de volledige scan (35 vragen) doorlopen in fase 4.
+  - **`scan_aanvullen`** (basisscan afgerond, werkzaamheden nog niet vacature-specifiek ingevuld): Indicatieve M-Score wordt getoond met label "(indicatief)". Tekst: "Vul de aanvullende vragen in voor een definitieve M-Score". Kandidaat hoeft alleen de werkzaamheden-dimensie (19 vragen) in te vullen in fase 4.
+  - **Definitieve M-Score** (werkzaamheden voor deze vacature ingevuld): Definitieve M-Score wordt getoond.
 - Bedrijfsnaam is anoniem tot de gespreksfase
 - **Kandidaat kiest:**
-  - **[Interesse]** → door naar fase 4 (Matching Scan)
+  - **[Interesse]** → door naar fase 4 (Matching Scan of aanvullende vragen)
   - **[Geen interesse]** → reden selecteren (zie afwijzingsredenen), kandidaat terug in pool, scout ontvangt feedback
   - **[Later bekijken]** → blijft in inbox
 
@@ -1625,8 +1636,8 @@ Het voordracht-proces verloopt in 6 fasen, waarbij de kandidaat een actieve rol 
 ### Fase 4: Matching Scan
 
 - Na "Interesse" moet de kandidaat de Matching Scan invullen (of aanvullen)
-- Als scan nog niet eerder ingevuld: volledige scan (35 vragen, ~10 minuten)
-- Als scan eerder ingevuld: alleen werkzaamheden-dimensie opnieuw (19 vragen, vacature-specifiek)
+- **Status `scan_nodig`** (basisscan nog nooit ingevuld): Volledige scan (35 vragen over alle dimensies, ~10 minuten). Na afronding heeft de kandidaat een complete basisscan en een definitieve M-Score voor deze vacature.
+- **Status `scan_aanvullen`** (basisscan eerder ingevuld): Alleen werkzaamheden-dimensie opnieuw (19 vragen, vacature-specifiek, ~5 minuten). Waarden en organisatiekenmerken worden hergebruikt. De indicatieve M-Score wordt omgezet in een definitieve M-Score.
 - M-Score wordt berekend en getoond
 - Kandidaat ziet samenvatting: "Je M-Score is 87%"
 - **Kandidaat kiest:**
