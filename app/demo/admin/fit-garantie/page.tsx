@@ -60,12 +60,13 @@ const mockClaims: FitGarantieClaim[] = [
     plaatsingsDatum: '2025-04-01',
     claimDatum: '2025-10-10',
     reden: 'Anders',
-    toelichting: 'Kandidaat heeft na 5 maanden zelf ontslag genomen wegens verhuizing.',
+    toelichting: 'Kandidaat heeft na 5 maanden zelf ontslag genomen. Functie bleek in de praktijk afwijkend van de vacatureomschrijving.',
     status: 'afgewezen',
     mScore: 86,
     opmerkingen: [
       { tekst: 'Claim ontvangen, wordt beoordeeld.', datum: '2025-10-11', door: 'Systeem' },
-      { tekst: 'Afgewezen: verhuizing valt onder uitsluitingen van de Fit Garantie.', datum: '2025-10-18', door: 'Admin' },
+      { tekst: 'Exitgesprek afgenomen met kandidaat.', datum: '2025-10-15', door: 'Admin' },
+      { tekst: 'Afgewezen: werkzaamheden weken af van de vacatureomschrijving. Dit valt onder de uitsluitingen van de Fit Garantie.', datum: '2025-10-18', door: 'Admin' },
     ],
   },
 ]

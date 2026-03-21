@@ -118,11 +118,61 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 
 ## 4. Fit Garantie
 
-- **Voorwaarde**: M-Score ≥80%
-- **Duur**: 12 maanden na startdatum
-- **Dekking**: Mismatch op cultuur, waarden of interesses
-- **Uitsluitingen**: Reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud
-- **Restitutie**: 100% van de plaatsingsfee
+### Voorwaarden
+- **Voorwaarde**: M-Score ≥ 80%
+- **Duur**: 12 maanden garantie vanaf bevestigde startdatum
+- **Dekking**: Geldt ook als de kandidaat op eigen initiatief vertrekt
+
+### Uitsluitingen (slechts 3)
+1. Werkzaamheden wijken af van de vacatureomschrijving
+2. Aantoonbaar mismanagement door de opdrachtgever
+3. Reorganisatie / functie verdwijnt
+
+### Verificatieprocedure
+1. Opdrachtgever meldt vertrek binnen 30 dagen bij Refurzy
+2. Kandidaat is verplicht mee te werken aan een exitgesprek met Refurzy (binnen 10 werkdagen)
+3. Refurzy beoordeelt of een uitsluiting van toepassing is
+4. Garantie: vervangende kandidaat of restitutie van de fee
+
+### Voorwaarden per rol
+- **Kandidaat**: medewerking aan exitgesprek is onderdeel van de Toestemmingsverklaring Kandidaat
+- **Opdrachtgever**: in de Plaatsingsovereenkomst staat dat Refurzy de garantie pas kan opvolgen na het exitgesprek met de kandidaat, en dat vertrek binnen 30 dagen gemeld moet worden
+
+---
+
+## 4b. Startdatum & Betaling
+
+### Betalingsmoment
+De plaatsingsvergoeding wordt gefactureerd op de eerste werkdag van de kandidaat. Niet bij contractondertekening.
+
+### Startdatum bevestiging (dual confirmation)
+- Na contractfase: beide partijen (opdrachtgever en kandidaat) vullen de verwachte startdatum in
+- Bij mismatch: Refurzy signaleert, scout bemiddelt
+- Op/na de startdatum: beide partijen bevestigen "Kandidaat is gestart"
+- Pas bij dubbele bevestiging → factuur wordt gegenereerd
+- Fit Garantie van 12 maanden start op de bevestigde startdatum
+
+### Terugtrekking vóór startdatum
+
+| Scenario | Gevolg | Fee |
+|---|---|---|
+| Kandidaat trekt zich terug | Opdrachtgever betaalt niets. Refurzy biedt vervangende kandidaat. | 0% |
+| Opdrachtgever trekt zich terug | 50% van de plaatsingsvergoeding wordt in rekening gebracht | 50% |
+| Beide bevestigen start | Volledige fee gefactureerd op eerste werkdag | 100% |
+
+### Terugtrekking opdrachtgever
+- Bij het indrukken van "Teruggetrokken" krijgt de opdrachtgever een waarschuwingsnotificatie: "Let op: bij terugtrekking door de opdrachtgever wordt 50% van de plaatsingsvergoeding in rekening gebracht."
+- Bevestigingsknop vereist
+- Scout ontvangt hun aandeel van de 50%
+
+### No-show kandidaat
+- Als de kandidaat niet komt opdagen zonder melding, kan de opdrachtgever "Kandidaat niet verschenen" melden
+- Refurzy verifieert bij de kandidaat
+- Behandeld als terugtrekking kandidaat (€0 voor opdrachtgever)
+
+### Automatische herinneringen
+- Na 5 werkdagen geen startbevestiging → herinnering
+- Na 10 werkdagen → escalatie naar Refurzy
 
 ---
 
@@ -670,7 +720,7 @@ Overzicht van alle Fit Garanties voor de opdrachtgever.
 #### Claim indienen modal
 - Reden dropdown: Culturele mismatch, Waarden mismatch, Anders
 - Toelichting textarea
-- Uitsluitingsnoot: "Niet van toepassing bij: reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud"
+- Uitsluitingsnoot: "Niet van toepassing bij: (1) werkzaamheden wijken af van vacatureomschrijving, (2) aantoonbaar mismanagement door opdrachtgever, (3) reorganisatie / functie verdwijnt"
 - Submit button met bevestiging
 
 #### Sectie Verlopen garanties
@@ -880,6 +930,66 @@ Elk akkoord moet worden gelogd met:
 - Bij een nieuwe versie van een document moet de gebruiker opnieuw akkoord gaan
 - Het oude akkoord blijft bewaard in de log (nooit overschrijven)
 - De huidige documentversie wordt centraal beheerd in `lib/consent-log.ts`
+
+---
+
+## 20b. Juridische Documenten — Inhoudelijke Eisen
+
+Onderstaande eisen beschrijven wat elk juridisch document inhoudelijk moet bevatten, zodat een jurist weet welke bepalingen opgenomen moeten worden.
+
+### Toestemmingsverklaring Kandidaat
+
+Moet bevatten:
+- Toestemming voor verwerking van persoonsgegevens en CV door Refurzy
+- Toestemming voor delen van (geanonimiseerd) profiel met opdrachtgevers
+- Verplichting tot medewerking aan exitgesprek bij vertrek binnen 12 maanden na plaatsing (binnen 10 werkdagen)
+- Toestemming voor het berekenen en delen van de M-Score
+
+### Plaatsingsovereenkomst (Opdrachtgever)
+
+Moet bevatten:
+- Plaatsingsvergoeding en betalingsvoorwaarden (facturering op eerste werkdag)
+- Fit Garantie voorwaarden (12 maanden bij M-Score ≥ 80%)
+- Garantie is pas uitvoerbaar na exitgesprek van Refurzy met de kandidaat
+- Meldplicht: vertrek kandidaat binnen 30 dagen melden bij Refurzy
+- Terugtrekking vóór startdatum: 50% fee verschuldigd bij terugtrekking door opdrachtgever
+- Startdatumbevestiging: opdrachtgever bevestigt eerste werkdag kandidaat
+- Exclusiviteit en blokkade regels (per vakgebied)
+
+### Scoutovereenkomst
+
+Moet bevatten:
+- Fee-structuur en uitbetalingsvoorwaarden
+- Introductiekorting regeling (eerste plaatsing)
+- Multi-scout bemiddeling regels (eerste voordracht wint)
+- Gedragsregels en kwaliteitseisen
+- Fee bij terugtrekking opdrachtgever: scout ontvangt aandeel van de 50%
+
+### Algemene Voorwaarden
+
+Moet bevatten:
+- Definities (M-Score, Fit Garantie, pipeline stappen, etc.)
+- Platformgebruik en accountbeheer
+- Aansprakelijkheid en geschillen
+- Privacy verwijzing
+- Beëindiging en opzegging
+
+### Verwerkersovereenkomst
+
+Moet bevatten:
+- AVG/GDPR compliance
+- Welke gegevens worden verwerkt
+- Bewaartermijnen
+- Rechten van betrokkenen
+- Beveiligingsmaatregelen
+
+### Cookiebeleid
+
+Moet bevatten:
+- Welke cookies worden gebruikt
+- Doel van elke cookie
+- Bewaartermijnen
+- Opt-out mogelijkheden
 
 ---
 

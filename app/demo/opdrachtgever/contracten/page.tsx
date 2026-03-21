@@ -179,17 +179,19 @@ export default function ContractenPage() {
                 <h3 className="font-semibold text-ink text-base">Artikelen</h3>
                 <div className="bg-surface-muted rounded-xl p-4 space-y-3">
                   <p><strong className="text-ink">Artikel 1 — No cure, no pay</strong><br />
-                    Opdrachtgever betaalt uitsluitend een plaatsingsfee bij daadwerkelijke ondertekening van een arbeidsovereenkomst met de kandidaat. Het ontgrendelen van kandidaatprofielen is kosteloos.</p>
+                    Opdrachtgever betaalt uitsluitend een plaatsingsfee bij daadwerkelijke start van de kandidaat. Het ontgrendelen van kandidaatprofielen is kosteloos.</p>
                   <p><strong className="text-ink">Artikel 2 — Plaatsingsfee</strong><br />
                     De plaatsingsfee bedraagt {'\u20AC'}{selectedContract.plaatsingsfee.toLocaleString('nl-NL')} excl. BTW, gebaseerd op opleidingsniveau ({selectedContract.opleidingsniveau}) en werkervaring ({selectedContract.werkervaring}). Over dit bedrag wordt 21% BTW in rekening gebracht.</p>
                   <p><strong className="text-ink">Artikel 3 — Fit Garantie</strong><br />
                     {selectedContract.fitGarantie
-                      ? `Bij een M-Score van ${selectedContract.mScore}% (≥80%) geldt een Fit Garantie van 12 maanden. Vertrekt de medewerker binnen 12 maanden door een mismatch in cultuur, waarden of interesses, dan wordt de plaatsingsfee gerestitueerd. Vertrek door reorganisatie, ziekte, verhuizing of gewijzigde functie-inhoud valt hier niet onder.`
+                      ? `Bij een M-Score van ${selectedContract.mScore}% (≥80%) geldt een Fit Garantie van 12 maanden. Vertrekt de medewerker binnen 12 maanden — ook op eigen initiatief — dan ontvangt u een vervangende kandidaat of restitutie van de fee. Uitsluitingen: (1) werkzaamheden wijken af van de vacatureomschrijving, (2) aantoonbaar mismanagement, (3) reorganisatie / functie verdwijnt. Bij een claim voert Refurzy een exitgesprek met de kandidaat. Meld vertrek binnen 30 dagen.`
                       : `De M-Score van ${selectedContract.mScore}% ligt onder de 80%-grens. De Fit Garantie is niet van toepassing op deze plaatsing.`
                     }</p>
                   <p><strong className="text-ink">Artikel 4 — Betaling</strong><br />
-                    De fee wordt geïncasseerd via de door opdrachtgever opgegeven creditcard na ondertekening van de arbeidsovereenkomst.</p>
-                  <p><strong className="text-ink">Artikel 5 — Anti-omzeiling</strong><br />
+                    De fee wordt gefactureerd op de eerste werkdag van de kandidaat. Beide partijen bevestigen de startdatum en de daadwerkelijke start via het platform.</p>
+                  <p><strong className="text-ink">Artikel 5 — Terugtrekking vóór startdatum</strong><br />
+                    Trekt de kandidaat zich vóór de startdatum terug, dan betaalt de opdrachtgever niets. Trekt de opdrachtgever zich terug, dan wordt 50% van de plaatsingsfee in rekening gebracht.</p>
+                  <p><strong className="text-ink">Artikel 6 — Anti-omzeiling</strong><br />
                     Bemiddeling buiten het Refurzy platform om van kandidaten die via Refurzy zijn geïntroduceerd, resulteert in een boete van 100% van de plaatsingsfee.</p>
                 </div>
               </div>

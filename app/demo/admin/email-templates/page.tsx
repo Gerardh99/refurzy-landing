@@ -259,7 +259,7 @@ const templates: EmailTemplate[] = [
       <div style="background: white; padding: 32px; border: 1px solid #E5E7EB; border-top: none; border-radius: 0 0 12px 12px;">
         <p style="color: #1E293B;">Hallo <strong>{{opdrachtgever_naam}}</strong>,</p>
         <p style="color: #64748B;"><strong>{{kandidaat_naam}}</strong> is nu {{maanden}} maanden werkzaam als {{vacature_titel}}. Hoe verloopt de samenwerking?</p>
-        <p style="color: #64748B;">De Fit Garantie dekt een mismatch op cultuur, waarden of interesses gedurende 12 maanden na startdatum.</p>
+        <p style="color: #64748B;">De Fit Garantie dekt vertrek binnen 12 maanden na startdatum — ook op eigen initiatief van de kandidaat. Uitsluitingen: afwijkende werkzaamheden, mismanagement of reorganisatie.</p>
         <div style="text-align: center; margin: 24px 0;">
           <a style="background: #14CDD3; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">Check-in invullen</a>
         </div>

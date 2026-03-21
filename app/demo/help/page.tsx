@@ -21,12 +21,12 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat is de Fit Garantie?',
-    a: 'Bij een M-Score van 80% of hoger biedt Refurzy een Fit Garantie van 12 maanden. Als de kandidaat binnen die periode vertrekt (niet op eigen initiatief), ontvangt de opdrachtgever een gratis vervangende kandidaat of restitutie van de fee.',
+    a: 'Bij een M-Score van 80% of hoger biedt Refurzy een Fit Garantie van 12 maanden. Als de kandidaat binnen die periode vertrekt — ook op eigen initiatief — ontvangt de opdrachtgever een gratis vervangende kandidaat of restitutie van de fee.\n\nDe garantie is alleen niet geldig als: (1) de werkzaamheden afwijken van de vacatureomschrijving, (2) er sprake is van aantoonbaar mismanagement, of (3) de functie verdwijnt door een reorganisatie.\n\nVoorwaarden: de opdrachtgever meldt het vertrek binnen 30 dagen bij Refurzy. Refurzy voert vervolgens een exitgesprek met de kandidaat om de situatie te beoordelen. De garantie wordt pas opvolgbaar na dit exitgesprek.',
     roles: 'all',
   },
   {
     q: 'Hoe werkt het no cure, no pay model?',
-    a: 'U betaalt alleen als een kandidaat daadwerkelijk wordt aangenomen. Het bekijken van anonieme voordrachten is gratis. Pas wanneer u een profiel wilt ontgrendelen, gaat u akkoord met de plaatsingsvoorwaarden. De fee wordt pas gefactureerd na ondertekening van het arbeidscontract.',
+    a: 'U betaalt alleen als een kandidaat daadwerkelijk start. Het bekijken van anonieme voordrachten is gratis. Pas wanneer u een profiel wilt ontgrendelen, gaat u akkoord met de plaatsingsvoorwaarden. De fee wordt gefactureerd op de eerste werkdag van de kandidaat — niet bij contractondertekening. Beide partijen bevestigen de startdatum en de daadwerkelijke start via het platform.\n\nAls de kandidaat zich vóór de startdatum terugtrekt, betaalt u niets en biedt Refurzy een vervangende kandidaat aan. Als u als opdrachtgever zich terugtrekt, wordt 50% van de fee in rekening gebracht.',
     roles: 'all',
   },
   {
@@ -52,6 +52,16 @@ const faqItems: FaqItem[] = [
     roles: ['opdrachtgever'],
   },
   {
+    q: 'Wanneer wordt de fee gefactureerd?',
+    a: 'De fee wordt gefactureerd op de eerste werkdag van de kandidaat — niet bij contractondertekening. Na de contractfase vullen zowel u als de kandidaat de verwachte startdatum in. Op de startdatum bevestigen beide partijen via het platform dat de kandidaat daadwerkelijk is gestart. Pas bij dubbele bevestiging wordt de factuur gegenereerd.\n\nAls de kandidaat zich vóór de startdatum terugtrekt, betaalt u niets. Als u als opdrachtgever zich terugtrekt, wordt 50% van de fee in rekening gebracht.',
+    roles: ['opdrachtgever'],
+  },
+  {
+    q: 'Wat als de kandidaat niet komt opdagen op de startdatum?',
+    a: 'U kunt via het platform "Kandidaat niet verschenen" melden. Refurzy verifieert de situatie bij de kandidaat en behandelt dit als een terugtrekking door de kandidaat. U betaalt dan niets en Refurzy biedt een vervangende kandidaat aan.',
+    roles: ['opdrachtgever'],
+  },
+  {
     q: 'Wat zijn de maximale doorlooptijden per fase?',
     a: 'Refurzy hanteert maximale doorlooptijden om een snel en professioneel wervingsproces te garanderen:\n\n\u2022 Review voordracht: 7 dagen\n\u2022 Gesprek plannen (na ontgrendeling): 7 dagen\n\u2022 Gesprek laten plaatsvinden: 10 dagen\n\u2022 Feedback geven na gesprek: 7 dagen\n\u2022 Vervolggesprek: 10 dagen\n\u2022 Arbeidsvoorwaardenfase: 14 dagen\n\nBij overschrijding stuurt Refurzy automatisch herinneringen. Na de deadline wordt geescaleerd.',
     roles: ['opdrachtgever'],
@@ -70,7 +80,7 @@ const faqItems: FaqItem[] = [
   // ── Scout ──
   {
     q: 'Hoe verdien ik als Talent Scout?',
-    a: 'Bij elke succesvolle plaatsing ontvangt u 50% van de plaatsingsfee (excl. BTW). De uitbetaling vindt plaats nadat het contract is getekend en bevestigd door de opdrachtgever. Uw verdiensten zijn zichtbaar in het Verdiensten-dashboard.',
+    a: 'Bij elke succesvolle plaatsing ontvangt u 50% van de plaatsingsfee (excl. BTW). De uitbetaling vindt plaats nadat de kandidaat daadwerkelijk is gestart en beide partijen dit hebben bevestigd via het platform. Uw verdiensten zijn zichtbaar in het Verdiensten-dashboard.\n\nAls de opdrachtgever zich vóór de startdatum terugtrekt, wordt 50% van de fee in rekening gebracht bij de opdrachtgever. U ontvangt uw aandeel van dit bedrag — u heeft immers uw werk gedaan.',
     roles: ['scout'],
   },
   {

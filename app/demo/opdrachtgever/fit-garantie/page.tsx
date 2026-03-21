@@ -68,8 +68,10 @@ const mockGaranties: FitGarantie[] = [
 ]
 
 const claimRedenen = [
+  'Kandidaat heeft ontslag genomen',
   'Culturele mismatch',
   'Waarden mismatch',
+  'Functioneringsprobleem',
   'Anders',
 ]
 
@@ -293,8 +295,10 @@ export default function OpdrachtgeverFitGarantie() {
                   />
                 </div>
 
-                <div className="bg-surface-muted rounded-lg p-3 text-xs text-ink-muted">
-                  <strong className="text-ink-light">Niet van toepassing bij:</strong> reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud
+                <div className="bg-surface-muted rounded-lg p-4 text-sm text-ink-light space-y-2">
+                  <p className="font-semibold text-ink">De Fit Garantie dekt ook vrijwillig vertrek door de kandidaat.</p>
+                  <p><strong className="text-ink">Niet van toepassing bij:</strong> (1) werkzaamheden wijken af van de vacatureomschrijving, (2) aantoonbaar mismanagement, (3) reorganisatie / functie verdwijnt.</p>
+                  <p className="text-ink-light">Na uw claim voert Refurzy een exitgesprek met de kandidaat om de situatie te beoordelen. Meld vertrek binnen 30 dagen.</p>
                 </div>
 
                 <div className="flex justify-end gap-3">

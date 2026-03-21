@@ -118,11 +118,61 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 
 ## 4. Fit Guarantee
 
-- **Condition**: M-Score ≥80%
-- **Duration**: 12 months after start date
-- **Coverage**: Mismatch in culture, values or interests
-- **Exclusions**: Reorganization, illness, relocation, changed job content
-- **Refund**: 100% of the placement fee
+### Conditions
+- **Condition**: M-Score ≥ 80%
+- **Duration**: 12 months guarantee from confirmed start date
+- **Coverage**: Also applies if the candidate leaves on their own initiative
+
+### Exclusions (only 3)
+1. Job activities deviate from the vacancy description
+2. Demonstrable mismanagement by the employer
+3. Reorganization / position is eliminated
+
+### Verification Procedure
+1. Employer reports departure within 30 days to Refurzy
+2. Candidate is required to participate in an exit interview with Refurzy (within 10 business days)
+3. Refurzy assesses whether an exclusion applies
+4. Guarantee: replacement candidate or refund of the fee
+
+### Conditions per Role
+- **Candidate**: cooperation with the exit interview is part of the Candidate Consent Statement
+- **Employer**: the Placement Agreement states that Refurzy can only follow up on the guarantee after the exit interview with the candidate, and that departure must be reported within 30 days
+
+---
+
+## 4b. Start Date & Payment
+
+### Payment Moment
+The placement fee is invoiced on the candidate's first working day. Not upon contract signing.
+
+### Start Date Confirmation (dual confirmation)
+- After contract phase: both parties (employer and candidate) fill in the expected start date
+- In case of mismatch: Refurzy flags it, scout mediates
+- On/after the start date: both parties confirm "Candidate has started"
+- Only upon dual confirmation → invoice is generated
+- Fit Guarantee of 12 months starts on the confirmed start date
+
+### Withdrawal Before Start Date
+
+| Scenario | Consequence | Fee |
+|---|---|---|
+| Candidate withdraws | Employer pays nothing. Refurzy offers a replacement candidate. | 0% |
+| Employer withdraws | 50% of the placement fee is charged | 50% |
+| Both confirm start | Full fee invoiced on first working day | 100% |
+
+### Employer Withdrawal
+- When pressing "Withdrawn", the employer receives a warning notification: "Please note: withdrawal by the employer results in 50% of the placement fee being charged."
+- Confirmation button required
+- Scout receives their share of the 50%
+
+### Candidate No-show
+- If the candidate does not show up without notice, the employer can report "Candidate did not appear"
+- Refurzy verifies with the candidate
+- Treated as candidate withdrawal (€0 for the employer)
+
+### Automatic Reminders
+- After 5 business days without start confirmation → reminder
+- After 10 business days → escalation to Refurzy
 
 ---
 
@@ -671,7 +721,7 @@ Overview of all Fit Guarantees for the employer.
 #### Submit claim modal
 - Reason dropdown: Cultural mismatch, Values mismatch, Other
 - Explanation textarea
-- Exclusion note: "Not applicable for: reorganization, illness, relocation, changed job content"
+- Exclusion note: "Not applicable for: (1) job activities deviate from vacancy description, (2) demonstrable mismanagement by employer, (3) reorganization / position is eliminated"
 - Submit button with confirmation
 
 #### Section Expired guarantees
@@ -881,6 +931,66 @@ Each consent must be logged with:
 - When a new version of a document is released, the user must agree again
 - The old consent remains stored in the log (never overwrite)
 - The current document version is centrally managed in `lib/consent-log.ts`
+
+---
+
+## 20b. Legal Documents — Content Requirements
+
+The requirements below describe what each legal document must contain, so a lawyer knows which provisions need to be included.
+
+### Candidate Consent Statement
+
+Must contain:
+- Consent for processing of personal data and CV by Refurzy
+- Consent for sharing (anonymized) profile with employers
+- Obligation to cooperate with exit interview upon departure within 12 months after placement (within 10 business days)
+- Consent for calculating and sharing the M-Score
+
+### Placement Agreement (Employer)
+
+Must contain:
+- Placement fee and payment terms (invoicing on the first working day)
+- Fit Guarantee conditions (12 months at M-Score ≥ 80%)
+- Guarantee is only enforceable after Refurzy's exit interview with the candidate
+- Reporting obligation: report candidate departure within 30 days to Refurzy
+- Withdrawal before start date: 50% fee owed upon employer withdrawal
+- Start date confirmation: employer confirms candidate's first working day
+- Exclusivity and block rules (per professional field)
+
+### Scout Agreement
+
+Must contain:
+- Fee structure and payout conditions
+- Introduction discount arrangement (first placement)
+- Multi-scout representation rules (first nomination wins)
+- Code of conduct and quality requirements
+- Fee upon employer withdrawal: scout receives share of the 50%
+
+### Terms & Conditions
+
+Must contain:
+- Definitions (M-Score, Fit Guarantee, pipeline steps, etc.)
+- Platform usage and account management
+- Liability and disputes
+- Privacy reference
+- Termination and cancellation
+
+### Data Processing Agreement
+
+Must contain:
+- GDPR compliance
+- Which data is processed
+- Retention periods
+- Rights of data subjects
+- Security measures
+
+### Cookie Policy
+
+Must contain:
+- Which cookies are used
+- Purpose of each cookie
+- Retention periods
+- Opt-out options
 
 ---
 
