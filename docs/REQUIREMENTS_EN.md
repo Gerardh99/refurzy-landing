@@ -132,7 +132,7 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 1. Employer reports departure within 30 days to Refurzy
 2. Candidate is required to participate in an exit interview with Refurzy (within 10 business days)
 3. Refurzy assesses whether an exclusion applies
-4. Guarantee: Refurzy provides a free replacement candidate (no new placement fee owed)
+4. Guarantee: Refurzy provides a one-time free replacement candidate (no new placement fee owed)
 
 ### Conditions per Role
 - **Candidate**: cooperation with the exit interview is part of the Candidate Consent Statement

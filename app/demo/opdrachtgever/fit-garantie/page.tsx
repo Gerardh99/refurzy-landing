@@ -296,7 +296,7 @@ export default function OpdrachtgeverFitGarantie() {
                 </div>
 
                 <div className="bg-surface-muted rounded-lg p-4 text-sm text-ink-light space-y-2">
-                  <p className="font-semibold text-ink">Bij een geldige claim levert Refurzy gratis een vervangende kandidaat. U betaalt hiervoor geen nieuwe plaatsingsfee.</p>
+                  <p className="font-semibold text-ink">Bij een geldige claim levert Refurzy eenmalig gratis een vervangende kandidaat. U betaalt hiervoor geen nieuwe plaatsingsfee.</p>
                   <p><strong className="text-ink">Niet van toepassing bij:</strong> (1) werkzaamheden wijken af van de vacatureomschrijving, (2) aantoonbaar mismanagement, (3) reorganisatie / functie verdwijnt.</p>
                   <p className="text-ink-light">Na uw claim voert Refurzy een exitgesprek met de kandidaat om de situatie te beoordelen. Meld vertrek binnen 30 dagen.</p>
                 </div>

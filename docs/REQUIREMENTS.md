@@ -132,7 +132,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 1. Opdrachtgever meldt vertrek binnen 30 dagen bij Refurzy
 2. Kandidaat is verplicht mee te werken aan een exitgesprek met Refurzy (binnen 10 werkdagen)
 3. Refurzy beoordeelt of een uitsluiting van toepassing is
-4. Garantie: Refurzy levert gratis een vervangende kandidaat (geen nieuwe plaatsingsfee verschuldigd)
+4. Garantie: Refurzy levert eenmalig gratis een vervangende kandidaat (geen nieuwe plaatsingsfee verschuldigd)
 
 ### Voorwaarden per rol
 - **Kandidaat**: medewerking aan exitgesprek is onderdeel van de Toestemmingsverklaring Kandidaat
