@@ -17,7 +17,7 @@ const pipelineSteps = [
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-type VacatureStatus = 'nieuw' | 'interesse' | 'scan_nodig' | 'scan_compleet' | 'voorgedragen' | 'gesprek' | 'voorwaarden' | 'contract' | 'afgewezen' | 'verlopen' | 'geweigerd'
+type VacatureStatus = 'nieuw' | 'interesse' | 'scan_nodig' | 'scan_aanvullen' | 'scan_compleet' | 'voorgedragen' | 'gesprek' | 'voorwaarden' | 'contract' | 'afgewezen' | 'verlopen' | 'geweigerd'
 
 interface KandidaatVacature {
   id: string
@@ -69,8 +69,8 @@ const mockVacatures: KandidaatVacature[] = [
     vacatureTitle: 'HR Business Partner',
     bedrijf: 'Anoniem',
     bedrijfAnoniem: true,
-    mScore: null,
-    mScoreIndicatief: false,
+    mScore: 74,
+    mScoreIndicatief: true,
     hardeCriteriaFit: 88,
     pipelineStap: 0,
     scoutNaam: 'Sophie de Graaf',
@@ -129,8 +129,8 @@ const mockVacatures: KandidaatVacature[] = [
     vacatureTitle: 'Data Engineer',
     bedrijf: 'Anoniem',
     bedrijfAnoniem: true,
-    mScore: null,
-    mScoreIndicatief: false,
+    mScore: 76,
+    mScoreIndicatief: true,
     hardeCriteriaFit: 89,
     pipelineStap: 1,
     scoutNaam: 'Mark Jansen',
@@ -140,7 +140,7 @@ const mockVacatures: KandidaatVacature[] = [
     land: 'Nederland',
     salaris: '€7.200',
     opleiding: 'HBO+',
-    status: 'scan_nodig',
+    status: 'scan_aanvullen',
   },
   // === AFGEROND ===
   {
@@ -265,7 +265,7 @@ export default function KandidaatDashboard() {
 
   const nieuweVacatures = mockVacatures.filter(v => v.status === 'nieuw' && !accepted.has(v.id) && !rejected.has(v.id))
   const actieveVacatures = mockVacatures.filter(v =>
-    ['interesse', 'scan_nodig', 'scan_compleet', 'voorgedragen', 'gesprek', 'voorwaarden', 'contract'].includes(v.status)
+    ['interesse', 'scan_nodig', 'scan_aanvullen', 'scan_compleet', 'voorgedragen', 'gesprek', 'voorwaarden', 'contract'].includes(v.status)
     || accepted.has(v.id)
   )
   const afgerondeVacatures = mockVacatures.filter(v =>
@@ -459,7 +459,7 @@ export default function KandidaatDashboard() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        v.status === 'scan_nodig' ? 'bg-orange/15 text-orange' :
+                        v.status === 'scan_nodig' || v.status === 'scan_aanvullen' ? 'bg-orange/15 text-orange' :
                         v.status === 'voorgedragen' ? 'bg-blue-100 text-blue-700' :
                         v.status === 'gesprek' ? 'bg-cyan/10 text-cyan' :
                         v.status === 'voorwaarden' ? 'bg-purple/10 text-purple' :
@@ -467,7 +467,9 @@ export default function KandidaatDashboard() {
                         accepted.has(v.id) ? 'bg-orange/15 text-orange' :
                         'bg-cyan/10 text-cyan'
                       }`}>
-                        {v.status === 'scan_nodig' || accepted.has(v.id) ? 'Scan invullen' :
+                        {accepted.has(v.id) ? 'Aanvullende vragen' :
+                         v.status === 'scan_nodig' ? 'Scan invullen' :
+                         v.status === 'scan_aanvullen' ? 'Aanvullende vragen' :
                          v.status === 'voorgedragen' ? 'Voorgedragen' :
                          v.status === 'gesprek' ? 'Gesprek' :
                          v.status === 'voorwaarden' ? 'Arbeidsvoorwaarden' :
@@ -503,7 +505,14 @@ export default function KandidaatDashboard() {
                 <PipelineBar step={accepted.has(v.id) ? 1 : v.pipelineStap} status={v.status} />
 
                 {/* Status message */}
-                {(v.status === 'scan_nodig' || accepted.has(v.id)) && (
+                {(v.status === 'scan_aanvullen' || accepted.has(v.id)) && (
+                  <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
+                    <span>🧪</span>
+                    <p className="text-xs text-orange font-medium">Vul de aanvullende vragen in voor een definitieve M-Score</p>
+                    <span className="ml-auto text-xs text-orange">→</span>
+                  </div>
+                )}
+                {v.status === 'scan_nodig' && (
                   <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
                     <span>🧪</span>
                     <p className="text-xs text-orange font-medium">Vul de Matching Scan in om voorgedragen te worden</p>
