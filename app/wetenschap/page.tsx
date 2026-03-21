@@ -124,7 +124,7 @@ export default function WetenschapPage() {
               {
                 title: 'Hogere productiviteit',
                 description: 'Bevlogen medewerkers presteren aantoonbaar beter. De Matching Scan voorspelt bevlogenheid met β = .30** — een sterk effect in organisatieonderzoek.',
-                source: 'VU Amsterdam, 2026; Halbesleben & Wheeler, 2008'
+                source: 'Halbesleben & Wheeler, 2008'
               },
               {
                 title: '4× meer geneigd om te blijven',
@@ -139,7 +139,7 @@ export default function WetenschapPage() {
               {
                 title: 'Positieve spiraal na 2–3 jaar',
                 description: 'Bij systematisch gebruik wordt de organisatiecultuur sterker. Een sterkere cultuur trekt betere kandidaten aan, wat de cultuur verder versterkt.',
-                source: 'VU Amsterdam / Refurzy model'
+                source: 'SHRM, 2024; Kristof-Brown et al., 2005'
               },
             ].map((item, i) => (
               <div key={i} className="bg-navy-light rounded-xl border border-purple/10 p-4 flex items-start gap-4">
