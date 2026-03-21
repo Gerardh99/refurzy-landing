@@ -62,11 +62,6 @@ const faqItems: FaqItem[] = [
     roles: ['opdrachtgever'],
   },
   {
-    q: 'Wat zijn de maximale doorlooptijden per fase?',
-    a: 'Refurzy hanteert maximale doorlooptijden om een snel en professioneel wervingsproces te garanderen:\n\n\u2022 Review voordracht: 7 dagen\n\u2022 Gesprek plannen (na ontgrendeling): 7 dagen\n\u2022 Gesprek laten plaatsvinden: 10 dagen\n\u2022 Feedback geven na gesprek: 7 dagen\n\u2022 Vervolggesprek: 10 dagen\n\u2022 Arbeidsvoorwaardenfase: 14 dagen\n\nBij overschrijding stuurt Refurzy automatisch herinneringen. Na de deadline wordt geescaleerd.',
-    roles: ['opdrachtgever'],
-  },
-  {
     q: 'Kan ik meerdere vacatures tegelijk open hebben?',
     a: 'Ja, u kunt zoveel vacatures aanmaken als u wilt. Elke vacature krijgt een eigen M-Score profiel en kan onafhankelijk kandidaten ontvangen van verschillende Talent Scouts.',
     roles: ['opdrachtgever'],
@@ -91,11 +86,6 @@ const faqItems: FaqItem[] = [
   {
     q: 'Moet ik zelf opdrachtgevers herinneren?',
     a: 'Nee. Refurzy stuurt automatisch herinneringen naar opdrachtgevers bij vertragingen. U hoeft zelf geen actie te ondernemen. Het systeem bewaakt alle doorlooptijden en escaleert automatisch als dat nodig is.',
-    roles: ['scout'],
-  },
-  {
-    q: 'Wat zijn de doorlooptijden waar het systeem op bewaakt?',
-    a: 'Het systeem hanteert de volgende maximale doorlooptijden:\n\n\u2022 Review voordracht: 7 dagen (herinnering op dag 3 en 6)\n\u2022 Gesprek plannen na ontgrendeling: 7 dagen (herinnering op dag 4 en 6)\n\u2022 Gesprek laten plaatsvinden: 10 dagen\n\u2022 Feedback na gesprek: 7 dagen (herinnering op dag 5 en 6)\n\u2022 Arbeidsvoorwaardenfase: 14 dagen (herinnering op dag 10)\n\nBij overschrijding ontvangt u een notificatie en neemt Refurzy contact op met de opdrachtgever.',
     roles: ['scout'],
   },
   {
@@ -169,16 +159,6 @@ const faqItems: FaqItem[] = [
   },
 ]
 
-// ─── Doorlooptijden tabel ──────────────────────────────────────────────────────
-
-const doorlooptijden = [
-  { fase: 'Review voordracht', status: 'voorgesteld \u2192 contract_akkoord', dagen: '7 dagen', herinnering: 'Dag 3, dag 6' },
-  { fase: 'Gesprek plannen', status: 'contract_akkoord \u2192 gesprek_gepland', dagen: '7 dagen', herinnering: 'Dag 4, dag 6' },
-  { fase: 'Gesprek laten plaatsvinden', status: 'gesprek_gepland \u2192 feedback_geven', dagen: '10 dagen', herinnering: '\u2014' },
-  { fase: 'Feedback geven', status: 'feedback_geven \u2192 volgende stap', dagen: '7 dagen', herinnering: 'Dag 5, dag 6' },
-  { fase: 'Vervolggesprek', status: 'vervolggesprek', dagen: '10 dagen', herinnering: '\u2014' },
-  { fase: 'Arbeidsvoorwaarden', status: 'arbeidsvoorwaarden', dagen: '14 dagen', herinnering: 'Dag 10' },
-]
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
@@ -216,18 +196,12 @@ export default function HelpPage() {
       </div>
 
       {/* Quick links */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button onClick={() => { setShowForm(false); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }) }}
           className="bg-white rounded-2xl border border-surface-border p-5 text-left hover:border-cyan/40 transition-colors group">
           <span className="text-2xl">📖</span>
           <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">Veelgestelde vragen</p>
           <p className="text-ink-muted text-xs mt-1">Antwoorden op de meest gestelde vragen</p>
-        </button>
-        <button onClick={() => { setShowForm(false); document.getElementById('doorlooptijden')?.scrollIntoView({ behavior: 'smooth' }) }}
-          className="bg-white rounded-2xl border border-surface-border p-5 text-left hover:border-cyan/40 transition-colors group">
-          <span className="text-2xl">⏱️</span>
-          <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">Doorlooptijden</p>
-          <p className="text-ink-muted text-xs mt-1">Maximale doorlooptijden per fase</p>
         </button>
         <button onClick={() => { setShowForm(true); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100) }}
           className="bg-white rounded-2xl border border-surface-border p-5 text-left hover:border-cyan/40 transition-colors group">
@@ -265,43 +239,6 @@ export default function HelpPage() {
         </div>
       </div>
 
-      {/* Doorlooptijden tabel */}
-      <div id="doorlooptijden">
-        <h2 className="text-lg font-semibold text-ink mb-2">Doorlooptijden per fase</h2>
-        <p className="text-ink-muted text-sm mb-4">
-          Refurzy bewaakt automatisch de doorlooptijden. Bij overschrijding worden herinneringen gestuurd en indien nodig escaleert Refurzy.
-        </p>
-        <div className="bg-white rounded-xl border border-surface-border overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-surface-muted border-b border-surface-border">
-                <th className="text-left px-4 py-3 text-ink-muted font-medium">Fase</th>
-                <th className="text-left px-4 py-3 text-ink-muted font-medium">Max. doorlooptijd</th>
-                <th className="text-left px-4 py-3 text-ink-muted font-medium">Herinneringen</th>
-              </tr>
-            </thead>
-            <tbody>
-              {doorlooptijden.map((row, i) => (
-                <tr key={i} className={i < doorlooptijden.length - 1 ? 'border-b border-surface-border' : ''}>
-                  <td className="px-4 py-3 text-ink font-medium">{row.fase}</td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-cyan/10 text-cyan text-xs font-medium rounded-full">
-                      {row.dagen}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-ink-light">{row.herinnering}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-3 bg-cyan/5 border border-cyan/20 rounded-xl p-3 flex items-start gap-2">
-          <span className="text-sm">🤖</span>
-          <p className="text-xs text-ink-light">
-            <strong className="text-ink">Automatische herinneringen:</strong> Refurzy stuurt automatisch herinneringen naar opdrachtgevers bij vertragingen. Scouts hoeven zelf niets te doen. Bij overschrijding van de deadline wordt geescaleerd naar het Refurzy team.
-          </p>
-        </div>
-      </div>
 
       {/* Contact / niet gevonden banner */}
       {!showForm && (
