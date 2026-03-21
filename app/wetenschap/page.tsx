@@ -91,6 +91,77 @@ export default function WetenschapPage() {
           </div>
         </section>
 
+        {/* Doorvertaling: wat betekent dit voor de opdrachtgever */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-2xl">📌</span>
+            <h2 className="text-2xl font-bold">Wat betekent dit voor uw organisatie?</h2>
+          </div>
+          <p className="text-gray-400 text-sm mb-6 ml-11">De Matching Scan voorspelt bevlogenheid, werkgeluk en retentie. Hieronder de concrete effecten — onderbouwd door onafhankelijk onderzoek.</p>
+
+          <div className="space-y-3">
+            {[
+              {
+                title: 'Tot 30% minder verloop',
+                description: 'Kandidaten die qua waarden en cultuur passen, blijven langer. P-O fit correleert negatief met vertrekintentie (r = -.35).',
+                source: 'Kristof-Brown et al., 2005'
+              },
+              {
+                title: '59% minder turnover',
+                description: 'Organisaties met hoog engagement — sterk gecorreleerd met goede P-O fit — hebben 59% minder verloop dan organisaties met laag engagement.',
+                source: 'Gallup / industrie-benchmark'
+              },
+              {
+                title: '39% lager verloop met pre-hire assessments',
+                description: 'Bedrijven die pre-hire assessments inzetten rapporteren 39% lagere turnover dan bedrijven die dat niet doen.',
+                source: 'Aberdeen Group'
+              },
+              {
+                title: '€44.000–€175.000 bespaard per voorkomen mis-hire',
+                description: '46% van alle aannames faalt binnen 18 maanden. De totale kosten per mis-hire bedragen 50–200% van het jaarsalaris.',
+                source: 'SHRM (2024); Leadership IQ'
+              },
+              {
+                title: 'Hogere productiviteit',
+                description: 'Bevlogen medewerkers presteren aantoonbaar beter. De Matching Scan voorspelt bevlogenheid met β = .30** — een sterk effect in organisatieonderzoek.',
+                source: 'VU Amsterdam, 2026; Halbesleben & Wheeler, 2008'
+              },
+              {
+                title: '4× meer geneigd om te blijven',
+                description: 'Medewerkers met een positieve cultuurmatch zijn bijna 4× meer geneigd te blijven. Bij slechte fit zoekt 57% actief een nieuwe baan, tegenover slechts 15% bij goede fit.',
+                source: 'SHRM, 2024 (N=11.080, 15 landen)'
+              },
+              {
+                title: 'Snellere besluitvorming',
+                description: 'De gemiddelde time-to-hire is 68,5 dagen. 81% van hiring managers twijfelt over de juiste keuze. De fit-score geeft zekerheid en versnelt beslissingen.',
+                source: 'SHRM, 2025; Resume Genius, 2024'
+              },
+              {
+                title: 'Positieve spiraal na 2–3 jaar',
+                description: 'Bij systematisch gebruik wordt de organisatiecultuur sterker. Een sterkere cultuur trekt betere kandidaten aan, wat de cultuur verder versterkt.',
+                source: 'VU Amsterdam / Refurzy model'
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-navy-light rounded-xl border border-purple/10 p-4 flex items-start gap-4">
+                <div className="w-8 h-8 rounded-lg bg-cyan/10 border border-cyan/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-cyan font-bold text-xs">{i + 1}</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+                  <p className="text-gray-600 text-[11px] mt-1.5 italic">Bron: {item.source}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 bg-gradient-to-r from-cyan/10 to-purple/10 rounded-xl border border-cyan/20 p-5">
+            <p className="text-gray-200 text-sm leading-relaxed text-center font-medium">
+              Kort gezegd: medewerkers die passen bij uw organisatie zijn <span className="text-cyan">productiever</span>, <span className="text-cyan">gelukkiger</span> en <span className="text-cyan">blijven langer</span> — en dat bespaart <span className="text-white font-bold">€44.000–€175.000</span> per voorkomen mis-hire.
+            </p>
+          </div>
+        </section>
+
         {/* Vergelijkingstabel */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
