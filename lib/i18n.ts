@@ -26,7 +26,7 @@ export const translations = {
   'hero.tagline': { nl: 'Redefining Recruitment. Forever.', en: 'Redefining Recruitment. Forever.' },
   'hero.h1a': { nl: 'Werving gebouwd op wetenschap.', en: 'Recruitment built on science.' },
   'hero.h1b': { nl: 'Niet op buikgevoel.', en: 'Not on gut feeling.' },
-  'hero.roi': { nl: 'ROI vanaf 336%. No cure, no pay.', en: 'ROI from 336%. No cure, no pay.' },
+  'hero.roi': { nl: 'ROI vanaf 396%. No cure, no pay.', en: 'ROI from 396%. No cure, no pay.' },
   'hero.sub1': {
     nl: 'Eén verkeerde hire kost 50-200% van het jaarsalaris.¹ Bij een bruto maandsalaris van €5.000 is dat €44.000 tot €175.000. En het overkomt 46% van alle aannames.²',
     en: 'One wrong hire costs 50-200% of the annual salary.¹ At a gross monthly salary of €5,000, that\'s €44,000 to €175,000. And it happens to 46% of all hires.²'
@@ -155,8 +155,8 @@ export const translations = {
   },
   'usp.retention.title': { nl: 'Lager verloop, hogere retentie', en: 'Lower turnover, higher retention' },
   'usp.retention.desc': {
-    nl: 'Medewerkers die passen bij de cultuur en waarden van een organisatie blijven langer en presteren beter. De Matching Scan voorkomt mis-hires en verlaagt het verloop met 10-30%.',
-    en: 'Employees who fit the culture and values of an organization stay longer and perform better. The Matching Scan prevents mis-hires and reduces turnover by 10-30%.'
+    nl: 'Medewerkers die passen bij de cultuur en waarden van een organisatie blijven langer en presteren beter. De Matching Scan voorkomt mis-hires en verlaagt het verloop met 39-59%.',
+    en: 'Employees who fit the culture and values of an organization stay longer and perform better. The Matching Scan prevents mis-hires and reduces turnover by 39-59%.'
   },
   'usp.anonymous.title': { nl: 'Anoniem tot ontgrendeling', en: 'Anonymous until unlocked' },
   'usp.anonymous.desc': {
@@ -198,7 +198,7 @@ export const translations = {
   'scan.ref.2': { nl: 'Ervaren Talent Scouts die uw profiel kennen', en: 'Experienced Talent Scouts who know your profile' },
   'scan.ref.3': { nl: 'No cure, no pay — nul risico', en: 'No cure, no pay — zero risk' },
   'scan.ref.4': { nl: 'Objectieve M-Score als beslissingsgrond', en: 'Objective M-Score as decision basis' },
-  'scan.ref.5': { nl: '10-30% minder verloop, aantoonbaar', en: '10-30% less turnover, demonstrable' },
+  'scan.ref.5': { nl: '39-59% minder verloop, aantoonbaar', en: '39-59% less turnover, demonstrable' },
 
   // ─── Pricing table ───────────────────────────────────────────────────────
   'pricing.colExp': { nl: 'Werkervaring', en: 'Experience' },
@@ -239,8 +239,8 @@ export const translations = {
   },
   'faq.q6': { nl: 'Hoeveel kan ik besparen?', en: 'How much can I save?' },
   'faq.a6': {
-    nl: 'Conservatief scenario: ROI vanaf 336%. Voor een klein bedrijf met 3 hires per jaar betekent dit €44.000–€85.000 netto besparing. Voor organisaties met 100+ medewerkers: €72.000–€668.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.',
-    en: 'Conservative scenario: ROI from 336%. For a small company with 3 hires per year, this means €44,000–€85,000 net savings. For organizations with 100+ employees: €72,000–€668,000 per year, depending on turnover reduction and cost per mis-hire.'
+    nl: 'Conservatief scenario: ROI vanaf 396%. Voor een klein bedrijf met 3 hires per jaar betekent dit €51.000–€131.000 netto besparing. Voor organisaties met 100+ medewerkers: €196.000–€1.370.000 per jaar, afhankelijk van turnover reductie en kosten per mis-hire.',
+    en: 'Conservative scenario: ROI from 396%. For a small company with 3 hires per year, this means €51,000–€131,000 net savings. For organizations with 100+ employees: €196,000–€1,370,000 per year, depending on turnover reduction and cost per mis-hire.'
   },
   'faq.q7': { nl: 'Geven jullie garantie op resultaat?', en: 'Do you guarantee results?' },
   'faq.a7': {

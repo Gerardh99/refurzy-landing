@@ -103,7 +103,7 @@ export default function HomePage() {
           {[
             { value: '50–200%', label: t('stats.mishireCost', lang) },
             { value: '46%', label: t('stats.failRate', lang) },
-            { value: '336%+', label: t('stats.roi', lang) },
+            { value: '396%+', label: t('stats.roi', lang) },
             { value: '81%', label: t('stats.doubt', lang) },
           ].map(s => (
             <div key={s.label}>
@@ -280,14 +280,14 @@ export default function HomePage() {
             {/* Lagere mis-hire kosten */}
             <div className="bg-navy-light rounded-2xl border border-purple/20 p-8 text-center hover:border-purple/40 transition-colors">
               <div className="w-16 h-16 rounded-2xl bg-purple/15 flex items-center justify-center text-3xl mx-auto mb-5">💰</div>
-              <div className="text-4xl font-bold text-purple-light mb-2">20–30%</div>
+              <div className="text-4xl font-bold text-purple-light mb-2">39–59%</div>
               <p className="text-white font-semibold mb-3">
-                {lang === 'nl' ? 'Minder mis-hires' : 'Fewer mis-hires'}
+                {lang === 'nl' ? 'Minder verloop' : 'Less turnover'}
               </p>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 {lang === 'nl'
-                  ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, dalen mis-hires met 20–30%. Dat bespaart tot €668.000 per jaar per 100 medewerkers.'
-                  : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, mis-hires drop 20–30%. That saves up to €668,000 per year per 100 employees.'}
+                  ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, daalt het verloop met 39–59%. Dat bespaart tot €1.370.000 per jaar per 100 medewerkers.'
+                  : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, turnover drops 39–59%. That saves up to €1,370,000 per year per 100 employees.'}
               </p>
               <p className="text-[10px] text-gray-600 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>
@@ -391,7 +391,7 @@ export default function HomePage() {
               <p className="text-[10px] text-gray-600 mt-2">{t('scan.stat1.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-              <div className="text-3xl font-bold text-purple-light mb-2">10–30%</div>
+              <div className="text-3xl font-bold text-purple-light mb-2">39–59%</div>
               <p className="text-sm text-gray-400">{t('scan.stat2.label', lang)}</p>
               <p className="text-[10px] text-gray-600 mt-2">{t('scan.stat2.sub', lang)}</p>
             </div>

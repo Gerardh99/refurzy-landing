@@ -51,9 +51,9 @@ export default function WetenschapPage() {
             <div className="space-y-4">
               {[
                 { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie.' },
-                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000). Refurzy vermindert dit risico met 20–30% door wetenschappelijk bewezen matching.' },
+                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000). Refurzy vermindert dit risico met 39–59% door wetenschappelijk bewezen matching.' },
                 { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
-                { icon: '📊', text: 'ROI van 336–651% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €220.000–€465.000 besparing.' },
+                { icon: '📊', text: 'ROI van 396–1001% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €241.000–€556.000 besparing.' },
                 { icon: '🔬', text: 'Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.' },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -77,19 +77,9 @@ export default function WetenschapPage() {
           <div className="space-y-3">
             {[
               {
-                title: 'Tot 30% minder verloop',
-                description: 'Kandidaten die qua waarden en cultuur passen, blijven langer. P-O fit correleert negatief met vertrekintentie (r = -.35).',
-                source: 'Kristof-Brown et al., 2005'
-              },
-              {
-                title: '59% minder turnover',
-                description: 'Organisaties met hoog engagement — sterk gecorreleerd met goede P-O fit — hebben 59% minder verloop dan organisaties met laag engagement.',
-                source: 'Gallup / industrie-benchmark'
-              },
-              {
-                title: '39% lager verloop met pre-hire assessments',
-                description: 'Bedrijven die pre-hire assessments inzetten rapporteren 39% lagere turnover dan bedrijven die dat niet doen.',
-                source: 'Aberdeen Group'
+                title: '39–59% minder verloop',
+                description: 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop (Aberdeen Group). Bij organisaties met hoog engagement — sterk gecorreleerd met goede P-O fit — loopt dit op tot 59% (Gallup). Case studies met vergelijkbare culture fit tools bevestigen dit (PRADCO, ASK).',
+                source: 'Aberdeen Group · Gallup · PRADCO · ASK/AssessCandidates · Kristof-Brown et al., 2005'
               },
               {
                 title: '€44.000–€175.000 bespaard per voorkomen mis-hire',
@@ -166,7 +156,7 @@ export default function WetenschapPage() {
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Mis-hire risico</td>
                   <td className="px-6 py-3 text-center text-red-400">46% faalt &lt;18 mnd</td>
-                  <td className="px-6 py-3 text-center text-cyan">20–30% lager risico</td>
+                  <td className="px-6 py-3 text-center text-cyan">39–59% lager risico</td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Betalingsmodel</td>
@@ -354,7 +344,7 @@ export default function WetenschapPage() {
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris, o.b.v. bruto maandsalaris €5.000). Door vooraf te meten of iemand past, vermindert u dit risico met 20–30%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
+              { title: 'Minder verkeerde aannames', desc: 'Een mis-hire kost €44.000–€175.000 (50–200% van het jaarsalaris, o.b.v. bruto maandsalaris €5.000). Door vooraf te meten of iemand past, vermindert u dit risico met 39–59%.', source: 'SHRM, 2024 · Kristof-Brown et al., 2005' },
               { title: 'Gelukkigere medewerkers', desc: 'Medewerkers die passen bij de organisatie zijn aantoonbaar gelukkiger, gemotiveerder en meer betrokken. Win-win: lagere kosten voor u, hoger welzijn voor hen.', source: 'VU Amsterdam, 2026 (N=309)' },
               { title: 'Hogere productiviteit', desc: 'Betrokken medewerkers presteren aantoonbaar beter. Werkbevlogenheid — een directe uitkomst van goede P-O fit — voorspelt hogere werkprestaties en minder verzuim.', source: 'Halbesleben & Wheeler, 2008' },
               { title: 'Mensen blijven langer', desc: 'Medewerkers die passen bij de cultuur zijn minder geneigd om weg te gaan. Organisaties met hoge betrokkenheid hebben 59% minder verloop. Case studies tonen reducties van 40–59%.', source: 'Kristof-Brown et al., 2005 · PRADCO · ASK/AssessCandidates' },
@@ -403,7 +393,7 @@ export default function WetenschapPage() {
                   <h4 className="text-white font-semibold text-sm">Minder mis-hires</h4>
                 </div>
                 <p className="text-gray-400 text-xs leading-relaxed">
-                  Eén verkeerde aanname kost 50–200% van het jaarsalaris (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit dalen mis-hire percentages met 20–30%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
+                  Eén verkeerde aanname kost 50–200% van het jaarsalaris (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit daalt het verloop met 39–59%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
                 </p>
               </div>
               <div className="bg-navy rounded-xl border border-cyan/15 p-4">
@@ -424,9 +414,9 @@ export default function WetenschapPage() {
               <p className="text-gray-500 text-xs mb-4">100 medewerkers · 13,5% turnover · gemiddeld salaris €5.000/mnd</p>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between"><span className="text-gray-400">Refurzy kosten jaar 1</span><span className="text-white font-semibold">€58.496</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (20% reductie)</span><span className="text-cyan font-semibold">€72.000 – €426.000</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (30% reductie)</span><span className="text-cyan font-semibold">€137.000 – €668.000</span></div>
-                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€297.000 – €2.680.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (39% reductie)</span><span className="text-cyan font-semibold">€196.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (59% reductie)</span><span className="text-cyan font-semibold">€1.370.000</span></div>
+                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€793.000 – €5.489.000</span></div>
               </div>
             </div>
 
@@ -436,9 +426,9 @@ export default function WetenschapPage() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between"><span className="text-gray-400">Traditioneel bureau (3 hires)</span><span className="text-red-400 font-semibold">€48.600/jaar</span></div>
                 <div className="flex justify-between"><span className="text-gray-400">Refurzy (3 hires)</span><span className="text-cyan font-semibold">€12.999/jaar</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar</span><span className="text-cyan font-semibold">€44.000 – €85.000</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">ROI</span><span className="text-white font-bold">336% – 651%</span></div>
-                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€220.000 – €465.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar</span><span className="text-cyan font-semibold">€51.000 – €131.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-400">ROI</span><span className="text-white font-bold">396% – 1001%</span></div>
+                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€241.000 – €556.000</span></div>
               </div>
             </div>
           </div>
