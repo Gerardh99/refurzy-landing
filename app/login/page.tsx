@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { login, getRolePath } from '@/lib/auth'
+import { login, profileLogin, getRolePath } from '@/lib/auth'
 import { logConsent, DocumentType, DOCUMENT_VERSIONS } from '@/lib/consent-log'
 
 const ROLE_CONSENTS: Record<string, { docs: DocumentType[]; labels: string[] }> = {
@@ -82,7 +82,11 @@ export default function LoginPage() {
       })
     }
 
-    const user = await login(email, password)
+    // Profile switch (via profile card): no password needed
+    // Normal login (typed credentials): requires password
+    const user = selectedProfile
+      ? await profileLogin(email)
+      : await login(email, password)
     if (user) {
       // demo@refurzy.com is the gate account — redirect to /homepage and set demo access
       if (email.toLowerCase() === 'demo@refurzy.com') {
@@ -156,14 +160,17 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-1.5">Wachtwoord</label>
-            <input
-              type="password" value={password} onChange={e => setPassword(e.target.value)}
-              className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
-              placeholder="••••••••" required
-            />
-          </div>
+          {/* Password field: hidden when using profile card (no password needed) */}
+          {!selectedProfile && (
+            <div className="mb-4">
+              <label className="block text-sm text-gray-400 mb-1.5">Wachtwoord</label>
+              <input
+                type="password" value={password} onChange={e => setPassword(e.target.value)}
+                className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
+                placeholder="••••••••" required
+              />
+            </div>
+          )}
 
           {/* Consent checkboxes — shown when demo account selected */}
           {showRegister && roleConsents && (

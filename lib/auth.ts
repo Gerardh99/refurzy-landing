@@ -67,6 +67,25 @@ export async function login(email: string, password: string): Promise<User | nul
   }
 }
 
+// Profile switch: no password needed, used by profile picker cards after initial demo login
+export async function profileLogin(email: string): Promise<User | null> {
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, profileSwitch: true }),
+    })
+    if (!res.ok) return null
+    const { user } = await res.json()
+    if (user && typeof window !== 'undefined') {
+      sessionStorage.setItem('refurzy_user', JSON.stringify(user))
+    }
+    return user
+  } catch {
+    return null
+  }
+}
+
 export function getUser(): User | null {
   if (typeof window === 'undefined') return null
   const data = sessionStorage.getItem('refurzy_user')

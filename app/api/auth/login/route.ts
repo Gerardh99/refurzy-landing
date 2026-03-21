@@ -11,9 +11,24 @@ const DEMO_USERS: Record<string, { email: string; name: string; role: string; co
   'admin@refurzy.nl': { email: 'admin@refurzy.nl', name: 'Refurzy Admin', role: 'admin', company: 'Refurzy B.V.' },
 }
 
-export async function POST(request: NextRequest) {
-  const { email, password } = await request.json()
+// Profile card emails that can be switched without password (after initial demo login)
+const PROFILE_EMAILS = new Set([
+  'demo@bedrijf.nl', 'scout@refurzy.com', 'kandidaat@email.com', 'admin@refurzy.com',
+  'scout@refurzy.nl', 'kandidaat@refurzy.nl', 'admin@refurzy.nl',
+])
 
+export async function POST(request: NextRequest) {
+  const { email, password, profileSwitch } = await request.json()
+
+  // Profile switch: no password needed, just return the user for known demo profiles
+  if (profileSwitch && PROFILE_EMAILS.has(email?.toLowerCase())) {
+    const user = DEMO_USERS[email.toLowerCase()]
+    if (user) {
+      return NextResponse.json({ user })
+    }
+  }
+
+  // Normal login: requires password
   const demoPassword = process.env.DEMO_PASSWORD
   if (!demoPassword) {
     return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
