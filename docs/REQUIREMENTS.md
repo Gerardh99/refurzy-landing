@@ -1284,13 +1284,50 @@ Plus als **FAQ item** (q7): "Waarom kost een mis-hire €44.000–€175.000?"
 ### Locatie
 Homepage, `id="calculator"`.
 
-### Inputs (3 velden)
-1. **Aantal hires per jaar** — numeriek invoerveld
-2. **Bruto maandsalaris** — numeriek invoerveld (standaard: €5.000)
-3. **Verlooppercentage** — numeriek invoerveld, standaard 10% (bron: CBS/Intelligence Group). Vermelding dat dit naar verwachting stijgt naar 19% (bron: Mercer).
+### Berekeningsmodel (conform wetenschappelijk document v7)
 
-### Berekening
-Live berekening met wow-effect animatie. Toont besparing op basis van verloopkosten × reductiepercentages (39% en 59%).
+**Inputs (3 velden):**
+
+Alle invoervelden zijn `type="text"` met `inputMode="numeric"` voor vrije toetsenbordinvoer. Validatie vindt alleen plaats on blur (niet tijdens typen).
+
+| Veld | Default | Min | Max | Toelichting |
+|------|---------|-----|-----|-------------|
+| Aantal medewerkers | 50 | 1 | 10.000 | Totaal aantal medewerkers in de organisatie |
+| Gemiddeld bruto maandsalaris | €5.000 | €2.000 | €20.000 | Gemiddeld over alle functies |
+| Huidig verloop (%) | 10% | 1% | 50% | Bron default: CBS/Intelligence Group (2025). Verwachte stijging naar 19% (Mercer, 2025) |
+
+De kernwijziging t.o.v. het oude model: het eerste veld is nu "Aantal medewerkers" (was: "Aantal hires per jaar"). Het verlooppercentage drijft nu de berekening: medewerkers × verloop% = hires per jaar.
+
+**Berekening (stap voor stap):**
+1. Hires per jaar = medewerkers × verloop%
+2. Jaarsalaris incl. vakantiegeld = maandsalaris × 12 × 1,08
+3. Totale loonkosten = jaarsalaris incl. vakantiegeld × 1,35 (werkgeverslasten)
+4. Kosten per mis-hire = 50-200% van totale loonkosten (SHRM)
+5. Mis-hires per jaar = hires × 46% (Leadership IQ: 46% faalt binnen 18 maanden)
+6. Voorkomen mis-hires = mis-hires × 39-59% (Aberdeen Group 39%, Gallup 59%)
+7. Besparing mis-hires = voorkomen mis-hires × kosten per mis-hire
+8. Directe besparing = bureau fee (25% jaarsalaris) - Refurzy fee (€4.333/hire)
+9. Totale besparing = directe besparing + besparing mis-hires
+10. ROI = totale besparing (laag) / Refurzy kosten × 100%
+11. 5-jaars cumulatief = totale besparing × 5
+
+**Output (resultaten-paneel):**
+- Geschatte jaarlijkse besparing (range laag-hoog, gradient tekst)
+- Tussenregel: "[X] medewerkers × [Y]% verloop = [Z] hires per jaar"
+- ROI percentage
+- Besparing op bureau fees
+- Cumulatief over 5 jaar
+- Voetnoot met alle bronnen
+- Uitklapbare mis-hire kostenopbouw (6 componenten + VSO + SHRM-link)
+
+**Rekenvoorbeeld (default waarden):**
+50 medewerkers × 10% verloop = 5 hires/jaar
+- Bureau: 5 × €64.800 × 25% = €81.000
+- Refurzy: 5 × €4.333 = €21.665
+- Directe besparing: €59.335
+- Mis-hires: 5 × 46% = 2,3 → Refurzy voorkomt 0,9-1,4
+- Besparing mis-hires: €19.372-€119.691
+- Totaal: €78.707-€179.026/jaar
 
 ### CTA
 Call-to-action button onder het resultaat.

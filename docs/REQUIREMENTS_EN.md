@@ -1295,10 +1295,54 @@ These figures are used as defaults and context in the savings calculator.
 
 New interactive calculator on the homepage with `id="calculator"`.
 
-#### Inputs (3 fields)
-1. **Hires per year** — number input
-2. **Gross monthly salary** — currency input
-3. **Turnover percentage** — percentage input, default: 10% (source: CBS/Intelligence Group)
+#### Calculation Model (per scientific document v7)
+
+**Inputs (3 fields):**
+
+All inputs use `type="text"` with `inputMode="numeric"` for free keyboard entry. Validation occurs on blur only (no inline blocking).
+
+| Field | Default | Min | Max | Notes |
+|-------|---------|-----|-----|-------|
+| Number of employees | 50 | 1 | 10,000 | Total headcount |
+| Average gross monthly salary | €5,000 | €2,000 | €20,000 | Average across all roles |
+| Current turnover (%) | 10% | 1% | 50% | Default source: CBS/Intelligence Group (2025). Expected rise to 19% (Mercer, 2025) |
+
+> **Key change (v7):** The first field is now "Number of employees" (not "Hires per year"). The turnover percentage drives the calculation: employees × turnover% = hires per year.
+
+**Calculation (step by step):**
+
+1. Hires per year = employees × turnover%
+2. Annual salary incl. holiday allowance = monthly salary × 12 × 1.08
+3. Total employer costs = annual salary incl. holiday allowance × 1.35
+4. Cost per mis-hire = 50-200% of total employer costs (SHRM)
+5. Mis-hires per year = hires × 46% (Leadership IQ)
+6. Prevented mis-hires = mis-hires × 39-59% (Aberdeen Group 39%, Gallup 59%)
+7. Mis-hire savings = prevented mis-hires × cost per mis-hire
+8. Direct savings = agency fee (25% annual salary) - Refurzy fee (€4,333/hire)
+9. Total savings = direct savings + mis-hire savings
+10. ROI = total savings (low) / Refurzy costs × 100%
+11. 5-year cumulative = total savings × 5
+
+**Output (results panel):**
+
+- Estimated annual savings (low-high range, gradient text)
+- Context line: "[X] employees × [Y]% turnover = [Z] hires per year"
+- ROI percentage
+- Savings on agency fees
+- Cumulative over 5 years
+- Footnote with all sources
+- Expandable mis-hire cost breakdown (6 components + VSO + SHRM link)
+
+**Example (default values):**
+
+50 employees × 10% turnover = 5 hires/year
+
+- Agency: 5 × €64,800 × 25% = €81,000
+- Refurzy: 5 × €4,333 = €21,665
+- Direct savings: €59,335
+- Mis-hires: 5 × 46% = 2.3 → Refurzy prevents 0.9-1.4
+- Mis-hire savings: €19,372-€119,691
+- Total: €78,707-€179,026/year
 
 #### Behavior
 - Shows live calculation with "wow effect" (animated numbers)
