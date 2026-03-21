@@ -21,12 +21,12 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat is de Fit Garantie?',
-    a: 'Bij een M-Score van 80% of hoger biedt Refurzy een Fit Garantie van 12 maanden. Als de kandidaat binnen die periode vertrekt — ook op eigen initiatief — ontvangt de opdrachtgever een gratis vervangende kandidaat of restitutie van de fee.\n\nDe garantie is alleen niet geldig als: (1) de werkzaamheden afwijken van de vacatureomschrijving, (2) er sprake is van aantoonbaar mismanagement, of (3) de functie verdwijnt door een reorganisatie.\n\nVoorwaarden: de opdrachtgever meldt het vertrek binnen 30 dagen bij Refurzy. Refurzy voert vervolgens een exitgesprek met de kandidaat om de situatie te beoordelen. De garantie wordt pas opvolgbaar na dit exitgesprek.',
+    a: 'Bij een M-Score van 80% of hoger biedt Refurzy een Fit Garantie van 12 maanden. Als de kandidaat binnen die periode vertrekt — ook op eigen initiatief — levert Refurzy gratis een vervangende kandidaat. U betaalt hiervoor geen nieuwe plaatsingsfee.\n\nDe garantie is alleen niet geldig als: (1) de werkzaamheden afwijken van de vacatureomschrijving, (2) er sprake is van aantoonbaar mismanagement, of (3) de functie verdwijnt door een reorganisatie.\n\nVoorwaarden: de opdrachtgever meldt het vertrek binnen 30 dagen bij Refurzy. Refurzy voert vervolgens een exitgesprek met de kandidaat om de situatie te beoordelen. De garantie wordt pas opvolgbaar na dit exitgesprek.',
     roles: 'all',
   },
   {
     q: 'Hoe werkt het no cure, no pay model?',
-    a: 'U betaalt alleen als een kandidaat daadwerkelijk start. Het bekijken van anonieme voordrachten is gratis. Pas wanneer u een profiel wilt ontgrendelen, gaat u akkoord met de plaatsingsvoorwaarden. De fee wordt gefactureerd op de eerste werkdag van de kandidaat — niet bij contractondertekening. Beide partijen bevestigen de startdatum en de daadwerkelijke start via het platform.\n\nAls de kandidaat zich vóór de startdatum terugtrekt, betaalt u niets en biedt Refurzy een vervangende kandidaat aan. Als u als opdrachtgever zich terugtrekt, wordt 50% van de fee in rekening gebracht.',
+    a: 'U betaalt alleen als een kandidaat daadwerkelijk start. Het bekijken van anonieme voordrachten is gratis. Pas wanneer u een profiel wilt ontgrendelen, gaat u akkoord met de plaatsingsvoorwaarden. De fee wordt gefactureerd op de eerste werkdag van de kandidaat — niet bij contractondertekening. Beide partijen bevestigen de startdatum en de daadwerkelijke start via het platform.\n\nAls de kandidaat zich vóór de startdatum terugtrekt, betaalt u niets en levert Refurzy gratis een vervangende kandidaat. Als u als opdrachtgever zich terugtrekt, wordt 50% van de fee in rekening gebracht.',
     roles: 'all',
   },
   {
@@ -58,7 +58,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat als de kandidaat niet komt opdagen op de startdatum?',
-    a: 'U kunt via het platform "Kandidaat niet verschenen" melden. Refurzy verifieert de situatie bij de kandidaat en behandelt dit als een terugtrekking door de kandidaat. U betaalt dan niets en Refurzy biedt een vervangende kandidaat aan.',
+    a: 'U kunt via het platform "Kandidaat niet verschenen" melden. Refurzy verifieert de situatie bij de kandidaat en behandelt dit als een terugtrekking door de kandidaat. U betaalt dan niets en Refurzy zoekt gratis een vervangende kandidaat.',
     roles: ['opdrachtgever'],
   },
   {

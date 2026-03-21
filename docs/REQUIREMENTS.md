@@ -132,7 +132,7 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 1. Opdrachtgever meldt vertrek binnen 30 dagen bij Refurzy
 2. Kandidaat is verplicht mee te werken aan een exitgesprek met Refurzy (binnen 10 werkdagen)
 3. Refurzy beoordeelt of een uitsluiting van toepassing is
-4. Garantie: vervangende kandidaat of restitutie van de fee
+4. Garantie: Refurzy levert gratis een vervangende kandidaat (geen nieuwe plaatsingsfee verschuldigd)
 
 ### Voorwaarden per rol
 - **Kandidaat**: medewerking aan exitgesprek is onderdeel van de Toestemmingsverklaring Kandidaat
@@ -561,7 +561,7 @@ lib/
 ### Automatische facturatie
 - Na elke succesvolle plaatsing (contract getekend) genereert Refurzy automatisch een factuur
 - Factuurnummering: `RF-F-[jaar]-[volgnummer]`
-- Creditnota bij Fit Garantie restitutie: `RF-CN-[jaar]-[volgnummer]`
+- Creditnota bij Fit Garantie vervanging: `RF-CN-[jaar]-[volgnummer]`
 - Alle bedragen exclusief 21% BTW
 
 ### Admin factuuroverzicht (`/demo/admin/facturen`)

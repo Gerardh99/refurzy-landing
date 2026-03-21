@@ -149,7 +149,7 @@ export default function AdminFacturen() {
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <p className="text-xs text-ink-muted">Creditnota&apos;s</p>
           <p className="text-2xl font-bold text-red-500 mt-1">{fmt(totaalCreditnota)}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Fit Garantie restituties</p>
+          <p className="text-[10px] text-ink-muted mt-1">Fit Garantie vervangingen</p>
         </div>
       </div>
 
