@@ -130,7 +130,7 @@ export default function HomePage() {
             <span className="flex items-center gap-2">{t('hero.trust2', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust3', lang)}</span>
           </div>
-          <p className="text-[10px] text-gray-700 max-w-lg mx-auto">
+          <p className="text-[10px] text-gray-400 max-w-lg mx-auto">
             {t('hero.sources', lang)}
           </p>
         </div>
@@ -177,7 +177,7 @@ export default function HomePage() {
                 <div className="text-2xl mb-4">{pain.icon}</div>
                 <h3 className="text-white font-semibold mb-2">{pain.title}</h3>
                 <p className="text-sm text-gray-400 leading-relaxed mb-2">{pain.desc}</p>
-                {pain.source && <p className="text-[10px] text-gray-500 italic">{pain.source}</p>}
+                {pain.source && <p className="text-[10px] text-gray-400 italic">{pain.source}</p>}
               </div>
             ))}
           </div>
@@ -275,7 +275,7 @@ export default function HomePage() {
                 <div>
                   <h3 className="text-white font-semibold mb-2">{usp.title}</h3>
                   <p className="text-sm text-gray-400 leading-relaxed mb-1">{usp.desc}</p>
-                  {usp.source && <p className="text-[10px] text-gray-500 italic">{usp.source}</p>}
+                  {usp.source && <p className="text-[10px] text-gray-400 italic">{usp.source}</p>}
                 </div>
               </div>
             ))}
@@ -313,7 +313,7 @@ export default function HomePage() {
                   ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
                   : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
               </p>
-              <p className="text-[10px] text-gray-500 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
+              <p className="text-[10px] text-gray-400 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
             </div>
 
             {/* Lagere mis-hire kosten */}
@@ -346,7 +346,7 @@ export default function HomePage() {
                   <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
                 </div>
               )}
-              <p className="text-[10px] text-gray-500 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
+              <p className="text-[10px] text-gray-400 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>
 
             {/* Hogere productiviteit */}
@@ -361,7 +361,7 @@ export default function HomePage() {
                   ? 'Medewerkers die passen bij de organisatie zijn bevlogener, en werkbevlogenheid voorspelt direct hogere werkprestaties. Ze zijn productiever, minder vaak ziek en presteren beter in hun team.'
                   : 'Employees who fit the organization are more engaged, and engagement directly predicts higher job performance. They are more productive, take fewer sick days, and perform better.'}
               </p>
-              <p className="text-[10px] text-gray-500 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
+              <p className="text-[10px] text-gray-400 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
             </div>
           </div>
 
@@ -372,28 +372,28 @@ export default function HomePage() {
               <p className="text-[11px] text-gray-500 mt-1">
                 {lang === 'nl' ? 'meer kans dat mensen blijven bij goede cultuurmatch' : 'more likely to stay with good culture match'}
               </p>
-              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2024</p>
+              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2024</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-purple-light">N=309</div>
               <p className="text-[11px] text-gray-500 mt-1">
                 {lang === 'nl' ? 'werknemers gevalideerd door VU Amsterdam' : 'employees validated by VU Amsterdam'}
               </p>
-              <p className="text-[9px] text-gray-700 mt-1">VU Amsterdam, 2026</p>
+              <p className="text-[9px] text-gray-400 mt-1">VU Amsterdam, 2026</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-orange">68,5</div>
               <p className="text-[11px] text-gray-500 mt-1">
                 {lang === 'nl' ? 'dagen gemiddelde time-to-hire — sneller met data' : 'days average time-to-hire — faster with data'}
               </p>
-              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2025</p>
+              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2025</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-cyan">15 🌍</div>
               <p className="text-[11px] text-gray-500 mt-1">
                 {lang === 'nl' ? 'landen bevestigen: cultuurmatch = retentie' : 'countries confirm: culture match = retention'}
               </p>
-              <p className="text-[9px] text-gray-700 mt-1">SHRM, 2024 · N=11.080</p>
+              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2024 · N=11.080</p>
             </div>
           </div>
 
@@ -424,7 +424,7 @@ export default function HomePage() {
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item3', lang)}</li>
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item4', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-500 mt-4 italic">{t('scan.footnote', lang)}</p>
+                <p className="text-[10px] text-gray-400 mt-4 italic">{t('scan.footnote', lang)}</p>
               </div>
               <div className="flex justify-center">
                 <div className="relative">
@@ -445,17 +445,17 @@ export default function HomePage() {
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-cyan mb-2">{t('scan.stat1.value', lang)}</div>
               <p className="text-sm text-gray-400">{t('scan.stat1.label', lang)}</p>
-              <p className="text-[10px] text-gray-500 mt-2">{t('scan.stat1.sub', lang)}</p>
+              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat1.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-purple-light mb-2">39–59%</div>
               <p className="text-sm text-gray-400">{t('scan.stat2.label', lang)}</p>
-              <p className="text-[10px] text-gray-500 mt-2">{t('scan.stat2.sub', lang)}</p>
+              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat2.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-orange mb-2">r = −.35</div>
               <p className="text-sm text-gray-400">{t('scan.stat3.label', lang)}</p>
-              <p className="text-[10px] text-gray-500 mt-2">{t('scan.stat3.sub', lang)}</p>
+              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat3.sub', lang)}</p>
             </div>
           </div>
 
@@ -472,7 +472,7 @@ export default function HomePage() {
                   <li>{t('scan.trad.4', lang)}</li>
                   <li>{t('scan.trad.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-500 mt-3 italic">SHRM 2025 · Leadership IQ</p>
+                <p className="text-[10px] text-gray-400 mt-3 italic">SHRM 2025 · Leadership IQ</p>
               </div>
               <div className="border border-cyan/20 rounded-xl p-5 bg-cyan/5">
                 <p className="text-cyan font-semibold text-sm mb-3">{t('scan.ref.label', lang)}</p>
@@ -483,7 +483,7 @@ export default function HomePage() {
                   <li>{t('scan.ref.4', lang)}</li>
                   <li>{t('scan.ref.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-500 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
+                <p className="text-[10px] text-gray-400 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
               </div>
             </div>
           </div>
@@ -637,7 +637,7 @@ export default function HomePage() {
               </div>
 
               {/* Footnote */}
-              <p className="text-[10px] text-gray-500 text-center leading-relaxed mb-6">
+              <p className="text-[10px] text-gray-400 text-center leading-relaxed mb-6">
                 {lang === 'nl'
                   ? '* Berekening: medewerkers × verloop% = hires/jaar. 46% mis-hire rate (Leadership IQ), Refurzy voorkomt 39-59% (Aberdeen Group, Gallup). Mis-hire kosten: 50-200% jaarsalaris (SHRM). Bureau fee: 25% vs. Refurzy €4.333.'
                   : '* Calculation: employees × turnover% = hires/year. 46% mis-hire rate (Leadership IQ), Refurzy prevents 39-59% (Aberdeen Group, Gallup). Mis-hire costs: 50-200% annual salary (SHRM). Agency fee: 25% vs. Refurzy €4,333.'}
