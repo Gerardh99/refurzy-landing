@@ -133,6 +133,108 @@ export default function VacatureDetailPage() {
         </div>
       </div>
 
+      {/* Exclusiviteit banner */}
+      {exclusief && (
+        <div className="bg-orange/10 border border-orange/30 rounded-2xl p-4 mb-6 flex items-center gap-3">
+          <span className="text-2xl">⭐</span>
+          <div>
+            <p className="text-orange font-semibold text-sm">Exclusiviteitsperiode actief — 25% premium</p>
+            <p className="text-orange/70 text-xs">Kandidaten zijn 2 weken exclusief voor u beschikbaar. De bemiddelingsvergoeding wordt met 25% verhoogd. Dit premium bedrag gaat volledig naar de Talent Scout.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Score legenda */}
+      <div className="bg-white rounded-2xl border border-surface-border p-4 mb-6">
+        <div className="flex items-center gap-6 text-xs text-ink-light">
+          <span className="font-semibold text-ink">Score legenda:</span>
+          <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Matching Scan</span>
+          <span><span className="text-orange font-medium">50% korting</span> = nieuwe scout zonder track record</span>
+        </div>
+      </div>
+
+      {/* Kandidaten tabel */}
+      <div className="bg-white rounded-2xl border border-surface-border overflow-hidden mb-6">
+        <div className="p-6 border-b border-surface-border">
+          <h2 className="text-ink font-semibold">Kandidaten ({kandidaten.length})</h2>
+        </div>
+
+        <div className="hidden md:grid grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
+          <div>Kandidaat</div>
+          <div className="text-center">Harde Criteria</div>
+          <div className="text-center">M-Score</div>
+          <div className="text-center">Scout Rating</div>
+          <div className="text-right">Acties</div>
+        </div>
+
+        {sorted.map((k) => {
+          const newScout = k.scoutRating < 4.0
+          const isMaster = k.scoutRating >= MASTER_SCOUT_THRESHOLD
+
+          return (
+            <Link
+              key={k.id}
+              href={`/demo/opdrachtgever/vacature/${vacature.id}/kandidaat/${k.id}`}
+              className="grid grid-cols-1 md:grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors cursor-pointer"
+            >
+              {/* Kandidaat */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple font-bold text-sm">
+                  {k.initialen}
+                </div>
+                <div>
+                  <div className="text-ink font-medium text-sm">
+                    {k.anoniem ? `Kandidaat ${k.initialen}` : k.naam}
+                  </div>
+                  <div className="text-xs text-ink-muted flex items-center gap-1">
+                    via {k.scoutNaam}
+                    {isMaster && <span className="px-1 py-0.5 bg-orange/15 text-orange text-[9px] font-bold rounded border border-orange/30 ml-1">MASTER</span>}
+                    {newScout && <span className="px-1 py-0.5 bg-green-500/15 text-green-400 text-[9px] font-bold rounded border border-green-500/30 ml-1">50% KORTING</span>}
+                  </div>
+                </div>
+              </div>
+
+              {/* Harde Criteria */}
+              <div className="flex items-center justify-center">
+                <HardeCriteriaDetail kandidaat={k} hardeCriteria={vacature.hardeCriteria} size="sm" />
+              </div>
+
+              {/* M-Score */}
+              <div className="flex justify-center">
+                <FitScore score={k.deVriesFit} size="sm" />
+              </div>
+
+              {/* Scout Rating */}
+              <div className="flex justify-center">
+                <StarRating rating={k.scoutRating} />
+              </div>
+
+              {/* Acties */}
+              <div className="flex justify-end gap-2" onClick={e => e.stopPropagation()}>
+                {k.unlocked ? (
+                  <span className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold border border-cyan/20">
+                    Bekijk proces →
+                  </span>
+                ) : (
+                  <span className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold">
+                    Bekijk & ontgrendel →
+                  </span>
+                )}
+                {k.status !== 'afgewezen' && (
+                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); openRejectModal(k.id) }} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
+                    Afwijzen
+                  </button>
+                )}
+              </div>
+            </Link>
+          )
+        })}
+
+        {kandidaten.length === 0 && (
+          <div className="p-12 text-center text-ink-muted">Nog geen kandidaten voor deze vacature</div>
+        )}
+      </div>
+
       {/* Vacaturebeschrijving */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
@@ -225,17 +327,6 @@ export default function VacatureDetailPage() {
         </div>
       </div>
 
-      {/* Exclusiviteit banner */}
-      {exclusief && (
-        <div className="bg-orange/10 border border-orange/30 rounded-2xl p-4 mb-6 flex items-center gap-3">
-          <span className="text-2xl">⭐</span>
-          <div>
-            <p className="text-orange font-semibold text-sm">Exclusiviteitsperiode actief — 25% premium</p>
-            <p className="text-orange/70 text-xs">Kandidaten zijn 2 weken exclusief voor u beschikbaar. De bemiddelingsvergoeding wordt met 25% verhoogd. Dit premium bedrag gaat volledig naar de Talent Scout.</p>
-          </div>
-        </div>
-      )}
-
       {/* Harde Criteria Summary */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <h2 className="text-ink font-semibold mb-4">Harde Criteria</h2>
@@ -265,97 +356,6 @@ export default function VacatureDetailPage() {
               ))}
             </div>
           </div>
-        )}
-      </div>
-
-      {/* Score legenda */}
-      <div className="bg-white rounded-2xl border border-surface-border p-4 mb-6">
-        <div className="flex items-center gap-6 text-xs text-ink-light">
-          <span className="font-semibold text-ink">Score legenda:</span>
-          <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Matching Scan</span>
-          <span><span className="text-orange font-medium">50% korting</span> = nieuwe scout zonder track record</span>
-        </div>
-      </div>
-
-      {/* Kandidaten tabel */}
-      <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
-        <div className="p-6 border-b border-surface-border">
-          <h2 className="text-ink font-semibold">Kandidaten ({kandidaten.length})</h2>
-        </div>
-
-        <div className="hidden md:grid grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
-          <div>Kandidaat</div>
-          <div className="text-center">Harde Criteria</div>
-          <div className="text-center">M-Score</div>
-          <div className="text-center">Scout Rating</div>
-          <div className="text-right">Acties</div>
-        </div>
-
-        {sorted.map((k) => {
-          const newScout = k.scoutRating < 4.0
-          const isMaster = k.scoutRating >= MASTER_SCOUT_THRESHOLD
-
-          return (
-            <Link
-              key={k.id}
-              href={`/demo/opdrachtgever/vacature/${vacature.id}/kandidaat/${k.id}`}
-              className="grid grid-cols-1 md:grid-cols-[2.5fr_1.2fr_1fr_1.2fr_1.5fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors cursor-pointer"
-            >
-              {/* Kandidaat */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-purple/20 border border-purple/30 flex items-center justify-center text-purple font-bold text-sm">
-                  {k.initialen}
-                </div>
-                <div>
-                  <div className="text-ink font-medium text-sm">
-                    {k.anoniem ? `Kandidaat ${k.initialen}` : k.naam}
-                  </div>
-                  <div className="text-xs text-ink-muted flex items-center gap-1">
-                    via {k.scoutNaam}
-                    {isMaster && <span className="px-1 py-0.5 bg-orange/15 text-orange text-[9px] font-bold rounded border border-orange/30 ml-1">MASTER</span>}
-                    {newScout && <span className="px-1 py-0.5 bg-green-500/15 text-green-400 text-[9px] font-bold rounded border border-green-500/30 ml-1">50% KORTING</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* Harde Criteria */}
-              <div className="flex items-center justify-center">
-                <HardeCriteriaDetail kandidaat={k} hardeCriteria={vacature.hardeCriteria} size="sm" />
-              </div>
-
-              {/* M-Score */}
-              <div className="flex justify-center">
-                <FitScore score={k.deVriesFit} size="sm" />
-              </div>
-
-              {/* Scout Rating */}
-              <div className="flex justify-center">
-                <StarRating rating={k.scoutRating} />
-              </div>
-
-              {/* Acties */}
-              <div className="flex justify-end gap-2" onClick={e => e.stopPropagation()}>
-                {k.unlocked ? (
-                  <span className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold border border-cyan/20">
-                    Bekijk proces →
-                  </span>
-                ) : (
-                  <span className="bg-cyan text-navy-dark px-3 py-1.5 rounded-lg text-xs font-semibold">
-                    Bekijk & ontgrendel →
-                  </span>
-                )}
-                {k.status !== 'afgewezen' && (
-                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); openRejectModal(k.id) }} className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors border border-red-500/20">
-                    Afwijzen
-                  </button>
-                )}
-              </div>
-            </Link>
-          )
-        })}
-
-        {kandidaten.length === 0 && (
-          <div className="p-12 text-center text-ink-muted">Nog geen kandidaten voor deze vacature</div>
         )}
       </div>
 
