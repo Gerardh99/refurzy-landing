@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { allVacatures } from '@/lib/mock-data'
 import { VAKGEBIEDEN, LANDEN } from '@/lib/constants'
+import { useFavoriteVacatures } from '@/lib/useFavoriteVacatures'
 
 const CONTRACT_TYPES = ['Vast', 'Tijdelijk', 'Freelance']
 const WERKMODELLEN = ['Op kantoor', 'Hybride', 'Volledig remote']
@@ -66,19 +67,10 @@ function parseSalarisMin(s: string): number {
 export default function ScoutVacatures() {
   const [search, setSearch] = useState('')
   const [locationFilter, setLocationFilter] = useState('')
-  const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const { favorites, toggleFavorite } = useFavoriteVacatures()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [filters, setFilters] = useState<Filters>(emptyFilters)
   const [sortBy, setSortBy] = useState('nieuwste')
-
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }
 
   const updateFilter = (key: keyof Filters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }))

@@ -113,7 +113,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-10 mx-auto mb-2" />
-          <p className="text-gray-500 text-sm">Platform</p>
+          <p className="text-gray-500 text-sm">Demo Platform</p>
         </div>
 
         {/* Profile picker — only shown when user has demo access */}

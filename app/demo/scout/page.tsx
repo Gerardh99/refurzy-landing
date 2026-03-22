@@ -4,14 +4,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { scoutKandidaten, allVacatures } from '@/lib/mock-data'
 import type { Kandidaat } from '@/lib/types'
+import { useFavoriteVacatures } from '@/lib/useFavoriteVacatures'
 
 type Tab = 'beschikbaar' | 'geplaatst' | 'inactief'
 
-// Mock: favorited vacatures (in production this would be persisted state shared with /scout/vacatures)
-const favorieteVacatureIds = new Set(['vac-1', 'vac-3'])
-const favorieteVacatures = allVacatures.filter(v => favorieteVacatureIds.has(v.id))
-
 export default function ScoutDashboard() {
+  const { favorites, isFavorite } = useFavoriteVacatures()
+  const favorieteVacatures = allVacatures.filter(v => isFavorite(v.id))
   const [show2FABanner, setShow2FABanner] = useState(true)
   const [activeTab, setActiveTab] = useState<Tab>('beschikbaar')
   const [expandedId, setExpandedId] = useState<string | null>(null)
@@ -174,6 +173,7 @@ export default function ScoutDashboard() {
             onToggleVoordragen={() => setVoordragenId(voordragenId === k.id ? null : k.id)}
             onVoordragen={(vacId, vacTitle) => handleVoordragen(k.id, vacId, vacTitle)}
             voorgedragenAls={voorgedragenMap[k.id]}
+            favorieteVacatures={favorieteVacatures}
           />
         ))}
       </div>
@@ -196,6 +196,7 @@ function CandidateCard({
   onToggleVoordragen,
   onVoordragen,
   voorgedragenAls,
+  favorieteVacatures,
 }: {
   kandidaat: Kandidaat
   tab: Tab
@@ -205,6 +206,7 @@ function CandidateCard({
   onToggleVoordragen: () => void
   onVoordragen: (vacId: string, vacTitle: string) => void
   voorgedragenAls?: string
+  favorieteVacatures: typeof allVacatures
 }) {
   const isGeplaatst = tab === 'geplaatst'
   const isInactief = tab === 'inactief'
@@ -449,8 +451,14 @@ function CandidateCard({
                   </div>
                   {favorieteVacatures.length === 0 ? (
                     <div className="p-4 text-center">
-                      <p className="text-sm text-ink-muted">Geen favorieten</p>
-                      <p className="text-xs text-ink-muted mt-1">Markeer vacatures als favoriet op de vacaturepagina</p>
+                      <p className="text-sm text-ink-muted">Geen favoriete vacatures</p>
+                      <p className="text-xs text-ink-muted mt-1">Markeer eerst vacatures als favoriet</p>
+                      <Link
+                        href="/demo/scout/vacatures"
+                        className="inline-block mt-2 px-3 py-1.5 bg-cyan/10 text-cyan text-xs font-medium rounded-lg hover:bg-cyan/20 transition-colors"
+                      >
+                        Naar vacatures →
+                      </Link>
                     </div>
                   ) : (
                     <div className="max-h-60 overflow-y-auto">

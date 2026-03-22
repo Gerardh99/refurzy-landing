@@ -4,7 +4,17 @@ import { useState } from 'react'
 import { TAALNIVEAU_LABELS, VAKGEBIEDEN } from '@/lib/constants'
 import type { TaalBeheersing } from '@/lib/types'
 
+// Mock active pipeline processes for this candidate
+const lopendeProcessen = [
+  { id: 'lp-1', vacatureTitle: 'Marketing Manager', bedrijf: 'TechVentures B.V.', stap: 'Gesprek gepland', scout: 'Sophie de Graaf' },
+  { id: 'lp-2', vacatureTitle: 'Brand Strategist', bedrijf: 'Anoniem', stap: 'Voorgedragen', scout: 'Sophie de Graaf' },
+]
+
 export default function KandidaatProfiel() {
+  const [beschikbaar, setBeschikbaar] = useState(true)
+  const [showReactivatedBanner, setShowReactivatedBanner] = useState(false)
+  const [showPauzeModal, setShowPauzeModal] = useState(false)
+  const [teruggetrokkenProcessen, setTeruggetrokkenProcessen] = useState<Set<string>>(new Set())
   const [form, setForm] = useState({
     naam: 'Anna de Jong',
     email: 'anna.dejong@email.nl',
@@ -30,6 +40,38 @@ export default function KandidaatProfiel() {
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
+
+  const handlePauzeerClick = () => {
+    // Check for active pipeline processes
+    const actieveProcessen = lopendeProcessen.filter(p => !teruggetrokkenProcessen.has(p.id))
+    if (actieveProcessen.length > 0) {
+      setShowPauzeModal(true)
+    } else {
+      setBeschikbaar(false)
+      setShowReactivatedBanner(false)
+    }
+  }
+
+  const handlePauzeerAlleen = () => {
+    setBeschikbaar(false)
+    setShowPauzeModal(false)
+    setShowReactivatedBanner(false)
+  }
+
+  const handlePauzeerEnTerugtrekken = () => {
+    setBeschikbaar(false)
+    setShowPauzeModal(false)
+    setShowReactivatedBanner(false)
+    // Mark all active processes as withdrawn
+    const actieveIds = lopendeProcessen.filter(p => !teruggetrokkenProcessen.has(p.id)).map(p => p.id)
+    setTeruggetrokkenProcessen(prev => {
+      const next = new Set(prev)
+      actieveIds.forEach(id => next.add(id))
+      return next
+    })
+  }
+
+  const actieveProcessen = lopendeProcessen.filter(p => !teruggetrokkenProcessen.has(p.id))
 
   return (
     <div className="space-y-8 max-w-2xl">
@@ -108,13 +150,13 @@ export default function KandidaatProfiel() {
             <label className="block text-sm text-ink-muted mb-1.5">Salarisindicatie (bruto/maand)</label>
             <div className="flex items-center gap-3">
               <div className="flex-1 relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">&euro;</span>
                 <input type="number" value={form.salarisMin} onChange={(e) => handleChange('salarisMin', e.target.value)}
                   placeholder="min" className="w-full pl-8 pr-4 bg-surface-muted border border-surface-border rounded-lg py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50" />
               </div>
-              <span className="text-ink-muted">–</span>
+              <span className="text-ink-muted">&ndash;</span>
               <div className="flex-1 relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">&euro;</span>
                 <input type="number" value={form.salarisMax} onChange={(e) => handleChange('salarisMax', e.target.value)}
                   placeholder="max" className="w-full pl-8 pr-4 bg-surface-muted border border-surface-border rounded-lg py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50" />
               </div>
@@ -149,7 +191,7 @@ export default function KandidaatProfiel() {
               {talen.map((t, i) => (
                 <div key={i} className="flex items-center gap-2 px-4 py-2.5 bg-surface-muted border border-surface-border rounded-lg text-sm text-ink">
                   <span className="font-medium">{t.taal}</span>
-                  <span className="text-ink-muted">—</span>
+                  <span className="text-ink-muted">&mdash;</span>
                   <span>{t.niveau} ({TAALNIVEAU_LABELS[t.niveau]})</span>
                 </div>
               ))}
@@ -186,18 +228,57 @@ export default function KandidaatProfiel() {
           Je Talent Scout wordt hiervan op de hoogte gesteld en je wordt niet voorgedragen voor nieuwe vacatures.
         </p>
 
-        <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-green-400"></span>
-            <div>
-              <p className="text-ink font-medium text-sm">Beschikbaar voor vacatures</p>
-              <p className="text-ink-muted text-xs">Je kunt worden voorgedragen door je Talent Scout</p>
+        {showReactivatedBanner && (
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
+            <span className="text-green-600 text-lg mt-0.5">&#10003;</span>
+            <div className="flex-1">
+              <p className="text-green-800 font-semibold text-sm">Profiel weer beschikbaar</p>
+              <p className="text-green-700 text-xs mt-0.5">Je Talent Scout(s) hebben een melding ontvangen dat je weer beschikbaar bent voor vacatures.</p>
             </div>
+            <button onClick={() => setShowReactivatedBanner(false)} className="text-green-400 hover:text-green-600 text-sm">&times;</button>
           </div>
-          <button className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-all">
-            Pauzeer profiel
-          </button>
-        </div>
+        )}
+
+        {beschikbaar ? (
+          <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <span className="w-3 h-3 rounded-full bg-green-400"></span>
+              <div>
+                <p className="text-ink font-medium text-sm">Beschikbaar voor vacatures</p>
+                <p className="text-ink-muted text-xs">Je kunt worden voorgedragen door je Talent Scout</p>
+              </div>
+            </div>
+            <button
+              onClick={handlePauzeerClick}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-all"
+            >
+              Pauzeer profiel
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 bg-amber-50 border border-amber-200 rounded-xl">
+              <div className="flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-amber-400"></span>
+                <div>
+                  <p className="text-ink font-medium text-sm">Profiel gepauzeerd</p>
+                  <p className="text-ink-muted text-xs">Je wordt niet voorgedragen voor nieuwe vacatures. Je scout(s) zijn op de hoogte gesteld.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => { setBeschikbaar(true); setShowReactivatedBanner(true) }}
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-all"
+              >
+                Weer beschikbaar
+              </button>
+            </div>
+            {teruggetrokkenProcessen.size > 0 && (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-3">
+                <p className="text-red-700 text-xs font-medium">Je hebt je teruggetrokken uit {teruggetrokkenProcessen.size} lopende proces{teruggetrokkenProcessen.size > 1 ? 'sen' : ''}. De opdrachtgever(s) en scout(s) zijn hierover geinformeerd.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="bg-white rounded-2xl border border-red-100 p-6 space-y-4">
@@ -210,6 +291,80 @@ export default function KandidaatProfiel() {
           Account verwijderen
         </button>
       </div>
+
+      {/* Pauzeer modal met lopende processen */}
+      {showPauzeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl border border-surface-border w-full max-w-lg mx-4 p-6 space-y-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-ink">Profiel pauzeren</h3>
+              <button
+                onClick={() => setShowPauzeModal(false)}
+                className="text-ink-muted hover:text-ink text-xl transition-colors"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-amber-600 text-lg">&#9888;</span>
+                <p className="text-amber-800 font-semibold text-sm">Je hebt {actieveProcessen.length} lopende proces{actieveProcessen.length > 1 ? 'sen' : ''}</p>
+              </div>
+              <div className="space-y-2">
+                {actieveProcessen.map(p => (
+                  <div key={p.id} className="flex items-center justify-between bg-white rounded-lg p-3 border border-amber-100">
+                    <div>
+                      <p className="text-ink font-medium text-sm">{p.vacatureTitle}</p>
+                      <p className="text-ink-muted text-xs">{p.bedrijf} &middot; via {p.scout}</p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-purple/10 text-purple">{p.stap}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-ink-light text-sm">Kies hoe je wilt pauzeren:</p>
+
+            <div className="space-y-3">
+              <button
+                onClick={handlePauzeerAlleen}
+                className="w-full text-left p-4 rounded-xl border-2 border-surface-border hover:border-cyan/50 transition-all space-y-1.5"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-cyan font-bold text-sm">&#10004;</span>
+                  <p className="text-ink font-semibold text-sm">Pauzeer alleen voor nieuwe voordrachten</p>
+                </div>
+                <p className="text-ink-muted text-xs pl-6">
+                  Je lopende processen lopen gewoon door. Je wordt alleen niet meer voorgedragen op nieuwe vacatures.
+                  Scout(s) ontvangen een melding.
+                </p>
+              </button>
+
+              <button
+                onClick={handlePauzeerEnTerugtrekken}
+                className="w-full text-left p-4 rounded-xl border-2 border-surface-border hover:border-red-300 transition-all space-y-1.5"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-red-500 font-bold text-sm">&times;</span>
+                  <p className="text-ink font-semibold text-sm">Trek je ook terug uit lopende processen</p>
+                </div>
+                <p className="text-ink-muted text-xs pl-6">
+                  Je wordt teruggetrokken uit alle {actieveProcessen.length} lopende proces{actieveProcessen.length > 1 ? 'sen' : ''}.
+                  Opdrachtgever(s) en scout(s) ontvangen hierover een melding. Dit kan niet ongedaan worden gemaakt.
+                </p>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowPauzeModal(false)}
+              className="w-full py-2 text-sm text-ink-light hover:text-ink transition-colors"
+            >
+              Annuleren
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
