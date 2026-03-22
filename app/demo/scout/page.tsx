@@ -286,8 +286,15 @@ function CandidateCard({
             <p className="text-ink font-medium">{k.werkervaring}</p>
           </div>
           <div>
-            <span className="text-ink-light text-xs font-medium">CV</span>
-            <p className="text-ink font-medium">{k.cvUploaded ? 'Geupload' : 'Ontbreekt'}</p>
+            <span className="text-ink-light text-xs font-medium">Gereedheid</span>
+            <div className="flex items-center gap-3 mt-0.5">
+              <span className={`text-xs font-medium ${k.cvUploaded ? 'text-green-600' : 'text-orange'}`}>
+                {k.cvUploaded ? '✓' : '✗'} CV
+              </span>
+              <span className={`text-xs font-medium ${k.scanCompleted ? 'text-green-600' : 'text-orange'}`}>
+                {k.scanCompleted ? '✓' : '✗'} Scan
+              </span>
+            </div>
           </div>
         </div>
       </div>
