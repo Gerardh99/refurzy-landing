@@ -47,9 +47,9 @@ export const translations = {
 
   // ─── Social proof bar ──────────────────────────────────────────────────────
   'stats.mishireCost': { nl: 'van jaarsalaris per mis-hire (SHRM, 2024)', en: 'of annual salary per mis-hire (SHRM, 2024)' },
-  'stats.failRate': { nl: 'van hires faalt binnen 18 maanden', en: 'of hires fail within 18 months' },
+  'stats.failRate': { nl: 'van hires faalt binnen 18 maanden (Leadership IQ)', en: 'of hires fail within 18 months (Leadership IQ)' },
   'stats.roi': { nl: 'ROI bij inzet Refurzy (conservatief)', en: 'ROI with Refurzy (conservative)' },
-  'stats.doubt': { nl: 'managers twijfelt over aannamebeslissing', en: 'of managers doubt their hiring decision' },
+  'stats.doubt': { nl: 'managers twijfelt over aannamebeslissing (Resume Genius, 2024)', en: 'of managers doubt their hiring decision (Resume Genius, 2024)' },
 
   // ─── Problem section ───────────────────────────────────────────────────────
   'problem.label': { nl: 'De uitdaging', en: 'The challenge' },
