@@ -70,7 +70,7 @@ export default function HomePage() {
           <Link href="/homepage">
             <img src="/logo-white.png" alt="Refurzy" className="h-7" />
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm text-gray-400 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden md:flex items-center gap-6 text-sm text-gray-300 absolute left-1/2 -translate-x-1/2">
             <a href="#hoe-het-werkt" className="hover:text-white transition-colors">{t('nav.howItWorks', lang)}</a>
             <a href="#pricing" className="hover:text-white transition-colors">{t('nav.pricing', lang)}</a>
             <Link href="/wetenschap" className="hover:text-white transition-colors">{t('nav.science', lang)}</Link>
@@ -125,12 +125,12 @@ export default function HomePage() {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex items-center justify-center gap-8 text-sm text-gray-400 mb-4">
+          <div className="flex items-center justify-center gap-8 text-sm text-gray-300 mb-4">
             <span className="flex items-center gap-2">{t('hero.trust1', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust2', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust3', lang)}</span>
           </div>
-          <p className="text-[10px] text-gray-500 max-w-lg mx-auto">
+          <p className="text-[10px] text-gray-300 max-w-lg mx-auto">
             {t('hero.sources', lang)}
           </p>
         </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
           ].map(s => (
             <div key={s.label}>
               <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan to-purple bg-clip-text text-transparent">{s.value}</div>
-              <div className="text-xs text-gray-500 mt-1">{s.label}</div>
+              <div className="text-xs text-gray-300 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -161,7 +161,7 @@ export default function HomePage() {
               {t('problem.label', lang)}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('problem.title', lang)}</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">{t('problem.subtitle', lang)}</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">{t('problem.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -176,7 +176,7 @@ export default function HomePage() {
               <div key={pain.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-orange/20 transition-colors group">
                 <div className="text-2xl mb-4">{pain.icon}</div>
                 <h3 className="text-white font-semibold mb-2">{pain.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed mb-2">{pain.desc}</p>
+                <p className="text-sm text-gray-300 leading-relaxed mb-2">{pain.desc}</p>
                 {pain.source && <p className="text-[10px] text-gray-400 italic">{pain.source}</p>}
               </div>
             ))}
@@ -189,7 +189,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('how.title', lang)}</h2>
-            <p className="text-gray-400 max-w-xl mx-auto">{t('how.subtitle', lang)}</p>
+            <p className="text-gray-300 max-w-xl mx-auto">{t('how.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -197,7 +197,7 @@ export default function HomePage() {
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-cyan/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-cyan/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🏢</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.employer', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400 flex-1">
+              <ol className="space-y-3 text-sm text-gray-300 flex-1">
                 <li className="flex gap-3"><span className="text-cyan font-bold">1.</span> {t('how.employer.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">2.</span> {t('how.employer.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">3.</span> {t('how.employer.3', lang)}</li>
@@ -215,7 +215,7 @@ export default function HomePage() {
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-purple/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-purple/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🔍</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.scout', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400 flex-1">
+              <ol className="space-y-3 text-sm text-gray-300 flex-1">
                 <li className="flex gap-3"><span className="text-purple-light font-bold">1.</span> {t('how.scout.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-purple-light font-bold">2.</span> {t('how.scout.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-purple-light font-bold">3.</span> {t('how.scout.3', lang)}</li>
@@ -233,7 +233,7 @@ export default function HomePage() {
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-orange/20 transition-colors group flex flex-col">
               <div className="w-14 h-14 rounded-xl bg-orange/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">👤</div>
               <h3 className="text-lg font-semibold mb-3 text-white">{t('how.candidate', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-400 flex-1">
+              <ol className="space-y-3 text-sm text-gray-300 flex-1">
                 <li className="flex gap-3"><span className="text-orange font-bold">1.</span> {t('how.candidate.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">2.</span> {t('how.candidate.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">3.</span> {t('how.candidate.3', lang)}</li>
@@ -258,7 +258,7 @@ export default function HomePage() {
               {t('solution.label', lang)}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('solution.title', lang)}</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">{t('solution.subtitle', lang)}</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">{t('solution.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -275,7 +275,7 @@ export default function HomePage() {
                 <div className="text-3xl flex-shrink-0">{usp.icon}</div>
                 <div>
                   <h3 className="text-white font-semibold mb-2">{usp.title}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed mb-1">{usp.desc}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-1">{usp.desc}</p>
                   {usp.source && <p className="text-[10px] text-gray-400 italic">{usp.source}</p>}
                 </div>
               </div>
@@ -294,7 +294,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {lang === 'nl' ? 'Bewezen resultaten voor opdrachtgevers' : 'Proven results for employers'}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               {lang === 'nl'
                 ? 'Onafhankelijk onderzoek van toonaangevende instituten toont aan wat betere matching oplevert.'
                 : 'Independent research from leading institutions shows what better matching delivers.'}
@@ -309,7 +309,7 @@ export default function HomePage() {
               <p className="text-white font-semibold mb-3">
                 {lang === 'nl' ? 'Minder verloop' : 'Less turnover'}
               </p>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+              <p className="text-sm text-gray-300 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
                   : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
@@ -324,7 +324,7 @@ export default function HomePage() {
               <p className="text-white font-semibold mb-3">
                 {lang === 'nl' ? 'Kosten per mis-hire' : 'Cost per mis-hire'}
               </p>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+              <p className="text-sm text-gray-300 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, daalt het verloop met 39–59%. Dat bespaart tot €1.370.000 per jaar per 100 medewerkers.'
                   : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, turnover drops 39–59%. That saves up to €1,370,000 per year per 100 employees.'}
@@ -333,7 +333,7 @@ export default function HomePage() {
                 {showMisHireDetail ? 'Minder tonen ↑' : 'Waarom zo hoog? ↓'}
               </button>
               {showMisHireDetail && (
-                <div className="mt-2 text-xs text-gray-500 space-y-1 text-left">
+                <div className="mt-2 text-xs text-gray-300 space-y-1 text-left">
                   <p>Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten, opgebouwd uit:</p>
                   <ul className="list-disc list-inside space-y-0.5">
                     <li>Herwervingskosten — vacature, jobboards, selectie opnieuw</li>
@@ -357,7 +357,7 @@ export default function HomePage() {
               <p className="text-white font-semibold mb-3">
                 {lang === 'nl' ? 'Hogere productiviteit' : 'Higher productivity'}
               </p>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+              <p className="text-sm text-gray-300 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Medewerkers die passen bij de organisatie zijn bevlogener, en werkbevlogenheid voorspelt direct hogere werkprestaties. Ze zijn productiever, minder vaak ziek en presteren beter in hun team.'
                   : 'Employees who fit the organization are more engaged, and engagement directly predicts higher job performance. They are more productive, take fewer sick days, and perform better.'}
@@ -370,31 +370,31 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-cyan">4×</div>
-              <p className="text-[11px] text-gray-500 mt-1">
+              <p className="text-[11px] text-gray-300 mt-1">
                 {lang === 'nl' ? 'meer kans dat mensen blijven bij goede cultuurmatch' : 'more likely to stay with good culture match'}
               </p>
-              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2024</p>
+              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2024</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-purple-light">N=309</div>
-              <p className="text-[11px] text-gray-500 mt-1">
+              <p className="text-[11px] text-gray-300 mt-1">
                 {lang === 'nl' ? 'werknemers gevalideerd door VU Amsterdam' : 'employees validated by VU Amsterdam'}
               </p>
-              <p className="text-[9px] text-gray-400 mt-1">VU Amsterdam, 2026</p>
+              <p className="text-[9px] text-gray-300 mt-1">VU Amsterdam, 2026</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-orange">68,5</div>
-              <p className="text-[11px] text-gray-500 mt-1">
+              <p className="text-[11px] text-gray-300 mt-1">
                 {lang === 'nl' ? 'dagen gemiddelde time-to-hire — sneller met data' : 'days average time-to-hire — faster with data'}
               </p>
-              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2025</p>
+              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2025</p>
             </div>
             <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
               <div className="text-xl font-bold text-cyan">15 🌍</div>
-              <p className="text-[11px] text-gray-500 mt-1">
+              <p className="text-[11px] text-gray-300 mt-1">
                 {lang === 'nl' ? 'landen bevestigen: cultuurmatch = retentie' : 'countries confirm: culture match = retention'}
               </p>
-              <p className="text-[9px] text-gray-400 mt-1">SHRM, 2024 · N=11.080</p>
+              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2024 · N=11.080</p>
             </div>
           </div>
 
@@ -419,13 +419,13 @@ export default function HomePage() {
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   {t('scan.desc', lang)}
                 </p>
-                <ul className="space-y-3 text-sm text-gray-400">
+                <ul className="space-y-3 text-sm text-gray-300">
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item1', lang)}</li>
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item2', lang)}</li>
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item3', lang)}</li>
                   <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item4', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-400 mt-4 italic">{t('scan.footnote', lang)}</p>
+                <p className="text-[10px] text-gray-300 mt-4 italic">{t('scan.footnote', lang)}</p>
               </div>
               <div className="flex justify-center">
                 <div className="relative">
@@ -445,18 +445,18 @@ export default function HomePage() {
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-cyan mb-2">{t('scan.stat1.value', lang)}</div>
-              <p className="text-sm text-gray-400">{t('scan.stat1.label', lang)}</p>
-              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat1.sub', lang)}</p>
+              <p className="text-sm text-gray-300">{t('scan.stat1.label', lang)}</p>
+              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat1.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-purple-light mb-2">39–59%</div>
-              <p className="text-sm text-gray-400">{t('scan.stat2.label', lang)}</p>
-              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat2.sub', lang)}</p>
+              <p className="text-sm text-gray-300">{t('scan.stat2.label', lang)}</p>
+              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat2.sub', lang)}</p>
             </div>
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
               <div className="text-3xl font-bold text-orange mb-2">r = −.35</div>
-              <p className="text-sm text-gray-400">{t('scan.stat3.label', lang)}</p>
-              <p className="text-[10px] text-gray-400 mt-2">{t('scan.stat3.sub', lang)}</p>
+              <p className="text-sm text-gray-300">{t('scan.stat3.label', lang)}</p>
+              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat3.sub', lang)}</p>
             </div>
           </div>
 
@@ -466,25 +466,25 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="border border-red-500/20 rounded-xl p-5 bg-red-500/5">
                 <p className="text-red-400 font-semibold text-sm mb-3">{t('scan.trad.label', lang)}</p>
-                <ul className="space-y-2 text-sm text-gray-400">
+                <ul className="space-y-2 text-sm text-gray-300">
                   <li>{t('scan.trad.1', lang)}</li>
                   <li>{t('scan.trad.2', lang)}</li>
                   <li>{t('scan.trad.3', lang)}</li>
                   <li>{t('scan.trad.4', lang)}</li>
                   <li>{t('scan.trad.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-400 mt-3 italic">SHRM 2025 · Leadership IQ</p>
+                <p className="text-[10px] text-gray-300 mt-3 italic">SHRM 2025 · Leadership IQ</p>
               </div>
               <div className="border border-cyan/20 rounded-xl p-5 bg-cyan/5">
                 <p className="text-cyan font-semibold text-sm mb-3">{t('scan.ref.label', lang)}</p>
-                <ul className="space-y-2 text-sm text-gray-400">
+                <ul className="space-y-2 text-sm text-gray-300">
                   <li>{t('scan.ref.1', lang)}</li>
                   <li>{t('scan.ref.2', lang)}</li>
                   <li>{t('scan.ref.3', lang)}</li>
                   <li>{t('scan.ref.4', lang)}</li>
                   <li>{t('scan.ref.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-400 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
+                <p className="text-[10px] text-gray-300 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
               </div>
             </div>
           </div>
@@ -495,7 +495,7 @@ export default function HomePage() {
       <section id="pricing" className="py-24 bg-navy-light/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('pricing.title', lang)}</h2>
-          <p className="text-gray-400 max-w-xl mx-auto mb-12">
+          <p className="text-gray-300 max-w-xl mx-auto mb-12">
             {t('pricing.subtitle', lang)}
           </p>
 
@@ -503,10 +503,10 @@ export default function HomePage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-purple/10">
-                  <th className="text-left py-3 px-4 text-gray-500 font-medium">{t('pricing.colExp', lang)}</th>
-                  <th className="text-center py-3 px-4 text-gray-500 font-medium">MBO</th>
-                  <th className="text-center py-3 px-4 text-gray-500 font-medium">HBO</th>
-                  <th className="text-center py-3 px-4 text-gray-500 font-medium">WO</th>
+                  <th className="text-left py-3 px-4 text-gray-300 font-medium">{t('pricing.colExp', lang)}</th>
+                  <th className="text-center py-3 px-4 text-gray-300 font-medium">MBO</th>
+                  <th className="text-center py-3 px-4 text-gray-300 font-medium">HBO</th>
+                  <th className="text-center py-3 px-4 text-gray-300 font-medium">WO</th>
                 </tr>
               </thead>
               <tbody>
@@ -540,7 +540,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {lang === 'nl' ? 'Bereken uw besparing' : 'Calculate your savings'}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               {lang === 'nl' ? 'Ontdek hoeveel uw organisatie kan besparen met Refurzy' : 'Discover how much your organization can save with Refurzy'}
             </p>
           </div>
@@ -567,7 +567,7 @@ export default function HomePage() {
                   {lang === 'nl' ? 'Gemiddeld bruto maandsalaris (ex. vakantiegeld)' : 'Average gross monthly salary (excl. holiday allowance)'}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">&euro;</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 text-lg font-semibold">&euro;</span>
                   <input
                     type="text"
                     inputMode="numeric"
@@ -592,9 +592,9 @@ export default function HomePage() {
                     onBlur={() => { const v = Math.max(1, Math.min(50, Number(calcVerloopInput) || 1)); setCalcVerloopInput(String(v)) }}
                     className="w-full bg-navy border border-purple/20 rounded-xl px-4 pr-10 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg font-semibold">%</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 text-lg font-semibold">%</span>
                 </div>
-                <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                <p className="text-[11px] text-gray-300 mt-2 leading-relaxed">
                   {lang === 'nl'
                     ? 'Het gemiddelde vrijwillige verloop in Nederland is circa 10% per jaar (CBS/Intelligence Group, 2025). De verwachting is dat dit naar 19% gaat stijgen (Mercer, 2025).'
                     : 'The average voluntary turnover in the Netherlands is approximately 10% per year (CBS/Intelligence Group, 2025). It is expected to rise to 19% (Mercer, 2025).'}
@@ -606,7 +606,7 @@ export default function HomePage() {
             <div className="bg-gradient-to-br from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-3xl border border-cyan/20 p-8 flex flex-col justify-center">
               {/* Main savings number */}
               <div className="text-center mb-8">
-                <p className="text-sm text-gray-400 mb-3 uppercase tracking-wider font-medium">
+                <p className="text-sm text-gray-300 mb-3 uppercase tracking-wider font-medium">
                   {lang === 'nl' ? 'Geschatte netto besparing per jaar (na aftrek Refurzy kosten)' : 'Estimated net savings per year (after Refurzy costs)'}
                 </p>
                 <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent leading-tight">
@@ -615,7 +615,7 @@ export default function HomePage() {
               </div>
 
               {/* Hires context */}
-              <p className="text-xs text-gray-500 text-center mb-6">
+              <p className="text-xs text-gray-300 text-center mb-6">
                 {lang === 'nl'
                   ? `${calcMedewerkers} medewerkers × ${calcVerloop}% verloop = ${calcResults.hiresPerJaar} hires per jaar`
                   : `${calcMedewerkers} employees × ${calcVerloop}% turnover = ${calcResults.hiresPerJaar} hires per year`}
@@ -625,20 +625,20 @@ export default function HomePage() {
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-cyan">{calcResults.roi}%</div>
-                  <p className="text-[11px] text-gray-500 mt-1">Return on Investment</p>
+                  <p className="text-[11px] text-gray-300 mt-1">Return on Investment</p>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-bold text-white">{formatEur.format(Math.round(calcResults.directeBesparing))}</div>
-                  <p className="text-[11px] text-gray-500 mt-1">{lang === 'nl' ? 'besparing op bureau fees' : 'savings on agency fees'}</p>
+                  <p className="text-[11px] text-gray-300 mt-1">{lang === 'nl' ? 'besparing op bureau fees' : 'savings on agency fees'}</p>
                 </div>
                 <div className="text-center">
                   <div className="text-sm font-bold text-white leading-tight">{formatEur.format(Math.round(calcResults.vijfJaarLow))} &ndash; {formatEur.format(Math.round(calcResults.vijfJaarHigh))}</div>
-                  <p className="text-[11px] text-gray-500 mt-1">{lang === 'nl' ? 'cumulatief over 5 jaar' : 'cumulative over 5 years'}</p>
+                  <p className="text-[11px] text-gray-300 mt-1">{lang === 'nl' ? 'cumulatief over 5 jaar' : 'cumulative over 5 years'}</p>
                 </div>
               </div>
 
               {/* Footnote */}
-              <p className="text-[10px] text-gray-400 text-center leading-relaxed mb-6">
+              <p className="text-[10px] text-gray-300 text-center leading-relaxed mb-6">
                 {lang === 'nl'
                   ? '* Berekening: medewerkers × verloop% = hires/jaar. 46% mis-hire rate (Leadership IQ), Refurzy voorkomt 39-59% (Aberdeen Group, Gallup). Mis-hire kosten: 50-200% jaarsalaris (SHRM). Bureau fee: 25% vs. Refurzy €4.333.'
                   : '* Calculation: employees × turnover% = hires/year. 46% mis-hire rate (Leadership IQ), Refurzy prevents 39-59% (Aberdeen Group, Gallup). Mis-hire costs: 50-200% annual salary (SHRM). Agency fee: 25% vs. Refurzy €4,333.'}
@@ -650,7 +650,7 @@ export default function HomePage() {
                   {showCalcDetail ? 'Minder tonen ↑' : 'Hoe zijn de kosten van een mis-hire opgebouwd? ↓'}
                 </button>
                 {showCalcDetail && (
-                  <div className="mt-3 bg-navy-light rounded-xl border border-purple/10 p-4 text-left text-xs text-gray-400 space-y-1.5">
+                  <div className="mt-3 bg-navy-light rounded-xl border border-purple/10 p-4 text-left text-xs text-gray-300 space-y-1.5">
                     <p className="text-gray-300 font-medium">Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM). Dit is opgebouwd uit:</p>
                     <ul className="list-disc list-inside space-y-1">
                       <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, selectieprocedure opnieuw doorlopen</li>
@@ -703,10 +703,10 @@ export default function HomePage() {
                   className="w-full flex items-center justify-between p-5 text-left"
                 >
                   <span className="text-white font-medium text-sm pr-4">{faq.q}</span>
-                  <span className={`text-gray-500 transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                  <span className={`text-gray-300 transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5 text-sm text-gray-400 leading-relaxed border-t border-purple/10 pt-4">
+                  <div className="px-5 pb-5 text-sm text-gray-300 leading-relaxed border-t border-purple/10 pt-4">
                     {faq.a}
                   </div>
                 )}
@@ -720,7 +720,7 @@ export default function HomePage() {
       <section className="py-24 bg-navy-light/30">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('cta.title', lang)}</h2>
-          <p className="text-gray-400 mb-10 max-w-lg mx-auto">
+          <p className="text-gray-300 mb-10 max-w-lg mx-auto">
             {t('cta.subtitle', lang)}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -740,33 +740,33 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <img src="/logo-white.png" alt="Refurzy" className="h-6 mb-4 opacity-60" />
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-xs text-gray-300 leading-relaxed">
                 Redefining Recruitment. Forever.
               </p>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.platform', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-500">
-                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forEmployers', lang)}</a>
-                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forScouts', lang)}</a>
-                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.forCandidates', lang)}</a>
-                <a href="#pricing" className="block hover:text-gray-400 transition-colors">{t('nav.pricing', lang)}</a>
+              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.platform', lang)}</h4>
+              <div className="space-y-2 text-xs text-gray-300">
+                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forEmployers', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forScouts', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forCandidates', lang)}</a>
+                <a href="#pricing" className="block hover:text-gray-300 transition-colors">{t('nav.pricing', lang)}</a>
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.company', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-500">
-                <a href="#hoe-het-werkt" className="block hover:text-gray-400 transition-colors">{t('footer.about', lang)}</a>
-                <Link href="/wetenschap" className="block hover:text-gray-400 transition-colors">{t('footer.science', lang)}</Link>
-                <a href="mailto:info@refurzy.com" className="block hover:text-gray-400 transition-colors">{t('footer.contact', lang)}</a>
+              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.company', lang)}</h4>
+              <div className="space-y-2 text-xs text-gray-300">
+                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.about', lang)}</a>
+                <Link href="/wetenschap" className="block hover:text-gray-300 transition-colors">{t('footer.science', lang)}</Link>
+                <a href="mailto:info@refurzy.com" className="block hover:text-gray-300 transition-colors">{t('footer.contact', lang)}</a>
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-400 mb-3">{t('footer.legal', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-500">
-                <Link href="/juridisch/privacybeleid" className="block hover:text-gray-400 transition-colors">{t('footer.privacy', lang)}</Link>
-                <Link href="/juridisch/algemene-voorwaarden" className="block hover:text-gray-400 transition-colors">{t('footer.terms', lang)}</Link>
-                <Link href="/juridisch/cookiebeleid" className="block hover:text-gray-400 transition-colors">{t('footer.cookies', lang)}</Link>
+              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.legal', lang)}</h4>
+              <div className="space-y-2 text-xs text-gray-300">
+                <Link href="/juridisch/privacybeleid" className="block hover:text-gray-300 transition-colors">{t('footer.privacy', lang)}</Link>
+                <Link href="/juridisch/algemene-voorwaarden" className="block hover:text-gray-300 transition-colors">{t('footer.terms', lang)}</Link>
+                <Link href="/juridisch/cookiebeleid" className="block hover:text-gray-300 transition-colors">{t('footer.cookies', lang)}</Link>
               </div>
             </div>
           </div>

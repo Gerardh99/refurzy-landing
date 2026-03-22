@@ -11,7 +11,7 @@ export default function WetenschapPage() {
       <nav className="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md border-b border-purple/10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <Link href="/homepage"><img src="/logo-white.png" alt="Refurzy" className="h-7" /></Link>
-          <div className="hidden md:flex items-center gap-6 text-sm text-gray-400 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden md:flex items-center gap-6 text-sm text-gray-300 absolute left-1/2 -translate-x-1/2">
             <Link href="/homepage#hoe-het-werkt" className="hover:text-white transition-colors">Hoe het werkt</Link>
             <Link href="/homepage#pricing" className="hover:text-white transition-colors">Pricing</Link>
             <span className="text-cyan font-medium">Wetenschap</span>
@@ -49,7 +49,7 @@ export default function WetenschapPage() {
         <section className="mb-16">
           <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-2xl border border-cyan/20 p-8">
             <h2 className="text-xl font-bold mb-2 text-center">Samenvatting — overtuig je manager in 60 seconden</h2>
-            <p className="text-gray-400 text-sm text-center mb-6">De 5 redenen waarom Refurzy een betere keuze is dan een traditioneel bureau</p>
+            <p className="text-gray-300 text-sm text-center mb-6">De 5 redenen waarom Refurzy een betere keuze is dan een traditioneel bureau</p>
             <div className="space-y-4">
               {[
                 { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie. Het resultaat: 39–59% minder mis-hires (Aberdeen Group; Halbesleben & Wheeler, 2008).' },
@@ -74,7 +74,7 @@ export default function WetenschapPage() {
             <span className="text-2xl">📌</span>
             <h2 className="text-2xl font-bold">Wat betekent dit voor uw organisatie?</h2>
           </div>
-          <p className="text-gray-400 text-sm mb-6 ml-11">De Matching Scan voorspelt bevlogenheid, werkgeluk en retentie. Hieronder de concrete effecten — onderbouwd door onafhankelijk onderzoek.</p>
+          <p className="text-gray-300 text-sm mb-6 ml-11">De Matching Scan voorspelt bevlogenheid, werkgeluk en retentie. Hieronder de concrete effecten — onderbouwd door onafhankelijk onderzoek.</p>
 
           <div className="space-y-3">
             {[
@@ -115,8 +115,8 @@ export default function WetenschapPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
-                  <p className="text-gray-500 text-[11px] mt-1.5 italic">Bron: {item.source}</p>
+                  <p className="text-gray-300 text-sm leading-relaxed">{item.description}</p>
+                  <p className="text-gray-300 text-[11px] mt-1.5 italic">Bron: {item.source}</p>
                 </div>
               </div>
             ))}
@@ -127,7 +127,7 @@ export default function WetenschapPage() {
               {showWetenschapMisHire ? 'Kostenopbouw verbergen ↑' : 'Hoe is €44.000–€175.000 opgebouwd? ↓'}
             </button>
             {showWetenschapMisHire && (
-              <div className="mt-2 bg-navy-light rounded-xl border border-purple/10 p-4 text-xs text-gray-400 space-y-1.5">
+              <div className="mt-2 bg-navy-light rounded-xl border border-purple/10 p-4 text-xs text-gray-300 space-y-1.5">
                 <p className="text-gray-300 font-medium">SHRM becijfert de totale kosten van een mis-hire op 50–200% van het jaarsalaris + werkgeverslasten. Bij een bruto maandsalaris van €5.000 bedragen de totale loonkosten €87.480/jaar (€60.000 salaris + €4.800 vakantiegeld + €22.680 werkgeverslasten). 50% daarvan = €44.000, 200% = €175.000. Opgebouwd uit:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, gehele selectieprocedure opnieuw</li>
@@ -160,16 +160,16 @@ export default function WetenschapPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-purple/10">
-                  <th className="text-left px-6 py-4 text-gray-500 font-medium"></th>
-                  <th className="text-center px-6 py-4 text-gray-400 font-medium">Traditioneel bureau</th>
+                  <th className="text-left px-6 py-4 text-gray-300 font-medium"></th>
+                  <th className="text-center px-6 py-4 text-gray-300 font-medium">Traditioneel bureau</th>
                   <th className="text-center px-6 py-4 text-cyan font-semibold">Refurzy</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-400">
+              <tbody className="text-gray-300">
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Kosten per hire</td>
-                  <td className="px-6 py-3 text-center text-red-400">20–30% bruto jaarsalaris<br/><span className="text-[10px] text-gray-400">gem. €16.000</span></td>
-                  <td className="px-6 py-3 text-center text-cyan">Vast tarief<br/><span className="text-[10px] text-gray-400">gem. €4.333</span></td>
+                  <td className="px-6 py-3 text-center text-red-400">20–30% bruto jaarsalaris<br/><span className="text-[10px] text-gray-300">gem. €16.000</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">Vast tarief<br/><span className="text-[10px] text-gray-300">gem. €4.333</span></td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Wetenschappelijke matching</td>
@@ -183,22 +183,22 @@ export default function WetenschapPage() {
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Betalingsmodel</td>
-                  <td className="px-6 py-3 text-center text-red-400">Retainer verplicht<br/><span className="text-[10px] text-gray-400">kwijt bij eigen match</span></td>
-                  <td className="px-6 py-3 text-center text-cyan">No cure, no pay<br/><span className="text-[10px] text-gray-400">geen retainer</span></td>
+                  <td className="px-6 py-3 text-center text-red-400">Retainer verplicht<br/><span className="text-[10px] text-gray-300">kwijt bij eigen match</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">No cure, no pay<br/><span className="text-[10px] text-gray-300">geen retainer</span></td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Exclusiviteit</td>
-                  <td className="px-6 py-3 text-center text-red-400">Vaak verplicht<br/><span className="text-[10px] text-gray-400">je zit vast aan het bureau</span></td>
-                  <td className="px-6 py-3 text-center text-cyan">Niet verplicht<br/><span className="text-[10px] text-gray-400">vrij om parallel te werven</span></td>
+                  <td className="px-6 py-3 text-center text-red-400">Vaak verplicht<br/><span className="text-[10px] text-gray-300">je zit vast aan het bureau</span></td>
+                  <td className="px-6 py-3 text-center text-cyan">Niet verplicht<br/><span className="text-[10px] text-gray-300">vrij om parallel te werven</span></td>
                 </tr>
                 <tr className="border-b border-purple/10">
                   <td className="px-6 py-3">Voorspelling van werkgeluk</td>
-                  <td className="px-6 py-3 text-center text-gray-400">Niet gemeten</td>
+                  <td className="px-6 py-3 text-center text-gray-300">Niet gemeten</td>
                   <td className="px-6 py-3 text-center text-cyan">M-Score (0–100%)</td>
                 </tr>
                 <tr>
                   <td className="px-6 py-3">Fit Garantie</td>
-                  <td className="px-6 py-3 text-center text-gray-400">Zelden</td>
+                  <td className="px-6 py-3 text-center text-gray-300">Zelden</td>
                   <td className="px-6 py-3 text-center text-cyan">Standaard</td>
                 </tr>
               </tbody>
@@ -216,7 +216,7 @@ export default function WetenschapPage() {
             <p className="text-gray-300 leading-relaxed mb-4">
               De Matching Scan meet hoe goed een kandidaat bij uw organisatie past — niet op basis van cv of ervaring, maar op <strong className="text-white">waarden, interesses en cultuur</strong>. Dit heet in de wetenschap &quot;Person-Organization fit&quot;: de compatibiliteit tussen persoon en organisatie.
             </p>
-            <p className="text-gray-400 leading-relaxed mb-6">
+            <p className="text-gray-300 leading-relaxed mb-6">
               Onderzoek toont aan dat deze match een veel sterkere voorspeller is van werkgeluk en retentie dan traditionele selectiemethoden zoals capaciteitstests of ongestructureerde interviews.
             </p>
             <div className="bg-navy rounded-xl border border-purple/10 p-5">
@@ -233,7 +233,7 @@ export default function WetenschapPage() {
             <span className="w-10 h-10 rounded-xl bg-cyan/15 flex items-center justify-center text-cyan font-bold">3</span>
             <h2 className="text-2xl font-bold">De 35 vragen — wat meten ze?</h2>
           </div>
-          <p className="text-gray-400 mb-6">De scan bestaat uit 35 vragen verdeeld over vier categorieën. Drie daarvan worden gebruikt voor matching. Gevalideerd door de VU Amsterdam bij 309 werknemers (2026).</p>
+          <p className="text-gray-300 mb-6">De scan bestaat uit 35 vragen verdeeld over vier categorieën. Drie daarvan worden gebruikt voor matching. Gevalideerd door de VU Amsterdam bij 309 werknemers (2026).</p>
 
           <div className="space-y-4">
             {[
@@ -267,11 +267,11 @@ export default function WetenschapPage() {
               },
             ].map(dim => (
               <div key={dim.title} className={`bg-navy-light rounded-2xl border ${dim.color === 'gray' ? 'border-gray-700' : 'border-purple/10'} p-6`}>
-                <h3 className={`font-semibold mb-2 ${dim.color === 'cyan' ? 'text-cyan' : dim.color === 'purple' ? 'text-purple-light' : dim.color === 'orange' ? 'text-orange' : 'text-gray-500'}`}>{dim.title}</h3>
-                <p className="text-sm text-gray-400 mb-3 leading-relaxed">{dim.desc}</p>
-                <div className="bg-navy rounded-lg p-3 text-xs text-gray-500 space-y-1">
-                  <p><span className="text-gray-400 font-medium">Resultaat:</span> {dim.stats}</p>
-                  {dim.regression && <p><span className="text-gray-400 font-medium">Na correctie:</span> {dim.regression}</p>}
+                <h3 className={`font-semibold mb-2 ${dim.color === 'cyan' ? 'text-cyan' : dim.color === 'purple' ? 'text-purple-light' : dim.color === 'orange' ? 'text-orange' : 'text-gray-300'}`}>{dim.title}</h3>
+                <p className="text-sm text-gray-300 mb-3 leading-relaxed">{dim.desc}</p>
+                <div className="bg-navy rounded-lg p-3 text-xs text-gray-300 space-y-1">
+                  <p><span className="text-gray-300 font-medium">Resultaat:</span> {dim.stats}</p>
+                  {dim.regression && <p><span className="text-gray-300 font-medium">Na correctie:</span> {dim.regression}</p>}
                 </div>
               </div>
             ))}
@@ -292,15 +292,15 @@ export default function WetenschapPage() {
             <div className="grid md:grid-cols-3 gap-4 mb-6">
               <div className="bg-navy/50 rounded-xl p-5 text-center">
                 <div className="text-3xl font-bold text-cyan mb-1">Werkgeluk</div>
-                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
+                <p className="text-xs text-gray-300">Zeer sterke voorspeller¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
                 <div className="text-3xl font-bold text-purple-light mb-1">Tevredenheid</div>
-                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
+                <p className="text-xs text-gray-300">Zeer sterke voorspeller¹</p>
               </div>
               <div className="bg-navy/50 rounded-xl p-5 text-center">
                 <div className="text-3xl font-bold text-orange mb-1">Retentie</div>
-                <p className="text-xs text-gray-400">Zeer sterke voorspeller¹</p>
+                <p className="text-xs text-gray-300">Zeer sterke voorspeller¹</p>
               </div>
             </div>
 
@@ -308,7 +308,7 @@ export default function WetenschapPage() {
               <p className="text-sm text-gray-300 leading-relaxed">
                 <strong className="text-white">Wat betekent dit concreet?</strong> Een hogere M-Score betekent dat een kandidaat beter past bij uw organisatie. Dit voorspelt dat hij of zij gelukkiger, productiever en langer bij u zal werken. Het werkt beter dan traditionele selectiemethoden zoals cv-screening of ongestructureerde interviews.¹
               </p>
-              <p className="text-[10px] text-gray-500 mt-3 italic">¹ Onderzocht bij 309 werknemers door de VU Amsterdam (2026). Effect blijft na correctie voor leeftijd, opleiding, salaris en dienstjaren. Ter vergelijking: traditionele capaciteitstests voorspellen werkprestaties met r = .16 (Sackett et al., 2024).</p>
+              <p className="text-[10px] text-gray-300 mt-3 italic">¹ Onderzocht bij 309 werknemers door de VU Amsterdam (2026). Effect blijft na correctie voor leeftijd, opleiding, salaris en dienstjaren. Ter vergelijking: traditionele capaciteitstests voorspellen werkprestaties met r = .16 (Sackett et al., 2024).</p>
             </div>
           </div>
         </section>
@@ -333,7 +333,7 @@ export default function WetenschapPage() {
                   <div className="w-8 h-8 rounded-full bg-cyan/15 flex items-center justify-center text-cyan font-bold text-sm flex-shrink-0 mt-0.5">{step.nr}</div>
                   <div>
                     <p className="text-white font-medium text-sm">{step.title}</p>
-                    <p className="text-gray-400 text-sm">{step.desc}</p>
+                    <p className="text-gray-300 text-sm">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -342,17 +342,17 @@ export default function WetenschapPage() {
 
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
             <h3 className="text-white font-semibold mb-4">Het verschil: weten vóór je aanneemt</h3>
-            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
               Normaal ontdek je pas na maanden of iemand echt bij je organisatie past. Dan is het te laat — 46% van alle aannames faalt binnen 18 maanden (Leadership IQ). Met Refurzy weet u dit <strong className="text-white">vóór</strong> de aanname.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-navy rounded-xl p-4">
                 <p className="text-cyan font-semibold text-sm mb-2">Betere selectie</p>
-                <p className="text-gray-400 text-xs leading-relaxed">U besteedt uw tijd aan kandidaten die écht passen. Kandidaten met een lage match worden eruit gefilterd voordat u ze spreekt.</p>
+                <p className="text-gray-300 text-xs leading-relaxed">U besteedt uw tijd aan kandidaten die écht passen. Kandidaten met een lage match worden eruit gefilterd voordat u ze spreekt.</p>
               </div>
               <div className="bg-navy rounded-xl p-4">
                 <p className="text-cyan font-semibold text-sm mb-2">Minder twijfel</p>
-                <p className="text-gray-400 text-xs leading-relaxed">81% van hiring managers twijfelt bij aannames (Resume Genius, 2024). De M-Score geeft een objectief antwoord naast uw eigen gevoel.</p>
+                <p className="text-gray-300 text-xs leading-relaxed">81% van hiring managers twijfelt bij aannames (Resume Genius, 2024). De M-Score geeft een objectief antwoord naast uw eigen gevoel.</p>
               </div>
             </div>
           </div>
@@ -382,7 +382,7 @@ export default function WetenschapPage() {
             ].map(v => (
               <div key={v.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
                 <h3 className="text-white font-semibold mb-2 text-sm">{v.title}</h3>
-                <p className="text-gray-400 text-xs leading-relaxed mb-2">{v.desc}</p>
+                <p className="text-gray-300 text-xs leading-relaxed mb-2">{v.desc}</p>
                 <p className="text-xs text-gray-400 italic">{v.source}</p>
               </div>
             ))}
@@ -391,7 +391,7 @@ export default function WetenschapPage() {
           {/* Extra: Wnuk study */}
           <div className="mt-6 bg-navy-light rounded-2xl border border-purple/10 p-6">
             <h3 className="text-white font-semibold mb-2 text-sm">Internationaal bevestigd: P-O fit vermindert vertrekintentie via zingeving</h3>
-            <p className="text-gray-400 text-xs leading-relaxed mb-2">
+            <p className="text-gray-300 text-xs leading-relaxed mb-2">
               Een recente studie onder 1.071 werknemers bevestigt dat P-O fit zowel direct als indirect (via zingeving in het werk) negatief samenhangt met vertrekintentie. Medewerkers die passen bij hun organisatie ervaren meer betekenis in hun werk, en vertrekken daardoor minder snel.
             </p>
             <p className="text-xs text-gray-400 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
@@ -415,7 +415,7 @@ export default function WetenschapPage() {
                   <span className="text-cyan text-lg">📉</span>
                   <h4 className="text-white font-semibold text-sm">Minder mis-hires</h4>
                 </div>
-                <p className="text-gray-400 text-xs leading-relaxed">
+                <p className="text-gray-300 text-xs leading-relaxed">
                   Eén verkeerde aanname kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM, 2024). Door wetenschappelijk bewezen matching op basis van Person-Organization fit daalt het verloop met 39–59%. Bij een gemiddeld salaris van €60.000 bespaart dat €30.000–€120.000 per vermeden mis-hire.
                 </p>
               </div>
@@ -424,7 +424,7 @@ export default function WetenschapPage() {
                   <span className="text-cyan text-lg">💰</span>
                   <h4 className="text-white font-semibold text-sm">Lagere wervingskosten</h4>
                 </div>
-                <p className="text-gray-400 text-xs leading-relaxed">
+                <p className="text-gray-300 text-xs leading-relaxed">
                   Traditionele bureaus rekenen 15–27% van het bruto jaarsalaris. Refurzy werkt met vaste, transparante tarieven per plaatsing op basis van opleidingsniveau en ervaring — gemiddeld 60% goedkoper. No cure, no pay: u betaalt alleen bij een succesvolle plaatsing.
                 </p>
               </div>
@@ -434,28 +434,28 @@ export default function WetenschapPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
               <h3 className="text-white font-semibold mb-1">Middelgroot bedrijf</h3>
-              <p className="text-gray-500 text-xs mb-4">100 medewerkers · 13,5% turnover · gemiddeld salaris €5.000/mnd</p>
+              <p className="text-gray-300 text-xs mb-4">100 medewerkers · 13,5% turnover · gemiddeld salaris €5.000/mnd</p>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-gray-400">Refurzy kosten jaar 1</span><span className="text-white font-semibold">€58.496</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (39% reductie)</span><span className="text-cyan font-semibold">€196.000</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar (59% reductie)</span><span className="text-cyan font-semibold">€1.370.000</span></div>
-                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€793.000 – €5.489.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Refurzy kosten jaar 1</span><span className="text-white font-semibold">€58.496</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Netto besparing/jaar (39% reductie)</span><span className="text-cyan font-semibold">€196.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Netto besparing/jaar (59% reductie)</span><span className="text-cyan font-semibold">€1.370.000</span></div>
+                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-300">Cumulatief over 5 jaar</span><span className="text-white font-bold">€793.000 – €5.489.000</span></div>
               </div>
             </div>
 
             <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
               <h3 className="text-white font-semibold mb-1">Klein bedrijf</h3>
-              <p className="text-gray-500 text-xs mb-4">3 hires/jaar · geen interne recruiter · gemiddeld salaris €5.000/mnd</p>
+              <p className="text-gray-300 text-xs mb-4">3 hires/jaar · geen interne recruiter · gemiddeld salaris €5.000/mnd</p>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-gray-400">Traditioneel bureau (3 hires)</span><span className="text-red-400 font-semibold">€48.600/jaar</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Refurzy (3 hires)</span><span className="text-cyan font-semibold">€12.999/jaar</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">Netto besparing/jaar</span><span className="text-cyan font-semibold">€59.000 – €178.000</span></div>
-                <div className="flex justify-between"><span className="text-gray-400">ROI</span><span className="text-white font-bold">455% – 1370%</span></div>
-                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-400">Cumulatief over 5 jaar</span><span className="text-white font-bold">€272.000 – €748.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Traditioneel bureau (3 hires)</span><span className="text-red-400 font-semibold">€48.600/jaar</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Refurzy (3 hires)</span><span className="text-cyan font-semibold">€12.999/jaar</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">Netto besparing/jaar</span><span className="text-cyan font-semibold">€59.000 – €178.000</span></div>
+                <div className="flex justify-between"><span className="text-gray-300">ROI</span><span className="text-white font-bold">455% – 1370%</span></div>
+                <div className="border-t border-purple/10 pt-3 flex justify-between"><span className="text-gray-300">Cumulatief over 5 jaar</span><span className="text-white font-bold">€272.000 – €748.000</span></div>
               </div>
             </div>
           </div>
-          <p className="text-[10px] text-gray-500 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door de Vrije Universiteit Amsterdam betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
+          <p className="text-[10px] text-gray-300 mt-4 italic text-center">Financiële berekeningen opgesteld door Refurzy op basis van industrie-data (SHRM, BLS). Wetenschappelijke validatie door de Vrije Universiteit Amsterdam betreft de Matching Scan en werkuitkomsten, niet de financiële doorrekeningen.</p>
         </section>
 
         {/* 7. Beperkingen */}
@@ -464,9 +464,9 @@ export default function WetenschapPage() {
             <span className="w-10 h-10 rounded-xl bg-orange/15 flex items-center justify-center text-orange font-bold">8</span>
             <h2 className="text-2xl font-bold">Eerlijk over de beperkingen</h2>
           </div>
-          <p className="text-gray-400 text-sm mb-4">Transparantie is belangrijk. De Matching Scan is een krachtig hulpmiddel, maar geen kristallen bol.</p>
+          <p className="text-gray-300 text-sm mb-4">Transparantie is belangrijk. De Matching Scan is een krachtig hulpmiddel, maar geen kristallen bol.</p>
           <div className="bg-navy-light rounded-2xl border border-purple/10 p-8">
-            <div className="space-y-4 text-sm text-gray-400 leading-relaxed">
+            <div className="space-y-4 text-sm text-gray-300 leading-relaxed">
               <div>
                 <p className="text-white font-medium mb-1">Een sterke indicator, geen garantie</p>
                 <p>De scan voorspelt werkgeluk en retentie zeer sterk, maar er spelen ook andere factoren mee: salaris, leiderschapskwaliteit, werk-privé balans. Daarom combineert u de M-Score altijd met uw eigen gesprekken en beoordeling.</p>
@@ -494,7 +494,7 @@ export default function WetenschapPage() {
             <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-4">
               Refurzy combineert wetenschappelijk bewezen matching met ervaren recruiters en AI-technologie. Het resultaat: betere kandidaten, minder risico, en gemiddeld 60% lagere kosten dan een traditioneel bureau.
             </p>
-            <p className="text-gray-400 leading-relaxed text-center max-w-3xl mx-auto mb-6">
+            <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-6">
               No cure, no pay. U betaalt alleen bij een succesvolle plaatsing. Met Fit Garantie.
             </p>
             <div className="flex justify-center gap-4">
@@ -505,7 +505,7 @@ export default function WetenschapPage() {
                 Bekijk tarieven
               </Link>
             </div>
-            <p className="text-[10px] text-gray-500 text-center italic mt-6">
+            <p className="text-[10px] text-gray-300 text-center italic mt-6">
               Wetenschappelijk gevalideerd door de Vrije Universiteit Amsterdam (2026, N=309).
             </p>
           </div>
@@ -542,7 +542,7 @@ export default function WetenschapPage() {
 
         {/* Back link */}
         <div className="mt-16 text-center">
-          <Link href="/homepage" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+          <Link href="/homepage" className="text-gray-300 hover:text-gray-300 text-sm transition-colors">
             ← Terug naar homepage
           </Link>
         </div>
