@@ -1,7 +1,7 @@
 # Refurzy — Product Requirements Document
 
-**Versie:** 3.0
-**Datum:** 21 maart 2026
+**Versie:** 3.1
+**Datum:** 22 maart 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
 ---
@@ -600,7 +600,7 @@ lib/
 ### Scout verdiensten (`/demo/scout/verdiensten`)
 - Summary cards: totaal verdiend, uitbetaald, openstaand, aantal plaatsingen
 - Tabel: datum, vacature, kandidaat, opdrachtgever, plaatsingsfee, jouw deel (50%), status
-- Introductiekorting op eerste plaatsing zichtbaar (25% i.p.v. 50%)
+- Eerste plaatsing: scout investeert in eigen track record met lagere fee (25% i.p.v. 50%)
 - Statussen: uitbetaald, openstaand, wacht op betaling
 - Link naar volledige factuurpagina
 
@@ -624,6 +624,21 @@ lib/
   - Toestemmingsverklaring (getekend op datum)
   - Privacyverklaring
   - Eventuele arbeidscontracten
+
+### Kandidaat profiel (`/demo/kandidaat/profiel`)
+- Basisgegevens: naam, woonplaats, opleiding, ervaring, salarisindicatie
+- **Dual voorkeursfuncties**: kandidaat geeft 2 voorkeursfuncties op:
+  - Per voorkeur: functiegebied (dropdown uit VAKGEBIEDEN-lijst) + functietitel (vrije tekst)
+  - Eerste voorkeur is verplicht, tweede is optioneel
+  - Wordt getoond op talent pool cards van scouts (groene badges)
+  - Wordt gebruikt voor matching met vacatures
+- **Beschikbaarheid toggle**: kandidaat kan profiel pauzeren/activeren
+  - Bij pauzeren: systeem checkt of er actieve pipeline-processen zijn
+  - **Zonder lopende processen**: direct pauzeren, melding naar scouts die kandidaat in talent pool hebben
+  - **Met lopende processen**: 2-staps bevestiging via modal:
+    - Optie 1: "Pauzeer alleen voor nieuwe voordrachten" — lopende processen lopen door
+    - Optie 2: "Trek je ook terug uit lopende processen" — opdrachtgever en scout krijgen melding
+  - Bij heractiveren: melding naar scouts die kandidaat in talent pool hebben
 
 ### Vacature detailpagina (`/demo/kandidaat/vacature/[id]`)
 - Functietitel, locatie, sector (bedrijfsnaam NIET zichtbaar tot contractfase)
@@ -695,6 +710,12 @@ Uitgebreide zoek- en filterfunctionaliteit voor de vacaturebrowser.
 - Resultaat telling: "X vacatures gevonden"
 - Bestaande zoekbalk en locatiefilter behouden
 - Tags per vacaturekaart (sector, contract, werkmodel, opleiding, ervaring)
+
+#### Shared Favorites (cross-page)
+- Favoriete vacatures worden opgeslagen via `useFavoriteVacatures` hook (localStorage, key: `refurzy-scout-favorieten`)
+- Favoriet-status is gesynchroniseerd over scout dashboard en vacaturepagina
+- Alleen gefavoriete vacatures verschijnen in de voordragen-dropdown bij kandidaten
+- Bij geen favorieten: lege state met link naar vacaturepagina om favorieten toe te voegen
 
 ### Opdrachtgever Kandidaten (`/demo/opdrachtgever/kandidaten`)
 
@@ -856,7 +877,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 17b. **Kandidaat-blokkade bij voordracht (per vakgebied)**: Een kandidaat die is voorgedragen op een vacature kan niet tegelijkertijd op een andere vacature **in hetzelfde vakgebied** worden voorgedragen. Voordrachten in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent. De blokkade duurt zolang het proces actief is. Bij afwijzing of verlopen voordracht komt de kandidaat direct vrij — behalve bij exclusieve vacatures, waar een minimale blokkade van 14 dagen geldt ongeacht de uitkomst. Zie sectie 3 "Kandidaat-blokkade bij voordracht".
 18. **Automatische matchingsuggesties**: Scouts ontvangen automatische matchingsuggesties wanneer een vacature wordt gepubliceerd die matcht met kandidaten in hun talent pool — op basis van harde criteria (opleiding, ervaring, salaris, reistijd, kantoordagen, talen) en M-Score. De scout kan de suggestie accepteren (= voordragen) of afwijzen.
 19. **Handmatig matchen**: Scouts kunnen kandidaten ook handmatig aan vacatures koppelen, onafhankelijk van automatische suggesties.
-20. **Introductiekorting nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. Om de drempel te verlagen: de eerste succesvolle plaatsing is met 50% korting. Zowel de scout als Refurzy dragen de korting (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt de korting automatisch. Dit wordt zichtbaar voor de opdrachtgever als "50% introductiekorting" badge bij kandidaten van nieuwe scouts, en voor de scout als incentive om de eerste match te realiseren.
+20. **Eerste plaatsing nieuwe scout**: Een scout zonder track record (0 afgeronde plaatsingen) is een hoger risico voor opdrachtgevers. De scout investeert daarom in de eerste plaatsing: zowel de scout als Refurzy accepteren een lagere fee (beiden ontvangen 25% i.p.v. 50% van de normale fee). Na de eerste succesvolle plaatsing vervalt deze regeling automatisch. Dit wordt zichtbaar voor de opdrachtgever als "EERSTE VOORDRACHT — 50% KORTING" badge bij kandidaten van nieuwe scouts. De scout heeft er alle belang bij om direct met topkandidaten te komen — het is een investering in eigen reputatie en toekomstige verdiensten.
 21. **Terugkeer naar talent pool na afwijzing**: Wanneer een kandidaat in de pipeline wordt afgewezen door de opdrachtgever, keert de kandidaat automatisch terug naar de status "beschikbaar" in de talent pool van de scout. De scout ontvangt een notificatie. Het M-Score profiel blijft geldig en de kandidaat kan direct voor een andere vacature worden voorgedragen. Afwijzingsreden en rating worden opgeslagen (niet zichtbaar voor kandidaat, wel voor scout). Wanneer een kandidaat zelf afziet (bijv. ander aanbod), kan de scout kiezen: "Beschikbaar voor andere vacatures" (terug in pool) of "Niet meer beschikbaar" (inactief in pool).
 22. **Automatische herinneringen (auto-nudges)**: Refurzy stuurt automatisch herinneringen naar opdrachtgevers wanneer pipeline-fases te lang duren. Scouts hoeven zelf geen actie te ondernemen — het systeem bewaakt de doorlooptijden. Bij overschrijding wordt geëscaleerd naar Refurzy. Zie sectie 27 voor het volledige communicatiemodel.
 22b. **Dual-status bevestiging (kandidaat ↔ opdrachtgever)**: Bij elke pipeline-stap wordt de kandidaat gevraagd om te bevestigen. Dit is een zachte bevestiging — de kandidaat wordt gestimuleerd maar niet verplicht. Bij een mismatch (kandidaat bevestigt een stap die de opdrachtgever nog niet heeft bijgewerkt) stuurt het systeem automatisch een nudge naar de opdrachtgever en een notificatie naar de scout. De scout ziet een dual indicator in de pipeline: ✓✓ = beide bevestigd, ✓? = alleen opdrachtgever, ?✓ = alleen kandidaat (oranje waarschuwing), ?? = geen van beiden. De kandidaat kan ook proactief melden dat een gesprek heeft plaatsgevonden of dat er rechtstreeks contact is geweest buiten het platform (escalatie naar Refurzy).
@@ -1022,7 +1043,7 @@ Moet bevatten:
 
 Moet bevatten:
 - Fee-structuur en uitbetalingsvoorwaarden
-- Introductiekorting regeling (eerste plaatsing)
+- Eerste-plaatsingsregeling (lagere fee als investering in track record)
 - Multi-scout bemiddeling regels (eerste voordracht wint)
 - Gedragsregels en kwaliteitseisen
 - Fee bij terugtrekking opdrachtgever: scout ontvangt aandeel van de 50%
@@ -1853,3 +1874,62 @@ Vanuit kandidaat-perspectief toont de pipeline 7 stappen:
 7. **Contract** — contract getekend (🎉)
 
 Kleuren: groen (✓ afgerond), paars (▶ huidige stap), grijs (nog niet bereikt), oranje (wacht op actie opdrachtgever met ?✓ indicator)
+
+---
+
+## 40. Scout Rating als USP (Homepage)
+
+### Kernboodschap
+Elke Talent Scout bouwt een objectieve rating op, gebaseerd op de kwaliteit van voordrachten en succesvolle plaatsingen. Nieuwe scouts starten zonder score en accepteren een lagere fee op hun eerste plaatsing — een investering in hun eigen reputatie. Het kaf scheidt zich van het koren: alleen scouts die consequent leveren, bouwen hun reputatie en verdiensten op.
+
+### Implementatie
+- Nieuw blok op homepage onder de 3 USP-kaarten
+- Titel: "Kwaliteit meetbaar gemaakt"
+- Tekst benadrukt objectieve meting en zelfregulerend mechanisme
+- Visueel: icoon + korte paragraaf
+
+---
+
+## 41. Sidebar Styling
+
+### Design
+- Geen emoji-icoontjes — clean, professionele look
+- Tekst in `font-medium` (dikker) voor betere leesbaarheid
+- Secties: PLATFORM, FINANCIEEL, KWALITEIT, COMMUNICATIE
+- Achtergrond: navy/donkerpaars gradient
+
+---
+
+## 42. Kandidaat Pauzering
+
+### Flow
+Wanneer een kandidaat het profiel pauseert:
+
+1. **Systeem checkt** of er actieve pipeline-processen zijn
+2. **Zonder lopende processen**: direct pauzeren
+   - Melding naar alle scouts die de kandidaat in hun talent pool hebben
+3. **Met lopende processen**: modal met 2 opties:
+   - ✅ "Pauzeer alleen voor nieuwe voordrachten" — lopende processen lopen door
+   - ❌ "Trek je ook terug uit lopende processen" — opdrachtgever en scout krijgen melding dat kandidaat zich terugtrekt
+4. **Bij heractiveren**: melding naar scouts die de kandidaat in hun talent pool hebben
+
+### Meldingen
+- Scout ontvangt melding type `beschikbaarheid` in meldingen-pagina
+- Bevat kandidaatnaam, actie (gepauzeerd/heractiveerd), en eventuele impact op lopende processen
+
+---
+
+## 43. Wetenschap Pagina — Bronvermeldingen
+
+### Statistieken met bronnen
+- **50-200%** van jaarsalaris per mis-hire → (SHRM, 2024)
+- **46%** van hires faalt binnen 18 maanden → (Leadership IQ)
+- **455%+** ROI bij inzet Refurzy → (conservatief, eigen berekening)
+- **81%** managers twijfelt over aannamebeslissing → (Resume Genius, 2024)
+- **39-59%** minder mis-hires → (Aberdeen Group; Halbesleben & Wheeler, 2008)
+
+### Matching Scan conclusie
+De beschrijving van de Matching Scan eindigt met de conclusie: "Het resultaat: 39–59% minder mis-hires"
+
+### Voetnoten
+- Alle voetnoten in `text-xs text-gray-400` voor goede leesbaarheid op donkere achtergrond

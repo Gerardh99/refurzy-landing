@@ -1,7 +1,7 @@
 # Refurzy — Product Requirements Document
 
-**Version:** 4.0
-**Date:** 21 March 2026
+**Version:** 4.1
+**Date:** 22 March 2026
 **Platform:** refurzy.com (Next.js + Vercel)
 
 ---
@@ -601,7 +601,7 @@ lib/
 ### Scout earnings (`/demo/scout/verdiensten`)
 - Summary cards: total earned, paid out, outstanding, number of placements
 - Table: date, vacancy, candidate, employer, placement fee, your share (50%), status
-- Introductory discount on first placement visible (25% instead of 50%)
+- First placement: scout invests in own track record with lower fee (25% instead of 50%)
 - Statuses: paid out, outstanding, awaiting payment
 - Link to full invoice page
 
@@ -625,6 +625,21 @@ lib/
   - Consent statement (signed on date)
   - Privacy statement
   - Any employment contracts
+
+### Candidate profile (`/demo/kandidaat/profiel`)
+- Basic details: name, city, education, experience, salary indication
+- **Dual preferred job functions**: candidate specifies 2 preferred functions:
+  - Per preference: professional field (dropdown from VAKGEBIEDEN list) + job title (free text)
+  - First preference is required, second is optional
+  - Displayed on talent pool cards for scouts (green badges)
+  - Used for matching with vacancies
+- **Availability toggle**: candidate can pause/activate their profile
+  - On pause: system checks for active pipeline processes
+  - **No active processes**: pause immediately, notification to scouts who have the candidate in their talent pool
+  - **Active processes exist**: 2-step confirmation modal:
+    - Option 1: "Pause for new nominations only" — active processes continue
+    - Option 2: "Also withdraw from active processes" — employer and scout receive notification
+  - On reactivation: notification to scouts who have the candidate in their talent pool
 
 ### Vacancy detail page (`/demo/kandidaat/vacature/[id]`)
 - Job title, location, sector (company name NOT visible until contract phase)
@@ -696,6 +711,12 @@ Extended search and filter functionality for the vacancy browser.
 - Result count: "X vacancies found"
 - Existing search bar and location filter retained
 - Tags per vacancy card (sector, contract, work model, education, experience)
+
+#### Shared Favorites (cross-page)
+- Favorite vacancies are stored via `useFavoriteVacatures` hook (localStorage, key: `refurzy-scout-favorieten`)
+- Favorite status is synchronized across scout dashboard and vacancy page
+- Only favorited vacancies appear in the nomination dropdown for candidates
+- When no favorites: empty state with link to vacancy page to add favorites
 
 ### Employer Candidates (`/demo/opdrachtgever/kandidaten`)
 
@@ -857,7 +878,7 @@ In-platform messaging system, accessible from all roles.
 17b. **Candidate block upon nomination (per professional field)**: A candidate who is nominated for a vacancy cannot simultaneously be nominated for another vacancy **in the same professional field (vakgebied)**. Nominations in other professional fields continue unaffected — a vacancy in a completely different field is not a competitor. The block lasts as long as the process is active. Upon rejection or expired nomination, the candidate becomes immediately available — except for exclusive vacancies, where a minimum block of 14 days applies regardless of the outcome. See section 3 "Candidate Block Upon Nomination".
 18. **Automatic matching suggestions**: Scouts receive automatic matching suggestions when a vacancy is published that matches candidates in their talent pool — based on hard criteria (education, experience, location) and M-Score. The scout can accept the suggestion (= nominate) or reject.
 19. **Manual matching**: Scouts can also manually match candidates to vacancies, independent of automatic suggestions.
-20. **Introductory discount for new scout**: A scout without track record (0 completed placements) is a higher risk for employers. To lower the barrier: the first successful placement is at 50% discount. Both the scout and Refurzy bear the discount (both receive 25% instead of 50% of the normal fee). After the first successful placement, the discount expires automatically. This is visible to the employer as a "50% introductory discount" badge for candidates from new scouts, and for the scout as an incentive to realize the first match.
+20. **First placement for new scout**: A scout without track record (0 completed placements) is a higher risk for employers. The scout therefore invests in their first placement: both the scout and Refurzy accept a lower fee (both receive 25% instead of 50% of the normal fee). After the first successful placement, this arrangement expires automatically. This is visible to the employer as a "FIRST NOMINATION — 50% DISCOUNT" badge for candidates from new scouts. The scout has every incentive to come with top candidates right away — it's an investment in their own reputation and future earnings.
 21. **Return to talent pool after rejection**: When a candidate in the pipeline is rejected by the employer, the candidate automatically returns to "available" status in the scout's talent pool. The scout receives a notification. The M-Score profile remains valid and the candidate can immediately be nominated for another vacancy. Rejection reason and rating are stored (not visible to candidate, visible to scout). When a candidate withdraws (e.g., other offer), the scout can choose: "Available for other vacancies" (back to pool) or "No longer available" (inactive in pool).
 22. **Automatic reminders (auto-nudges)**: Refurzy automatically sends reminders to employers when pipeline phases take too long. Scouts don't need to take any action — the system monitors lead times. When exceeded, escalation to Refurzy occurs. See section 27 for the full communication model.
 22b. **Dual-status confirmation (candidate ↔ employer)**: At each pipeline step, the candidate is asked to confirm. This is a soft confirmation — the candidate is encouraged but not required. When a mismatch occurs (candidate confirms a step that the employer hasn't updated yet), the system automatically sends a nudge to the employer and a notification to the scout. The scout sees a dual indicator in the pipeline: ✓✓ = both confirmed, ✓? = employer only, ?✓ = candidate only (orange warning), ?? = neither. The candidate can also proactively report that an interview has taken place or that direct contact outside the platform has occurred (escalation to Refurzy).
@@ -1008,7 +1029,7 @@ Must contain:
 
 Must contain:
 - Fee structure and payout conditions
-- Introduction discount arrangement (first placement)
+- First-placement arrangement (lower fee as investment in track record)
 - Multi-scout representation rules (first nomination wins)
 - Code of conduct and quality requirements
 - Fee upon employer withdrawal: scout receives share of the 50%
@@ -1843,3 +1864,61 @@ From the candidate perspective, the pipeline shows 7 steps:
 7. **Contract** — contract signed (🎉)
 
 Colors: green (✓ completed), purple (▶ current step), gray (not yet reached), orange (waiting for employer action with ?✓ indicator)
+
+---
+
+## 40. Scout Rating as USP (Homepage)
+
+### Core Message
+Every Talent Scout builds an objective rating based on the quality of nominations and successful placements. New scouts start without a score and accept a lower fee on their first placement — an investment in their own reputation. The wheat separates from the chaff: only scouts who consistently deliver build their reputation and earnings.
+
+### Implementation
+- New block on homepage below the 3 USP cards
+- Title: "Quality made measurable"
+- Text emphasizes objective measurement and self-regulating mechanism
+
+---
+
+## 41. Sidebar Styling
+
+### Design
+- No emoji icons — clean, professional look
+- Text in `font-medium` (bolder) for better readability
+- Sections: PLATFORM, FINANCIEEL, KWALITEIT, COMMUNICATIE
+- Background: navy/dark purple gradient
+
+---
+
+## 42. Candidate Profile Pausing
+
+### Flow
+When a candidate pauses their profile:
+
+1. **System checks** for active pipeline processes
+2. **No active processes**: pause immediately
+   - Notification to all scouts who have the candidate in their talent pool
+3. **Active processes exist**: modal with 2 options:
+   - ✅ "Pause for new nominations only" — active processes continue
+   - ❌ "Also withdraw from active processes" — employer and scout receive notification
+4. **On reactivation**: notification to scouts who have the candidate in their talent pool
+
+### Notifications
+- Scout receives notification type `availability` on notifications page
+- Contains candidate name, action (paused/reactivated), and any impact on active processes
+
+---
+
+## 43. Science Page — Source Citations
+
+### Statistics with sources
+- **50-200%** of annual salary per mis-hire → (SHRM, 2024)
+- **46%** of hires fail within 18 months → (Leadership IQ)
+- **455%+** ROI with Refurzy → (conservative, own calculation)
+- **81%** of managers doubt their hiring decision → (Resume Genius, 2024)
+- **39-59%** fewer mis-hires → (Aberdeen Group; Halbesleben & Wheeler, 2008)
+
+### Matching Scan conclusion
+The Matching Scan description concludes with: "The result: 39–59% fewer mis-hires"
+
+### Footnotes
+- All footnotes in `text-xs text-gray-400` for good readability on dark backgrounds
