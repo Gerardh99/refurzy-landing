@@ -64,7 +64,7 @@ export default function WetenschapPage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-400 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
+            <p className="text-xs text-gray-300 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
           </div>
         </section>
 
@@ -220,7 +220,7 @@ export default function WetenschapPage() {
               Onderzoek toont aan dat deze match een veel sterkere voorspeller is van werkgeluk en retentie dan traditionele selectiemethoden zoals capaciteitstests of ongestructureerde interviews.
             </p>
             <div className="bg-navy rounded-xl border border-purple/10 p-5">
-              <p className="text-sm text-gray-400 italic">
+              <p className="text-sm text-gray-300 italic">
                 Bronnen: Kristof-Brown et al. (2005, 2023), Granillo-Velasquez et al. (2024), Liu et al. (2024).
               </p>
             </div>
@@ -383,7 +383,7 @@ export default function WetenschapPage() {
               <div key={v.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6">
                 <h3 className="text-white font-semibold mb-2 text-sm">{v.title}</h3>
                 <p className="text-gray-300 text-xs leading-relaxed mb-2">{v.desc}</p>
-                <p className="text-xs text-gray-400 italic">{v.source}</p>
+                <p className="text-xs text-gray-300 italic">{v.source}</p>
               </div>
             ))}
           </div>
@@ -394,7 +394,7 @@ export default function WetenschapPage() {
             <p className="text-gray-300 text-xs leading-relaxed mb-2">
               Een recente studie onder 1.071 werknemers bevestigt dat P-O fit zowel direct als indirect (via zingeving in het werk) negatief samenhangt met vertrekintentie. Medewerkers die passen bij hun organisatie ervaren meer betekenis in hun werk, en vertrekken daardoor minder snel.
             </p>
-            <p className="text-xs text-gray-400 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
+            <p className="text-xs text-gray-300 italic">Wnuk & Chudzicka-Czupała, 2026 (N=1.071)</p>
           </div>
         </section>
 

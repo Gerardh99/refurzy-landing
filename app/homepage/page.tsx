@@ -177,7 +177,7 @@ export default function HomePage() {
                 <div className="text-2xl mb-4">{pain.icon}</div>
                 <h3 className="text-white font-semibold mb-2">{pain.title}</h3>
                 <p className="text-sm text-gray-300 leading-relaxed mb-2">{pain.desc}</p>
-                {pain.source && <p className="text-[10px] text-gray-400 italic">{pain.source}</p>}
+                {pain.source && <p className="text-[10px] text-gray-300 italic">{pain.source}</p>}
               </div>
             ))}
           </div>
@@ -276,7 +276,7 @@ export default function HomePage() {
                 <div>
                   <h3 className="text-white font-semibold mb-2">{usp.title}</h3>
                   <p className="text-sm text-gray-300 leading-relaxed mb-1">{usp.desc}</p>
-                  {usp.source && <p className="text-[10px] text-gray-400 italic">{usp.source}</p>}
+                  {usp.source && <p className="text-[10px] text-gray-300 italic">{usp.source}</p>}
                 </div>
               </div>
             ))}
@@ -314,7 +314,7 @@ export default function HomePage() {
                   ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
                   : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
               </p>
-              <p className="text-[10px] text-gray-400 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
+              <p className="text-[10px] text-gray-300 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
             </div>
 
             {/* Lagere mis-hire kosten */}
@@ -347,7 +347,7 @@ export default function HomePage() {
                   <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
                 </div>
               )}
-              <p className="text-[10px] text-gray-400 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
+              <p className="text-[10px] text-gray-300 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>
 
             {/* Hogere productiviteit */}
@@ -362,7 +362,7 @@ export default function HomePage() {
                   ? 'Medewerkers die passen bij de organisatie zijn bevlogener, en werkbevlogenheid voorspelt direct hogere werkprestaties. Ze zijn productiever, minder vaak ziek en presteren beter in hun team.'
                   : 'Employees who fit the organization are more engaged, and engagement directly predicts higher job performance. They are more productive, take fewer sick days, and perform better.'}
               </p>
-              <p className="text-[10px] text-gray-400 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
+              <p className="text-[10px] text-gray-300 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
             </div>
           </div>
 
