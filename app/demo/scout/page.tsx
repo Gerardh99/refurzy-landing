@@ -80,20 +80,24 @@ export default function ScoutDashboard() {
               <span className="text-xl">🚀</span>
             </div>
             <div>
-              <h3 className="text-ink font-bold text-sm">Jouw eerste match met introductiekorting</h3>
+              <h3 className="text-ink font-bold text-sm">Refurzy investeert mee in jouw eerste plaatsing</h3>
               <p className="text-ink-light text-sm mt-1 leading-relaxed">
-                Als nieuwe scout bieden we jouw kandidaten aan met <span className="text-green-600 font-semibold">50% korting</span> voor de opdrachtgever.
-                Dit maakt het extra aantrekkelijk om jouw kandidaat een kans te geven. Na je eerste succesvolle plaatsing
-                bouw je je reputatie op en gelden de reguliere tarieven.
+                Bij je eerste voordracht bieden we de opdrachtgever <span className="text-green-600 font-semibold">50% korting</span> op de plaatsingsfee.
+                Refurzy neemt de helft van die korting voor eigen rekening — zo investeren we samen in jouw track record.
+                De opdrachtgever betaalt minder, jij bouwt reputatie op, en na je eerste succesvolle plaatsing gelden de reguliere tarieven.
               </p>
-              <div className="flex items-center gap-4 mt-3 text-xs">
+              <div className="flex flex-wrap items-center gap-4 mt-3 text-xs">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-green-400"></span>
                   <span className="text-ink-muted">Eerste plaatsing: 25% fee voor jou (i.p.v. 50%)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  <span className="text-ink-muted">Refurzy draagt de andere 25%</span>
+                </div>
+                <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-cyan"></span>
-                  <span className="text-ink-muted">Daarna: reguliere 50% fee</span>
+                  <span className="text-ink-muted">Daarna: reguliere 50/50 verdeling</span>
                 </div>
               </div>
             </div>
