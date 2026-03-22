@@ -52,11 +52,11 @@ export default function WetenschapPage() {
             <p className="text-gray-300 text-sm text-center mb-6">De 5 redenen waarom Refurzy een betere keuze is dan een traditioneel bureau</p>
             <div className="space-y-4">
               {[
-                { icon: '🎯', text: 'De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie. Het resultaat: 39–59% minder mis-hires (Aberdeen Group, 2015; Gallup).' },
-                { icon: '📉', text: '46% van alle aannames faalt binnen 18 maanden. Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000). Refurzy vermindert dit risico met 39–59% door wetenschappelijk bewezen matching.' },
-                { icon: '💰', text: 'Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.' },
-                { icon: '📊', text: 'ROI van 455–1370% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €272.000–€748.000 besparing.' },
-                { icon: '🔬', text: 'Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.' },
+                { icon: '🎯', text: <>De Matching Scan voorspelt of een kandidaat past bij je organisatie — vóór de aanname. Ontwikkeld met de Vrije Universiteit Amsterdam, getest bij 309 werknemers.<sup>1</sup> De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die statistisch zeer sterk correleren met bevlogenheid, werkgeluk en retentie. Het resultaat: 39–59% minder mis-hires.<sup>2</sup></> },
+                { icon: '📉', text: <>46% van alle aannames faalt binnen 18 maanden.<sup>3</sup> Eén verkeerde hire kost €44.000–€175.000 (bij een bruto maandsalaris van €5.000).<sup>4</sup> Refurzy vermindert dit risico met 39–59% door wetenschappelijk bewezen matching.<sup>2</sup></> },
+                { icon: '💰', text: <>Gemiddeld 60% goedkoper dan een traditioneel bureau. Vaste, transparante tarieven. No cure, no pay — je betaalt alleen bij een succesvolle plaatsing.</> },
+                { icon: '📊', text: <>ROI van 455–1370% in het eerste jaar, zelfs voor een klein bedrijf met 3 hires per jaar. Cumulatief over 5 jaar: €272.000–€748.000 besparing.*</> },
+                { icon: '🔬', text: <>Niet gebaseerd op buikgevoel maar op onderzoek. De scan meet werkinteresses, kernwaarden en cultuurvoorkeur — drie factoren die werkgeluk en retentie zeer sterk voorspellen.<sup>1</sup></> },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-lg flex-shrink-0">{item.icon}</span>
@@ -64,7 +64,13 @@ export default function WetenschapPage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-300 italic mt-6 text-center">* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000. Bronnen: SHRM 2024, VU Amsterdam 2026, Aberdeen Group.</p>
+            <div className="mt-6 pt-4 border-t border-white/10 text-xs text-gray-400 italic space-y-0.5">
+              <p><sup>1</sup> VU Amsterdam (De Vries, 2026; N=309)</p>
+              <p><sup>2</sup> Aberdeen Group (2015): 39% bij pre-hire assessments · Gallup: 59% bij hoog engagement</p>
+              <p><sup>3</sup> Leadership IQ</p>
+              <p><sup>4</sup> SHRM (2024): 50–200% van jaarsalaris</p>
+              <p>* Berekeningen zijn gebaseerd op een bruto maandsalaris van €5.000.</p>
+            </div>
           </div>
         </section>
 
