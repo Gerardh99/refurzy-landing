@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { TAALNIVEAU_LABELS } from '@/lib/constants'
+import type { TaalBeheersing } from '@/lib/types'
 
 export default function KandidaatProfiel() {
   const [form, setForm] = useState({
@@ -10,8 +12,17 @@ export default function KandidaatProfiel() {
     woonplaats: 'Amsterdam',
     opleidingsniveau: 'WO',
     werkervaring: '8 jaar',
-    huidigeRol: 'Marketing Lead bij CreativeAgency',
+    huidigeRol: 'Senior Marketeer',
+    voorkeursFunctie: 'Marketing Manager',
+    salarisMin: '4500',
+    salarisMax: '6000',
+    maxReistijd: '45 minuten',
+    opKantoor: 'Hybride (3 dagen)',
   })
+  const [talen] = useState<TaalBeheersing[]>([
+    { taal: 'Nederlands', niveau: 'C2' },
+    { taal: 'Engels', niveau: 'B2' },
+  ])
 
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -50,8 +61,64 @@ export default function KandidaatProfiel() {
             </select>
           </div>
           <Field label="Werkervaring" value={form.werkervaring} onChange={(v) => handleChange('werkervaring', v)} />
+          <Field label="Huidige functie" value={form.huidigeRol} onChange={(v) => handleChange('huidigeRol', v)} />
+          <Field label="Gewenste functie" value={form.voorkeursFunctie} onChange={(v) => handleChange('voorkeursFunctie', v)} />
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-ink">Werkvoorkeuren</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="md:col-span-2">
-            <Field label="Huidige rol" value={form.huidigeRol} onChange={(v) => handleChange('huidigeRol', v)} />
+            <label className="block text-sm text-ink-muted mb-1.5">Salarisindicatie (bruto/maand)</label>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                <input type="number" value={form.salarisMin} onChange={(e) => handleChange('salarisMin', e.target.value)}
+                  placeholder="min" className="w-full pl-8 pr-4 bg-surface-muted border border-surface-border rounded-lg py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50" />
+              </div>
+              <span className="text-ink-muted">–</span>
+              <div className="flex-1 relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
+                <input type="number" value={form.salarisMax} onChange={(e) => handleChange('salarisMax', e.target.value)}
+                  placeholder="max" className="w-full pl-8 pr-4 bg-surface-muted border border-surface-border rounded-lg py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm text-ink-muted mb-1.5">Maximale reistijd</label>
+            <select value={form.maxReistijd} onChange={(e) => handleChange('maxReistijd', e.target.value)}
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
+              <option>15 minuten</option>
+              <option>30 minuten</option>
+              <option>45 minuten</option>
+              <option>60 minuten</option>
+              <option>90 minuten</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm text-ink-muted mb-1.5">Op kantoor</label>
+            <select value={form.opKantoor} onChange={(e) => handleChange('opKantoor', e.target.value)}
+              className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
+              <option>Op kantoor (5 dagen)</option>
+              <option>Hybride (4 dagen)</option>
+              <option>Hybride (3 dagen)</option>
+              <option>Hybride (2 dagen)</option>
+              <option>Hybride (1 dag)</option>
+              <option>Volledig remote</option>
+            </select>
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-sm text-ink-muted mb-1.5">Talen</label>
+            <div className="space-y-2">
+              {talen.map((t, i) => (
+                <div key={i} className="flex items-center gap-2 px-4 py-2.5 bg-surface-muted border border-surface-border rounded-lg text-sm text-ink">
+                  <span className="font-medium">{t.taal}</span>
+                  <span className="text-ink-muted">—</span>
+                  <span>{t.niveau} ({TAALNIVEAU_LABELS[t.niveau]})</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

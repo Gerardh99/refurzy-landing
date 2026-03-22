@@ -25,6 +25,10 @@ const texts = {
     fullNamePlaceholder: 'Voornaam + achternaam',
     email: 'E-mailadres *',
     phone: 'Telefoonnummer *',
+    currentRole: 'Huidige functie *',
+    currentRolePlaceholder: 'Bijv. Marketing Manager bij Bedrijf X',
+    preferredRole: 'Gewenste functie *',
+    preferredRolePlaceholder: 'Bijv. Senior Marketing Manager',
     previous: 'Vorige',
     next: 'Volgende',
     consentTitle: 'Toestemming geven',
@@ -67,6 +71,10 @@ const texts = {
     fullNamePlaceholder: 'First name + last name',
     email: 'Email address *',
     phone: 'Phone number *',
+    currentRole: 'Current role *',
+    currentRolePlaceholder: 'E.g. Marketing Manager at Company X',
+    preferredRole: 'Preferred role *',
+    preferredRolePlaceholder: 'E.g. Senior Marketing Manager',
     previous: 'Previous',
     next: 'Next',
     consentTitle: 'Give Consent',
@@ -105,6 +113,8 @@ export default function OnboardingKandidaat() {
     naam: '',
     email: '',
     telefoon: '',
+    huidigeRol: '',
+    voorkeursFunctie: '',
     salarisMin: '',
     salarisMax: '',
     maxReistijd: '45 minuten',
@@ -224,6 +234,16 @@ export default function OnboardingKandidaat() {
                   <label className="block text-sm font-medium text-ink mb-1">{t.phone}</label>
                   <input type="tel" value={form.telefoon} onChange={e => update('telefoon', e.target.value)}
                     placeholder="06-12345678" className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.currentRole}</label>
+                  <input type="text" value={form.huidigeRol} onChange={e => update('huidigeRol', e.target.value)}
+                    placeholder={t.currentRolePlaceholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.preferredRole}</label>
+                  <input type="text" value={form.voorkeursFunctie} onChange={e => update('voorkeursFunctie', e.target.value)}
+                    placeholder={t.preferredRolePlaceholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
               </div>
               <div className="flex justify-between mt-8">

@@ -248,7 +248,7 @@ export default function VacatureAanmakenPage() {
   const canProceed = () => {
     switch (step) {
       case 1: return form.titel.length > 0
-      case 2: return form.locatie.length > 0 && form.vakgebied.length > 0 && form.afdelingscultuur.length > 10
+      case 2: return form.locatie.length > 0 && form.vakgebied.length > 0 && form.afdelingscultuur.length > 10 && form.maxReistijd !== ''
       case 3: return form.opleiding !== '' && form.ervaring !== ''
       case 4: return form.omschrijving.length > 20
       case 5: return akkoord
@@ -819,6 +819,7 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Salarisindicatie:</span> <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : 'Niet ingevuld'}</span></div>
                 <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>
+                <div><span className="text-ink-muted">Max reistijd:</span> <span className="text-ink">{form.maxReistijd}</span></div>
                 <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
                 <div><span className="text-ink-muted">Ervaring:</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
                 {taalEisen.length > 0 && (

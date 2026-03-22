@@ -193,7 +193,7 @@ export default function OpdrachtgeverKandidaten() {
                 </div>
 
                 <Link
-                  href={`/demo/opdrachtgever/kandidaat/${k.vacatureId}/${k.id}`}
+                  href={`/demo/opdrachtgever/vacature/${k.vacatureId}/kandidaat/${k.id}`}
                   className="px-4 py-2 bg-purple/10 text-purple text-sm font-medium rounded-lg hover:bg-purple/20 transition-colors"
                 >
                   Bekijk profiel

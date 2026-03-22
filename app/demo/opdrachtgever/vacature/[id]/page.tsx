@@ -11,11 +11,8 @@ import StarRating from '@/components/StarRating'
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import Link from 'next/link'
 import { logConsent } from '@/lib/consent-log'
+import { MASTER_SCOUT_THRESHOLD } from '@/lib/constants'
 
-
-function isNewScout(scoutNaam: string) {
-  return scoutNaam === 'Mark Jansen' // mock: Mark Jansen is new scout
-}
 
 export default function VacatureDetailPage() {
   const params = useParams()
@@ -125,7 +122,7 @@ export default function VacatureDetailPage() {
                 onClick={() => setExclusief(!exclusief)}
                 className={`text-xs font-semibold px-2 py-0.5 rounded ${exclusief ? 'bg-orange/15 text-orange border border-orange/30' : 'bg-purple/10 text-ink-light border border-surface-border'}`}
               >
-                {exclusief ? '2 weken actief — +30%' : 'Niet actief'}
+                {exclusief ? '2 weken actief — +25%' : 'Niet actief'}
               </button>
             </div>
             <div className="text-right">
@@ -233,8 +230,8 @@ export default function VacatureDetailPage() {
         <div className="bg-orange/10 border border-orange/30 rounded-2xl p-4 mb-6 flex items-center gap-3">
           <span className="text-2xl">⭐</span>
           <div>
-            <p className="text-orange font-semibold text-sm">Exclusiviteitsperiode actief — 30% premium</p>
-            <p className="text-orange/70 text-xs">Kandidaten zijn 2 weken exclusief voor u beschikbaar. De bemiddelingsvergoeding wordt met 30% verhoogd. Dit premium bedrag gaat volledig naar de Talent Scout.</p>
+            <p className="text-orange font-semibold text-sm">Exclusiviteitsperiode actief — 25% premium</p>
+            <p className="text-orange/70 text-xs">Kandidaten zijn 2 weken exclusief voor u beschikbaar. De bemiddelingsvergoeding wordt met 25% verhoogd. Dit premium bedrag gaat volledig naar de Talent Scout.</p>
           </div>
         </div>
       )}
@@ -295,8 +292,8 @@ export default function VacatureDetailPage() {
         </div>
 
         {sorted.map((k) => {
-          const newScout = isNewScout(k.scoutNaam)
-          const isMaster = k.scoutRating >= 4.0
+          const newScout = k.scoutRating < 4.0
+          const isMaster = k.scoutRating >= MASTER_SCOUT_THRESHOLD
 
           return (
             <Link
@@ -365,7 +362,7 @@ export default function VacatureDetailPage() {
       {/* Contract Modal */}
       {contractModal && (() => {
         const k = kandidaten.find(c => c.id === contractModal)
-        const newScout = k ? isNewScout(k.scoutNaam) : false
+        const newScout = k ? k.scoutRating < 4.0 : false
         return (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-lg w-full shadow-2xl">

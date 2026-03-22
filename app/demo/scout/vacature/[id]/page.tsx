@@ -19,6 +19,17 @@ export default function ScoutVacatureDetail() {
 
   const vacature = allVacatures.find((v) => v.id === params.id)
 
+  const daysSinceCreated = vacature
+    ? Math.floor((Date.now() - new Date(vacature.createdAt).getTime()) / (1000 * 60 * 60 * 24))
+    : 0
+  const geplaatstTekst = daysSinceCreated < 1
+    ? 'Vandaag'
+    : daysSinceCreated < 7
+      ? `${daysSinceCreated} dagen geleden`
+      : daysSinceCreated < 30
+        ? `${Math.floor(daysSinceCreated / 7)} weken geleden`
+        : `${Math.floor(daysSinceCreated / 30)} maanden geleden`
+
   if (!vacature) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -76,7 +87,7 @@ export default function ScoutVacatureDetail() {
           <div><span className="text-ink-muted">Salaris</span><p className="text-ink font-medium">{vacature.salaris || '€4.000 – €6.000'}</p></div>
           <div><span className="text-ink-muted">Deadline</span><p className="text-ink font-medium">{new Date(vacature.deadline).toLocaleDateString('nl-NL')}</p></div>
           <div><span className="text-ink-muted">Contract</span><p className="text-ink font-medium">Vast</p></div>
-          <div><span className="text-ink-muted">Geplaatst</span><p className="text-ink font-medium">2 weken geleden</p></div>
+          <div><span className="text-ink-muted">Geplaatst</span><p className="text-ink font-medium">{geplaatstTekst}</p></div>
         </div>
         <p className="text-sm text-ink-light leading-relaxed">
           We zoeken een ervaren {vacature.title} die onze organisatie versterkt. De ideale kandidaat combineert vakkennis met een sterke culturele fit. Je werkt nauw samen met het team en draagt bij aan de groeidoelstellingen van {vacature.company}.

@@ -1,12 +1,22 @@
 'use client'
 
-// ─── Mock data ──────────────────────────────────────────────────────────────
+import { scoutKandidaten } from '@/lib/mock-data'
+
+// ─── Derived stats from mock data ───────────────────────────────────────────
+
+const geplaatst = scoutKandidaten.filter(k => k.poolStatus === 'geplaatst')
+const actief = scoutKandidaten.filter(k => k.poolStatus === 'beschikbaar' || k.poolStatus === 'in_proces')
+const aantalPlaatsingen = geplaatst.length
+const totaalVerdiend = geplaatst.reduce((sum, k) => sum + (k.plaatsing?.scoutFee ?? 0), 0)
+const conversieRatio = scoutKandidaten.length > 0
+  ? Math.round((aantalPlaatsingen / scoutKandidaten.length) * 100)
+  : 0
 
 const stats = [
-  { label: 'Totaal plaatsingen', value: '7', trend: '+2', trendUp: true, icon: '🎯' },
+  { label: 'Totaal plaatsingen', value: String(aantalPlaatsingen), trend: `${actief.length} actieve kandidaten`, trendUp: true, icon: '🎯' },
   { label: 'Gemiddelde rating', value: '4.2/5', trend: '⭐', trendUp: true, icon: '⭐' },
-  { label: 'Conversieratio', value: '34%', trend: 'voorgedragen → geplaatst', trendUp: true, icon: '📈' },
-  { label: 'Totaal verdiend', value: '€18.400', trend: '+€3.200 deze maand', trendUp: true, icon: '💰' },
+  { label: 'Conversieratio', value: `${conversieRatio}%`, trend: 'voorgedragen → geplaatst', trendUp: true, icon: '📈' },
+  { label: 'Totaal verdiend', value: `€${totaalVerdiend.toLocaleString('nl-NL')}`, trend: '+€3.200 deze maand', trendUp: true, icon: '💰' },
 ]
 
 const maandData = [
@@ -36,9 +46,9 @@ const gemiddeldeRating = (reviews.reduce((sum, r) => sum + r.sterren, 0) / revie
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 export default function ScoutAnalyticsPage() {
-  const proScoutBereikt = true
-  const plaatsingenVoltooid = 2
   const plaatsingenNodig = 2
+  const plaatsingenVoltooid = aantalPlaatsingen
+  const proScoutBereikt = plaatsingenVoltooid >= plaatsingenNodig
 
   return (
     <div className="space-y-6">

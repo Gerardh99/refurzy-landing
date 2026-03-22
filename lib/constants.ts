@@ -1,3 +1,6 @@
+// ─── MASTER Scout threshold ──────────────────────────────────────────────────
+export const MASTER_SCOUT_THRESHOLD = 4.0
+
 // ─── Vakgebieden (professional fields) ────────────────────────────────────────
 export const VAKGEBIEDEN = [
   'Accountancy & Finance',
@@ -119,11 +122,11 @@ export const TAALNIVEAUS = ['A2', 'B1', 'B2', 'C1', 'C2'] as const
 export type Taalniveau = (typeof TAALNIVEAUS)[number]
 
 export const TAALNIVEAU_LABELS: Record<Taalniveau, string> = {
-  A2: 'Basis',
-  B1: 'Redelijk',
-  B2: 'Goed',
-  C1: 'Uitstekend',
-  C2: 'Moedertaal / Near-native',
+  A2: 'Basis (kan zich redden)',
+  B1: 'Redelijk (kan meepraten)',
+  B2: 'Goed (kan vlot converseren)',
+  C1: 'Uitstekend (bijna vloeiend)',
+  C2: 'Moedertaal / near-native',
 }
 
 // Numeric value for comparison (higher = better)

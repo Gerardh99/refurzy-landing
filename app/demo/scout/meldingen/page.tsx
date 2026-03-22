@@ -14,7 +14,7 @@ const signaleringen = [
 ]
 
 const tijdlijn = [
-  { id: 1, datum: '2026-03-11', bericht: 'Herinnering verstuurd aan TechVentures B.V. over kandidaat Thomas van Dijk', type: 'verstuurd' },
+  { id: 1, datum: '2026-03-11', bericht: 'Herinnering verstuurd aan FinTechCo over kandidaat Thomas van Dijk', type: 'verstuurd' },
   { id: 2, datum: '2026-03-09', bericht: 'Status bijgewerkt door GreenLogistics B.V. - binnen deadline', type: 'opgelost' },
   { id: 3, datum: '2026-03-05', bericht: 'Automatische signalering: MedTech Solutions heeft 5 dagen niet gereageerd', type: 'waarschuwing' },
   { id: 4, datum: '2026-03-03', bericht: 'Herinnering verstuurd aan MedTech Solutions over kandidaat Eva Bakker', type: 'verstuurd' },
