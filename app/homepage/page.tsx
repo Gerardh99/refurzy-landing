@@ -314,7 +314,7 @@ export default function HomePage() {
                   ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
                   : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
               </p>
-              <p className="text-[10px] text-gray-300 italic">Aberdeen Group · Halbesleben & Wheeler, 2008</p>
+              <p className="text-[10px] text-gray-300 italic">Aberdeen Group, 2015 · Gallup</p>
             </div>
 
             {/* Lagere mis-hire kosten */}

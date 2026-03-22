@@ -1915,7 +1915,7 @@ When a candidate pauses their profile:
 - **46%** of hires fail within 18 months → (Leadership IQ)
 - **455%+** ROI with Refurzy → (conservative, own calculation)
 - **81%** of managers doubt their hiring decision → (Resume Genius, 2024)
-- **39-59%** fewer mis-hires → (Aberdeen Group; Halbesleben & Wheeler, 2008)
+- **39-59%** fewer mis-hires → (Aberdeen Group, 2015; Gallup)
 
 ### Matching Scan conclusion
 The Matching Scan description concludes with: "The result: 39–59% fewer mis-hires"

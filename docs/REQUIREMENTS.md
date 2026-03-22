@@ -1926,7 +1926,7 @@ Wanneer een kandidaat het profiel pauseert:
 - **46%** van hires faalt binnen 18 maanden → (Leadership IQ)
 - **455%+** ROI bij inzet Refurzy → (conservatief, eigen berekening)
 - **81%** managers twijfelt over aannamebeslissing → (Resume Genius, 2024)
-- **39-59%** minder mis-hires → (Aberdeen Group; Halbesleben & Wheeler, 2008)
+- **39-59%** minder mis-hires → (Aberdeen Group, 2015; Gallup)
 
 ### Matching Scan conclusie
 De beschrijving van de Matching Scan eindigt met de conclusie: "Het resultaat: 39–59% minder mis-hires"
