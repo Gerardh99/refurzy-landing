@@ -9,7 +9,7 @@ import type { TaalBeheersing } from '@/lib/types'
 const texts = {
   nl: {
     header: 'Kandidaat registratie',
-    steps: ['Welkom', 'Gegevens', 'Voorkeuren', 'Toestemming', 'Klaar'],
+    steps: ['Welkom', 'Gegevens', 'E-mail verificatie', 'Voorkeuren', 'Toestemming', 'Klaar'],
     welcomeTitle: 'Welkom!',
     welcomeInvite: (scout: string, title: string, company: string) =>
       <>Je bent uitgenodigd door <span className="font-semibold text-purple">{scout}</span> voor de functie van <span className="font-semibold text-ink">{title}</span> bij <span className="font-semibold text-ink">{company}</span>.</>,
@@ -31,6 +31,12 @@ const texts = {
     preferredRolePlaceholder: 'Bijv. Senior Marketing Manager',
     previous: 'Vorige',
     next: 'Volgende',
+    emailVerifyTitle: 'E-mail verificatie',
+    emailVerifyDesc: (email: string) => `We hebben een verificatiecode gestuurd naar ${email}. Controleer je inbox en voer de code in om je e-mailadres te bevestigen.`,
+    emailVerifyCodeLabel: 'Verificatiecode',
+    emailVerifyBtn: 'Verifiëren',
+    emailVerifyResend: 'Opnieuw versturen',
+    emailVerifyResent: 'Verificatiecode opnieuw verstuurd',
     consentTitle: 'Toestemming geven',
     consentSub: 'Om je te kunnen matchen met vacatures hebben we je toestemming nodig.',
     consentStatement: 'Toestemmingsverklaring',
@@ -55,7 +61,7 @@ const texts = {
   },
   en: {
     header: 'Candidate Registration',
-    steps: ['Welcome', 'Details', 'Preferences', 'Consent', 'Done'],
+    steps: ['Welcome', 'Details', 'Email Verification', 'Preferences', 'Consent', 'Done'],
     welcomeTitle: 'Welcome!',
     welcomeInvite: (scout: string, title: string, company: string) =>
       <>You&apos;ve been invited by <span className="font-semibold text-purple">{scout}</span> for the position of <span className="font-semibold text-ink">{title}</span> at <span className="font-semibold text-ink">{company}</span>.</>,
@@ -77,6 +83,12 @@ const texts = {
     preferredRolePlaceholder: 'E.g. Senior Marketing Manager',
     previous: 'Previous',
     next: 'Next',
+    emailVerifyTitle: 'Email Verification',
+    emailVerifyDesc: (email: string) => `We have sent a verification code to ${email}. Check your inbox and enter the code to verify your email address.`,
+    emailVerifyCodeLabel: 'Verification code',
+    emailVerifyBtn: 'Verify',
+    emailVerifyResend: 'Resend',
+    emailVerifyResent: 'Verification code resent',
     consentTitle: 'Give Consent',
     consentSub: 'We need your consent to match you with vacancies.',
     consentStatement: 'Consent Statement',
@@ -108,6 +120,8 @@ export default function OnboardingKandidaat() {
 
   const [currentStep, setCurrentStep] = useState(0)
   const router = useRouter()
+  const [emailCode, setEmailCode] = useState('123456')
+  const [emailResent, setEmailResent] = useState(false)
 
   const [form, setForm] = useState({
     naam: '',
@@ -257,8 +271,50 @@ export default function OnboardingKandidaat() {
             </div>
           )}
 
-          {/* Step 3: Preferences */}
+          {/* Step 3: Email Verificatie */}
           {currentStep === 2 && (
+            <div>
+              <h2 className="text-xl font-semibold text-ink mb-1">{t.emailVerifyTitle}</h2>
+              <p className="text-sm text-ink-muted mb-6">{t.emailVerifyDesc(form.email || 'naam@email.nl')}</p>
+              <div className="bg-surface-muted rounded-lg p-6 mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">📧</span>
+                  <div>
+                    <p className="font-medium text-ink">{form.email || 'naam@email.nl'}</p>
+                    <p className="text-xs text-ink-muted">Voer de 6-cijferige code in die je hebt ontvangen</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.emailVerifyCodeLabel}</label>
+                  <input type="text" value={emailCode} onChange={e => setEmailCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000" maxLength={6}
+                    className="w-full px-4 py-3 rounded-lg border border-surface-border bg-white text-ink text-center text-2xl tracking-[0.5em] font-mono placeholder:text-ink-muted placeholder:tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                </div>
+              </div>
+              <button onClick={next}
+                disabled={emailCode.length !== 6}
+                className="w-full px-6 py-3 bg-purple text-white rounded-lg font-medium hover:bg-purple-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                {t.emailVerifyBtn}
+              </button>
+              <div className="text-center mt-4">
+                <button onClick={() => { setEmailResent(true); setTimeout(() => setEmailResent(false), 3000) }}
+                  className="text-sm text-purple hover:text-purple-dark font-medium transition-colors">
+                  {t.emailVerifyResend}
+                </button>
+                {emailResent && (
+                  <p className="text-xs text-green-600 mt-2">{t.emailVerifyResent}</p>
+                )}
+              </div>
+              <div className="flex justify-start mt-6">
+                <button onClick={prev} className="px-6 py-2.5 border border-surface-border text-ink rounded-lg font-medium hover:bg-surface-muted transition-colors">
+                  {t.previous}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Preferences */}
+          {currentStep === 3 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.preferencesTitle}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.preferencesSub}</p>
@@ -341,8 +397,8 @@ export default function OnboardingKandidaat() {
             </div>
           )}
 
-          {/* Step 4: Consent */}
-          {currentStep === 3 && (
+          {/* Step 5: Consent */}
+          {currentStep === 4 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.consentTitle}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.consentSub}</p>
@@ -381,8 +437,8 @@ export default function OnboardingKandidaat() {
             </div>
           )}
 
-          {/* Step 5: Account created */}
-          {currentStep === 4 && (
+          {/* Step 6: Account created */}
+          {currentStep === 5 && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">🎉</span>

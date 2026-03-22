@@ -8,7 +8,7 @@ import { SECTOREN, SECTOREN_EN } from '@/lib/constants'
 const texts = {
   nl: {
     headerTitle: 'Registratie Opdrachtgever',
-    steps: ['Bedrijfsgegevens', 'Contactpersoon', 'KVK Verificatie', 'Voorwaarden', 'Account aangemaakt'],
+    steps: ['Bedrijfsgegevens', 'Contactpersoon', 'E-mail verificatie', 'KVK Verificatie', 'Voorwaarden', 'Account aangemaakt'],
     // Step 1
     step1Title: 'Bedrijfsgegevens',
     step1Desc: 'Vul de gegevens van uw bedrijf in.',
@@ -34,6 +34,13 @@ const texts = {
     jobTitleLabel: 'Functie *',
     jobTitlePlaceholder: 'Bijv. HR Manager',
     previous: 'Vorige',
+    // Step 2b: Email verification
+    emailVerifyTitle: 'E-mail verificatie',
+    emailVerifyDesc: (email: string) => `We hebben een verificatiecode gestuurd naar ${email}. Controleer je inbox en voer de code in om je e-mailadres te bevestigen.`,
+    emailVerifyCodeLabel: 'Verificatiecode',
+    emailVerifyBtn: 'Verifiëren',
+    emailVerifyResend: 'Opnieuw versturen',
+    emailVerifyResent: 'Verificatiecode opnieuw verstuurd',
     // Step 3
     step3Title: 'KVK Verificatie',
     step3Desc: 'We controleren of uw KVK-nummer al bekend is in ons systeem.',
@@ -68,7 +75,7 @@ const texts = {
   },
   en: {
     headerTitle: 'Employer Registration',
-    steps: ['Company Details', 'Contact Person', 'CoC Verification', 'Terms', 'Account created'],
+    steps: ['Company Details', 'Contact Person', 'Email Verification', 'CoC Verification', 'Terms', 'Account created'],
     // Step 1
     step1Title: 'Company Details',
     step1Desc: 'Enter your company details.',
@@ -94,6 +101,13 @@ const texts = {
     jobTitleLabel: 'Job title *',
     jobTitlePlaceholder: 'E.g. HR Manager',
     previous: 'Previous',
+    // Step 2b: Email verification
+    emailVerifyTitle: 'Email Verification',
+    emailVerifyDesc: (email: string) => `We have sent a verification code to ${email}. Check your inbox and enter the code to verify your email address.`,
+    emailVerifyCodeLabel: 'Verification code',
+    emailVerifyBtn: 'Verify',
+    emailVerifyResend: 'Resend',
+    emailVerifyResent: 'Verification code resent',
     // Step 3
     step3Title: 'CoC Verification',
     step3Desc: 'We check if your Chamber of Commerce number is already registered.',
@@ -135,6 +149,8 @@ export default function OnboardingOpdrachtgever() {
   const [currentStep, setCurrentStep] = useState(0)
   const [kvkExists, setKvkExists] = useState(false)
   const [accessRequestSent, setAccessRequestSent] = useState(false)
+  const [emailCode, setEmailCode] = useState('123456')
+  const [emailResent, setEmailResent] = useState(false)
   const router = useRouter()
 
   const [form, setForm] = useState({
@@ -307,8 +323,50 @@ export default function OnboardingOpdrachtgever() {
             </div>
           )}
 
-          {/* Step 3: KVK Verificatie */}
+          {/* Step 3: Email Verificatie */}
           {currentStep === 2 && (
+            <div>
+              <h2 className="text-xl font-semibold text-ink mb-1">{t.emailVerifyTitle}</h2>
+              <p className="text-sm text-ink-muted mb-6">{t.emailVerifyDesc(form.email || 'naam@bedrijf.nl')}</p>
+              <div className="bg-surface-muted rounded-lg p-6 mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">📧</span>
+                  <div>
+                    <p className="font-medium text-ink">{form.email || 'naam@bedrijf.nl'}</p>
+                    <p className="text-xs text-ink-muted">Voer de 6-cijferige code in die je hebt ontvangen</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.emailVerifyCodeLabel}</label>
+                  <input type="text" value={emailCode} onChange={e => setEmailCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000" maxLength={6}
+                    className="w-full px-4 py-3 rounded-lg border border-surface-border bg-white text-ink text-center text-2xl tracking-[0.5em] font-mono placeholder:text-ink-muted placeholder:tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                </div>
+              </div>
+              <button onClick={next}
+                disabled={emailCode.length !== 6}
+                className="w-full px-6 py-3 bg-purple text-white rounded-lg font-medium hover:bg-purple-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                {t.emailVerifyBtn}
+              </button>
+              <div className="text-center mt-4">
+                <button onClick={() => { setEmailResent(true); setTimeout(() => setEmailResent(false), 3000) }}
+                  className="text-sm text-purple hover:text-purple-dark font-medium transition-colors">
+                  {t.emailVerifyResend}
+                </button>
+                {emailResent && (
+                  <p className="text-xs text-green-600 mt-2">{t.emailVerifyResent}</p>
+                )}
+              </div>
+              <div className="flex justify-start mt-6">
+                <button onClick={prev} className="px-6 py-2.5 border border-surface-border text-ink rounded-lg font-medium hover:bg-surface-muted transition-colors">
+                  {t.previous}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: KVK Verificatie */}
+          {currentStep === 3 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.step3Title}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.step3Desc}</p>
@@ -386,8 +444,8 @@ export default function OnboardingOpdrachtgever() {
             </div>
           )}
 
-          {/* Step 4: Voorwaarden */}
-          {currentStep === 3 && (
+          {/* Step 5: Voorwaarden */}
+          {currentStep === 4 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.step4Title}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.step4Desc}</p>
@@ -430,8 +488,8 @@ export default function OnboardingOpdrachtgever() {
             </div>
           )}
 
-          {/* Step 5: Account aangemaakt */}
-          {currentStep === 4 && (
+          {/* Step 6: Account aangemaakt */}
+          {currentStep === 5 && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">🎉</span>

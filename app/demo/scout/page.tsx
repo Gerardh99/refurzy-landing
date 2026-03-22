@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { scoutKandidaten, allVacatures } from '@/lib/mock-data'
 import type { Kandidaat } from '@/lib/types'
 
@@ -11,6 +12,7 @@ const favorieteVacatureIds = new Set(['vac-1', 'vac-3'])
 const favorieteVacatures = allVacatures.filter(v => favorieteVacatureIds.has(v.id))
 
 export default function ScoutDashboard() {
+  const [show2FABanner, setShow2FABanner] = useState(true)
   const [activeTab, setActiveTab] = useState<Tab>('beschikbaar')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [voordragenId, setVoordragenId] = useState<string | null>(null)
@@ -42,6 +44,29 @@ export default function ScoutDashboard() {
 
   return (
     <div className="space-y-6">
+      {/* 2FA Banner */}
+      {show2FABanner && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            </div>
+            <div>
+              <p className="text-amber-800 font-semibold text-sm">Beveilig je account met tweestapsverificatie (2FA)</p>
+              <p className="text-amber-700 text-xs mt-0.5">Dit beschermt je account tegen onbevoegde toegang.</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <Link href="/demo/scout/instellingen" className="bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-amber-700 transition-colors">
+              Nu activeren
+            </Link>
+            <button onClick={() => setShow2FABanner(false)} className="text-amber-400 hover:text-amber-600 transition-colors text-lg" title="Sluiten">
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <div>
         <h1 className="text-2xl font-bold text-ink">Mijn Talent Pool</h1>
         <p className="text-ink-light font-medium mt-1">{scoutKandidaten.length} kandidaten in je netwerk</p>

@@ -7,7 +7,7 @@ import { useLang } from '@/lib/i18n'
 const texts = {
   nl: {
     header: 'Registratie Talent Scout',
-    steps: ['Persoonlijke gegevens', 'Professioneel profiel', 'Voorwaarden', 'Account aangemaakt'],
+    steps: ['Persoonlijke gegevens', 'E-mail verificatie', 'Professioneel profiel', 'Voorwaarden', 'Account aangemaakt'],
     // Step 1
     step1Title: 'Persoonlijke gegevens',
     step1Desc: 'Vertel ons wie je bent.',
@@ -31,6 +31,13 @@ const texts = {
     kvkZakelijk: 'Zakelijke relatie',
     kvkParticulier: 'Particuliere relatie — betalingen worden gelogd voor belastingaangifte',
     next: 'Volgende',
+    // Step 1b: Email verification
+    emailVerifyTitle: 'E-mail verificatie',
+    emailVerifyDesc: (email: string) => `We hebben een verificatiecode gestuurd naar ${email}. Controleer je inbox en voer de code in om je e-mailadres te bevestigen.`,
+    emailVerifyCodeLabel: 'Verificatiecode',
+    emailVerifyBtn: 'Verifiëren',
+    emailVerifyResend: 'Opnieuw versturen',
+    emailVerifyResent: 'Verificatiecode opnieuw verstuurd',
     // Step 2
     step2Title: 'Professioneel profiel',
     step2Desc: 'Vertel ons over je recruitment-ervaring.',
@@ -61,7 +68,7 @@ const texts = {
   },
   en: {
     header: 'Talent Scout Registration',
-    steps: ['Personal Details', 'Professional Profile', 'Terms', 'Account Created'],
+    steps: ['Personal Details', 'Email Verification', 'Professional Profile', 'Terms', 'Account Created'],
     // Step 1
     step1Title: 'Personal Details',
     step1Desc: 'Tell us about yourself.',
@@ -85,6 +92,13 @@ const texts = {
     kvkZakelijk: 'Business relationship',
     kvkParticulier: 'Private individual — payments will be logged for tax reporting',
     next: 'Next',
+    // Step 1b: Email verification
+    emailVerifyTitle: 'Email Verification',
+    emailVerifyDesc: (email: string) => `We have sent a verification code to ${email}. Check your inbox and enter the code to verify your email address.`,
+    emailVerifyCodeLabel: 'Verification code',
+    emailVerifyBtn: 'Verify',
+    emailVerifyResend: 'Resend',
+    emailVerifyResent: 'Verification code resent',
     // Step 2
     step2Title: 'Professional Profile',
     step2Desc: 'Tell us about your recruitment experience.',
@@ -123,6 +137,9 @@ export default function OnboardingScout() {
   const router = useRouter()
   const { lang } = useLang()
   const t = texts[lang]
+
+  const [emailCode, setEmailCode] = useState('123456')
+  const [emailResent, setEmailResent] = useState(false)
 
   const [form, setForm] = useState({
     naam: '',
@@ -260,8 +277,50 @@ export default function OnboardingScout() {
             </div>
           )}
 
-          {/* Step 2: Professional profile */}
+          {/* Step 2: Email Verificatie */}
           {currentStep === 1 && (
+            <div>
+              <h2 className="text-xl font-semibold text-ink mb-1">{t.emailVerifyTitle}</h2>
+              <p className="text-sm text-ink-muted mb-6">{t.emailVerifyDesc(form.email || 'naam@email.nl')}</p>
+              <div className="bg-surface-muted rounded-lg p-6 mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">📧</span>
+                  <div>
+                    <p className="font-medium text-ink">{form.email || 'naam@email.nl'}</p>
+                    <p className="text-xs text-ink-muted">Voer de 6-cijferige code in die je hebt ontvangen</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.emailVerifyCodeLabel}</label>
+                  <input type="text" value={emailCode} onChange={e => setEmailCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000" maxLength={6}
+                    className="w-full px-4 py-3 rounded-lg border border-surface-border bg-white text-ink text-center text-2xl tracking-[0.5em] font-mono placeholder:text-ink-muted placeholder:tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                </div>
+              </div>
+              <button onClick={next}
+                disabled={emailCode.length !== 6}
+                className="w-full px-6 py-3 bg-purple text-white rounded-lg font-medium hover:bg-purple-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                {t.emailVerifyBtn}
+              </button>
+              <div className="text-center mt-4">
+                <button onClick={() => { setEmailResent(true); setTimeout(() => setEmailResent(false), 3000) }}
+                  className="text-sm text-purple hover:text-purple-dark font-medium transition-colors">
+                  {t.emailVerifyResend}
+                </button>
+                {emailResent && (
+                  <p className="text-xs text-green-600 mt-2">{t.emailVerifyResent}</p>
+                )}
+              </div>
+              <div className="flex justify-start mt-6">
+                <button onClick={prev} className="px-6 py-2.5 border border-surface-border text-ink rounded-lg font-medium hover:bg-surface-muted transition-colors">
+                  {t.previous}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Professional profile */}
+          {currentStep === 2 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.step2Title}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.step2Desc}</p>
@@ -308,8 +367,8 @@ export default function OnboardingScout() {
             </div>
           )}
 
-          {/* Step 3: Terms */}
-          {currentStep === 2 && (
+          {/* Step 4: Terms */}
+          {currentStep === 3 && (
             <div>
               <h2 className="text-xl font-semibold text-ink mb-1">{t.step3Title}</h2>
               <p className="text-sm text-ink-muted mb-6">{t.step3Desc}</p>
@@ -352,8 +411,8 @@ export default function OnboardingScout() {
             </div>
           )}
 
-          {/* Step 4: Account created */}
-          {currentStep === 3 && (
+          {/* Step 5: Account created */}
+          {currentStep === 4 && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-4xl">🎉</span>
