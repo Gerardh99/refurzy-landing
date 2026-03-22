@@ -266,6 +266,7 @@ export default function HomePage() {
               { icon: '🧬', title: t('usp.scan.title', lang), desc: t('usp.scan.desc', lang), source: 'VU Amsterdam, 2026 (N=309)' },
               { icon: '💰', title: t('usp.cheaper.title', lang), desc: t('usp.cheaper.desc', lang), source: lang === 'nl' ? 'Op basis van gemiddelde bureau-fee van 20-30%' : 'Based on average agency fee of 20-30%' },
               { icon: '🔍', title: t('usp.scouts.title', lang), desc: t('usp.scouts.desc', lang) },
+              { icon: '⭐', title: t('usp.rating.title', lang), desc: t('usp.rating.desc', lang) },
               { icon: '📊', title: t('usp.data.title', lang), desc: t('usp.data.desc', lang), source: 'Resume Genius, 2024' },
               { icon: '⏱️', title: t('usp.retention.title', lang), desc: t('usp.retention.desc', lang), source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
               { icon: '🛡️', title: t('usp.anonymous.title', lang), desc: t('usp.anonymous.desc', lang) },

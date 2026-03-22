@@ -148,6 +148,11 @@ export const translations = {
     nl: 'Onze Talent Scouts zijn veelal ervaren recruiters die al jaren in het vak zitten. Zij kennen hun netwerk, weten waar het talent zit en kunnen de strijd aan met de beste bureaus — maar werken voor u, niet voor een bureau.',
     en: 'Our Talent Scouts are mostly experienced recruiters who have been in the field for years. They know their network, know where the talent is and can compete with the best agencies — but work for you, not for an agency.'
   },
+  'usp.rating.title': { nl: 'Scouts met een objectieve kwaliteitsrating', en: 'Scouts with an objective quality rating' },
+  'usp.rating.desc': {
+    nl: 'Elke Talent Scout bouwt een objectieve rating op, gebaseerd op de kwaliteit van voordrachten en succesvolle plaatsingen. Nieuwe scouts starten zonder score en krijgen een introductiekorting — ze hebben er dus alle belang bij om direct met topkandidaten te komen. Het kaf scheidt zich van het koren: alleen scouts die consequent leveren, bouwen hun reputatie en verdiensten op.',
+    en: 'Every Talent Scout builds an objective rating based on nomination quality and successful placements. New scouts start without a score and receive an introductory discount — giving them every incentive to deliver top candidates from day one. The wheat separates from the chaff: only scouts who consistently deliver build their reputation and earnings.'
+  },
   'usp.data.title': { nl: 'Data vervangt twijfel', en: 'Data replaces doubt' },
   'usp.data.desc': {
     nl: '81% van managers twijfelt bij aannames. De M-Score geeft een objectieve, kwantitatieve indicator van de match. Geen buikgevoel meer, maar wetenschappelijk onderbouwde zekerheid vóór het eerste gesprek.',
