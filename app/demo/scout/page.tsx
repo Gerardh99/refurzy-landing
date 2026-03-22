@@ -255,7 +255,23 @@ function CandidateCard({
       </button>
 
       {/* Always-visible summary */}
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 space-y-3">
+        {/* Voorkeursfuncties */}
+        <div className="space-y-1.5">
+          <span className="text-ink-light text-xs font-medium">Zoekt naar</span>
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple/8 border border-purple/15 text-xs">
+              <span className="text-purple font-semibold">{k.voorkeursFunctietitel1}</span>
+              <span className="text-ink-muted">({k.voorkeursFunctiegebied1})</span>
+            </span>
+            {k.voorkeursFunctiegebied2 && k.voorkeursFunctietitel2 && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan/8 border border-cyan/15 text-xs">
+                <span className="text-cyan font-semibold">{k.voorkeursFunctietitel2}</span>
+                <span className="text-ink-muted">({k.voorkeursFunctiegebied2})</span>
+              </span>
+            )}
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-3 text-sm">
           <div>
             <span className="text-ink-light text-xs font-medium">Woonplaats</span>
@@ -301,9 +317,15 @@ function CandidateCard({
               <p className="text-ink font-medium">{k.huidigeRol}</p>
             </div>
             <div>
-              <span className="text-ink-light text-xs font-medium">Voorkeursfunctie</span>
-              <p className="text-ink font-medium">{k.voorkeursFunctie}</p>
+              <span className="text-ink-light text-xs font-medium">Voorkeur 1</span>
+              <p className="text-ink font-medium">{k.voorkeursFunctietitel1} <span className="text-ink-muted text-xs">({k.voorkeursFunctiegebied1})</span></p>
             </div>
+            {k.voorkeursFunctiegebied2 && k.voorkeursFunctietitel2 && (
+              <div>
+                <span className="text-ink-light text-xs font-medium">Voorkeur 2</span>
+                <p className="text-ink font-medium">{k.voorkeursFunctietitel2} <span className="text-ink-muted text-xs">({k.voorkeursFunctiegebied2})</span></p>
+              </div>
+            )}
             <div>
               <span className="text-ink-light text-xs font-medium">Matching Scan</span>
               <p className={`font-medium ${k.scanCompleted ? 'text-green-600' : 'text-orange'}`}>

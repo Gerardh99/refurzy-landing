@@ -68,11 +68,9 @@ const mockGaranties: FitGarantie[] = [
 ]
 
 const claimRedenen = [
-  'Kandidaat heeft ontslag genomen',
   'Culturele mismatch',
-  'Waarden mismatch',
-  'Functioneringsprobleem',
-  'Anders',
+  'Waardenmismatch',
+  'Organisatiefit-mismatch',
 ]
 
 function getMonthsElapsed(plaatsingsDatum: string): number {
@@ -295,10 +293,32 @@ export default function OpdrachtgeverFitGarantie() {
                   />
                 </div>
 
-                <div className="bg-surface-muted rounded-lg p-4 text-sm text-ink-light space-y-2">
-                  <p className="font-semibold text-ink">Bij een geldige claim levert Refurzy eenmalig gratis een vervangende kandidaat. U betaalt hiervoor geen nieuwe plaatsingsfee.</p>
-                  <p><strong className="text-ink">Niet van toepassing bij:</strong> (1) werkzaamheden wijken af van de vacatureomschrijving, (2) aantoonbaar mismanagement, (3) reorganisatie / functie verdwijnt.</p>
-                  <p className="text-ink-light">Na uw claim voert Refurzy een exitgesprek met de kandidaat om de situatie te beoordelen. Meld vertrek binnen 30 dagen.</p>
+                <div className="bg-surface-muted rounded-lg p-4 text-sm text-ink-light space-y-3">
+                  <p className="font-semibold text-ink">Dekking</p>
+                  <p>De Fit Garantie dekt uitsluitend vertrek dat aantoonbaar het gevolg is van een mismatch op cultuurfit, waardenfit of organisatiefit — de drie dimensies die de M-Score meet. Bij een geldige claim levert Refurzy eenmalig een vervangende kandidaat zonder nieuwe plaatsingsfee.</p>
+
+                  <p className="font-semibold text-ink">Niet gedekt</p>
+                  <ul className="list-disc list-inside space-y-0.5">
+                    <li>Functioneringsproblemen (prestaties, competenties)</li>
+                    <li>Persoonlijke omstandigheden (verhuizing, gezin, gezondheid)</li>
+                    <li>Extern aanbod (kandidaat kiest ander aanbod)</li>
+                    <li>Gewijzigde functie (werkzaamheden wijken af van vacatureomschrijving)</li>
+                    <li>Mismanagement door opdrachtgever</li>
+                    <li>Reorganisatie (functie verdwijnt of wijzigt substantieel)</li>
+                    <li>Ziekte of arbeidsongeschiktheid</li>
+                    <li>Input Matching Scan komt niet overeen met de praktijk (oordeel medewerker)</li>
+                  </ul>
+
+                  <p className="font-semibold text-ink">Procedure</p>
+                  <ul className="list-decimal list-inside space-y-0.5">
+                    <li>Meld vertrek binnen 30 kalenderdagen bij Refurzy</li>
+                    <li>Refurzy voert binnen 10 werkdagen een exitgesprek met de medewerker</li>
+                    <li>De medewerker bevestigt dat het vertrek het gevolg is van een fit-mismatch</li>
+                    <li>Refurzy beoordeelt of de melding binnen de dekking valt</li>
+                    <li>Het eindoordeel ligt te allen tijde bij Refurzy</li>
+                  </ul>
+
+                  <p className="text-xs text-ink-muted">Zonder exitgesprek met de medewerker kan geen claim worden beoordeeld en vervalt het recht op de garantie.</p>
                 </div>
 
                 <div className="flex justify-end gap-3">

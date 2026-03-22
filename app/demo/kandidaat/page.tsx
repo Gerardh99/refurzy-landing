@@ -445,12 +445,6 @@ export default function KandidaatDashboard() {
                     Geen interesse
                   </button>
                   <button
-                    onClick={() => setActiveTab('actief')}
-                    className="text-sm text-ink-light hover:text-ink px-3 py-2.5 font-medium"
-                  >
-                    Later
-                  </button>
-                  <button
                     onClick={() => handleAccept(v.id)}
                     className="px-6 py-2.5 text-sm bg-purple text-white rounded-xl hover:bg-purple/90 transition-colors font-semibold shadow-sm"
                   >

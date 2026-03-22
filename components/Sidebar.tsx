@@ -64,7 +64,6 @@ const navGroups: Record<UserRole, NavGroup[]> = {
       items: [
         { href: '/demo/opdrachtgever', label: 'Dashboard', icon: '📊' },
         { href: '/demo/opdrachtgever/vacature-aanmaken', label: 'Vacature aanmaken', icon: '➕' },
-        { href: '/demo/opdrachtgever/kandidaten', label: 'Kandidaten', icon: '👤' },
         { href: '/demo/opdrachtgever/matching-profiel', label: 'M-Score Profiel', icon: '🧪' },
       ],
     },

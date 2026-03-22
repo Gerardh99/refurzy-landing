@@ -253,8 +253,13 @@ export default function ScoutVacatureDetail() {
                         {beschikbareKandidaten.map(k => {
                           const isSelected = selectedKandidaat?.id === k.id
                           const feeInfo = calculateFee(k.opleidingsniveau, k.werkervaring)
-                          const voorkeurMatcht = vacature.title.toLowerCase().includes(k.voorkeursFunctie.toLowerCase())
-                            || k.voorkeursFunctie.toLowerCase().includes(vacature.title.toLowerCase())
+                          const titel1 = k.voorkeursFunctietitel1?.toLowerCase() || ''
+                          const titel2 = k.voorkeursFunctietitel2?.toLowerCase() || ''
+                          const vacTitel = vacature.title.toLowerCase()
+                          const vacGebied = vacature.vakgebied?.toLowerCase() || ''
+                          const voorkeur1Matcht = vacTitel.includes(titel1) || titel1.includes(vacTitel) || (k.voorkeursFunctiegebied1?.toLowerCase() || '').includes(vacGebied)
+                          const voorkeur2Matcht = titel2 && (vacTitel.includes(titel2) || titel2.includes(vacTitel) || (k.voorkeursFunctiegebied2?.toLowerCase() || '').includes(vacGebied))
+                          const voorkeurMatcht = voorkeur1Matcht || voorkeur2Matcht
                           return (
                             <button
                               key={k.id}
@@ -280,16 +285,20 @@ export default function ScoutVacatureDetail() {
                                   <p className="text-xs text-ink-light">{k.woonplaats}</p>
                                 </div>
                               </div>
-                              {/* Voorkeursfunctie */}
-                              <div className="mt-2 flex items-center gap-1.5">
-                                {voorkeurMatcht ? (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-50 text-green-700 text-xs font-medium">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                                    Voorkeur: {k.voorkeursFunctie}
-                                  </span>
-                                ) : (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-muted text-ink-muted text-xs">
-                                    🎯 Voorkeur: {k.voorkeursFunctie}
+                              {/* Voorkeursfuncties */}
+                              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                  voorkeur1Matcht ? 'bg-green-50 text-green-700' : 'bg-surface-muted text-ink-muted'
+                                }`}>
+                                  {voorkeur1Matcht && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                                  {k.voorkeursFunctietitel1}
+                                </span>
+                                {k.voorkeursFunctietitel2 && (
+                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                    voorkeur2Matcht ? 'bg-green-50 text-green-700' : 'bg-surface-muted text-ink-muted'
+                                  }`}>
+                                    {voorkeur2Matcht && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                                    {k.voorkeursFunctietitel2}
                                   </span>
                                 )}
                               </div>

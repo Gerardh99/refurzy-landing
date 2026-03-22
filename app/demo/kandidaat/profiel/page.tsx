@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { TAALNIVEAU_LABELS } from '@/lib/constants'
+import { TAALNIVEAU_LABELS, VAKGEBIEDEN } from '@/lib/constants'
 import type { TaalBeheersing } from '@/lib/types'
 
 export default function KandidaatProfiel() {
@@ -13,7 +13,10 @@ export default function KandidaatProfiel() {
     opleidingsniveau: 'WO',
     werkervaring: '8 jaar',
     huidigeRol: 'Senior Marketeer',
-    voorkeursFunctie: 'Marketing Manager',
+    voorkeursFunctiegebied1: 'Marketing & E-commerce',
+    voorkeursFunctietitel1: 'Marketing Manager',
+    voorkeursFunctiegebied2: 'Management & Directie',
+    voorkeursFunctietitel2: 'Head of Marketing',
     salarisMin: '4500',
     salarisMax: '6000',
     maxReistijd: '45 minuten',
@@ -62,7 +65,39 @@ export default function KandidaatProfiel() {
           </div>
           <Field label="Werkervaring" value={form.werkervaring} onChange={(v) => handleChange('werkervaring', v)} />
           <Field label="Huidige functie" value={form.huidigeRol} onChange={(v) => handleChange('huidigeRol', v)} />
-          <Field label="Gewenste functie" value={form.voorkeursFunctie} onChange={(v) => handleChange('voorkeursFunctie', v)} />
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-ink">Voorkeursfuncties</h2>
+        <p className="text-sm text-ink-light">Geef aan in welke functiegebieden en rollen je wilt werken. Dit helpt je scout om je bij de juiste vacatures voor te dragen.</p>
+        <div className="bg-purple/5 border border-purple/15 rounded-xl p-4 space-y-3">
+          <p className="text-xs font-semibold text-purple uppercase tracking-wider">Voorkeur 1</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm text-ink-muted mb-1.5">Functiegebied</label>
+              <select value={form.voorkeursFunctiegebied1} onChange={(e) => handleChange('voorkeursFunctiegebied1', e.target.value)}
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-purple/50">
+                <option value="">Selecteer...</option>
+                {VAKGEBIEDEN.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+            <Field label="Functietitel" value={form.voorkeursFunctietitel1} onChange={(v) => handleChange('voorkeursFunctietitel1', v)} />
+          </div>
+        </div>
+        <div className="bg-cyan/5 border border-cyan/15 rounded-xl p-4 space-y-3">
+          <p className="text-xs font-semibold text-cyan uppercase tracking-wider">Voorkeur 2 (optioneel)</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm text-ink-muted mb-1.5">Functiegebied</label>
+              <select value={form.voorkeursFunctiegebied2} onChange={(e) => handleChange('voorkeursFunctiegebied2', e.target.value)}
+                className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
+                <option value="">Selecteer...</option>
+                {VAKGEBIEDEN.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+            <Field label="Functietitel" value={form.voorkeursFunctietitel2} onChange={(v) => handleChange('voorkeursFunctietitel2', v)} />
+          </div>
         </div>
       </div>
 

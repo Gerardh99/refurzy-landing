@@ -121,22 +121,37 @@ Platform supports pricing in 15 countries with local currencies and adjustment f
 ### Conditions
 - **Condition**: M-Score ≥ 80%
 - **Duration**: 12 months guarantee from confirmed start date
-- **Coverage**: Also applies if the candidate leaves on their own initiative
 
-### Exclusions (only 3)
-1. Job activities deviate from the vacancy description
-2. Demonstrable mismanagement by the employer
-3. Reorganization / position is eliminated
+### Coverage (exhaustive)
+The Fit Guarantee exclusively covers departure that is demonstrably caused by a mismatch on the three dimensions measured by the M-Score:
+1. **Cultural mismatch** — work style, communication style, team dynamics
+2. **Values mismatch** — company values, ethics, work vision
+3. **Organizational fit mismatch** — type of organization, work environment, organizational culture
+
+### Exclusions (everything not covered)
+1. Performance issues (output, competencies, skills)
+2. Personal circumstances (relocation, family, health)
+3. External offer (candidate chooses a better offer elsewhere)
+4. Changed job content (actual work deviates from vacancy description)
+5. Mismanagement by the employer
+6. Reorganization (position eliminated or substantially changed)
+7. Illness or disability
+8. Employer's Matching Scan input does not reflect actual practice (as determined by the employee in the exit interview)
+9. Death or force majeure
 
 ### Verification Procedure
-1. Employer reports departure within 30 days to Refurzy
-2. Candidate is required to participate in an exit interview with Refurzy (within 10 business days)
-3. Refurzy assesses whether an exclusion applies
-4. Guarantee: Refurzy provides a one-time free replacement candidate (no new placement fee owed)
+1. Employer reports departure within **30 calendar days** to Refurzy
+2. Refurzy conducts an exit interview with the employee within **10 business days**
+3. The employee confirms that the departure was caused by a mismatch on culture, values, or organizational fit
+4. Refurzy assesses whether the claim falls within coverage
+5. **The final judgment lies with Refurzy at all times**
+6. If approved: Refurzy provides a one-time replacement candidate (no new placement fee owed)
+
+**Without an exit interview with the employee, no claim can be assessed and the right to the guarantee lapses.**
 
 ### Conditions per Role
-- **Candidate**: cooperation with the exit interview is part of the Candidate Consent Statement
-- **Employer**: the Placement Agreement states that Refurzy can only follow up on the guarantee after the exit interview with the candidate, and that departure must be reported within 30 days
+- **Candidate/employee**: cooperation with the exit interview is part of the Candidate Consent Statement (signed during onboarding)
+- **Employer**: the Placement Agreement states that (a) Refurzy can only follow up on the guarantee after the exit interview with the employee, (b) departure must be reported within 30 calendar days, and (c) the final judgment on the claim lies with Refurzy
 
 ---
 
@@ -723,9 +738,9 @@ Overview of all Fit Guarantees for the employer.
 - Status: Active, Expired, Claim submitted
 
 #### Submit claim modal
-- Reason dropdown: Cultural mismatch, Values mismatch, Other
+- Reason dropdown: Cultural mismatch, Values mismatch, Organizational fit mismatch
 - Explanation textarea
-- Exclusion note: "Not applicable for: (1) job activities deviate from vacancy description, (2) demonstrable mismanagement by employer, (3) reorganization / position is eliminated"
+- Coverage information: explanation that only fit-mismatch is covered, full list of exclusions, procedure description with exit interview as hard requirement
 - Submit button with confirmation
 
 #### Section Expired guarantees
@@ -830,7 +845,7 @@ In-platform messaging system, accessible from all roles.
 6. **Rejection requires reason**: Dropdown + optional explanation + scout rating (1-5). Minimum scores based on phase reached: nominated=free (1-5), contract_accepted/after interview=min. 3, salary_negotiation=auto 4, contract_signed=auto 5. Employer can always give higher than the minimum.
 7. **Fee distribution**: 50/50 scout/Refurzy
 8. **>10 year rule**: HBO and WO receive the same multiplier (2.5) for >10 years of experience
-9. **Fit Guarantee**: Only at M-Score ≥80%, 12 months, only culture/values/interests mismatch
+9. **Fit Guarantee**: Only at M-Score ≥80%, 12 months, exclusively for demonstrable mismatch on culture/values/organizational fit (see section 4 for full conditions, exclusions and procedure)
 10. **Exclusivity**: Optional 2-week exclusivity with 25% surcharge
 11. **Prices excl. VAT**: All prices on the platform are exclusive of VAT
 12. **Automatic invoicing**: Invoice is generated at contract signed, payout upon employer payment
@@ -908,10 +923,11 @@ The following provisions must be included in the Terms & Conditions:
 - Intermediation outside the platform results in a penalty of 100% of the fee
 
 ### Fit Guarantee
-- At M-Score >= 80%, a Fit Guarantee of 12 months applies
-- Coverage: departure due to mismatch in culture, values or interests
-- Exclusions: reorganization, illness, relocation, changed job content
-- Refund: 100% of the placement fee (incl. VAT)
+- At M-Score >= 80%, a Fit Guarantee of 12 months applies from confirmed start date
+- Coverage: exclusively departure demonstrably caused by a mismatch on culture fit, values fit, or organizational fit
+- Not covered: performance issues, personal circumstances, external offers, changed job content, mismanagement, reorganization, illness/disability, inaccurate Matching Scan input (employee's judgment)
+- Procedure: exit interview with employee mandatory, employee confirms fit-mismatch, final judgment lies with Refurzy
+- If approved: one-time replacement candidate at no additional placement fee
 
 ---
 

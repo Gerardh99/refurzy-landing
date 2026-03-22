@@ -86,6 +86,7 @@ export interface KandidaatMatch {
   scoutRating: number
   scoutNaam: string
   scoutId?: string
+  eersteVoordracht?: boolean    // True if this is the scout's very first nomination (50% discount)
   status: 'aanbevolen' | 'bekijk' | 'overweeg' | 'afgewezen' | 'aangenomen'
   procesStatus: ProcesStatus
   unlocked: boolean
@@ -147,7 +148,13 @@ export interface Kandidaat {
   opleidingsniveau: 'MBO' | 'HBO' | 'WO'
   werkervaring: string
   huidigeRol: string
-  voorkeursFunctie: string
+  // ─── Voorkeursfuncties (2 stuks) ───
+  voorkeursFunctiegebied1: string       // Dropdown uit VAKGEBIEDEN
+  voorkeursFunctietitel1: string        // Vrije tekst functietitel
+  voorkeursFunctiegebied2?: string      // Optioneel tweede functiegebied
+  voorkeursFunctietitel2?: string       // Optioneel tweede functietitel
+  /** @deprecated Use voorkeursFunctiegebied1/2 + voorkeursFunctietitel1/2 */
+  voorkeursFunctie?: string
   // ─── Hard criteria matching fields ───
   salarisMin?: number            // bruto per maand verwachting
   salarisMax?: number            // bruto per maand verwachting

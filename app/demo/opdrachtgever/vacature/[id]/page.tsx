@@ -149,7 +149,7 @@ export default function VacatureDetailPage() {
         <div className="flex items-center gap-6 text-xs text-ink-light">
           <span className="font-semibold text-ink">Score legenda:</span>
           <span><span className="text-cyan font-medium">M-Score</span> = uitkomst 35-vragen Matching Scan</span>
-          <span><span className="text-orange font-medium">50% korting</span> = nieuwe scout zonder track record</span>
+          <span><span className="text-orange font-medium">50% korting</span> = eerste voordracht / nieuwe scout zonder track record</span>
         </div>
       </div>
 
@@ -189,7 +189,8 @@ export default function VacatureDetailPage() {
                   <div className="text-xs text-ink-muted flex items-center gap-1">
                     via {k.scoutNaam}
                     {isMaster && <span className="px-1 py-0.5 bg-orange/15 text-orange text-[9px] font-bold rounded border border-orange/30 ml-1">MASTER</span>}
-                    {newScout && <span className="px-1 py-0.5 bg-green-500/15 text-green-400 text-[9px] font-bold rounded border border-green-500/30 ml-1">50% KORTING</span>}
+                    {k.eersteVoordracht && <span className="px-1 py-0.5 bg-green-500/15 text-green-400 text-[9px] font-bold rounded border border-green-500/30 ml-1">EERSTE VOORDRACHT — 50% KORTING</span>}
+                    {newScout && !k.eersteVoordracht && <span className="px-1 py-0.5 bg-green-500/15 text-green-400 text-[9px] font-bold rounded border border-green-500/30 ml-1">50% KORTING</span>}
                   </div>
                 </div>
               </div>
@@ -391,7 +392,7 @@ export default function VacatureDetailPage() {
                   <li>• U betaalt <span className="text-ink font-medium">alleen bij een succesvolle plaatsing</span> (ondertekend arbeidscontract).</li>
                   <li>• De plaatsingsfee is afhankelijk van opleidingsniveau en werkervaring{newScout ? ' (50% introductiekorting toegepast)' : ''}.</li>
                   <li>• Bemiddeling buiten het platform om resulteert in een boete van 100% van de vergoeding.</li>
-                  <li>• Bij M-Score ≥80% geldt de <span className="text-ink font-medium">Fit Garantie</span> (12 maanden).</li>
+                  <li>• Bij M-Score ≥80% geldt de <span className="text-ink font-medium">Fit Garantie</span> (12 maanden, uitsluitend bij aantoonbare fit-mismatch).</li>
                 </ul>
               </div>
 

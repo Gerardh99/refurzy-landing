@@ -121,22 +121,37 @@ Platform ondersteunt pricing in 15 landen met lokale valuta en aanpassingsfactor
 ### Voorwaarden
 - **Voorwaarde**: M-Score ≥ 80%
 - **Duur**: 12 maanden garantie vanaf bevestigde startdatum
-- **Dekking**: Geldt ook als de kandidaat op eigen initiatief vertrekt
 
-### Uitsluitingen (slechts 3)
-1. Werkzaamheden wijken af van de vacatureomschrijving
-2. Aantoonbaar mismanagement door de opdrachtgever
-3. Reorganisatie / functie verdwijnt
+### Dekking (limitatief)
+De Fit Garantie dekt uitsluitend vertrek dat aantoonbaar het gevolg is van een mismatch op de drie dimensies die de M-Score meet:
+1. **Culturele mismatch** — werkstijl, communicatiestijl, teamdynamiek
+2. **Waardenmismatch** — bedrijfswaarden, ethiek, visie op werk
+3. **Organisatiefit-mismatch** — type organisatie, werkomgeving, organisatiecultuur
+
+### Uitsluitingen (alles wat niet gedekt is)
+1. Functioneringsproblemen (prestaties, competenties, vaardigheden)
+2. Persoonlijke omstandigheden (verhuizing, gezinssituatie, gezondheid)
+3. Extern aanbod (kandidaat kiest beter aanbod elders)
+4. Gewijzigde functie-inhoud (werkzaamheden wijken af van vacatureomschrijving)
+5. Mismanagement door de opdrachtgever
+6. Reorganisatie (functie verdwijnt of wijzigt substantieel)
+7. Ziekte of arbeidsongeschiktheid
+8. Input Matching Scan komt niet overeen met de praktijk (oordeel medewerker in exitgesprek)
+9. Overlijden of force majeure
 
 ### Verificatieprocedure
-1. Opdrachtgever meldt vertrek binnen 30 dagen bij Refurzy
-2. Kandidaat is verplicht mee te werken aan een exitgesprek met Refurzy (binnen 10 werkdagen)
-3. Refurzy beoordeelt of een uitsluiting van toepassing is
-4. Garantie: Refurzy levert eenmalig gratis een vervangende kandidaat (geen nieuwe plaatsingsfee verschuldigd)
+1. Opdrachtgever meldt vertrek binnen **30 kalenderdagen** bij Refurzy
+2. Refurzy voert binnen **10 werkdagen** een exitgesprek met de medewerker
+3. De medewerker bevestigt dat het vertrek het gevolg is van een mismatch op cultuur, waarden of organisatiefit
+4. Refurzy beoordeelt of de melding binnen de dekking valt
+5. **Het eindoordeel ligt te allen tijde bij Refurzy**
+6. Bij goedkeuring: Refurzy levert eenmalig een vervangende kandidaat (geen nieuwe plaatsingsfee verschuldigd)
+
+**Zonder exitgesprek met de medewerker kan geen claim worden beoordeeld en vervalt het recht op de garantie.**
 
 ### Voorwaarden per rol
-- **Kandidaat**: medewerking aan exitgesprek is onderdeel van de Toestemmingsverklaring Kandidaat
-- **Opdrachtgever**: in de Plaatsingsovereenkomst staat dat Refurzy de garantie pas kan opvolgen na het exitgesprek met de kandidaat, en dat vertrek binnen 30 dagen gemeld moet worden
+- **Kandidaat/medewerker**: medewerking aan exitgesprek is onderdeel van de Toestemmingsverklaring Kandidaat (getekend bij onboarding)
+- **Opdrachtgever**: in de Plaatsingsovereenkomst staat dat (a) Refurzy de garantie pas kan opvolgen na het exitgesprek met de medewerker, (b) vertrek binnen 30 kalenderdagen gemeld moet worden, en (c) het eindoordeel over de claim bij Refurzy ligt
 
 ---
 
@@ -722,9 +737,9 @@ Overzicht van alle Fit Garanties voor de opdrachtgever.
 - Status: Actief, Verlopen, Claim ingediend
 
 #### Claim indienen modal
-- Reden dropdown: Culturele mismatch, Waarden mismatch, Anders
+- Reden dropdown: Culturele mismatch, Waardenmismatch, Organisatiefit-mismatch
 - Toelichting textarea
-- Uitsluitingsnoot: "Niet van toepassing bij: (1) werkzaamheden wijken af van vacatureomschrijving, (2) aantoonbaar mismanagement door opdrachtgever, (3) reorganisatie / functie verdwijnt"
+- Dekkingsinformatie: uitleg dat alleen fit-mismatch gedekt is, volledige lijst uitsluitingen, procedurebeschrijving met exitgesprek als harde voorwaarde
 - Submit button met bevestiging
 
 #### Sectie Verlopen garanties
@@ -829,7 +844,7 @@ In-platform berichtensysteem, toegankelijk vanuit alle rollen.
 6. **Afwijzing vereist reden**: Dropdown + optionele toelichting + scout-rating (1-5). Minimumscores op basis van bereikte fase: voorgesteld=vrij (1-5), contract_akkoord/na gesprek=min. 3, arbeidsvoorwaarden=auto 4, contract_getekend=auto 5. Opdrachtgever kan altijd hoger geven dan het minimum.
 7. **Fee verdeling**: 50/50 scout/Refurzy
 8. **>10 jaar regel**: HBO en WO krijgen zelfde multiplier (2.5) bij >10 jaar ervaring
-9. **Fit Garantie**: Alleen bij M-Score ≥80%, 12 maanden, alleen cultuur/waarden/interesses mismatch
+9. **Fit Garantie**: Alleen bij M-Score ≥80%, 12 maanden, uitsluitend bij aantoonbare mismatch op cultuur/waarden/organisatiefit (zie sectie 4 voor volledige voorwaarden, uitsluitingen en procedure)
 10. **Exclusiviteit**: Optioneel 2-weken exclusiviteit met +25% toeslag (50/50 verdeling scout/Refurzy)
 11. **Prijzen excl. BTW**: Alle prijzen op het platform zijn exclusief BTW
 12. **Automatische facturatie**: Factuur wordt gegenereerd bij contract getekend, uitbetaling bij betaling opdrachtgever
@@ -922,10 +937,11 @@ De volgende bepalingen moeten worden opgenomen in de Algemene Voorwaarden:
 - Bemiddeling buiten het platform om resulteert in een boete van 100% van de vergoeding
 
 ### Fit Garantie
-- Bij M-Score >= 80% geldt een Fit Garantie van 12 maanden
-- Dekking: vertrek wegens mismatch in cultuur, waarden of interesses
-- Uitsluitingen: reorganisatie, ziekte, verhuizing, gewijzigde functie-inhoud
-- Restitutie: 100% van de plaatsingsfee (incl. BTW)
+- Bij M-Score >= 80% geldt een Fit Garantie van 12 maanden vanaf bevestigde startdatum
+- Dekking: uitsluitend vertrek dat aantoonbaar het gevolg is van een mismatch op cultuurfit, waardenfit of organisatiefit
+- Niet gedekt: functioneringsproblemen, persoonlijke omstandigheden, extern aanbod, gewijzigde functie-inhoud, mismanagement, reorganisatie, ziekte/arbeidsongeschiktheid, onjuiste Matching Scan-input (oordeel medewerker)
+- Procedure: exitgesprek met medewerker verplicht, medewerker bevestigt fit-mismatch, eindoordeel bij Refurzy
+- Bij goedkeuring: eenmalig vervangende kandidaat zonder nieuwe plaatsingsfee
 
 ---
 

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/i18n'
-import { TALEN, TAALNIVEAUS, TAALNIVEAU_LABELS } from '@/lib/constants'
+import { TALEN, TAALNIVEAUS, TAALNIVEAU_LABELS, VAKGEBIEDEN } from '@/lib/constants'
 import type { TaalBeheersing } from '@/lib/types'
 
 const texts = {
@@ -27,8 +27,12 @@ const texts = {
     phone: 'Telefoonnummer *',
     currentRole: 'Huidige functie *',
     currentRolePlaceholder: 'Bijv. Marketing Manager bij Bedrijf X',
-    preferredRole: 'Gewenste functie *',
-    preferredRolePlaceholder: 'Bijv. Senior Marketing Manager',
+    preferredField1: 'Voorkeur functiegebied 1 *',
+    preferredRole1: 'Gewenste functietitel 1 *',
+    preferredRole1Placeholder: 'Bijv. Senior Marketing Manager',
+    preferredField2: 'Voorkeur functiegebied 2 (optioneel)',
+    preferredRole2: 'Gewenste functietitel 2 (optioneel)',
+    preferredRole2Placeholder: 'Bijv. Brand Strategist',
     previous: 'Vorige',
     next: 'Volgende',
     emailVerifyTitle: 'E-mail verificatie',
@@ -79,8 +83,12 @@ const texts = {
     phone: 'Phone number *',
     currentRole: 'Current role *',
     currentRolePlaceholder: 'E.g. Marketing Manager at Company X',
-    preferredRole: 'Preferred role *',
-    preferredRolePlaceholder: 'E.g. Senior Marketing Manager',
+    preferredField1: 'Preferred field 1 *',
+    preferredRole1: 'Preferred job title 1 *',
+    preferredRole1Placeholder: 'E.g. Senior Marketing Manager',
+    preferredField2: 'Preferred field 2 (optional)',
+    preferredRole2: 'Preferred job title 2 (optional)',
+    preferredRole2Placeholder: 'E.g. Brand Strategist',
     previous: 'Previous',
     next: 'Next',
     emailVerifyTitle: 'Email Verification',
@@ -128,7 +136,10 @@ export default function OnboardingKandidaat() {
     email: '',
     telefoon: '',
     huidigeRol: '',
-    voorkeursFunctie: '',
+    voorkeursFunctiegebied1: '',
+    voorkeursFunctietitel1: '',
+    voorkeursFunctiegebied2: '',
+    voorkeursFunctietitel2: '',
     salarisMin: '',
     salarisMax: '',
     maxReistijd: '45 minuten',
@@ -254,10 +265,39 @@ export default function OnboardingKandidaat() {
                   <input type="text" value={form.huidigeRol} onChange={e => update('huidigeRol', e.target.value)}
                     placeholder={t.currentRolePlaceholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-ink mb-1">{t.preferredRole}</label>
-                  <input type="text" value={form.voorkeursFunctie} onChange={e => update('voorkeursFunctie', e.target.value)}
-                    placeholder={t.preferredRolePlaceholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                {/* Voorkeur 1 */}
+                <div className="bg-purple/5 border border-purple/15 rounded-xl p-4 space-y-3">
+                  <p className="text-xs font-semibold text-purple uppercase tracking-wider">Voorkeur 1</p>
+                  <div>
+                    <label className="block text-sm font-medium text-ink mb-1">{t.preferredField1}</label>
+                    <select value={form.voorkeursFunctiegebied1} onChange={e => update('voorkeursFunctiegebied1', e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                      <option value="">Selecteer functiegebied...</option>
+                      {VAKGEBIEDEN.map(v => <option key={v} value={v}>{v}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-ink mb-1">{t.preferredRole1}</label>
+                    <input type="text" value={form.voorkeursFunctietitel1} onChange={e => update('voorkeursFunctietitel1', e.target.value)}
+                      placeholder={t.preferredRole1Placeholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                  </div>
+                </div>
+                {/* Voorkeur 2 */}
+                <div className="bg-cyan/5 border border-cyan/15 rounded-xl p-4 space-y-3">
+                  <p className="text-xs font-semibold text-cyan uppercase tracking-wider">Voorkeur 2 (optioneel)</p>
+                  <div>
+                    <label className="block text-sm font-medium text-ink mb-1">{t.preferredField2}</label>
+                    <select value={form.voorkeursFunctiegebied2} onChange={e => update('voorkeursFunctiegebied2', e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple">
+                      <option value="">Selecteer functiegebied...</option>
+                      {VAKGEBIEDEN.map(v => <option key={v} value={v}>{v}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-ink mb-1">{t.preferredRole2}</label>
+                    <input type="text" value={form.voorkeursFunctietitel2} onChange={e => update('voorkeursFunctietitel2', e.target.value)}
+                      placeholder={t.preferredRole2Placeholder} className="w-full px-4 py-2.5 rounded-lg border border-surface-border bg-white text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple" />
+                  </div>
                 </div>
               </div>
               <div className="flex justify-between mt-8">
