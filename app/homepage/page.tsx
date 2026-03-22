@@ -319,9 +319,9 @@ export default function HomePage() {
             {/* Lagere mis-hire kosten */}
             <div className="bg-navy-light rounded-2xl border border-purple/20 p-8 text-center hover:border-purple/40 transition-colors">
               <div className="w-16 h-16 rounded-2xl bg-purple/15 flex items-center justify-center text-3xl mx-auto mb-5">💰</div>
-              <div className="text-4xl font-bold text-purple-light mb-2">39–59%</div>
+              <div className="text-4xl font-bold text-purple-light mb-2">€44K–€175K</div>
               <p className="text-white font-semibold mb-3">
-                {lang === 'nl' ? 'Minder verloop' : 'Less turnover'}
+                {lang === 'nl' ? 'Kosten per mis-hire' : 'Cost per mis-hire'}
               </p>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 {lang === 'nl'
