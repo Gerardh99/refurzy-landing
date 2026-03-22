@@ -260,14 +260,14 @@ function CandidateCard({
         <div className="space-y-1.5">
           <span className="text-ink-light text-xs font-medium">Zoekt naar</span>
           <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple/8 border border-purple/15 text-xs">
-              <span className="text-purple font-semibold">{k.voorkeursFunctietitel1}</span>
-              <span className="text-ink-muted">({k.voorkeursFunctiegebied1})</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-green-50 border border-green-200 text-xs">
+              <span className="text-green-700 font-semibold">{k.voorkeursFunctietitel1}</span>
+              <span className="text-green-600/70">({k.voorkeursFunctiegebied1})</span>
             </span>
             {k.voorkeursFunctiegebied2 && k.voorkeursFunctietitel2 && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan/8 border border-cyan/15 text-xs">
-                <span className="text-cyan font-semibold">{k.voorkeursFunctietitel2}</span>
-                <span className="text-ink-muted">({k.voorkeursFunctiegebied2})</span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-green-50 border border-green-200 text-xs">
+                <span className="text-green-700 font-semibold">{k.voorkeursFunctietitel2}</span>
+                <span className="text-green-600/70">({k.voorkeursFunctiegebied2})</span>
               </span>
             )}
           </div>
