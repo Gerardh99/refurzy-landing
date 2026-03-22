@@ -150,8 +150,8 @@ export const translations = {
   },
   'usp.rating.title': { nl: 'Scouts met een objectieve kwaliteitsrating', en: 'Scouts with an objective quality rating' },
   'usp.rating.desc': {
-    nl: 'Elke Talent Scout bouwt een objectieve rating op, gebaseerd op de kwaliteit van voordrachten en succesvolle plaatsingen. Nieuwe scouts starten zonder score en krijgen een introductiekorting — ze hebben er dus alle belang bij om direct met topkandidaten te komen. Het kaf scheidt zich van het koren: alleen scouts die consequent leveren, bouwen hun reputatie en verdiensten op.',
-    en: 'Every Talent Scout builds an objective rating based on nomination quality and successful placements. New scouts start without a score and receive an introductory discount — giving them every incentive to deliver top candidates from day one. The wheat separates from the chaff: only scouts who consistently deliver build their reputation and earnings.'
+    nl: 'Elke Talent Scout bouwt een objectieve rating op, gebaseerd op de kwaliteit van voordrachten en succesvolle plaatsingen. Nieuwe scouts investeren in zichzelf: bij hun eerste plaatsing accepteren ze een lagere fee om hun track record op te bouwen. Het kaf scheidt zich van het koren — alleen scouts die consequent leveren, bouwen hun reputatie en verdiensten op.',
+    en: 'Every Talent Scout builds an objective rating based on nomination quality and successful placements. New scouts invest in themselves: they accept a lower fee on their first placement to build their track record. The wheat separates from the chaff — only scouts who consistently deliver build their reputation and earnings.'
   },
   'usp.data.title': { nl: 'Data vervangt twijfel', en: 'Data replaces doubt' },
   'usp.data.desc': {
