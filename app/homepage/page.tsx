@@ -125,12 +125,12 @@ export default function HomePage() {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex items-center justify-center gap-8 text-sm text-gray-500 mb-4">
+          <div className="flex items-center justify-center gap-8 text-sm text-gray-400 mb-4">
             <span className="flex items-center gap-2">{t('hero.trust1', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust2', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust3', lang)}</span>
           </div>
-          <p className="text-[10px] text-gray-400 max-w-lg mx-auto">
+          <p className="text-[10px] text-gray-500 max-w-lg mx-auto">
             {t('hero.sources', lang)}
           </p>
         </div>
