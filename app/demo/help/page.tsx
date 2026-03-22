@@ -83,7 +83,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Wat is de exclusiviteitsoptie?',
-    a: 'Bij het aanmaken van een vacature kunt u exclusiviteit activeren (+25% op de plaatsingsfee). Kandidaten die worden voorgedragen zijn dan 14 dagen exclusief beschikbaar voor uw vacature en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. Let op: exclusiviteit is onherroepelijk — eenmaal geactiveerd kan het niet meer worden uitgeschakeld voor die vacature.',
+    a: 'Bij het aanmaken van een vacature kunt u exclusiviteit activeren (+25% op de plaatsingsfee). Kandidaten die worden voorgedragen zijn dan 14 dagen exclusief beschikbaar voor uw vacature en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde functiegebied. Sollicitaties in andere functiegebieden lopen gewoon door — een vacature in een heel ander functiegebied is immers geen concurrent voor uw positie. Let op: exclusiviteit is onherroepelijk — eenmaal geactiveerd kan het niet meer worden uitgeschakeld voor die vacature.',
     roles: ['opdrachtgever'],
   },
 
@@ -115,12 +115,12 @@ const faqItems: FaqItem[] = [
   },
   {
     q: 'Kan ik een kandidaat op meerdere vacatures tegelijk voordragen?',
-    a: 'Nee. Zodra een kandidaat is voorgedragen op een vacature, is deze geblokkeerd voor andere voordrachten zolang het proces loopt. Na een afwijzing of verlopen voordracht komt de kandidaat direct vrij. Bij exclusieve vacatures geldt een minimale blokkade van 14 dagen, maar alleen voor vacatures in hetzelfde vakgebied — sollicitaties in andere vakgebieden lopen gewoon door. U ziet in uw talent pool een indicator wanneer een kandidaat geblokkeerd is.',
+    a: 'Nee. Zodra een kandidaat is voorgedragen op een vacature, is deze geblokkeerd voor andere voordrachten zolang het proces loopt. Na een afwijzing of verlopen voordracht komt de kandidaat direct vrij. Bij exclusieve vacatures geldt een minimale blokkade van 14 dagen, maar alleen voor vacatures in hetzelfde functiegebied — sollicitaties in andere functiegebieden lopen gewoon door. U ziet in uw talent pool een indicator wanneer een kandidaat geblokkeerd is.',
     roles: ['scout'],
   },
   {
     q: 'Wat betekent het als een vacature exclusief is?',
-    a: 'Bij een exclusieve vacature betaalt de opdrachtgever 25% extra bij een succesvolle plaatsing. In ruil daarvoor zijn voorgedragen kandidaten 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Lopende sollicitaties van de kandidaat in andere vakgebieden worden niet geraakt — alleen overlappende functies worden gepauzeerd. De exclusiviteitstoeslag wordt 50/50 verdeeld, dus u ontvangt ook meer fee.\n\nLet op: wanneer u een kandidaat voordraagt op een exclusieve vacature en deze kandidaat heeft lopende sollicitaties in hetzelfde vakgebied, krijgt u een melding. De kandidaat moet hiermee ook akkoord gaan voordat de voordracht kan worden ingediend.',
+    a: 'Bij een exclusieve vacature betaalt de opdrachtgever 25% extra bij een succesvolle plaatsing. In ruil daarvoor zijn voorgedragen kandidaten 14 dagen exclusief beschikbaar en worden niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde functiegebied. Lopende sollicitaties van de kandidaat in andere functiegebieden worden niet geraakt — alleen overlappende functies worden gepauzeerd. De exclusiviteitstoeslag wordt 50/50 verdeeld, dus u ontvangt ook meer fee.\n\nLet op: wanneer u een kandidaat voordraagt op een exclusieve vacature en deze kandidaat heeft lopende sollicitaties in hetzelfde functiegebied, krijgt u een melding. De kandidaat moet hiermee ook akkoord gaan voordat de voordracht kan worden ingediend.',
     roles: ['scout'],
   },
   {

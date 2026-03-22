@@ -439,13 +439,13 @@ export default function VacatureAanmakenPage() {
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="block text-sm text-ink font-medium mb-1.5">Vakgebied *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">Functiegebied *</label>
                 <select
                   value={form.vakgebied}
                   onChange={e => setForm(f => ({ ...f, vakgebied: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors"
                 >
-                  <option value="">Selecteer een vakgebied...</option>
+                  <option value="">Selecteer een functiegebied...</option>
                   {VAKGEBIEDEN.map(v => (
                     <option key={v} value={v}>{v}</option>
                   ))}
@@ -645,7 +645,7 @@ export default function VacatureAanmakenPage() {
                       <span className="px-2 py-0.5 bg-purple/10 text-purple text-[10px] font-bold rounded-full uppercase tracking-wider">+25%</span>
                     </div>
                     <p className="text-xs text-ink-light mt-1.5 leading-relaxed">
-                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde vakgebied. Sollicitaties in andere vakgebieden lopen gewoon door — een vacature in een heel ander vakgebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
+                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde functiegebied. Sollicitaties in andere functiegebieden lopen gewoon door — een vacature in een heel ander functiegebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
                     </p>
                     <div className="mt-3 bg-cyan/10 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
                       <span className="text-cyan-700 text-xs">🚀</span>
@@ -815,7 +815,7 @@ export default function VacatureAanmakenPage() {
                 <div><span className="text-ink-muted">Afdeling:</span> <span className="text-ink">{form.afdeling || '—'}</span></div>
                 <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
                 <div><span className="text-ink-muted">Land:</span> <span className="text-ink">{form.land}</span></div>
-                <div><span className="text-ink-muted">Vakgebied:</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
+                <div><span className="text-ink-muted">Functiegebied:</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
                 <div><span className="text-ink-muted">Salarisindicatie:</span> <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : 'Niet ingevuld'}</span></div>
                 <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
                 <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>

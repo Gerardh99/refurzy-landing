@@ -99,10 +99,10 @@ export default function ScoutAnalyticsPage() {
           </div>
         </div>
 
-        {/* Top vakgebieden */}
+        {/* Top functiegebieden */}
         <div className="bg-white rounded-2xl border border-surface-border p-6">
           <h2 className="text-lg font-semibold text-ink mb-5 flex items-center gap-2">
-            <span className="text-xl">🏆</span> Top vakgebieden
+            <span className="text-xl">🏆</span> Top functiegebieden
           </h2>
           <div className="space-y-5">
             {vakgebieden.map((v) => (

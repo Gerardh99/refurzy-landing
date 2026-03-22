@@ -90,7 +90,7 @@ export default function ScoutVacatures() {
 
   const activeFilterChips = useMemo(() => {
     const chips: { key: keyof Filters; label: string }[] = []
-    if (filters.vakgebied) chips.push({ key: 'vakgebied', label: `Vakgebied: ${filters.vakgebied}` })
+    if (filters.vakgebied) chips.push({ key: 'vakgebied', label: `Functiegebied: ${filters.vakgebied}` })
     if (filters.land) chips.push({ key: 'land', label: `Land: ${filters.land}` })
     if (filters.salarisMin) chips.push({ key: 'salarisMin', label: `Min salaris: \u20AC${filters.salarisMin}` })
     if (filters.salarisMax) chips.push({ key: 'salarisMax', label: `Max salaris: \u20AC${filters.salarisMax}` })
@@ -189,15 +189,15 @@ export default function ScoutVacatures() {
       {filtersOpen && (
         <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Vakgebied */}
+            {/* Functiegebied */}
             <div>
-              <label className="block text-xs font-medium text-ink-light mb-1.5">Vakgebied</label>
+              <label className="block text-xs font-medium text-ink-light mb-1.5">Functiegebied</label>
               <select
                 value={filters.vakgebied}
                 onChange={(e) => updateFilter('vakgebied', e.target.value)}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50"
               >
-                <option value="">Alle vakgebieden</option>
+                <option value="">Alle functiegebieden</option>
                 {VAKGEBIEDEN.map((v) => <option key={v} value={v}>{v}</option>)}
               </select>
             </div>

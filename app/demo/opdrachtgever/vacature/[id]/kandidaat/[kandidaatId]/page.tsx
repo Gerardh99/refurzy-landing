@@ -150,7 +150,7 @@ function getDefaultCV(k: { naam: string; opleidingsniveau: string; werkervaring:
       { titel: k.opleidingsniveau === 'WO' ? 'MSc Bedrijfskunde' : 'BSc Bedrijfskunde', instelling: k.opleidingsniveau === 'WO' ? 'Universiteit Utrecht' : 'Hogeschool Utrecht', jaar: '2014-2018' },
     ],
     werkervaring: [
-      { functie: 'Senior Professional', bedrijf: 'Vorig Bedrijf B.V.', periode: '2020 – heden', beschrijving: 'Verantwoordelijk voor diverse projecten en taken binnen het vakgebied.' },
+      { functie: 'Senior Professional', bedrijf: 'Vorig Bedrijf B.V.', periode: '2020 – heden', beschrijving: 'Verantwoordelijk voor diverse projecten en taken binnen het functiegebied.' },
     ],
     vaardigheden: ['Projectmanagement', 'Communicatie', 'Analyse', 'Teamwerk'],
     talen: [{ taal: 'Nederlands', niveau: 'Uitstekend (C1)' }, { taal: 'Engels', niveau: 'Goed (B2)' }],

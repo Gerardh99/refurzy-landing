@@ -1,7 +1,7 @@
 // ─── MASTER Scout threshold ──────────────────────────────────────────────────
 export const MASTER_SCOUT_THRESHOLD = 4.0
 
-// ─── Vakgebieden (professional fields) ────────────────────────────────────────
+// ─── Functiegebieden (professional fields) ───────────────────────────────────
 export const VAKGEBIEDEN = [
   'Accountancy & Finance',
   'Administratie',
@@ -21,6 +21,7 @@ export const VAKGEBIEDEN = [
   'Onderwijs & Training',
   'Operations',
   'Productie & Techniek',
+  'Risk & Compliance',
   'Sales & Business Development',
   'Zorg & Welzijn',
   'Overig',
