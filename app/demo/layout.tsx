@@ -9,39 +9,49 @@ import TopBar from '@/components/TopBar'
 
 export default function DemoLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [authChecked, setAuthChecked] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
   const isOnboarding = pathname?.startsWith('/demo/onboarding')
 
   useEffect(() => {
-    if (isOnboarding) return // Onboarding pages don't require auth
+    if (isOnboarding) return
 
-    // Auto-login via ?role= query param (for feedback Excel links)
-    const params = new URLSearchParams(window.location.search)
-    const roleParam = params.get('role')
-    if (roleParam && !getUser()) {
-      const roleEmails: Record<string, string> = {
-        opdrachtgever: 'demo@bedrijf.nl',
-        scout: 'scout@refurzy.com',
-        kandidaat: 'kandidaat@email.com',
-        admin: 'admin@refurzy.com',
-      }
-      const email = roleEmails[roleParam]
-      if (email) {
-        profileLogin(email).then(u => {
-          if (u) setUser(u)
-        })
+    const roleEmails: Record<string, string> = {
+      opdrachtgever: 'demo@bedrijf.nl',
+      scout: 'scout@refurzy.com',
+      kandidaat: 'kandidaat@email.com',
+      admin: 'admin@refurzy.com',
+    }
+
+    async function checkAuth() {
+      // 1. Already logged in?
+      const existing = getUser()
+      if (existing) {
+        setUser(existing)
+        setAuthChecked(true)
         return
       }
+
+      // 2. Auto-login via ?role= query param (feedback Excel links)
+      const params = new URLSearchParams(window.location.search)
+      const roleParam = params.get('role')
+      if (roleParam && roleEmails[roleParam]) {
+        const u = await profileLogin(roleEmails[roleParam])
+        if (u) {
+          setUser(u)
+          setAuthChecked(true)
+          return
+        }
+      }
+
+      // 3. No auth → redirect to login
+      setAuthChecked(true)
+      router.push('/login')
     }
 
-    const u = getUser()
-    if (!u) {
-      router.push('/login')
-      return
-    }
-    setUser(u)
+    checkAuth()
   }, [router, isOnboarding])
 
   // Onboarding pages render without sidebar/topbar
