@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { getUser } from '@/lib/auth'
+import { getUser, profileLogin } from '@/lib/auth'
 import { User } from '@/lib/types'
 import Sidebar from '@/components/Sidebar'
 import TopBar from '@/components/TopBar'
@@ -16,6 +16,26 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (isOnboarding) return // Onboarding pages don't require auth
+
+    // Auto-login via ?role= query param (for feedback Excel links)
+    const params = new URLSearchParams(window.location.search)
+    const roleParam = params.get('role')
+    if (roleParam && !getUser()) {
+      const roleEmails: Record<string, string> = {
+        opdrachtgever: 'demo@bedrijf.nl',
+        scout: 'scout@refurzy.com',
+        kandidaat: 'kandidaat@email.com',
+        admin: 'admin@refurzy.com',
+      }
+      const email = roleEmails[roleParam]
+      if (email) {
+        profileLogin(email).then(u => {
+          if (u) setUser(u)
+        })
+        return
+      }
+    }
+
     const u = getUser()
     if (!u) {
       router.push('/login')
