@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { getUser, profileLogin } from '@/lib/auth'
+import { getUser } from '@/lib/auth'
 import { User } from '@/lib/types'
 import Sidebar from '@/components/Sidebar'
 import TopBar from '@/components/TopBar'
@@ -25,33 +25,37 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
       admin: 'admin@refurzy.com',
     }
 
-    async function checkAuth() {
-      // 1. Already logged in?
-      const existing = getUser()
-      if (existing) {
-        setUser(existing)
+    // 1. Already logged in?
+    const existing = getUser()
+    if (existing) {
+      setUser(existing)
+      setAuthChecked(true)
+      return
+    }
+
+    // 2. Auto-login via ?role= query param (feedback Excel links)
+    const params = new URLSearchParams(window.location.search)
+    const roleParam = params.get('role')
+    if (roleParam && roleEmails[roleParam]) {
+      // Directly set sessionStorage — no API call needed for demo
+      const demoUsers: Record<string, User> = {
+        opdrachtgever: { email: 'demo@bedrijf.nl', name: 'Daan Verhoeven', role: 'opdrachtgever', company: 'TechVentures B.V.' },
+        scout: { email: 'scout@refurzy.com', name: 'Lisa de Groot', role: 'scout' },
+        kandidaat: { email: 'kandidaat@email.com', name: 'Thomas Bakker', role: 'kandidaat' },
+        admin: { email: 'admin@refurzy.com', name: 'Refurzy Admin', role: 'admin', company: 'Refurzy B.V.' },
+      }
+      const u = demoUsers[roleParam]
+      if (u) {
+        sessionStorage.setItem('refurzy_user', JSON.stringify(u))
+        setUser(u)
         setAuthChecked(true)
         return
       }
-
-      // 2. Auto-login via ?role= query param (feedback Excel links)
-      const params = new URLSearchParams(window.location.search)
-      const roleParam = params.get('role')
-      if (roleParam && roleEmails[roleParam]) {
-        const u = await profileLogin(roleEmails[roleParam])
-        if (u) {
-          setUser(u)
-          setAuthChecked(true)
-          return
-        }
-      }
-
-      // 3. No auth → redirect to login
-      setAuthChecked(true)
-      router.push('/login')
     }
 
-    checkAuth()
+    // 3. No auth → redirect to login
+    setAuthChecked(true)
+    router.push('/login')
   }, [router, isOnboarding])
 
   // Onboarding pages render without sidebar/topbar
