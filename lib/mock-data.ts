@@ -14,7 +14,7 @@ export const vacatures: Vacature[] = [
     createdAt: '2026-03-01',
     pmsCompleted: true,
     exclusiviteit: true,
-    scoutVergoeding: 6750,
+    scoutVergoeding: 4500,
     hardeCriteria: {
       opleidingsniveau: 'HBO',
       minimaleErvaring: '5-10 jaar',
@@ -126,7 +126,7 @@ export const vacatures: Vacature[] = [
     createdAt: '2026-03-10',
     pmsCompleted: true,
     exclusiviteit: false,
-    scoutVergoeding: 5400,
+    scoutVergoeding: 3600,
     hardeCriteria: {
       opleidingsniveau: 'HBO',
       minimaleErvaring: '5-10 jaar',
@@ -234,7 +234,7 @@ export const allVacatures: Vacature[] = [
     createdAt: '2026-03-05',
     pmsCompleted: true,
     exclusiviteit: false,
-    scoutVergoeding: 3600,
+    scoutVergoeding: 2400,
     hardeCriteria: {
       opleidingsniveau: 'HBO',
       minimaleErvaring: '2-5 jaar',
@@ -285,7 +285,7 @@ export const allVacatures: Vacature[] = [
     createdAt: '2026-03-12',
     pmsCompleted: true,
     exclusiviteit: true,
-    scoutVergoeding: 8100,
+    scoutVergoeding: 6750,
     hardeCriteria: {
       opleidingsniveau: 'WO',
       minimaleErvaring: '5-10 jaar',
