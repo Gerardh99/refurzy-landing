@@ -24,6 +24,8 @@ export interface Vacature {
   kandidaten: KandidaatMatch[]
   createdAt: string
   pmsCompleted: boolean
+  exclusiviteit?: boolean
+  scoutVergoeding?: number
 }
 
 export interface TaalEis {

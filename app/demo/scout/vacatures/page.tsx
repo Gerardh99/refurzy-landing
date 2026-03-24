@@ -353,6 +353,8 @@ export default function ScoutVacatures() {
 function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle: () => void }) {
   const contractType = vacatureContractTypes[v.id] || 'Vast'
   const werkmodel = vacatureWerkmodellen[v.id] || 'Hybride'
+  const fee = v.scoutVergoeding ?? 0
+  const hasExcl = v.exclusiviteit === true
 
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-6 flex items-start justify-between gap-4 hover:border-purple/30 transition-colors">
@@ -375,13 +377,24 @@ function VacatureCard({ v, isFav, onToggle }: { v: any; isFav: boolean; onToggle
           <span className="text-sm bg-slate-100 text-ink px-2.5 py-0.5 rounded-full font-medium">{v.hardeCriteria.minimaleErvaring}</span>
         </div>
       </Link>
-      <button
-        onClick={onToggle}
-        className={`text-2xl transition-colors flex-shrink-0 ${isFav ? 'text-cyan' : 'text-ink-muted hover:text-cyan/60'}`}
-        aria-label={isFav ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'}
-      >
-        {isFav ? '\u2605' : '\u2606'}
-      </button>
+      <div className="flex flex-col items-end gap-2 flex-shrink-0">
+        <button
+          onClick={onToggle}
+          className={`text-2xl transition-colors ${isFav ? 'text-cyan' : 'text-ink-muted hover:text-cyan/60'}`}
+          aria-label={isFav ? 'Verwijder uit favorieten' : 'Voeg toe aan favorieten'}
+        >
+          {isFav ? '\u2605' : '\u2606'}
+        </button>
+        {fee > 0 && (
+          <div className="text-right">
+            <p className="text-lg font-bold text-green-600">{'\u20AC'}{fee.toLocaleString('nl-NL')}{hasExcl ? ' *' : ''}</p>
+            <p className="text-xs text-ink-light mt-0.5">
+              Exclusiviteit kandidaat: <span className={`font-semibold ${hasExcl ? 'text-green-600' : 'text-ink-muted'}`}>{hasExcl ? 'Ja' : 'Nee'}</span>
+            </p>
+            {hasExcl && <p className="text-[10px] text-ink-muted">* incl. exclusiviteitstoeslag</p>}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
