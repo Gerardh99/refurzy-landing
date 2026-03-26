@@ -63,18 +63,18 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy text-white font-[Poppins]">
+    <div className="min-h-screen bg-[#FAFBFE] text-slate-800 font-[Poppins]">
       {/* ═══ NAVIGATION ═══ */}
-      <nav className="fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md border-b border-purple/10">
+      <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between relative">
           <Link href="/homepage">
             <img src="/logo-white.png" alt="Refurzy" className="h-7" />
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm text-gray-300 absolute left-1/2 -translate-x-1/2">
-            <a href="#hoe-het-werkt" className="hover:text-white transition-colors">{t('nav.howItWorks', lang)}</a>
-            <a href="#pricing" className="hover:text-white transition-colors">{t('nav.pricing', lang)}</a>
-            <Link href="/wetenschap" className="hover:text-white transition-colors">{t('nav.science', lang)}</Link>
-            <a href="#faq" className="hover:text-white transition-colors">{t('nav.faq', lang)}</a>
+          <div className="hidden md:flex items-center gap-6 text-sm text-slate-500 absolute left-1/2 -translate-x-1/2">
+            <a href="#hoe-het-werkt" className="hover:text-slate-800 transition-colors">{t('nav.howItWorks', lang)}</a>
+            <a href="#pricing" className="hover:text-slate-800 transition-colors">{t('nav.pricing', lang)}</a>
+            <Link href="/wetenschap" className="hover:text-slate-800 transition-colors">{t('nav.science', lang)}</Link>
+            <a href="#faq" className="hover:text-slate-800 transition-colors">{t('nav.faq', lang)}</a>
           </div>
           <div className="flex items-center gap-3">
             <LangToggle lang={lang} setLang={changeLang} />
@@ -87,13 +87,7 @@ export default function HomePage() {
 
       {/* ═══ HERO ═══ */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute w-[600px] h-[600px] bg-cyan rounded-full filter blur-[100px] opacity-15 -top-[200px] -right-[100px] animate-pulse" style={{ animationDuration: '20s' }} />
-          <div className="absolute w-[500px] h-[500px] bg-purple rounded-full filter blur-[100px] opacity-15 -bottom-[150px] -left-[100px] animate-pulse" style={{ animationDuration: '25s' }} />
-          <div className="absolute w-[350px] h-[350px] bg-[#06BAFF] rounded-full filter blur-[100px] opacity-15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDuration: '18s' }} />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-2">
             <span className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent">
               {t('hero.tagline', lang).split('.')[0]}.
@@ -101,17 +95,17 @@ export default function HomePage() {
             <br />
             {t('hero.tagline', lang).split('.')[1]?.trim()}.
           </h1>
-          <p className="text-lg md:text-xl text-[rgba(249,251,255,0.65)] font-normal mb-2 mt-6">
+          <p className="text-lg md:text-xl text-slate-500 font-normal mb-2 mt-6">
             {t('hero.h1a', lang)} {t('hero.h1b', lang)}
           </p>
           <p className="text-lg md:text-xl text-cyan font-semibold mb-8">
             {t('hero.roi', lang)}
           </p>
 
-          <p className="text-base md:text-lg text-[rgba(249,251,255,0.65)] font-normal max-w-2xl mx-auto mb-4 leading-relaxed">
+          <p className="text-base md:text-lg text-slate-500 font-normal max-w-2xl mx-auto mb-4 leading-relaxed">
             {t('hero.sub1', lang)}
           </p>
-          <p className="text-base md:text-lg text-[rgba(249,251,255,0.65)] font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base md:text-lg text-slate-500 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
             {t('hero.sub2', lang)}
           </p>
 
@@ -119,25 +113,25 @@ export default function HomePage() {
             <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
               {t('hero.ctaEmployer', lang)}
             </Link>
-            <Link href="/demo/onboarding/scout" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
+            <Link href="/demo/onboarding/scout" className="bg-purple/10 text-purple font-semibold px-8 py-4 rounded-[10px] text-base border border-slate-200 hover:bg-purple/15 transition-colors">
               {t('hero.ctaScout', lang)}
             </Link>
           </div>
 
           {/* Trust indicators */}
-          <div className="flex items-center justify-center gap-8 text-sm text-gray-300 mb-4">
+          <div className="flex items-center justify-center gap-8 text-sm text-slate-500 mb-4">
             <span className="flex items-center gap-2">{t('hero.trust1', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust2', lang)}</span>
             <span className="flex items-center gap-2">{t('hero.trust3', lang)}</span>
           </div>
-          <p className="text-[10px] text-gray-300 max-w-lg mx-auto">
+          <p className="text-[10px] text-slate-500 max-w-lg mx-auto">
             {t('hero.sources', lang)}
           </p>
         </div>
       </section>
 
       {/* ═══ SOCIAL PROOF BAR ═══ */}
-      <section className="border-y border-purple/10 bg-navy-light/50 py-8">
+      <section className="border-y border-slate-200 bg-slate-50 py-8">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { value: '50–200%', label: t('stats.mishireCost', lang) },
@@ -147,7 +141,7 @@ export default function HomePage() {
           ].map(s => (
             <div key={s.label}>
               <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan to-purple bg-clip-text text-transparent">{s.value}</div>
-              <div className="text-xs text-gray-300 mt-1">{s.label}</div>
+              <div className="text-xs text-slate-500 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -161,7 +155,7 @@ export default function HomePage() {
               {t('problem.label', lang)}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('problem.title', lang)}</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">{t('problem.subtitle', lang)}</p>
+            <p className="text-slate-500 max-w-2xl mx-auto">{t('problem.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -173,11 +167,11 @@ export default function HomePage() {
               { icon: '😤', title: t('pain.managers.title', lang), desc: t('pain.managers.desc', lang) },
               { icon: '🏜️', title: t('pain.market.title', lang), desc: t('pain.market.desc', lang) },
             ].map(pain => (
-              <div key={pain.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 hover:border-orange/20 transition-colors group">
+              <div key={pain.title} className="bg-white shadow-sm rounded-2xl border border-slate-200 p-6 hover:border-orange/30 hover:shadow-md transition-all group">
                 <div className="text-2xl mb-4">{pain.icon}</div>
-                <h3 className="text-white font-semibold mb-2">{pain.title}</h3>
-                <p className="text-sm text-gray-300 leading-relaxed mb-2">{pain.desc}</p>
-                {pain.source && <p className="text-[10px] text-gray-300 italic">{pain.source}</p>}
+                <h3 className="text-slate-800 font-semibold mb-2">{pain.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed mb-2">{pain.desc}</p>
+                {pain.source && <p className="text-[10px] text-slate-500 italic">{pain.source}</p>}
               </div>
             ))}
           </div>
@@ -189,20 +183,20 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('how.title', lang)}</h2>
-            <p className="text-gray-300 max-w-xl mx-auto">{t('how.subtitle', lang)}</p>
+            <p className="text-slate-500 max-w-xl mx-auto">{t('how.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Opdrachtgever */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-cyan/20 transition-colors group flex flex-col">
-              <div className="w-14 h-14 rounded-xl bg-cyan/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🏢</div>
-              <h3 className="text-lg font-semibold mb-3 text-white">{t('how.employer', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-300 flex-1">
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-8 hover:border-cyan/30 hover:shadow-md transition-all group flex flex-col">
+              <div className="w-14 h-14 rounded-xl bg-cyan/10 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🏢</div>
+              <h3 className="text-lg font-semibold mb-3 text-slate-800">{t('how.employer', lang)}</h3>
+              <ol className="space-y-3 text-sm text-slate-500 flex-1">
                 <li className="flex gap-3"><span className="text-cyan font-bold">1.</span> {t('how.employer.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">2.</span> {t('how.employer.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-cyan font-bold">3.</span> {t('how.employer.3', lang)}</li>
               </ol>
-              <div className="mt-5 pt-5 border-t border-cyan/10">
+              <div className="mt-5 pt-5 border-t border-cyan/20">
                 <p className="text-xs text-cyan font-medium">
                   {lang === 'nl'
                     ? '💰 No cure, no pay. Geen risico, alleen resultaat.'
@@ -212,16 +206,16 @@ export default function HomePage() {
             </div>
 
             {/* Talent Scout */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-purple/20 transition-colors group flex flex-col">
-              <div className="w-14 h-14 rounded-xl bg-purple/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🔍</div>
-              <h3 className="text-lg font-semibold mb-3 text-white">{t('how.scout', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-300 flex-1">
-                <li className="flex gap-3"><span className="text-purple-light font-bold">1.</span> {t('how.scout.1', lang)}</li>
-                <li className="flex gap-3"><span className="text-purple-light font-bold">2.</span> {t('how.scout.2', lang)}</li>
-                <li className="flex gap-3"><span className="text-purple-light font-bold">3.</span> {t('how.scout.3', lang)}</li>
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-8 hover:border-purple/30 hover:shadow-md transition-all group flex flex-col">
+              <div className="w-14 h-14 rounded-xl bg-purple/10 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">🔍</div>
+              <h3 className="text-lg font-semibold mb-3 text-slate-800">{t('how.scout', lang)}</h3>
+              <ol className="space-y-3 text-sm text-slate-500 flex-1">
+                <li className="flex gap-3"><span className="text-purple font-bold">1.</span> {t('how.scout.1', lang)}</li>
+                <li className="flex gap-3"><span className="text-purple font-bold">2.</span> {t('how.scout.2', lang)}</li>
+                <li className="flex gap-3"><span className="text-purple font-bold">3.</span> {t('how.scout.3', lang)}</li>
               </ol>
-              <div className="mt-5 pt-5 border-t border-purple/10">
-                <p className="text-xs text-purple-light font-medium">
+              <div className="mt-5 pt-5 border-t border-slate-200">
+                <p className="text-xs text-purple font-medium">
                   {lang === 'nl'
                     ? '🌍 Amsterdam, Bali of Barcelona — jouw laptop is je kantoor.'
                     : '🌍 Amsterdam, Bali or Barcelona — your laptop is your office.'}
@@ -230,15 +224,15 @@ export default function HomePage() {
             </div>
 
             {/* Kandidaat */}
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 hover:border-orange/20 transition-colors group flex flex-col">
-              <div className="w-14 h-14 rounded-xl bg-orange/15 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">👤</div>
-              <h3 className="text-lg font-semibold mb-3 text-white">{t('how.candidate', lang)}</h3>
-              <ol className="space-y-3 text-sm text-gray-300 flex-1">
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-8 hover:border-orange/30 hover:shadow-md transition-all group flex flex-col">
+              <div className="w-14 h-14 rounded-xl bg-orange/10 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">👤</div>
+              <h3 className="text-lg font-semibold mb-3 text-slate-800">{t('how.candidate', lang)}</h3>
+              <ol className="space-y-3 text-sm text-slate-500 flex-1">
                 <li className="flex gap-3"><span className="text-orange font-bold">1.</span> {t('how.candidate.1', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">2.</span> {t('how.candidate.2', lang)}</li>
                 <li className="flex gap-3"><span className="text-orange font-bold">3.</span> {t('how.candidate.3', lang)}</li>
               </ol>
-              <div className="mt-5 pt-5 border-t border-orange/10">
+              <div className="mt-5 pt-5 border-t border-orange/20">
                 <p className="text-xs text-orange font-medium">
                   {lang === 'nl'
                     ? '✨ Gratis. Geen sollicitatiestress. Alleen kansen die bij je passen.'
@@ -251,14 +245,14 @@ export default function HomePage() {
       </section>
 
       {/* ═══ DE OPLOSSING ═══ */}
-      <section id="voor-wie" className="py-24 bg-navy-light/30">
+      <section id="voor-wie" className="py-24 bg-slate-50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-block px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-xs font-semibold mb-4 tracking-wider uppercase">
+            <div className="inline-block px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 text-xs font-semibold mb-4 tracking-wider uppercase">
               {t('solution.label', lang)}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('solution.title', lang)}</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">{t('solution.subtitle', lang)}</p>
+            <p className="text-slate-500 max-w-2xl mx-auto">{t('solution.subtitle', lang)}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -271,12 +265,12 @@ export default function HomePage() {
               { icon: '⏱️', title: t('usp.retention.title', lang), desc: t('usp.retention.desc', lang), source: 'SHRM 2024 · Kristof-Brown et al., 2005' },
               { icon: '🛡️', title: t('usp.anonymous.title', lang), desc: t('usp.anonymous.desc', lang) },
             ].map(usp => (
-              <div key={usp.title} className="bg-navy-light rounded-2xl border border-purple/10 p-6 flex gap-5 hover:border-cyan/20 transition-colors">
+              <div key={usp.title} className="bg-white shadow-sm rounded-2xl border border-slate-200 p-6 flex gap-5 hover:border-cyan/30 hover:shadow-md transition-all">
                 <div className="text-3xl flex-shrink-0">{usp.icon}</div>
                 <div>
-                  <h3 className="text-white font-semibold mb-2">{usp.title}</h3>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-1">{usp.desc}</p>
-                  {usp.source && <p className="text-[10px] text-gray-300 italic">{usp.source}</p>}
+                  <h3 className="text-slate-800 font-semibold mb-2">{usp.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-1">{usp.desc}</p>
+                  {usp.source && <p className="text-[10px] text-slate-500 italic">{usp.source}</p>}
                 </div>
               </div>
             ))}
@@ -294,7 +288,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {lang === 'nl' ? 'Bewezen resultaten voor opdrachtgevers' : 'Proven results for employers'}
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-slate-500 max-w-2xl mx-auto">
               {lang === 'nl'
                 ? 'Onafhankelijk onderzoek van toonaangevende instituten toont aan wat betere matching oplevert.'
                 : 'Independent research from leading institutions shows what better matching delivers.'}
@@ -303,28 +297,28 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {/* Lager verloop */}
-            <div className="bg-navy-light rounded-2xl border border-cyan/20 p-8 text-center hover:border-cyan/40 transition-colors">
-              <div className="w-16 h-16 rounded-2xl bg-cyan/15 flex items-center justify-center text-3xl mx-auto mb-5">📉</div>
+            <div className="bg-white shadow-sm rounded-2xl border border-cyan/20 p-8 text-center hover:border-cyan/30 hover:shadow-md transition-all">
+              <div className="w-16 h-16 rounded-2xl bg-cyan/10 flex items-center justify-center text-3xl mx-auto mb-5">📉</div>
               <div className="text-4xl font-bold text-cyan mb-2">39–59%</div>
-              <p className="text-white font-semibold mb-3">
+              <p className="text-slate-800 font-semibold mb-3">
                 {lang === 'nl' ? 'Minder verloop' : 'Less turnover'}
               </p>
-              <p className="text-sm text-gray-300 leading-relaxed mb-4">
+              <p className="text-sm text-slate-500 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Bedrijven die pre-hire assessments inzetten rapporteren 39% minder verloop. Organisaties met hoge betrokkenheid zien zelfs 59% minder uitstroom.'
                   : 'Companies using pre-hire assessments report 39% less turnover. Organizations with high engagement see up to 59% less attrition.'}
               </p>
-              <p className="text-[10px] text-gray-300 italic">Aberdeen Group, 2015 · Gallup</p>
+              <p className="text-[10px] text-slate-500 italic">Aberdeen Group, 2015 · Gallup</p>
             </div>
 
             {/* Lagere mis-hire kosten */}
-            <div className="bg-navy-light rounded-2xl border border-purple/20 p-8 text-center hover:border-purple/40 transition-colors">
-              <div className="w-16 h-16 rounded-2xl bg-purple/15 flex items-center justify-center text-3xl mx-auto mb-5">💰</div>
-              <div className="text-4xl font-bold text-purple-light mb-2">€44K–€175K</div>
-              <p className="text-white font-semibold mb-3">
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-8 text-center hover:border-purple/30 hover:shadow-md transition-all">
+              <div className="w-16 h-16 rounded-2xl bg-purple/10 flex items-center justify-center text-3xl mx-auto mb-5">💰</div>
+              <div className="text-4xl font-bold text-purple mb-2">€44K–€175K</div>
+              <p className="text-slate-800 font-semibold mb-3">
                 {lang === 'nl' ? 'Kosten per mis-hire' : 'Cost per mis-hire'}
               </p>
-              <p className="text-sm text-gray-300 leading-relaxed mb-4">
+              <p className="text-sm text-slate-500 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Eén verkeerde aanname kost €44.000–€175.000 (o.b.v. bruto maandsalaris €5.000). Door P-O fit vooraf te meten, daalt het verloop met 39–59%. Dat bespaart tot €1.370.000 per jaar per 100 medewerkers.'
                   : 'One bad hire costs €44,000–€175,000 (based on €5,000 gross monthly salary). By measuring P-O fit upfront, turnover drops 39–59%. That saves up to €1,370,000 per year per 100 employees.'}
@@ -333,7 +327,7 @@ export default function HomePage() {
                 {showMisHireDetail ? 'Minder tonen ↑' : 'Waarom zo hoog? ↓'}
               </button>
               {showMisHireDetail && (
-                <div className="mt-2 text-xs text-gray-300 space-y-1 text-left">
+                <div className="mt-2 text-xs text-slate-500 space-y-1 text-left">
                   <p>Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten, opgebouwd uit:</p>
                   <ul className="list-disc list-inside space-y-0.5">
                     <li>Herwervingskosten — vacature, jobboards, selectie opnieuw</li>
@@ -343,58 +337,58 @@ export default function HomePage() {
                     <li>Teamschade — moreel, kennis en relaties verdwijnen</li>
                     <li>Ontslagkosten (VSO/transitievergoeding) — gemiddeld 1–3 bruto maandsalarissen extra</li>
                   </ul>
-                  <p className="text-yellow-500/80 text-[10px] mt-1">⚠️ De SHRM-schatting is gebaseerd op Amerikaans onderzoek. In Nederland komen VSO-kosten hier vaak nog bovenop.</p>
+                  <p className="text-yellow-600 text-[10px] mt-1">⚠️ De SHRM-schatting is gebaseerd op Amerikaans onderzoek. In Nederland komen VSO-kosten hier vaak nog bovenop.</p>
                   <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
                 </div>
               )}
-              <p className="text-[10px] text-gray-300 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
+              <p className="text-[10px] text-slate-500 italic">SHRM, 2024 · Kristof-Brown et al., 2005</p>
             </div>
 
             {/* Hogere productiviteit */}
-            <div className="bg-navy-light rounded-2xl border border-orange/20 p-8 text-center hover:border-orange/40 transition-colors">
-              <div className="w-16 h-16 rounded-2xl bg-orange/15 flex items-center justify-center text-3xl mx-auto mb-5">🚀</div>
+            <div className="bg-white shadow-sm rounded-2xl border border-orange/20 p-8 text-center hover:border-orange/30 hover:shadow-md transition-all">
+              <div className="w-16 h-16 rounded-2xl bg-orange/10 flex items-center justify-center text-3xl mx-auto mb-5">🚀</div>
               <div className="text-4xl font-bold text-orange mb-2">+</div>
-              <p className="text-white font-semibold mb-3">
+              <p className="text-slate-800 font-semibold mb-3">
                 {lang === 'nl' ? 'Hogere productiviteit' : 'Higher productivity'}
               </p>
-              <p className="text-sm text-gray-300 leading-relaxed mb-4">
+              <p className="text-sm text-slate-500 leading-relaxed mb-4">
                 {lang === 'nl'
                   ? 'Medewerkers die passen bij de organisatie zijn bevlogener, en werkbevlogenheid voorspelt direct hogere werkprestaties. Ze zijn productiever, minder vaak ziek en presteren beter in hun team.'
                   : 'Employees who fit the organization are more engaged, and engagement directly predicts higher job performance. They are more productive, take fewer sick days, and perform better.'}
               </p>
-              <p className="text-[10px] text-gray-300 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
+              <p className="text-[10px] text-slate-500 italic">Halbesleben & Wheeler, 2008 · VU Amsterdam, 2026</p>
             </div>
           </div>
 
           {/* Extra bewijs-strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+            <div className="bg-slate-100 rounded-xl border border-slate-200 p-4 text-center">
               <div className="text-xl font-bold text-cyan">4×</div>
-              <p className="text-[11px] text-gray-300 mt-1">
+              <p className="text-[11px] text-slate-500 mt-1">
                 {lang === 'nl' ? 'meer kans dat mensen blijven bij goede cultuurmatch' : 'more likely to stay with good culture match'}
               </p>
-              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2024</p>
+              <p className="text-[9px] text-slate-500 mt-1">SHRM, 2024</p>
             </div>
-            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
-              <div className="text-xl font-bold text-purple-light">N=309</div>
-              <p className="text-[11px] text-gray-300 mt-1">
+            <div className="bg-slate-100 rounded-xl border border-slate-200 p-4 text-center">
+              <div className="text-xl font-bold text-purple">N=309</div>
+              <p className="text-[11px] text-slate-500 mt-1">
                 {lang === 'nl' ? 'werknemers gevalideerd door VU Amsterdam' : 'employees validated by VU Amsterdam'}
               </p>
-              <p className="text-[9px] text-gray-300 mt-1">VU Amsterdam, 2026</p>
+              <p className="text-[9px] text-slate-500 mt-1">VU Amsterdam, 2026</p>
             </div>
-            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+            <div className="bg-slate-100 rounded-xl border border-slate-200 p-4 text-center">
               <div className="text-xl font-bold text-orange">68,5</div>
-              <p className="text-[11px] text-gray-300 mt-1">
+              <p className="text-[11px] text-slate-500 mt-1">
                 {lang === 'nl' ? 'dagen gemiddelde time-to-hire — sneller met data' : 'days average time-to-hire — faster with data'}
               </p>
-              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2025</p>
+              <p className="text-[9px] text-slate-500 mt-1">SHRM, 2025</p>
             </div>
-            <div className="bg-navy-light/70 rounded-xl border border-purple/10 p-4 text-center">
+            <div className="bg-slate-100 rounded-xl border border-slate-200 p-4 text-center">
               <div className="text-xl font-bold text-cyan">15 🌍</div>
-              <p className="text-[11px] text-gray-300 mt-1">
+              <p className="text-[11px] text-slate-500 mt-1">
                 {lang === 'nl' ? 'landen bevestigen: cultuurmatch = retentie' : 'countries confirm: culture match = retention'}
               </p>
-              <p className="text-[9px] text-gray-300 mt-1">SHRM, 2024 · N=11.080</p>
+              <p className="text-[9px] text-slate-500 mt-1">SHRM, 2024 · N=11.080</p>
             </div>
           </div>
 
@@ -412,20 +406,20 @@ export default function HomePage() {
           <div className="bg-gradient-to-r from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-3xl border border-cyan/20 p-10 md:p-16">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="inline-block px-3 py-1 bg-cyan/15 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4">
+                <div className="inline-block px-3 py-1 bg-cyan/10 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4">
                   {t('scan.badge', lang)}
                 </div>
                 <h2 className="text-3xl font-bold mb-4">{t('scan.title', lang)}</h2>
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className="text-slate-500 mb-6 leading-relaxed">
                   {t('scan.desc', lang)}
                 </p>
-                <ul className="space-y-3 text-sm text-gray-300">
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item1', lang)}</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item2', lang)}</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item3', lang)}</li>
-                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/15 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item4', lang)}</li>
+                <ul className="space-y-3 text-sm text-slate-500">
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/10 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item1', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/10 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item2', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/10 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item3', lang)}</li>
+                  <li className="flex items-center gap-3"><span className="w-6 h-6 rounded-full bg-cyan/10 text-cyan flex items-center justify-center text-xs">✓</span> {t('scan.item4', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-300 mt-4 italic">{t('scan.footnote', lang)}</p>
+                <p className="text-[10px] text-slate-500 mt-4 italic">{t('scan.footnote', lang)}</p>
               </div>
               <div className="flex justify-center">
                 <div className="relative">
@@ -435,7 +429,7 @@ export default function HomePage() {
                       <div className="text-sm text-white/70 font-light mt-1">M-Score</div>
                     </div>
                   </div>
-                  <div className="absolute -top-2 -right-2 w-12 h-12 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-400 text-lg">✓</div>
+                  <div className="absolute -top-2 -right-2 w-12 h-12 rounded-full bg-green-500/20 border border-green-200 flex items-center justify-center text-green-600 text-lg">✓</div>
                 </div>
               </div>
             </div>
@@ -443,48 +437,48 @@ export default function HomePage() {
 
           {/* Wetenschap samenvatting */}
           <div className="mt-12 grid md:grid-cols-3 gap-6">
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-6 text-center">
               <div className="text-3xl font-bold text-cyan mb-2">{t('scan.stat1.value', lang)}</div>
-              <p className="text-sm text-gray-300">{t('scan.stat1.label', lang)}</p>
-              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat1.sub', lang)}</p>
+              <p className="text-sm text-slate-500">{t('scan.stat1.label', lang)}</p>
+              <p className="text-[10px] text-slate-500 mt-2">{t('scan.stat1.sub', lang)}</p>
             </div>
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
-              <div className="text-3xl font-bold text-purple-light mb-2">39–59%</div>
-              <p className="text-sm text-gray-300">{t('scan.stat2.label', lang)}</p>
-              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat2.sub', lang)}</p>
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-6 text-center">
+              <div className="text-3xl font-bold text-purple mb-2">39–59%</div>
+              <p className="text-sm text-slate-500">{t('scan.stat2.label', lang)}</p>
+              <p className="text-[10px] text-slate-500 mt-2">{t('scan.stat2.sub', lang)}</p>
             </div>
-            <div className="bg-navy-light rounded-2xl border border-purple/10 p-6 text-center">
+            <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-6 text-center">
               <div className="text-3xl font-bold text-orange mb-2">r = −.35</div>
-              <p className="text-sm text-gray-300">{t('scan.stat3.label', lang)}</p>
-              <p className="text-[10px] text-gray-300 mt-2">{t('scan.stat3.sub', lang)}</p>
+              <p className="text-sm text-slate-500">{t('scan.stat3.label', lang)}</p>
+              <p className="text-[10px] text-slate-500 mt-2">{t('scan.stat3.sub', lang)}</p>
             </div>
           </div>
 
           {/* Hoe het verschilt */}
-          <div className="mt-12 bg-navy-light rounded-2xl border border-purple/10 p-8">
-            <h3 className="text-xl font-bold text-white mb-6 text-center">{t('scan.compare.title', lang)}</h3>
+          <div className="mt-12 bg-white shadow-sm rounded-2xl border border-slate-200 p-8">
+            <h3 className="text-xl font-bold text-slate-800 mb-6 text-center">{t('scan.compare.title', lang)}</h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="border border-red-500/20 rounded-xl p-5 bg-red-500/5">
-                <p className="text-red-400 font-semibold text-sm mb-3">{t('scan.trad.label', lang)}</p>
-                <ul className="space-y-2 text-sm text-gray-300">
+                <p className="text-red-600 font-semibold text-sm mb-3">{t('scan.trad.label', lang)}</p>
+                <ul className="space-y-2 text-sm text-slate-500">
                   <li>{t('scan.trad.1', lang)}</li>
                   <li>{t('scan.trad.2', lang)}</li>
                   <li>{t('scan.trad.3', lang)}</li>
                   <li>{t('scan.trad.4', lang)}</li>
                   <li>{t('scan.trad.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-300 mt-3 italic">SHRM 2025 · Leadership IQ</p>
+                <p className="text-[10px] text-slate-500 mt-3 italic">SHRM 2025 · Leadership IQ</p>
               </div>
               <div className="border border-cyan/20 rounded-xl p-5 bg-cyan/5">
                 <p className="text-cyan font-semibold text-sm mb-3">{t('scan.ref.label', lang)}</p>
-                <ul className="space-y-2 text-sm text-gray-300">
+                <ul className="space-y-2 text-sm text-slate-500">
                   <li>{t('scan.ref.1', lang)}</li>
                   <li>{t('scan.ref.2', lang)}</li>
                   <li>{t('scan.ref.3', lang)}</li>
                   <li>{t('scan.ref.4', lang)}</li>
                   <li>{t('scan.ref.5', lang)}</li>
                 </ul>
-                <p className="text-[10px] text-gray-300 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
+                <p className="text-[10px] text-slate-500 mt-3 italic">VU Amsterdam · SHRM · Aberdeen Group</p>
               </div>
             </div>
           </div>
@@ -492,21 +486,21 @@ export default function HomePage() {
       </section>
 
       {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-24 bg-navy-light/30">
+      <section id="pricing" className="py-24 bg-slate-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('pricing.title', lang)}</h2>
-          <p className="text-gray-300 max-w-xl mx-auto mb-12">
+          <p className="text-slate-500 max-w-xl mx-auto mb-12">
             {t('pricing.subtitle', lang)}
           </p>
 
-          <div className="bg-navy-light rounded-2xl border border-purple/10 p-8 mb-8 overflow-x-auto">
+          <div className="bg-white shadow-sm rounded-2xl border border-slate-200 p-8 mb-8 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-purple/10">
-                  <th className="text-left py-3 px-4 text-gray-300 font-medium">{t('pricing.colExp', lang)}</th>
-                  <th className="text-center py-3 px-4 text-gray-300 font-medium">MBO</th>
-                  <th className="text-center py-3 px-4 text-gray-300 font-medium">HBO</th>
-                  <th className="text-center py-3 px-4 text-gray-300 font-medium">WO</th>
+                <tr className="border-b border-slate-200">
+                  <th className="text-left py-3 px-4 text-slate-500 font-medium">{t('pricing.colExp', lang)}</th>
+                  <th className="text-center py-3 px-4 text-slate-500 font-medium">MBO</th>
+                  <th className="text-center py-3 px-4 text-slate-500 font-medium">HBO</th>
+                  <th className="text-center py-3 px-4 text-slate-500 font-medium">WO</th>
                 </tr>
               </thead>
               <tbody>
@@ -516,11 +510,11 @@ export default function HomePage() {
                   { exp: t('pricing.row3', lang), mbo: '€5.400', hbo: '€7.200', wo: '€10.800' },
                   { exp: t('pricing.row4', lang), mbo: '€7.200', hbo: '€12.000', wo: '€12.000', equal: true },
                 ].map(row => (
-                  <tr key={row.exp} className="border-b border-purple/5">
-                    <td className="py-3 px-4 text-gray-300 font-medium">{row.exp}</td>
-                    <td className="py-3 px-4 text-center text-white font-semibold">{row.mbo}</td>
-                    <td className={`py-3 px-4 text-center font-semibold ${row.equal ? 'text-cyan' : 'text-white'}`}>{row.hbo}</td>
-                    <td className={`py-3 px-4 text-center font-semibold ${row.equal ? 'text-cyan' : 'text-white'}`}>{row.wo}</td>
+                  <tr key={row.exp} className="border-b border-slate-100">
+                    <td className="py-3 px-4 text-slate-500 font-medium">{row.exp}</td>
+                    <td className="py-3 px-4 text-center text-slate-800 font-semibold">{row.mbo}</td>
+                    <td className={`py-3 px-4 text-center font-semibold ${row.equal ? 'text-cyan' : 'text-slate-800'}`}>{row.hbo}</td>
+                    <td className={`py-3 px-4 text-center font-semibold ${row.equal ? 'text-cyan' : 'text-slate-800'}`}>{row.wo}</td>
                   </tr>
                 ))}
               </tbody>
@@ -531,7 +525,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ BESPARINGSCALCULATOR ═══ */}
-      <section id="calculator" className="py-24 bg-navy-light/30">
+      <section id="calculator" className="py-24 bg-slate-50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-block px-3 py-1 bg-cyan/10 border border-cyan/20 rounded-full text-cyan text-xs font-semibold mb-4 tracking-wider uppercase">
@@ -540,7 +534,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {lang === 'nl' ? 'Bereken uw besparing' : 'Calculate your savings'}
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-slate-500 max-w-2xl mx-auto">
               {lang === 'nl' ? 'Ontdek hoeveel uw organisatie kan besparen met Refurzy' : 'Discover how much your organization can save with Refurzy'}
             </p>
           </div>
@@ -549,7 +543,7 @@ export default function HomePage() {
             {/* Input fields */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-500 mb-2">
                   {lang === 'nl' ? 'Aantal medewerkers' : 'Number of employees'}
                 </label>
                 <input
@@ -558,29 +552,29 @@ export default function HomePage() {
                   value={calcMedewerkersInput}
                   onChange={(e) => setCalcMedewerkersInput(e.target.value.replace(/[^0-9]/g, ''))}
                   onBlur={() => { const v = Math.max(1, Math.min(10000, Number(calcMedewerkersInput) || 1)); setCalcMedewerkersInput(String(v)) }}
-                  className="w-full bg-navy border border-purple/20 rounded-xl px-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-500 mb-2">
                   {lang === 'nl' ? 'Gemiddeld bruto maandsalaris (ex. vakantiegeld)' : 'Average gross monthly salary (excl. holiday allowance)'}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 text-lg font-semibold">&euro;</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg font-semibold">&euro;</span>
                   <input
                     type="text"
                     inputMode="numeric"
                     value={calcSalarisInput}
                     onChange={(e) => setCalcSalarisInput(e.target.value.replace(/[^0-9]/g, ''))}
                     onBlur={() => { const v = Math.max(2000, Math.min(20000, Number(calcSalarisInput) || 2000)); setCalcSalarisInput(String(v)) }}
-                    className="w-full bg-navy border border-purple/20 rounded-xl pl-10 pr-4 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                    className="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-slate-800 text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-500 mb-2">
                   {lang === 'nl' ? 'Huidig verloop (%)' : 'Current turnover (%)'}
                 </label>
                 <div className="relative">
@@ -590,11 +584,11 @@ export default function HomePage() {
                     value={calcVerloopInput}
                     onChange={(e) => setCalcVerloopInput(e.target.value.replace(/[^0-9]/g, ''))}
                     onBlur={() => { const v = Math.max(1, Math.min(50, Number(calcVerloopInput) || 1)); setCalcVerloopInput(String(v)) }}
-                    className="w-full bg-navy border border-purple/20 rounded-xl px-4 pr-10 py-3 text-white text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
+                    className="w-full bg-white border border-slate-300 rounded-xl px-4 pr-10 py-3 text-slate-800 text-lg font-semibold focus:border-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyan/30 transition-colors"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 text-lg font-semibold">%</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg font-semibold">%</span>
                 </div>
-                <p className="text-[11px] text-gray-300 mt-2 leading-relaxed">
+                <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
                   {lang === 'nl'
                     ? 'Het gemiddelde vrijwillige verloop in Nederland is circa 10% per jaar (CBS/Intelligence Group, 2025). De verwachting is dat dit naar 19% gaat stijgen (Mercer, 2025).'
                     : 'The average voluntary turnover in the Netherlands is approximately 10% per year (CBS/Intelligence Group, 2025). It is expected to rise to 19% (Mercer, 2025).'}
@@ -606,7 +600,7 @@ export default function HomePage() {
             <div className="bg-gradient-to-br from-cyan/10 via-[#06BAFF]/10 to-purple/10 rounded-3xl border border-cyan/20 p-8 flex flex-col justify-center">
               {/* Main savings number */}
               <div className="text-center mb-8">
-                <p className="text-sm text-gray-300 mb-3 uppercase tracking-wider font-medium">
+                <p className="text-sm text-slate-500 mb-3 uppercase tracking-wider font-medium">
                   {lang === 'nl' ? 'Geschatte netto besparing per jaar (na aftrek Refurzy kosten)' : 'Estimated net savings per year (after Refurzy costs)'}
                 </p>
                 <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan via-[#06BAFF] to-purple bg-clip-text text-transparent leading-tight">
@@ -615,7 +609,7 @@ export default function HomePage() {
               </div>
 
               {/* Hires context */}
-              <p className="text-xs text-gray-300 text-center mb-6">
+              <p className="text-xs text-slate-500 text-center mb-6">
                 {lang === 'nl'
                   ? `${calcMedewerkers} medewerkers × ${calcVerloop}% verloop = ${calcResults.hiresPerJaar} hires per jaar`
                   : `${calcMedewerkers} employees × ${calcVerloop}% turnover = ${calcResults.hiresPerJaar} hires per year`}
@@ -625,20 +619,20 @@ export default function HomePage() {
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-cyan">{calcResults.roi}%</div>
-                  <p className="text-[11px] text-gray-300 mt-1">Return on Investment</p>
+                  <p className="text-[11px] text-slate-500 mt-1">Return on Investment</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-lg font-bold text-white">{formatEur.format(Math.round(calcResults.directeBesparing))}</div>
-                  <p className="text-[11px] text-gray-300 mt-1">{lang === 'nl' ? 'besparing op bureau fees' : 'savings on agency fees'}</p>
+                  <div className="text-lg font-bold text-slate-800">{formatEur.format(Math.round(calcResults.directeBesparing))}</div>
+                  <p className="text-[11px] text-slate-500 mt-1">{lang === 'nl' ? 'besparing op bureau fees' : 'savings on agency fees'}</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-sm font-bold text-white leading-tight">{formatEur.format(Math.round(calcResults.vijfJaarLow))} &ndash; {formatEur.format(Math.round(calcResults.vijfJaarHigh))}</div>
-                  <p className="text-[11px] text-gray-300 mt-1">{lang === 'nl' ? 'cumulatief over 5 jaar' : 'cumulative over 5 years'}</p>
+                  <div className="text-sm font-bold text-slate-800 leading-tight">{formatEur.format(Math.round(calcResults.vijfJaarLow))} &ndash; {formatEur.format(Math.round(calcResults.vijfJaarHigh))}</div>
+                  <p className="text-[11px] text-slate-500 mt-1">{lang === 'nl' ? 'cumulatief over 5 jaar' : 'cumulative over 5 years'}</p>
                 </div>
               </div>
 
               {/* Footnote */}
-              <p className="text-[10px] text-gray-300 text-center leading-relaxed mb-6">
+              <p className="text-[10px] text-slate-500 text-center leading-relaxed mb-6">
                 {lang === 'nl'
                   ? '* Berekening: medewerkers × verloop% = hires/jaar. 46% mis-hire rate (Leadership IQ), Refurzy voorkomt 39-59% (Aberdeen Group, Gallup). Mis-hire kosten: 50-200% jaarsalaris (SHRM). Bureau fee: 25% vs. Refurzy €4.333.'
                   : '* Calculation: employees × turnover% = hires/year. 46% mis-hire rate (Leadership IQ), Refurzy prevents 39-59% (Aberdeen Group, Gallup). Mis-hire costs: 50-200% annual salary (SHRM). Agency fee: 25% vs. Refurzy €4,333.'}
@@ -650,17 +644,17 @@ export default function HomePage() {
                   {showCalcDetail ? 'Minder tonen ↑' : 'Hoe zijn de kosten van een mis-hire opgebouwd? ↓'}
                 </button>
                 {showCalcDetail && (
-                  <div className="mt-3 bg-navy-light rounded-xl border border-purple/10 p-4 text-left text-xs text-gray-300 space-y-1.5">
-                    <p className="text-gray-300 font-medium">Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM). Dit is opgebouwd uit:</p>
+                  <div className="mt-3 bg-white rounded-xl border border-slate-200 p-4 text-left text-xs text-slate-500 space-y-1.5">
+                    <p className="text-slate-500 font-medium">Een mis-hire kost 50–200% van het jaarsalaris + werkgeverslasten (SHRM). Dit is opgebouwd uit:</p>
                     <ul className="list-disc list-inside space-y-1">
-                      <li><strong className="text-gray-300">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, selectieprocedure opnieuw doorlopen</li>
-                      <li><strong className="text-gray-300">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken onder niveau, de positie staat maanden open</li>
-                      <li><strong className="text-gray-300">Onboarding en training</strong> — alles wat u investeerde in inwerken, cursussen en begeleiding is verloren</li>
-                      <li><strong className="text-gray-300">Managementtijd</strong> — leidinggevenden besteden honderden uren aan coaching en afhandeling</li>
-                      <li><strong className="text-gray-300">Teamschade</strong> — verloop ondermijnt moreel en productiviteit. Kennis en relaties verdwijnen</li>
-                      <li><strong className="text-gray-300">Ontslagkosten (VSO/transitievergoeding)</strong> — in Nederland gemiddeld 1–3 bruto maandsalarissen extra</li>
+                      <li><strong className="text-slate-500">Herwervingskosten</strong> — vacature, jobboards, recruiter-tijd, selectieprocedure opnieuw doorlopen</li>
+                      <li><strong className="text-slate-500">Verloren productiviteit</strong> — de vertrekkende medewerker presteert weken onder niveau, de positie staat maanden open</li>
+                      <li><strong className="text-slate-500">Onboarding en training</strong> — alles wat u investeerde in inwerken, cursussen en begeleiding is verloren</li>
+                      <li><strong className="text-slate-500">Managementtijd</strong> — leidinggevenden besteden honderden uren aan coaching en afhandeling</li>
+                      <li><strong className="text-slate-500">Teamschade</strong> — verloop ondermijnt moreel en productiviteit. Kennis en relaties verdwijnen</li>
+                      <li><strong className="text-slate-500">Ontslagkosten (VSO/transitievergoeding)</strong> — in Nederland gemiddeld 1–3 bruto maandsalarissen extra</li>
                     </ul>
-                    <p className="text-yellow-500/80 text-[11px] mt-2">⚠️ Let op: de SHRM-schatting van 50–200% is gebaseerd op Amerikaans onderzoek, waar ontslagkosten lager zijn. In Nederland komen hier vaak nog VSO-kosten bovenop. De werkelijke kosten per mis-hire liggen daarmee gemiddeld genomen nóg hoger.</p>
+                    <p className="text-yellow-600 text-[11px] mt-2">⚠️ Let op: de SHRM-schatting van 50–200% is gebaseerd op Amerikaans onderzoek, waar ontslagkosten lager zijn. In Nederland komen hier vaak nog VSO-kosten bovenop. De werkelijke kosten per mis-hire liggen daarmee gemiddeld genomen nóg hoger.</p>
                     <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-cyan hover:underline">Bron: SHRM, The Real Costs of Recruitment →</a>
                   </div>
                 )}
@@ -697,16 +691,16 @@ export default function HomePage() {
               { q: t('faq.q9', lang), a: t('faq.a9', lang) },
               { q: t('faq.q10', lang), a: t('faq.a10', lang) },
             ].map((faq, i) => (
-              <div key={i} className="bg-navy-light rounded-2xl border border-purple/10 overflow-hidden">
+              <div key={i} className="bg-white shadow-sm rounded-2xl border border-slate-200 overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between p-5 text-left"
                 >
-                  <span className="text-white font-medium text-sm pr-4">{faq.q}</span>
-                  <span className={`text-gray-300 transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                  <span className="text-slate-800 font-medium text-sm pr-4">{faq.q}</span>
+                  <span className={`text-slate-500 transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5 text-sm text-gray-300 leading-relaxed border-t border-purple/10 pt-4">
+                  <div className="px-5 pb-5 text-sm text-slate-500 leading-relaxed border-t border-slate-200 pt-4">
                     {faq.a}
                   </div>
                 )}
@@ -717,17 +711,17 @@ export default function HomePage() {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section className="py-24 bg-navy-light/30">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('cta.title', lang)}</h2>
-          <p className="text-gray-300 mb-10 max-w-lg mx-auto">
+          <p className="text-slate-500 mb-10 max-w-lg mx-auto">
             {t('cta.subtitle', lang)}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/demo/onboarding/opdrachtgever" className="btn-gradient text-white font-semibold px-8 py-4 rounded-[10px] text-base hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
               {t('cta.btnEmployer', lang)}
             </Link>
-            <Link href="/demo/onboarding/scout" className="bg-purple/15 text-purple-light font-semibold px-8 py-4 rounded-[10px] text-base border border-purple/20 hover:bg-purple/25 transition-colors">
+            <Link href="/demo/onboarding/scout" className="bg-purple/10 text-purple font-semibold px-8 py-4 rounded-[10px] text-base border border-slate-200 hover:bg-purple/15 transition-colors">
               {t('cta.btnScout', lang)}
             </Link>
           </div>
@@ -735,42 +729,42 @@ export default function HomePage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-purple/10 py-12">
+      <footer className="bg-slate-50 border-t border-slate-200 py-12">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <img src="/logo-white.png" alt="Refurzy" className="h-6 mb-4 opacity-60" />
-              <p className="text-xs text-gray-300 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed">
                 Redefining Recruitment. Forever.
               </p>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.platform', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-300">
-                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forEmployers', lang)}</a>
-                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forScouts', lang)}</a>
-                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.forCandidates', lang)}</a>
-                <a href="#pricing" className="block hover:text-gray-300 transition-colors">{t('nav.pricing', lang)}</a>
+              <h4 className="text-sm font-semibold text-slate-500 mb-3">{t('footer.platform', lang)}</h4>
+              <div className="space-y-2 text-xs text-slate-500">
+                <a href="#hoe-het-werkt" className="block hover:text-slate-500 transition-colors">{t('footer.forEmployers', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-slate-500 transition-colors">{t('footer.forScouts', lang)}</a>
+                <a href="#hoe-het-werkt" className="block hover:text-slate-500 transition-colors">{t('footer.forCandidates', lang)}</a>
+                <a href="#pricing" className="block hover:text-slate-500 transition-colors">{t('nav.pricing', lang)}</a>
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.company', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-300">
-                <a href="#hoe-het-werkt" className="block hover:text-gray-300 transition-colors">{t('footer.about', lang)}</a>
-                <Link href="/wetenschap" className="block hover:text-gray-300 transition-colors">{t('footer.science', lang)}</Link>
-                <a href="mailto:info@refurzy.com" className="block hover:text-gray-300 transition-colors">{t('footer.contact', lang)}</a>
+              <h4 className="text-sm font-semibold text-slate-500 mb-3">{t('footer.company', lang)}</h4>
+              <div className="space-y-2 text-xs text-slate-500">
+                <a href="#hoe-het-werkt" className="block hover:text-slate-500 transition-colors">{t('footer.about', lang)}</a>
+                <Link href="/wetenschap" className="block hover:text-slate-500 transition-colors">{t('footer.science', lang)}</Link>
+                <a href="mailto:info@refurzy.com" className="block hover:text-slate-500 transition-colors">{t('footer.contact', lang)}</a>
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-gray-300 mb-3">{t('footer.legal', lang)}</h4>
-              <div className="space-y-2 text-xs text-gray-300">
-                <Link href="/juridisch/privacybeleid" className="block hover:text-gray-300 transition-colors">{t('footer.privacy', lang)}</Link>
-                <Link href="/juridisch/algemene-voorwaarden" className="block hover:text-gray-300 transition-colors">{t('footer.terms', lang)}</Link>
-                <Link href="/juridisch/cookiebeleid" className="block hover:text-gray-300 transition-colors">{t('footer.cookies', lang)}</Link>
+              <h4 className="text-sm font-semibold text-slate-500 mb-3">{t('footer.legal', lang)}</h4>
+              <div className="space-y-2 text-xs text-slate-500">
+                <Link href="/juridisch/privacybeleid" className="block hover:text-slate-500 transition-colors">{t('footer.privacy', lang)}</Link>
+                <Link href="/juridisch/algemene-voorwaarden" className="block hover:text-slate-500 transition-colors">{t('footer.terms', lang)}</Link>
+                <Link href="/juridisch/cookiebeleid" className="block hover:text-slate-500 transition-colors">{t('footer.cookies', lang)}</Link>
               </div>
             </div>
           </div>
-          <div className="border-t border-purple/10 pt-6 text-center text-xs text-gray-700">
+          <div className="border-t border-slate-200 pt-6 text-center text-xs text-slate-400">
             {t('footer.rights', lang)}
           </div>
         </div>

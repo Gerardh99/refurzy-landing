@@ -8,44 +8,15 @@ body {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.landing-bg {
-  background: #1A0F5D;
-}
-
 .gradient-text {
-  background: linear-gradient(135deg, #14CDD3, #06BAFF, #6D40F9);
+  background: linear-gradient(135deg, #6D40F9, #06BAFF, #14CDD3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .btn-gradient {
-  background: linear-gradient(135deg, #14CDD3, #06BAFF, #6D40F9);
-}
-
-.bg-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-}
-.bg-orb-1 {
-  width: 600px; height: 600px;
-  background: #14CDD3;
-  top: -200px; right: -100px;
-}
-.bg-orb-2 {
-  width: 500px; height: 500px;
-  background: #6D40F9;
-  bottom: -150px; left: -100px;
-}
-.bg-orb-3 {
-  width: 350px; height: 350px;
-  background: #06BAFF;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #6D40F9, #06BAFF, #14CDD3);
 }
 
 @keyframes fadeIn {
