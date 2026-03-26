@@ -125,14 +125,14 @@ export default function LandingPage() {
 
       {/* Top-right: lang toggle + login */}
       <div style={{ position: 'fixed', top: '20px', right: '24px', zIndex: 10, display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', borderRadius: '8px', padding: '2px', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ display: 'flex', background: 'rgba(0,0,0,0.04)', borderRadius: '8px', padding: '2px', border: '1px solid rgba(0,0,0,0.08)' }}>
           <button
             onClick={() => switchLang('nl')}
             style={{
               padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
               fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
-              background: lang === 'nl' ? 'rgba(255,255,255,0.15)' : 'transparent',
-              color: lang === 'nl' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.5)',
+              background: lang === 'nl' ? 'rgba(0,0,0,0.08)' : 'transparent',
+              color: lang === 'nl' ? '#334155' : '#94a3b8',
               transition: 'all 0.2s ease',
             }}
           >
@@ -143,8 +143,8 @@ export default function LandingPage() {
             style={{
               padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
               fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
-              background: lang === 'en' ? 'rgba(255,255,255,0.15)' : 'transparent',
-              color: lang === 'en' ? 'rgba(249,251,255,0.9)' : 'rgba(249,251,255,0.5)',
+              background: lang === 'en' ? 'rgba(0,0,0,0.08)' : 'transparent',
+              color: lang === 'en' ? '#334155' : '#94a3b8',
               transition: 'all 0.2s ease',
             }}
           >
@@ -154,20 +154,16 @@ export default function LandingPage() {
         <Link
           href="/login"
           style={{
-            color: 'rgba(249,251,255,0.5)', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
+            color: '#64748b', fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif',
             textDecoration: 'none', letterSpacing: '0.5px', transition: 'color 0.3s ease',
-            padding: '6px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)',
+            padding: '6px 14px', borderRadius: '8px', border: '1px solid #e2e8f0',
           }}
-          onMouseOver={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.6)')}
-          onMouseOut={e => (e.currentTarget.style.color = 'rgba(249,251,255,0.5)')}
+          onMouseOver={e => (e.currentTarget.style.color = '#334155')}
+          onMouseOut={e => (e.currentTarget.style.color = '#64748b')}
         >
           {t.login}
         </Link>
       </div>
-
-      <div className="bg-orb bg-orb-1" />
-      <div className="bg-orb bg-orb-2" />
-      <div className="bg-orb bg-orb-3" />
 
       <div className="container">
         <img src="/logo-white.png" alt="Refurzy" className="logo" />
@@ -178,7 +174,7 @@ export default function LandingPage() {
 
         <p className="body-text">{t.body}</p>
 
-        <p style={{fontSize: '0.75rem', color: 'rgba(249,251,255,0.6)', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
+        <p style={{fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', maxWidth: '500px', marginBottom: '48px', lineHeight: '1.6'}}>
           {t.sources}
         </p>
 
@@ -225,41 +221,36 @@ export default function LandingPage() {
 
 const landingCSS = `
   :root {
-    --navy: #1A0F5D;
+    --navy: #1e293b;
     --blue: #06BAFF;
     --teal: #14CDD3;
     --purple: #6D40F9;
-    --light: #F9FBFF;
-    --gradient: linear-gradient(135deg, var(--teal), var(--blue), var(--purple));
+    --ink: #334155;
+    --ink-light: #64748b;
+    --ink-muted: #94a3b8;
+    --surface: #FAFBFE;
+    --gradient: linear-gradient(135deg, var(--purple), var(--blue), var(--teal));
   }
-  body { background: var(--navy) !important; color: var(--light) !important; }
-  .bg-orb { position:fixed; border-radius:50%; filter:blur(100px); opacity:0.15; pointer-events:none; z-index:0; }
-  .bg-orb-1 { width:600px; height:600px; background:var(--teal); top:-200px; right:-100px; animation:float1 20s ease-in-out infinite; }
-  .bg-orb-2 { width:500px; height:500px; background:var(--purple); bottom:-150px; left:-100px; animation:float2 25s ease-in-out infinite; }
-  .bg-orb-3 { width:350px; height:350px; background:var(--blue); top:50%; left:50%; transform:translate(-50%,-50%); animation:float3 18s ease-in-out infinite; }
-  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-80px,60px)} }
-  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,-80px)} }
-  @keyframes float3 { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.2)} }
   .container { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:60px 24px; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .logo { width:220px; margin-bottom:60px; animation:fadeInDown 0.8s ease-out; }
   @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-  h1 { font-size:clamp(1.8rem,5vw,2.6rem); font-weight:600; text-align:center; margin-bottom:20px; line-height:1.3; animation:fadeInUp 0.8s ease-out 0.2s both; }
+  h1 { font-size:clamp(1.8rem,5vw,2.6rem); font-weight:600; text-align:center; margin-bottom:20px; line-height:1.3; color:var(--ink); animation:fadeInUp 0.8s ease-out 0.2s both; }
   .gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .subtitle { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.6); max-width:560px; line-height:1.7; margin-bottom:20px; animation:fadeInUp 0.8s ease-out 0.4s both; }
-  .body-text { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:rgba(249,251,255,0.6); max-width:560px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
+  .subtitle { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:var(--ink-light); max-width:560px; line-height:1.7; margin-bottom:20px; animation:fadeInUp 0.8s ease-out 0.4s both; }
+  .body-text { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:300; text-align:center; color:var(--ink-light); max-width:560px; line-height:1.7; margin-bottom:16px; animation:fadeInUp 0.8s ease-out 0.5s both; }
   .divider { width:60px; height:2px; background:var(--gradient); margin:0 auto 48px; border-radius:2px; animation:fadeInUp 0.8s ease-out 0.55s both; }
   .cta-section { width:100%; max-width:500px; animation:fadeInUp 0.8s ease-out 0.6s both; }
-  .cta-label { font-size:0.85rem; font-weight:500; text-align:center; color:rgba(249,251,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
-  .role-tabs { display:flex; gap:4px; background:rgba(255,255,255,0.06); border-radius:12px; padding:4px; margin-bottom:20px; }
-  .role-tab { flex:1; padding:12px 16px; border:none; border-radius:10px; background:transparent; color:rgba(249,251,255,0.5); font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:all 0.3s ease; }
-  .role-tab:hover { color:rgba(249,251,255,0.8); }
-  .role-tab.active { background:rgba(255,255,255,0.1); color:var(--light); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  .cta-label { font-size:0.85rem; font-weight:500; text-align:center; color:var(--ink-muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
+  .role-tabs { display:flex; gap:4px; background:rgba(0,0,0,0.04); border-radius:12px; padding:4px; margin-bottom:20px; }
+  .role-tab { flex:1; padding:12px 16px; border:none; border-radius:10px; background:transparent; color:var(--ink-muted); font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:all 0.3s ease; }
+  .role-tab:hover { color:var(--ink-light); }
+  .role-tab.active { background:white; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
   .form-row { display:flex; gap:10px; }
   .input-wrapper { flex:1; position:relative; }
-  input[type="email"], input[type="text"] { width:100%; padding:14px 18px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:var(--light); font-family:'Poppins',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease; }
-  input[type="email"]::placeholder, input[type="text"]::placeholder { color:rgba(249,251,255,0.5); }
-  input[type="email"]:focus, input[type="text"]:focus { border-color:var(--blue); background:rgba(255,255,255,0.1); box-shadow:0 0 0 3px rgba(6,186,255,0.1); }
+  input[type="email"], input[type="text"] { width:100%; padding:14px 18px; background:white; border:1px solid #e2e8f0; border-radius:10px; color:var(--ink); font-family:'Poppins',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease; }
+  input[type="email"]::placeholder, input[type="text"]::placeholder { color:var(--ink-muted); }
+  input[type="email"]:focus, input[type="text"]:focus { border-color:var(--blue); background:white; box-shadow:0 0 0 3px rgba(6,186,255,0.1); }
   .name-row { margin-bottom:10px; }
   .btn-submit { padding:14px 28px; background:var(--gradient); border:none; border-radius:10px; color:white; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; white-space:nowrap; width:100%; margin-top:10px; }
   .btn-submit:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(6,186,255,0.3); }
@@ -267,10 +258,10 @@ const landingCSS = `
   .btn-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
   .hp-field { position:absolute; left:-9999px; top:-9999px; opacity:0; height:0; width:0; z-index:-1; }
   .message { text-align:center; padding:14px 20px; border-radius:10px; font-size:0.9rem; margin-top:16px; display:none; }
-  .message.success { background:rgba(20,205,211,0.15); border:1px solid rgba(20,205,211,0.3); color:var(--teal); display:block; }
-  .message.error { background:rgba(255,80,80,0.15); border:1px solid rgba(255,80,80,0.3); color:#ff6b6b; display:block; }
-  .footer { margin-top:60px; text-align:center; color:rgba(249,251,255,0.5); font-size:0.75rem; animation:fadeInUp 0.8s ease-out 0.8s both; }
-  .spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,0.3); border-radius:50%; border-top-color:white; animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:8px; }
+  .message.success { background:rgba(20,205,211,0.1); border:1px solid rgba(20,205,211,0.25); color:#0d9488; display:block; }
+  .message.error { background:rgba(255,80,80,0.1); border:1px solid rgba(255,80,80,0.25); color:#dc2626; display:block; }
+  .footer { margin-top:60px; text-align:center; color:var(--ink-muted); font-size:0.75rem; animation:fadeInUp 0.8s ease-out 0.8s both; }
+  .spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(109,64,249,0.3); border-radius:50%; border-top-color:var(--purple); animation:spin 0.6s linear infinite; vertical-align:middle; margin-right:8px; }
   @keyframes spin { to{transform:rotate(360deg)} }
   @media(max-width:480px) { .container{padding:40px 20px} .logo{width:160px;margin-bottom:40px} }
 `
