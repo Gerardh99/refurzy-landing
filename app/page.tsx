@@ -166,7 +166,7 @@ export default function LandingPage() {
       </div>
 
       <div className="container">
-        <img src="/logo-dark.jpg" alt="Refurzy" className="logo" />
+        <img src="/logo-dark.png" alt="Refurzy" className="logo" />
 
         <h1><span className="gradient-text">Redefining Recruitment.</span> Forever.</h1>
 
@@ -226,7 +226,7 @@ const landingCSS = `
     --teal: #14CDD3;
     --purple: #6D40F9;
     --ink: #0f172a;
-    --ink-light: #475569;
+    --ink-light: #334155;
     --ink-muted: #64748b;
     --surface: #F1F5F9;
     --gradient: linear-gradient(135deg, var(--purple), var(--blue), var(--teal));
