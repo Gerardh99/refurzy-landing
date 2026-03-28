@@ -166,7 +166,7 @@ export default function LandingPage() {
       </div>
 
       <div className="container">
-        <img src="/logo-white.png" alt="Refurzy" className="logo" />
+        <img src="/logo-dark.jpg" alt="Refurzy" className="logo" />
 
         <h1><span className="gradient-text">Redefining Recruitment.</span> Forever.</h1>
 
@@ -221,14 +221,14 @@ export default function LandingPage() {
 
 const landingCSS = `
   :root {
-    --navy: #1e293b;
+    --navy: #0f172a;
     --blue: #06BAFF;
     --teal: #14CDD3;
     --purple: #6D40F9;
-    --ink: #334155;
-    --ink-light: #64748b;
-    --ink-muted: #94a3b8;
-    --surface: #FAFBFE;
+    --ink: #0f172a;
+    --ink-light: #475569;
+    --ink-muted: #64748b;
+    --surface: #F1F5F9;
     --gradient: linear-gradient(135deg, var(--purple), var(--blue), var(--teal));
   }
   .container { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:60px 24px; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
@@ -245,10 +245,10 @@ const landingCSS = `
   .role-tabs { display:flex; gap:4px; background:rgba(0,0,0,0.04); border-radius:12px; padding:4px; margin-bottom:20px; }
   .role-tab { flex:1; padding:12px 16px; border:none; border-radius:10px; background:transparent; color:var(--ink-muted); font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:all 0.3s ease; }
   .role-tab:hover { color:var(--ink-light); }
-  .role-tab.active { background:white; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .role-tab.active { background:white; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,0.12); }
   .form-row { display:flex; gap:10px; }
   .input-wrapper { flex:1; position:relative; }
-  input[type="email"], input[type="text"] { width:100%; padding:14px 18px; background:white; border:1px solid #e2e8f0; border-radius:10px; color:var(--ink); font-family:'Poppins',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease; }
+  input[type="email"], input[type="text"] { width:100%; padding:14px 18px; background:white; border:1px solid #cbd5e1; border-radius:10px; color:var(--ink); font-family:'Poppins',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease; box-shadow:0 1px 2px rgba(0,0,0,0.05); }
   input[type="email"]::placeholder, input[type="text"]::placeholder { color:var(--ink-muted); }
   input[type="email"]:focus, input[type="text"]:focus { border-color:var(--blue); background:white; box-shadow:0 0 0 3px rgba(6,186,255,0.1); }
   .name-row { margin-bottom:10px; }
