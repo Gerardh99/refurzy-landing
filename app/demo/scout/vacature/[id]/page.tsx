@@ -9,6 +9,8 @@ import FitScore from '@/components/FitScore'
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import StatusBadge from '@/components/StatusBadge'
 import FraudReportModal from '@/components/FraudReportModal'
+import KvkRegistratieModal from '@/components/KvkRegistratieModal'
+import { wouldExceedThreshold, getScoutEarnedTotal, getCountryThreshold } from '@/lib/scout-registration'
 import { useLang } from '@/lib/i18n'
 
 const texts = {
@@ -135,6 +137,8 @@ export default function ScoutVacatureDetail() {
   const [toelichting, setToelichting] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [showFraudModal, setShowFraudModal] = useState(false)
+  const [showKvkModal, setShowKvkModal] = useState(false)
+  const [pendingKvkFee, setPendingKvkFee] = useState(0)
 
   const vacature = allVacatures.find((v) => v.id === params.id)
 
@@ -169,8 +173,20 @@ export default function ScoutVacatureDetail() {
 
   const handleVoordragen = () => {
     if (!selectedKandidaat) return
+    const { scoutFee } = calculateFee(selectedKandidaat.opleidingsniveau, selectedKandidaat.werkervaring)
+    if (wouldExceedThreshold(scoutFee)) {
+      // Income threshold would be exceeded — require KVK registration first
+      setPendingKvkFee(scoutFee)
+      setShowKvkModal(true)
+      return
+    }
     setSubmitted(true)
     // In a real app this would POST to API — here we just show success
+  }
+
+  const handleKvkRegistered = () => {
+    // Registration saved — now proceed with the nomination
+    setSubmitted(true)
   }
 
   const resetModal = () => {
@@ -521,6 +537,17 @@ export default function ScoutVacatureDetail() {
           </div>
         </div>
       )}
+
+      {/* ─── KVK Registration Modal (income threshold gate) ─────────────────── */}
+      <KvkRegistratieModal
+        isOpen={showKvkModal}
+        onClose={() => setShowKvkModal(false)}
+        onRegistered={handleKvkRegistered}
+        lang={lang}
+        earnedTotal={getScoutEarnedTotal()}
+        threshold={getCountryThreshold()}
+        potentialFee={pendingKvkFee}
+      />
 
       {/* ─── Fraud Report Modal ───────────────────────────────────────────────── */}
       <FraudReportModal

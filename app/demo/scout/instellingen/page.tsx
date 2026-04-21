@@ -1,7 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/i18n'
+import {
+  getScoutEarnedTotal,
+  getCountryThreshold,
+  getScoutKvkStatus,
+  saveScoutKvkStatus,
+} from '@/lib/scout-registration'
 
 const texts = {
   nl: {
@@ -9,16 +15,16 @@ const texts = {
     pageSubtitle: 'Beheer je uitbetalingsgegevens en bedrijfsregistratie',
     blockedTitle: 'Account geblokkeerd voor nieuwe bemiddelingen',
     blockedBody: (max: number) =>
-      `Je hebt het maximum van ${max} bemiddelingen als particulier bereikt. Om verder te kunnen bemiddelen moet je je bedrijf registreren bij de KvK.`,
+      `Je hebt de jaargrens van €${max.toLocaleString('nl-NL')} als particulier talent scout bereikt. Om verder te kunnen bemiddelen moet je je bedrijf registreren bij de KvK.`,
     upgradeBtn: 'Upgrade naar zakelijk',
     statusModus: 'Modus',
     statusParticulier: 'Particulier',
     statusZakelijk: 'Zakelijk',
-    statusMaxMediations: (max: number) => `Max ${max} bemiddelingen`,
+    statusMaxMediations: (max: number) => `Grens €${max.toLocaleString('nl-NL')}`,
     statusEarned: 'Verdiend dit jaar',
     statusMediations: 'Bemiddelingen',
     statusLimitReached: 'Limiet bereikt',
-    statusRemaining: (n: number) => `${n} resterend`,
+    statusRemaining: (n: number) => `€${n.toLocaleString('nl-NL')} ruimte over`,
     personalDataTitle: 'Persoonlijke gegevens (verplicht voor belastingdienst)',
     personalDataNote: 'Wij zijn wettelijk verplicht om jaarlijks een opgave te doen aan de Belastingdienst van alle particulieren die wij hebben uitbetaald. Onderstaande gegevens worden 1x per jaar aan de Belastingdienst doorgegeven.',
     labelFullName: 'Volledige naam',
@@ -30,7 +36,7 @@ const texts = {
     ibanNote: 'Elk IBAN mag slechts aan één account gekoppeld zijn om dubbele registraties te voorkomen.',
     businessTitle: 'Bedrijfsregistratie',
     businessNote: (max: number) =>
-      `Na ${max} bemiddelingen als particulier is een KvK-registratie verplicht om verder te kunnen werken op het platform.`,
+      `Scouts die de jaargrens van €${max.toLocaleString('nl-NL')} overschrijden zijn verplicht zich als zelfstandige (zzp/eenmanszaak) te registreren bij de Kamer van Koophandel.`,
     labelKvK: 'KvK-nummer',
     kvkChecking: 'Controleren...',
     kvkVerify: 'Verifieer',
@@ -76,16 +82,16 @@ const texts = {
     pageSubtitle: 'Manage your payout details and business registration',
     blockedTitle: 'Account blocked for new mediations',
     blockedBody: (max: number) =>
-      `You have reached the maximum of ${max} mediations as a private individual. To continue mediating you must register your business with the Chamber of Commerce.`,
+      `You have reached the annual threshold of €${max.toLocaleString('nl-NL')} as a private talent scout. To continue mediating you must register your business with the Chamber of Commerce.`,
     upgradeBtn: 'Upgrade to business',
     statusModus: 'Mode',
     statusParticulier: 'Private',
     statusZakelijk: 'Business',
-    statusMaxMediations: (max: number) => `Max ${max} mediations`,
+    statusMaxMediations: (max: number) => `Threshold €${max.toLocaleString('nl-NL')}`,
     statusEarned: 'Earned this year',
     statusMediations: 'Mediations',
     statusLimitReached: 'Limit reached',
-    statusRemaining: (n: number) => `${n} remaining`,
+    statusRemaining: (n: number) => `€${n.toLocaleString('nl-NL')} remaining`,
     personalDataTitle: 'Personal details (required for tax authority)',
     personalDataNote: 'We are legally required to submit an annual report to the tax authority for all private individuals we have paid out. The details below are submitted once a year.',
     labelFullName: 'Full name',
@@ -97,7 +103,7 @@ const texts = {
     ibanNote: 'Each IBAN may only be linked to one account to prevent duplicate registrations.',
     businessTitle: 'Business registration',
     businessNote: (max: number) =>
-      `After ${max} mediations as a private individual, a Chamber of Commerce registration is required to continue working on the platform.`,
+      `Scouts who exceed the annual threshold of €${max.toLocaleString('nl-NL')} are required to register as self-employed (freelancer / sole trader) with the Chamber of Commerce.`,
     labelKvK: 'Chamber of Commerce number',
     kvkChecking: 'Checking...',
     kvkVerify: 'Verify',
@@ -147,7 +153,6 @@ export default function ScoutInstellingen() {
   const [twoFAActive, setTwoFAActive] = useState(false)
   const [showTwoFASetup, setShowTwoFASetup] = useState(false)
   const [totpCode, setTotpCode] = useState('')
-  const [mode, setMode] = useState<'particulier' | 'zzp'>('particulier')
   const [iban, setIban] = useState('NL91 ABNA 0417 1643 00')
   const [ibanError, setIbanError] = useState('')
   const [kvkNummer, setKvkNummer] = useState('')
@@ -156,12 +161,25 @@ export default function ScoutInstellingen() {
   const [showUpgrade, setShowUpgrade] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // Mock: particulier limits
-  const grensbedrag = 7000 // NL jaargrens particulier
-  const huidigVerdiend = 4800
-  const aantalBemiddelingen = 2
-  const maxBemiddelingenParticulier = 2
-  const geblokkeerd = aantalBemiddelingen >= maxBemiddelingenParticulier && mode === 'particulier'
+  // Derived from real mock data + localStorage
+  const grensbedrag = getCountryThreshold('NL')
+  const huidigVerdiend = getScoutEarnedTotal()
+  const [kvkStatus, setKvkStatus] = useState(() => getScoutKvkStatus())
+  const mode: 'particulier' | 'zzp' = kvkStatus.isRegistered ? 'zzp' : 'particulier'
+
+  // Keep KVK form pre-filled if already registered
+  useEffect(() => {
+    const status = getScoutKvkStatus()
+    setKvkStatus(status)
+    if (status.isRegistered) {
+      setKvkNummer(status.kvkNummer)
+      setKvkVerified(true)
+    }
+  }, [])
+
+  // Income threshold — scout is blocked from nominating if over threshold without KVK
+  const geblokkeerd = huidigVerdiend >= grensbedrag && mode === 'particulier'
+  const aantalBemiddelingen = 3 // fixed: 3 placed candidates in demo data
 
   function handleIbanChange(value: string) {
     setIban(value)
@@ -179,7 +197,8 @@ export default function ScoutInstellingen() {
     setTimeout(() => {
       setKvkChecking(false)
       setKvkVerified(true)
-      setMode('zzp')
+      saveScoutKvkStatus({ kvkNummer, bedrijfsnaam: 'Lisa de Groot Recruitment' })
+      setKvkStatus(getScoutKvkStatus())
     }, 1500)
   }
 
@@ -196,7 +215,7 @@ export default function ScoutInstellingen() {
             <div>
               <h3 className="font-semibold text-red-700 mb-1">{t.blockedTitle}</h3>
               <p className="text-red-600 text-sm mb-3">
-                {t.blockedBody(maxBemiddelingenParticulier)}
+                {t.blockedBody(grensbedrag)}
               </p>
               <button
                 onClick={() => setShowUpgrade(true)}
@@ -214,7 +233,7 @@ export default function ScoutInstellingen() {
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <p className="text-ink-light text-xs mb-1">{t.statusModus}</p>
           <p className="text-lg font-semibold">{mode === 'particulier' ? t.statusParticulier : t.statusZakelijk}</p>
-          {mode === 'particulier' && <p className="text-xs text-orange mt-1">{t.statusMaxMediations(maxBemiddelingenParticulier)}</p>}
+          {mode === 'particulier' && <p className="text-xs text-orange mt-1">{t.statusMaxMediations(grensbedrag)}</p>}
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <p className="text-ink-light text-xs mb-1">{t.statusEarned}</p>
@@ -236,7 +255,7 @@ export default function ScoutInstellingen() {
           <p className="text-lg font-semibold">{aantalBemiddelingen}</p>
           {mode === 'particulier' && (
             <p className={`text-xs mt-1 ${geblokkeerd ? 'text-red-400' : 'text-ink-muted'}`}>
-              {geblokkeerd ? t.statusLimitReached : t.statusRemaining(maxBemiddelingenParticulier - aantalBemiddelingen)}
+              {geblokkeerd ? t.statusLimitReached : t.statusRemaining(grensbedrag - huidigVerdiend)}
             </p>
           )}
         </div>
@@ -288,7 +307,7 @@ export default function ScoutInstellingen() {
       {(showUpgrade || mode === 'zzp') && (
         <div className="bg-white rounded-2xl border border-cyan/20 p-6 mb-6">
           <h2 className="text-lg font-semibold mb-2">{t.businessTitle}</h2>
-          <p className="text-sm text-ink-light mb-4">{t.businessNote(maxBemiddelingenParticulier)}</p>
+          <p className="text-sm text-ink-light mb-4">{t.businessNote(grensbedrag)}</p>
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-ink-light mb-1">{t.labelKvK}</label>
