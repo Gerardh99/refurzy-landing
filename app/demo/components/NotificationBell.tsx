@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { UserRole } from '@/lib/types'
 import { mockNotifications, notificationIcons, Notification } from '@/lib/mock-notifications'
+import { useLang } from '@/lib/i18n'
 
-function timeAgo(timestamp: string): string {
+function timeAgo(timestamp: string, lang: 'nl' | 'en'): string {
   const now = new Date('2026-03-19T12:00:00Z')
   const date = new Date(timestamp)
   const diffMs = now.getTime() - date.getTime()
@@ -13,6 +14,13 @@ function timeAgo(timestamp: string): string {
   const diffHours = Math.floor(diffMs / 3600000)
   const diffDays = Math.floor(diffMs / 86400000)
 
+  if (lang === 'en') {
+    if (diffMins < 60) return `${diffMins} min ago`
+    if (diffHours < 24) return `${diffHours} hours ago`
+    if (diffDays === 1) return 'yesterday'
+    if (diffDays < 7) return `${diffDays} days ago`
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+  }
   if (diffMins < 60) return `${diffMins} min geleden`
   if (diffHours < 24) return `${diffHours} uur geleden`
   if (diffDays === 1) return 'gisteren'
@@ -23,6 +31,7 @@ function timeAgo(timestamp: string): string {
 export default function NotificationBell({ role }: { role: UserRole }) {
   const [open, setOpen] = useState(false)
   const [notifications, setNotifications] = useState<Notification[]>(mockNotifications[role] || [])
+  const { lang } = useLang()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   const unreadCount = notifications.filter(n => !n.read).length
@@ -63,16 +72,16 @@ export default function NotificationBell({ role }: { role: UserRole }) {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-96 bg-white rounded-xl border border-surface-border shadow-lg z-50 overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 border-b border-surface-border">
-            <h3 className="text-sm font-semibold text-ink">Notificaties</h3>
+            <h3 className="text-sm font-semibold text-ink">{lang === 'en' ? 'Notifications' : 'Notificaties'}</h3>
             <div className="flex items-center gap-3">
               {unreadCount > 0 && (
                 <button onClick={markAllRead} className="text-xs text-purple hover:text-purple-dark font-medium">
-                  Alles gelezen
+                  {lang === 'en' ? 'Mark all read' : 'Alles gelezen'}
                 </button>
               )}
               <Link href="/demo/notificaties" onClick={() => setOpen(false)}
                 className="text-xs text-ink-muted hover:text-ink font-medium">
-                Alles bekijken
+                {lang === 'en' ? 'View all' : 'Alles bekijken'}
               </Link>
             </div>
           </div>
@@ -85,12 +94,12 @@ export default function NotificationBell({ role }: { role: UserRole }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className={`text-sm truncate ${!notification.read ? 'font-semibold text-ink' : 'font-medium text-ink-light'}`}>
-                      {notification.title}
+                      {notification.title[lang]}
                     </p>
                     {!notification.read && <span className="w-2 h-2 bg-purple rounded-full flex-shrink-0" />}
                   </div>
-                  <p className="text-xs text-ink-muted mt-0.5 line-clamp-2">{notification.description}</p>
-                  <p className="text-[11px] text-ink-muted mt-1">{timeAgo(notification.timestamp)}</p>
+                  <p className="text-xs text-ink-muted mt-0.5 line-clamp-2">{notification.description[lang]}</p>
+                  <p className="text-[11px] text-ink-muted mt-1">{timeAgo(notification.timestamp, lang)}</p>
                 </div>
                 <button onClick={(e) => { e.stopPropagation(); toggleRead(notification.id) }}
                   className="text-ink-muted hover:text-ink-muted mt-1 flex-shrink-0" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
@@ -104,7 +113,7 @@ export default function NotificationBell({ role }: { role: UserRole }) {
 
           {notifications.length === 0 && (
             <div className="px-4 py-8 text-center text-ink-muted text-sm">
-              Geen notificaties
+              {lang === 'en' ? 'No notifications' : 'Geen notificaties'}
             </div>
           )}
         </div>

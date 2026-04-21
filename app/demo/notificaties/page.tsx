@@ -157,14 +157,14 @@ export default function NotificatiesPage() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-0.5">
                 <span className={`text-sm ${!notification.read ? 'font-semibold text-ink' : 'font-medium text-ink-light'}`}>
-                  {notification.title}
+                  {notification.title[lang]}
                 </span>
                 {!notification.read && <span className="w-2 h-2 bg-purple rounded-full flex-shrink-0" />}
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-surface-muted text-ink-muted ml-auto flex-shrink-0">
                   {t.typeLabels[notification.type]}
                 </span>
               </div>
-              <p className="text-sm text-ink-light">{notification.description}</p>
+              <p className="text-sm text-ink-light">{notification.description[lang]}</p>
               <div className="flex items-center gap-4 mt-2">
                 <span className="text-xs text-ink-muted">{timeAgo(notification.timestamp)}</span>
                 {notification.link && (

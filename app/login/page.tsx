@@ -44,22 +44,34 @@ const loginTexts = {
   },
 }
 
-const ROLE_CONSENTS: Record<string, { docs: DocumentType[]; labels: string[] }> = {
+const ROLE_CONSENTS: Record<string, { docs: DocumentType[]; labels: { nl: string[]; en: string[] } }> = {
   'demo@bedrijf.nl': {
     docs: ['algemene_voorwaarden', 'privacybeleid', 'verwerkersovereenkomst_opdrachtgever'],
-    labels: ['Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
+    labels: {
+      nl: ['Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
+      en: ['General Terms', 'Privacy Policy', 'Data Processing Agreement'],
+    },
   },
   'scout@refurzy.com': {
     docs: ['scoutovereenkomst', 'algemene_voorwaarden', 'privacybeleid', 'verwerkersovereenkomst_scout'],
-    labels: ['Scoutovereenkomst', 'Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
+    labels: {
+      nl: ['Scoutovereenkomst', 'Algemene Voorwaarden', 'Privacybeleid', 'Verwerkersovereenkomst'],
+      en: ['Scout Agreement', 'General Terms', 'Privacy Policy', 'Data Processing Agreement'],
+    },
   },
   'kandidaat@email.com': {
     docs: ['toestemmingsverklaring_kandidaat', 'privacybeleid'],
-    labels: ['Toestemmingsverklaring', 'Privacybeleid'],
+    labels: {
+      nl: ['Toestemmingsverklaring', 'Privacybeleid'],
+      en: ['Consent Declaration', 'Privacy Policy'],
+    },
   },
   'admin@refurzy.com': {
     docs: ['algemene_voorwaarden', 'privacybeleid'],
-    labels: ['Algemene Voorwaarden', 'Privacybeleid'],
+    labels: {
+      nl: ['Algemene Voorwaarden', 'Privacybeleid'],
+      en: ['General Terms', 'Privacy Policy'],
+    },
   },
 }
 
@@ -244,7 +256,7 @@ export default function LoginPage() {
                   <span className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
                     {lt.consentPrefix}{' '}
                     <a href={DOC_URLS[doc]} target="_blank" rel="noopener noreferrer" className="text-cyan underline hover:text-cyan/80">
-                      {roleConsents.labels[i]}
+                      {roleConsents.labels[lang][i]}
                     </a>
                     <span className="text-gray-500 text-xs ml-1">(v{DOCUMENT_VERSIONS[doc]})</span>
                   </span>
