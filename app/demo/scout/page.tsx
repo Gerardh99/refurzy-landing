@@ -6,6 +6,7 @@ import { scoutKandidaten, allVacatures } from '@/lib/mock-data'
 import type { Kandidaat } from '@/lib/types'
 import { useFavoriteVacatures } from '@/lib/useFavoriteVacatures'
 import { useLang } from '@/lib/i18n'
+import FraudReportModal from '@/components/FraudReportModal'
 
 type Tab = 'beschikbaar' | 'geplaatst' | 'inactief'
 
@@ -76,6 +77,7 @@ const texts = {
     noFavorites: 'Geen favoriete vacatures',
     noFavoritesHint: 'Markeer eerst vacatures als favoriet',
     toVacancies: 'Naar vacatures →',
+    btnReportKandidaat: 'Fraude melden',
   },
   en: {
     pageTitle: 'My Talent Pool',
@@ -143,6 +145,7 @@ const texts = {
     noFavorites: 'No favourite vacancies',
     noFavoritesHint: 'Mark vacancies as favourite first',
     toVacancies: 'Go to vacancies →',
+    btnReportKandidaat: 'Report fraud',
   },
 }
 
@@ -352,6 +355,8 @@ function CandidateCard({
 }) {
   const isGeplaatst = tab === 'geplaatst'
   const isInactief = tab === 'inactief'
+  const [showFraudModal, setShowFraudModal] = useState(false)
+  const { lang } = useLang()
 
   return (
     <div className={`bg-white rounded-2xl border border-surface-border overflow-hidden transition-all ${isInactief ? 'opacity-60' : ''} ${isExpanded ? 'ring-2 ring-purple/20' : ''}`}>
@@ -549,7 +554,16 @@ function CandidateCard({
       {/* Action bar */}
       <div className="px-6 pb-5 pt-2 border-t border-surface-border">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-ink-light">{k.email}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-ink-light">{k.email}</span>
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowFraudModal(true) }}
+              title={t.btnReportKandidaat}
+              className="text-xs px-2 py-1 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 transition-colors"
+            >
+              🚨
+            </button>
+          </div>
           {isGeplaatst ? (
             <button
               onClick={onToggleExpand}
@@ -625,6 +639,19 @@ function CandidateCard({
           )}
         </div>
       </div>
+
+      {/* Fraud Report Modal */}
+      <FraudReportModal
+        isOpen={showFraudModal}
+        onClose={() => setShowFraudModal(false)}
+        lang={lang}
+        reporterRole="scout"
+        reporterName="Lisa de Groot"
+        reporterEmail="scout@refurzy.com"
+        subjectRole="kandidaat"
+        subjectName={k.naam}
+        subjectEmail={k.email}
+      />
     </div>
   )
 }

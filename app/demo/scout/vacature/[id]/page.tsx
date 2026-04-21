@@ -8,6 +8,7 @@ import { Kandidaat } from '@/lib/types'
 import FitScore from '@/components/FitScore'
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import StatusBadge from '@/components/StatusBadge'
+import FraudReportModal from '@/components/FraudReportModal'
 import { useLang } from '@/lib/i18n'
 
 const texts = {
@@ -64,6 +65,7 @@ const texts = {
     successBody2: 'Bij akkoord wordt het contract opgesteld en krijgt de opdrachtgever toegang tot de volledige contactgegevens.',
     btnClose: 'Sluiten',
     btnBackToVacancies: 'Terug naar vacatures',
+    btnReportOpdrachtgever: 'Fraude melden',
   },
   en: {
     backToVacancies: '← Back to vacancies',
@@ -118,6 +120,7 @@ const texts = {
     successBody2: 'Upon approval the contract will be drawn up and the client gets access to the full contact details.',
     btnClose: 'Close',
     btnBackToVacancies: 'Back to vacancies',
+    btnReportOpdrachtgever: 'Report fraud',
   },
 }
 
@@ -131,6 +134,7 @@ export default function ScoutVacatureDetail() {
   const [selectedKandidaat, setSelectedKandidaat] = useState<Kandidaat | null>(null)
   const [toelichting, setToelichting] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [showFraudModal, setShowFraudModal] = useState(false)
 
   const vacature = allVacatures.find((v) => v.id === params.id)
 
@@ -184,17 +188,25 @@ export default function ScoutVacatureDetail() {
           <h1 className="text-2xl font-bold text-ink">{vacature.title}</h1>
           <p className="text-purple mt-1">{vacature.company} &middot; {vacature.location}</p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          disabled={aantalVoorgedragenDoorMij >= maxPerScout}
-          className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-            aantalVoorgedragenDoorMij >= maxPerScout
-              ? 'bg-surface-muted text-ink-muted cursor-not-allowed'
-              : 'bg-cyan text-navy-dark hover:bg-cyan/90'
-          }`}
-        >
-          {aantalVoorgedragenDoorMij >= maxPerScout ? t.maxNominated(maxPerScout) : t.btnNominate}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowFraudModal(true)}
+            className="px-4 py-2.5 rounded-lg font-medium text-sm border border-red-200 text-red-500 hover:bg-red-50 transition-colors"
+          >
+            🚨 {t.btnReportOpdrachtgever}
+          </button>
+          <button
+            onClick={() => setShowModal(true)}
+            disabled={aantalVoorgedragenDoorMij >= maxPerScout}
+            className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
+              aantalVoorgedragenDoorMij >= maxPerScout
+                ? 'bg-surface-muted text-ink-muted cursor-not-allowed'
+                : 'bg-cyan text-navy-dark hover:bg-cyan/90'
+            }`}
+          >
+            {aantalVoorgedragenDoorMij >= maxPerScout ? t.maxNominated(maxPerScout) : t.btnNominate}
+          </button>
+        </div>
       </div>
 
       {/* Vacature info */}
@@ -509,6 +521,20 @@ export default function ScoutVacatureDetail() {
           </div>
         </div>
       )}
+
+      {/* ─── Fraud Report Modal ───────────────────────────────────────────────── */}
+      <FraudReportModal
+        isOpen={showFraudModal}
+        onClose={() => setShowFraudModal(false)}
+        lang={lang}
+        reporterRole="scout"
+        reporterName="Lisa de Groot"
+        reporterEmail="scout@refurzy.com"
+        subjectRole="opdrachtgever"
+        subjectName="Daan Verhoeven"
+        subjectEmail="demo@bedrijf.nl"
+        context={`${vacature.title} — ${vacature.company}`}
+      />
     </div>
   )
 }

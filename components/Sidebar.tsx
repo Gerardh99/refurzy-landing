@@ -74,6 +74,7 @@ const navLabelsNl = {
   uitbetalingen: 'Uitbetalingen',
   vuTestLog: 'VU Test Log',
   emailTemplates: 'Email Templates',
+  fraudemeldingen: 'Fraudemeldingen',
 }
 
 const navLabelsEn = {
@@ -106,6 +107,7 @@ const navLabelsEn = {
   uitbetalingen: 'Payouts',
   vuTestLog: 'VU Test Log',
   emailTemplates: 'Email Templates',
+  fraudemeldingen: 'Fraud Reports',
 }
 
 type NavLabels = typeof navLabelsNl
@@ -242,6 +244,7 @@ function buildNavGroups(role: UserRole, lbl: NavLabels): NavGroup[] {
           items: [
             { href: '/demo/admin/fit-garantie', label: lbl.fitGarantie },
             { href: '/demo/admin/scan-gebruik', label: lbl.vuTestLog },
+            { href: '/demo/admin/fraudemeldingen', label: lbl.fraudemeldingen },
           ],
         },
         {

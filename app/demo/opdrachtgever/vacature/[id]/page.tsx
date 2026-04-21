@@ -12,6 +12,7 @@ import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import Link from 'next/link'
 import { logConsent } from '@/lib/consent-log'
 import { MASTER_SCOUT_THRESHOLD } from '@/lib/constants'
+import FraudReportModal from '@/components/FraudReportModal'
 import { useLang } from '@/lib/i18n'
 
 const texts = {
@@ -97,6 +98,7 @@ const texts = {
     toastRejected: 'Kandidaat afgewezen — feedback opgeslagen',
     notFound: 'Vacature niet gevonden',
     anonimous: (initialen: string) => `Kandidaat ${initialen}`,
+    btnReportScout: 'Melden',
   },
   en: {
     backToDashboard: '← Back to dashboard',
@@ -180,6 +182,7 @@ const texts = {
     toastRejected: 'Candidate rejected — feedback saved',
     notFound: 'Vacancy not found',
     anonimous: (initialen: string) => `Candidate ${initialen}`,
+    btnReportScout: 'Report',
   },
 }
 
@@ -198,6 +201,7 @@ export default function VacatureDetailPage() {
   const [rejectRating, setRejectRating] = useState(0)
   const [rejectReason, setRejectReason] = useState<AfwijzingsReden | ''>('')
   const [rejectNote, setRejectNote] = useState('')
+  const [fraudScout, setFraudScout] = useState<{ name: string } | null>(null)
   const [editing, setEditing] = useState(false)
   const [beschrijving, setBeschrijving] = useState(
     `We zoeken een ervaren ${vacature?.title || 'professional'} die ons team versterkt. De ideale kandidaat combineert vakkennis met een sterke culturele fit.\n\nWat ga je doen?\n• Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${vacature?.title || ''} strategie\n• Samenwerken met interne stakeholders en externe partners\n• Bijdragen aan de groeidoelstellingen van de organisatie\n• Rapporteren aan het management team\n\nWat vragen wij?\n• Minimaal ${vacature?.hardeCriteria?.minimaleErvaring || '5 jaar'} relevante werkervaring\n• ${vacature?.hardeCriteria?.opleidingsniveau || 'HBO'} werk- en denkniveau\n• Uitstekende communicatieve vaardigheden in woord en geschrift\n• Proactieve houding en teamspeler\n\nWat bieden wij?\n• Salaris: ${vacature?.salaris || 'Marktconform'}\n• ${vacature?.hardeCriteria?.opKantoor || 'Hybride werken'}\n• 25 vakantiedagen + 13 ADV-dagen\n• Pensioenregeling en reiskostenvergoeding`
@@ -382,7 +386,7 @@ export default function VacatureDetailPage() {
               </div>
 
               {/* Acties */}
-              <div className="flex justify-end gap-2" onClick={e => e.stopPropagation()}>
+              <div className="flex justify-end gap-2 flex-wrap" onClick={e => e.stopPropagation()}>
                 {k.unlocked ? (
                   <span className="bg-cyan/15 text-cyan px-3 py-1.5 rounded-lg text-xs font-semibold border border-cyan/20">
                     {t.viewProcess}
@@ -397,6 +401,13 @@ export default function VacatureDetailPage() {
                     {t.reject}
                   </button>
                 )}
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFraudScout({ name: k.scoutNaam }) }}
+                  className="bg-orange/10 text-orange border border-orange/20 px-2 py-1.5 rounded-lg text-xs font-semibold hover:bg-orange/20 transition-colors"
+                  title={`${t.btnReportScout}: ${k.scoutNaam}`}
+                >
+                  🚨
+                </button>
               </div>
             </Link>
           )
@@ -662,6 +673,22 @@ export default function VacatureDetailPage() {
           </div>
         )
       })()}
+
+      {/* ─── Fraud Report Modal (report scout) ───────────────────────────────── */}
+      {fraudScout && (
+        <FraudReportModal
+          isOpen={!!fraudScout}
+          onClose={() => setFraudScout(null)}
+          lang={lang}
+          reporterRole="opdrachtgever"
+          reporterName="Daan Verhoeven"
+          reporterEmail="demo@bedrijf.nl"
+          subjectRole="scout"
+          subjectName={fraudScout.name}
+          subjectEmail="scout@refurzy.com"
+          context={vacature ? `${vacature.title} — ${vacature.company}` : undefined}
+        />
+      )}
     </div>
   )
 }
