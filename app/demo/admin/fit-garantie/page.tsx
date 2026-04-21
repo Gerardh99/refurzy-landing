@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
 
 type ClaimStatus = 'ontvangen' | 'exitgesprek_plannen' | 'exitgesprek_gepland' | 'exitgesprek_afgerond' | 'in_beoordeling' | 'goedgekeurd' | 'afgewezen'
 
@@ -21,6 +22,221 @@ interface FitGarantieClaim {
   exitgesprekSamenvatting?: string
   medewerkerBevestigt?: boolean
   opmerkingen: { tekst: string; datum: string; door: string }[]
+}
+
+const texts = {
+  nl: {
+    pageTitle: 'Fit Garantie Beheer',
+    pageSubtitle: 'Beheer en beoordeel Fit Garantie claims',
+    statsActief: 'Actieve garanties',
+    statsOpen: 'Open claims',
+    statsGoedgekeurd: 'Goedgekeurd',
+    statsAfgewezen: 'Afgewezen',
+    procedureTitle: 'Claim beoordelingsprocedure',
+    procedureSteps: [
+      'Claim ontvangen',
+      'Exitgesprek plannen',
+      'Exitgesprek gepland',
+      'Exitgesprek afgerond',
+      'Beoordeling',
+      'Besluit',
+    ],
+    colKandidaat: 'Kandidaat',
+    colOpdrachtgever: 'Opdrachtgever',
+    colVacature: 'Vacature',
+    colPlaatsingsDatum: 'Plaatsingsdatum',
+    colClaimDatum: 'Claimdatum',
+    colReden: 'Reden',
+    colStatus: 'Status',
+    detailOpdrachtgever: 'Opdrachtgever',
+    detailMScore: 'M-Score bij plaatsing',
+    detailEmail: 'Medewerker e-mail',
+    detailExitDatum: 'Exitgesprek datum',
+    detailToelichting: 'Toelichting opdrachtgever',
+    detailSamenvatting: 'Exitgesprek samenvatting',
+    badgeBevestigt: '\u2713 Medewerker bevestigt fit-mismatch',
+    badgeBevestigtNiet: '\u2717 Medewerker bevestigt geen fit-mismatch',
+    btnPlanExitgesprek: 'Plan exitgesprek',
+    btnAfrondenExitgesprek: 'Exitgesprek afronden',
+    btnGoedkeuren: 'Goedkeuren',
+    btnAfwijzen: 'Afwijzen',
+    opmerkingen: (n: number) => `Opmerkingen (${n})`,
+    opmerkingPlaceholder: 'Opmerking toevoegen...',
+    opmerkingToevoegen: 'Toevoegen',
+    statusLabels: {
+      'ontvangen': 'Ontvangen',
+      'exitgesprek_plannen': 'Exitgesprek plannen',
+      'exitgesprek_gepland': 'Exitgesprek gepland',
+      'exitgesprek_afgerond': 'Exitgesprek afgerond',
+      'in_beoordeling': 'In beoordeling',
+      'goedgekeurd': 'Goedgekeurd',
+      'afgewezen': 'Afgewezen',
+    } as Record<ClaimStatus, string>,
+    // Plan exitgesprek modal
+    modalPlanTitle: 'Exitgesprek plannen',
+    modalPlanDesc: (email: string) =>
+      `Plan een exitgesprek met de medewerker. Refurzy voert dit gesprek om vast te stellen of het vertrek het gevolg is van een fit-mismatch. Een uitnodiging wordt per e-mail verstuurd naar ${email}.`,
+    modalPlanDateLabel: 'Datum exitgesprek',
+    modalPlanNote: 'Binnen 10 werkdagen na ontvangst claim moet het exitgesprek plaatsvinden.',
+    modalPlanCancel: 'Annuleren',
+    modalPlanSubmit: 'Verstuur uitnodiging',
+    // Afronden modal
+    modalAfrondenTitle: 'Exitgesprek afronden',
+    modalAfrondenSamenvattingLabel: 'Samenvatting exitgesprek',
+    modalAfrondenSamenvattingPlaceholder: 'Beschrijf de bevindingen uit het exitgesprek...',
+    modalAfrondenVraag: 'Bevestigt de medewerker dat het vertrek het gevolg is van een fit-mismatch?',
+    modalAfrondenJa: 'Ja, bevestigt',
+    modalAfrondenNee: 'Nee, bevestigt niet',
+    modalAfrondenWarning: 'Let op: Zonder bevestiging van de medewerker kan de claim in principe niet worden goedgekeurd. Het eindoordeel ligt bij Refurzy.',
+    modalAfrondenCancel: 'Annuleren',
+    modalAfrondenSubmit: 'Exitgesprek afronden',
+    // Besluit modal
+    modalBesluitTitle: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Claim goedkeuren' : 'Claim afwijzen',
+    modalBesluitInfoGoedgekeurd: {
+      header: 'Bij goedkeuring:',
+      items: [
+        'Opdrachtgever ontvangt bevestiging',
+        'Refurzy levert een vervangende kandidaat zonder nieuwe plaatsingsfee',
+        'Scout wordt geinformeerd',
+      ],
+    },
+    modalBesluitInfoAfgewezen: {
+      header: 'Bij afwijzing:',
+      items: [
+        'Opdrachtgever ontvangt motivatie van de afwijzing',
+        'Geen vervangende kandidaat',
+        'Opdrachtgever kan bezwaar maken',
+      ],
+    },
+    modalBesluitMotivatieLabel: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Motivatie goedkeuring' : 'Motivatie afwijzing',
+    modalBesluitPlaceholder: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd'
+        ? 'Beschrijf waarom de claim binnen de dekking valt...'
+        : 'Beschrijf waarom de claim buiten de dekking valt...',
+    modalBesluitCancel: 'Annuleren',
+    modalBesluitSubmit: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Goedkeuren' : 'Afwijzen',
+    // Besluit detail badge
+    detailMedewerkerBevestigt: (v: boolean) => v ? 'bevestigt fit-mismatch' : 'bevestigt geen fit-mismatch',
+    detailMedewerkerLabel: 'Medewerker:',
+    // Handler strings
+    handlerExitgesprekGepland: (datumStr: string) =>
+      `Exitgesprek met medewerker gepland op ${datumStr}. Uitnodiging verstuurd per e-mail.`,
+    handlerAfrondenBevestigt: 'Medewerker bevestigt dat het vertrek het gevolg is van een fit-mismatch.',
+    handlerAfrondenBevestigtNiet: 'Medewerker bevestigt niet dat het vertrek het gevolg is van een fit-mismatch.',
+    handlerAfrondenSuffix: 'Claim gaat naar beoordeling.',
+    handlerGoedgekeurd: (toelichting: string) =>
+      `Claim goedgekeurd: ${toelichting}. Vervangende kandidaat wordt geleverd zonder nieuwe plaatsingsfee.`,
+    handlerAfgewezen: (toelichting: string) => `Claim afgewezen: ${toelichting}`,
+  },
+  en: {
+    pageTitle: 'Fit Guarantee Management',
+    pageSubtitle: 'Manage and assess Fit Guarantee claims',
+    statsActief: 'Active guarantees',
+    statsOpen: 'Open claims',
+    statsGoedgekeurd: 'Approved',
+    statsAfgewezen: 'Rejected',
+    procedureTitle: 'Claim assessment procedure',
+    procedureSteps: [
+      'Claim received',
+      'Schedule exit interview',
+      'Exit interview scheduled',
+      'Exit interview completed',
+      'Review',
+      'Decision',
+    ],
+    colKandidaat: 'Candidate',
+    colOpdrachtgever: 'Employer',
+    colVacature: 'Job',
+    colPlaatsingsDatum: 'Placement date',
+    colClaimDatum: 'Claim date',
+    colReden: 'Reason',
+    colStatus: 'Status',
+    detailOpdrachtgever: 'Employer',
+    detailMScore: 'M-Score at placement',
+    detailEmail: 'Employee email',
+    detailExitDatum: 'Exit interview date',
+    detailToelichting: 'Employer notes',
+    detailSamenvatting: 'Exit interview summary',
+    badgeBevestigt: '\u2713 Employee confirms fit mismatch',
+    badgeBevestigtNiet: '\u2717 Employee does not confirm fit mismatch',
+    btnPlanExitgesprek: 'Schedule exit interview',
+    btnAfrondenExitgesprek: 'Complete exit interview',
+    btnGoedkeuren: 'Approve',
+    btnAfwijzen: 'Reject',
+    opmerkingen: (n: number) => `Comments (${n})`,
+    opmerkingPlaceholder: 'Add a comment...',
+    opmerkingToevoegen: 'Add',
+    statusLabels: {
+      'ontvangen': 'Received',
+      'exitgesprek_plannen': 'Schedule exit interview',
+      'exitgesprek_gepland': 'Exit interview scheduled',
+      'exitgesprek_afgerond': 'Exit interview completed',
+      'in_beoordeling': 'Under review',
+      'goedgekeurd': 'Approved',
+      'afgewezen': 'Rejected',
+    } as Record<ClaimStatus, string>,
+    // Plan exitgesprek modal
+    modalPlanTitle: 'Schedule exit interview',
+    modalPlanDesc: (email: string) =>
+      `Schedule an exit interview with the employee. Refurzy conducts this interview to determine whether the departure is the result of a fit mismatch. An invitation will be sent by email to ${email}.`,
+    modalPlanDateLabel: 'Exit interview date',
+    modalPlanNote: 'The exit interview must take place within 10 working days of receiving the claim.',
+    modalPlanCancel: 'Cancel',
+    modalPlanSubmit: 'Send invitation',
+    // Afronden modal
+    modalAfrondenTitle: 'Complete exit interview',
+    modalAfrondenSamenvattingLabel: 'Exit interview summary',
+    modalAfrondenSamenvattingPlaceholder: 'Describe the findings from the exit interview...',
+    modalAfrondenVraag: 'Does the employee confirm that the departure is the result of a fit mismatch?',
+    modalAfrondenJa: 'Yes, confirms',
+    modalAfrondenNee: 'No, does not confirm',
+    modalAfrondenWarning: 'Note: Without employee confirmation, the claim generally cannot be approved. Final judgement rests with Refurzy.',
+    modalAfrondenCancel: 'Cancel',
+    modalAfrondenSubmit: 'Complete exit interview',
+    // Besluit modal
+    modalBesluitTitle: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Claim approve' : 'Claim reject',
+    modalBesluitInfoGoedgekeurd: {
+      header: 'Upon approval:',
+      items: [
+        'Employer receives confirmation',
+        'Refurzy provides a replacement candidate at no additional placement fee',
+        'Scout is informed',
+      ],
+    },
+    modalBesluitInfoAfgewezen: {
+      header: 'Upon rejection:',
+      items: [
+        'Employer receives the grounds for rejection',
+        'No replacement candidate',
+        'Employer may file an objection',
+      ],
+    },
+    modalBesluitMotivatieLabel: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Approval justification' : 'Rejection justification',
+    modalBesluitPlaceholder: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd'
+        ? 'Describe why the claim falls within the coverage...'
+        : 'Describe why the claim falls outside the coverage...',
+    modalBesluitCancel: 'Cancel',
+    modalBesluitSubmit: (type: 'goedgekeurd' | 'afgewezen') =>
+      type === 'goedgekeurd' ? 'Approve' : 'Reject',
+    // Besluit detail badge
+    detailMedewerkerBevestigt: (v: boolean) => v ? 'confirms fit mismatch' : 'does not confirm fit mismatch',
+    detailMedewerkerLabel: 'Employee:',
+    // Handler strings
+    handlerExitgesprekGepland: (datumStr: string) =>
+      `Exit interview with employee scheduled on ${datumStr}. Invitation sent by email.`,
+    handlerAfrondenBevestigt: 'Employee confirms that the departure is the result of a fit mismatch.',
+    handlerAfrondenBevestigtNiet: 'Employee does not confirm that the departure is the result of a fit mismatch.',
+    handlerAfrondenSuffix: 'Claim moves to review.',
+    handlerGoedgekeurd: (toelichting: string) =>
+      `Claim approved: ${toelichting}. Replacement candidate will be provided at no additional placement fee.`,
+    handlerAfgewezen: (toelichting: string) => `Claim rejected: ${toelichting}`,
+  },
 }
 
 const initialClaims: FitGarantieClaim[] = [
@@ -90,35 +306,26 @@ const initialClaims: FitGarantieClaim[] = [
   },
 ]
 
-const statusConfig: Record<ClaimStatus, { label: string; color: string; step: number }> = {
-  'ontvangen': { label: 'Ontvangen', color: 'bg-blue-100 text-blue-700', step: 0 },
-  'exitgesprek_plannen': { label: 'Exitgesprek plannen', color: 'bg-orange/10 text-orange', step: 1 },
-  'exitgesprek_gepland': { label: 'Exitgesprek gepland', color: 'bg-purple/10 text-purple', step: 2 },
-  'exitgesprek_afgerond': { label: 'Exitgesprek afgerond', color: 'bg-cyan/10 text-cyan', step: 3 },
-  'in_beoordeling': { label: 'In beoordeling', color: 'bg-amber-100 text-amber-700', step: 4 },
-  'goedgekeurd': { label: 'Goedgekeurd', color: 'bg-green-100 text-green-700', step: 5 },
-  'afgewezen': { label: 'Afgewezen', color: 'bg-red-100 text-red-700', step: 5 },
+const statusConfig: Record<ClaimStatus, { color: string; step: number }> = {
+  'ontvangen': { color: 'bg-blue-100 text-blue-700', step: 0 },
+  'exitgesprek_plannen': { color: 'bg-orange/10 text-orange', step: 1 },
+  'exitgesprek_gepland': { color: 'bg-purple/10 text-purple', step: 2 },
+  'exitgesprek_afgerond': { color: 'bg-cyan/10 text-cyan', step: 3 },
+  'in_beoordeling': { color: 'bg-amber-100 text-amber-700', step: 4 },
+  'goedgekeurd': { color: 'bg-green-100 text-green-700', step: 5 },
+  'afgewezen': { color: 'bg-red-100 text-red-700', step: 5 },
 }
 
-const procedureSteps = [
-  'Claim ontvangen',
-  'Exitgesprek plannen',
-  'Exitgesprek gepland',
-  'Exitgesprek afgerond',
-  'Beoordeling',
-  'Besluit',
-]
-
-function StatusBadge({ status }: { status: ClaimStatus }) {
+function StatusBadge({ status, label }: { status: ClaimStatus; label: string }) {
   const cfg = statusConfig[status]
   return (
     <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${cfg.color}`}>
-      {cfg.label}
+      {label}
     </span>
   )
 }
 
-function ProcedureBar({ status }: { status: ClaimStatus }) {
+function ProcedureBar({ status, procedureSteps }: { status: ClaimStatus; procedureSteps: string[] }) {
   const currentStep = statusConfig[status].step
   const isFinal = status === 'goedgekeurd' || status === 'afgewezen'
 
@@ -155,6 +362,9 @@ export default function AdminFitGarantie() {
   const [claims, setClaims] = useState<FitGarantieClaim[]>(initialClaims)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [newOpmerking, setNewOpmerking] = useState('')
+
+  const { lang } = useLang()
+  const t = texts[lang]
 
   // Exitgesprek planning state
   const [showExitgesprekModal, setShowExitgesprekModal] = useState(false)
@@ -201,9 +411,10 @@ export default function AdminFitGarantie() {
   const handlePlanExitgesprek = () => {
     if (!exitgesprekClaimId || !exitgesprekDatum) return
     const datum = new Date(exitgesprekDatum)
-    const datumStr = datum.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
+    const locale = lang === 'nl' ? 'nl-NL' : 'en-GB'
+    const datumStr = datum.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
     updateClaim(exitgesprekClaimId, { status: 'exitgesprek_gepland', exitgesprekDatum })
-    addOpmerking(exitgesprekClaimId, `Exitgesprek met medewerker gepland op ${datumStr}. Uitnodiging verstuurd per e-mail.`)
+    addOpmerking(exitgesprekClaimId, t.handlerExitgesprekGepland(datumStr))
     setShowExitgesprekModal(false)
   }
 
@@ -223,9 +434,9 @@ export default function AdminFitGarantie() {
       medewerkerBevestigt,
     })
     const bevestigingTekst = medewerkerBevestigt
-      ? 'Medewerker bevestigt dat het vertrek het gevolg is van een fit-mismatch.'
-      : 'Medewerker bevestigt niet dat het vertrek het gevolg is van een fit-mismatch.'
-    addOpmerking(afrondenClaimId, `Exitgesprek afgerond. ${bevestigingTekst} Claim gaat naar beoordeling.`)
+      ? t.handlerAfrondenBevestigt
+      : t.handlerAfrondenBevestigtNiet
+    addOpmerking(afrondenClaimId, `Exitgesprek afgerond. ${bevestigingTekst} ${t.handlerAfrondenSuffix}`)
     setShowAfrondenModal(false)
   }
 
@@ -241,8 +452,8 @@ export default function AdminFitGarantie() {
     if (!besluitClaimId || !besluitType || !besluitToelichting) return
     updateClaim(besluitClaimId, { status: besluitType })
     const tekst = besluitType === 'goedgekeurd'
-      ? `Claim goedgekeurd: ${besluitToelichting}. Vervangende kandidaat wordt geleverd zonder nieuwe plaatsingsfee.`
-      : `Claim afgewezen: ${besluitToelichting}`
+      ? t.handlerGoedgekeurd(besluitToelichting)
+      : t.handlerAfgewezen(besluitToelichting)
     addOpmerking(besluitClaimId, tekst)
     setShowBesluitModal(false)
   }
@@ -253,41 +464,43 @@ export default function AdminFitGarantie() {
     setNewOpmerking('')
   }
 
+  const locale = lang === 'nl' ? 'nl-NL' : 'en-GB'
+
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Fit Garantie Beheer</h1>
-        <p className="text-ink-light font-medium mt-1">Beheer en beoordeel Fit Garantie claims</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <div className="text-sm text-ink-light">Actieve garanties</div>
+          <div className="text-sm text-ink-light">{t.statsActief}</div>
           <div className="text-2xl font-bold text-ink mt-1">{stats.actieveGaranties}</div>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <div className="text-sm text-ink-light">Open claims</div>
+          <div className="text-sm text-ink-light">{t.statsOpen}</div>
           <div className="text-2xl font-bold text-orange mt-1">{stats.openClaims}</div>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <div className="text-sm text-ink-light">Goedgekeurd</div>
+          <div className="text-sm text-ink-light">{t.statsGoedgekeurd}</div>
           <div className="text-2xl font-bold text-green-600 mt-1">{stats.goedgekeurd}</div>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <div className="text-sm text-ink-light">Afgewezen</div>
+          <div className="text-sm text-ink-light">{t.statsAfgewezen}</div>
           <div className="text-2xl font-bold text-red-500 mt-1">{stats.afgewezen}</div>
         </div>
       </div>
 
       {/* Procedure uitleg */}
       <div className="bg-purple/5 border border-purple/15 rounded-2xl p-5">
-        <h3 className="text-sm font-semibold text-purple mb-3">Claim beoordelingsprocedure</h3>
+        <h3 className="text-sm font-semibold text-purple mb-3">{t.procedureTitle}</h3>
         <div className="flex items-center gap-2 text-xs text-ink-light">
-          {procedureSteps.map((step, i) => (
+          {t.procedureSteps.map((step, i) => (
             <div key={step} className="flex items-center gap-2">
               <span className="bg-white border border-purple/20 rounded-lg px-2 py-1 font-medium text-ink">{i + 1}. {step}</span>
-              {i < procedureSteps.length - 1 && <span className="text-purple">&rarr;</span>}
+              {i < t.procedureSteps.length - 1 && <span className="text-purple">&rarr;</span>}
             </div>
           ))}
         </div>
@@ -296,13 +509,13 @@ export default function AdminFitGarantie() {
       {/* Claims list */}
       <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
         <div className="hidden md:grid grid-cols-7 gap-4 px-6 py-3 bg-surface-muted border-b border-surface-border text-xs font-medium text-ink-muted uppercase tracking-wide">
-          <div>Kandidaat</div>
-          <div>Opdrachtgever</div>
-          <div>Vacature</div>
-          <div>Plaatsingsdatum</div>
-          <div>Claimdatum</div>
-          <div>Reden</div>
-          <div>Status</div>
+          <div>{t.colKandidaat}</div>
+          <div>{t.colOpdrachtgever}</div>
+          <div>{t.colVacature}</div>
+          <div>{t.colPlaatsingsDatum}</div>
+          <div>{t.colClaimDatum}</div>
+          <div>{t.colReden}</div>
+          <div>{t.colStatus}</div>
         </div>
 
         {claims.map((claim) => {
@@ -318,57 +531,57 @@ export default function AdminFitGarantie() {
                 <div className="font-medium text-ink text-sm">{claim.kandidaatNaam}</div>
                 <div className="text-sm text-ink-light">{claim.opdrachtgeverBedrijf}</div>
                 <div className="text-sm text-ink-light">{claim.vacature}</div>
-                <div className="text-sm text-ink-light">{new Date(claim.plaatsingsDatum).toLocaleDateString('nl-NL')}</div>
-                <div className="text-sm text-ink-light">{new Date(claim.claimDatum).toLocaleDateString('nl-NL')}</div>
+                <div className="text-sm text-ink-light">{new Date(claim.plaatsingsDatum).toLocaleDateString(locale)}</div>
+                <div className="text-sm text-ink-light">{new Date(claim.claimDatum).toLocaleDateString(locale)}</div>
                 <div className="text-sm text-ink-light">{claim.reden}</div>
-                <div><StatusBadge status={claim.status} /></div>
+                <div><StatusBadge status={claim.status} label={t.statusLabels[claim.status]} /></div>
               </button>
 
               {isExpanded && (
                 <div className="px-6 pb-6 space-y-5 bg-surface-muted/30">
                   {/* Procedure bar */}
-                  <ProcedureBar status={claim.status} />
+                  <ProcedureBar status={claim.status} procedureSteps={t.procedureSteps} />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Left column: claim details */}
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <div className="text-xs font-medium text-ink-muted mb-1">Opdrachtgever</div>
+                          <div className="text-xs font-medium text-ink-muted mb-1">{t.detailOpdrachtgever}</div>
                           <div className="text-sm text-ink">{claim.opdrachtgeverNaam}</div>
                           <div className="text-xs text-ink-muted">{claim.opdrachtgeverBedrijf}</div>
                         </div>
                         <div>
-                          <div className="text-xs font-medium text-ink-muted mb-1">M-Score bij plaatsing</div>
+                          <div className="text-xs font-medium text-ink-muted mb-1">{t.detailMScore}</div>
                           <div className="text-sm font-bold text-cyan">{claim.mScore}%</div>
                         </div>
                         <div>
-                          <div className="text-xs font-medium text-ink-muted mb-1">Medewerker e-mail</div>
+                          <div className="text-xs font-medium text-ink-muted mb-1">{t.detailEmail}</div>
                           <div className="text-sm text-purple font-medium">{claim.medewerkerEmail}</div>
                         </div>
                         {claim.exitgesprekDatum && (
                           <div>
-                            <div className="text-xs font-medium text-ink-muted mb-1">Exitgesprek datum</div>
-                            <div className="text-sm text-ink font-medium">{new Date(claim.exitgesprekDatum).toLocaleDateString('nl-NL')}</div>
+                            <div className="text-xs font-medium text-ink-muted mb-1">{t.detailExitDatum}</div>
+                            <div className="text-sm text-ink font-medium">{new Date(claim.exitgesprekDatum).toLocaleDateString(locale)}</div>
                           </div>
                         )}
                       </div>
 
                       <div>
-                        <div className="text-xs font-medium text-ink-muted mb-1">Toelichting opdrachtgever</div>
+                        <div className="text-xs font-medium text-ink-muted mb-1">{t.detailToelichting}</div>
                         <div className="text-sm text-ink bg-white rounded-lg p-3 border border-surface-border">{claim.toelichting}</div>
                       </div>
 
                       {/* Exitgesprek samenvatting */}
                       {claim.exitgesprekSamenvatting && (
                         <div>
-                          <div className="text-xs font-medium text-ink-muted mb-1">Exitgesprek samenvatting</div>
+                          <div className="text-xs font-medium text-ink-muted mb-1">{t.detailSamenvatting}</div>
                           <div className="text-sm text-ink bg-white rounded-lg p-3 border border-surface-border space-y-2">
                             <p>{claim.exitgesprekSamenvatting}</p>
                             <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
                               claim.medewerkerBevestigt ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                             }`}>
-                              {claim.medewerkerBevestigt ? '\u2713 Medewerker bevestigt fit-mismatch' : '\u2717 Medewerker bevestigt geen fit-mismatch'}
+                              {claim.medewerkerBevestigt ? t.badgeBevestigt : t.badgeBevestigtNiet}
                             </div>
                           </div>
                         </div>
@@ -381,7 +594,7 @@ export default function AdminFitGarantie() {
                             onClick={() => openPlanExitgesprek(claim.id)}
                             className="px-4 py-2 bg-purple text-white text-sm font-medium rounded-lg hover:bg-purple-dark transition-colors"
                           >
-                            Plan exitgesprek
+                            {t.btnPlanExitgesprek}
                           </button>
                         )}
                         {claim.status === 'exitgesprek_gepland' && (
@@ -389,7 +602,7 @@ export default function AdminFitGarantie() {
                             onClick={() => openAfrondenExitgesprek(claim.id)}
                             className="px-4 py-2 bg-cyan text-navy-dark text-sm font-medium rounded-lg hover:bg-cyan/90 transition-colors"
                           >
-                            Exitgesprek afronden
+                            {t.btnAfrondenExitgesprek}
                           </button>
                         )}
                         {claim.status === 'in_beoordeling' && (
@@ -398,13 +611,13 @@ export default function AdminFitGarantie() {
                               onClick={() => openBesluit(claim.id, 'goedgekeurd')}
                               className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors"
                             >
-                              Goedkeuren
+                              {t.btnGoedkeuren}
                             </button>
                             <button
                               onClick={() => openBesluit(claim.id, 'afgewezen')}
                               className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
                             >
-                              Afwijzen
+                              {t.btnAfwijzen}
                             </button>
                           </>
                         )}
@@ -413,12 +626,12 @@ export default function AdminFitGarantie() {
 
                     {/* Right column: opmerkingen */}
                     <div className="space-y-3">
-                      <div className="text-xs font-medium text-ink-muted mb-1">Opmerkingen ({claim.opmerkingen.length})</div>
+                      <div className="text-xs font-medium text-ink-muted mb-1">{t.opmerkingen(claim.opmerkingen.length)}</div>
                       <div className="space-y-2 max-h-80 overflow-y-auto">
                         {claim.opmerkingen.map((o, i) => (
                           <div key={i} className="bg-white rounded-lg p-3 border border-surface-border">
                             <div className="text-sm text-ink">{o.tekst}</div>
-                            <div className="text-xs text-ink-muted mt-1">{o.door} &mdash; {new Date(o.datum).toLocaleDateString('nl-NL')}</div>
+                            <div className="text-xs text-ink-muted mt-1">{o.door} &mdash; {new Date(o.datum).toLocaleDateString(locale)}</div>
                           </div>
                         ))}
                       </div>
@@ -427,7 +640,7 @@ export default function AdminFitGarantie() {
                         <div className="flex gap-2">
                           <input
                             type="text"
-                            placeholder="Opmerking toevoegen..."
+                            placeholder={t.opmerkingPlaceholder}
                             value={expandedId === claim.id ? newOpmerking : ''}
                             onChange={(e) => setNewOpmerking(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter') handleAddOpmerking(claim.id) }}
@@ -437,7 +650,7 @@ export default function AdminFitGarantie() {
                             onClick={() => handleAddOpmerking(claim.id)}
                             className="px-3 py-2 bg-purple/10 text-purple text-sm font-medium rounded-lg hover:bg-purple/20 transition-colors"
                           >
-                            Toevoegen
+                            {t.opmerkingToevoegen}
                           </button>
                         </div>
                       )}
@@ -455,7 +668,7 @@ export default function AdminFitGarantie() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl border border-surface-border w-full max-w-md mx-4 p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-ink">Exitgesprek plannen</h3>
+              <h3 className="text-lg font-bold text-ink">{t.modalPlanTitle}</h3>
               <button onClick={() => setShowExitgesprekModal(false)} className="text-ink-muted hover:text-ink text-xl">&times;</button>
             </div>
 
@@ -470,12 +683,11 @@ export default function AdminFitGarantie() {
                   </div>
 
                   <p className="text-ink-light text-sm">
-                    Plan een exitgesprek met de medewerker. Refurzy voert dit gesprek om vast te stellen of het vertrek
-                    het gevolg is van een fit-mismatch. Een uitnodiging wordt per e-mail verstuurd naar {claim.medewerkerEmail}.
+                    {t.modalPlanDesc(claim.medewerkerEmail)}
                   </p>
 
                   <div>
-                    <label className="block text-sm font-medium text-ink mb-1.5">Datum exitgesprek</label>
+                    <label className="block text-sm font-medium text-ink mb-1.5">{t.modalPlanDateLabel}</label>
                     <input
                       type="date"
                       value={exitgesprekDatum}
@@ -485,17 +697,17 @@ export default function AdminFitGarantie() {
                   </div>
 
                   <div className="bg-purple/5 border border-purple/15 rounded-lg p-3">
-                    <p className="text-xs text-purple font-medium">Binnen 10 werkdagen na ontvangst claim moet het exitgesprek plaatsvinden.</p>
+                    <p className="text-xs text-purple font-medium">{t.modalPlanNote}</p>
                   </div>
 
                   <div className="flex justify-end gap-3">
-                    <button onClick={() => setShowExitgesprekModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">Annuleren</button>
+                    <button onClick={() => setShowExitgesprekModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">{t.modalPlanCancel}</button>
                     <button
                       onClick={handlePlanExitgesprek}
                       disabled={!exitgesprekDatum}
                       className="px-6 py-2 bg-purple text-white text-sm font-medium rounded-lg hover:bg-purple-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Verstuur uitnodiging
+                      {t.modalPlanSubmit}
                     </button>
                   </div>
                 </div>
@@ -510,7 +722,7 @@ export default function AdminFitGarantie() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl border border-surface-border w-full max-w-lg mx-4 p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-ink">Exitgesprek afronden</h3>
+              <h3 className="text-lg font-bold text-ink">{t.modalAfrondenTitle}</h3>
               <button onClick={() => setShowAfrondenModal(false)} className="text-ink-muted hover:text-ink text-xl">&times;</button>
             </div>
 
@@ -525,18 +737,18 @@ export default function AdminFitGarantie() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-ink mb-1.5">Samenvatting exitgesprek</label>
+                    <label className="block text-sm font-medium text-ink mb-1.5">{t.modalAfrondenSamenvattingLabel}</label>
                     <textarea
                       value={exitSamenvatting}
                       onChange={(e) => setExitSamenvatting(e.target.value)}
-                      placeholder="Beschrijf de bevindingen uit het exitgesprek..."
+                      placeholder={t.modalAfrondenSamenvattingPlaceholder}
                       rows={4}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50 resize-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-ink mb-2">Bevestigt de medewerker dat het vertrek het gevolg is van een fit-mismatch?</label>
+                    <label className="block text-sm font-medium text-ink mb-2">{t.modalAfrondenVraag}</label>
                     <div className="flex gap-3">
                       <button
                         onClick={() => setMedewerkerBevestigt(true)}
@@ -546,7 +758,7 @@ export default function AdminFitGarantie() {
                             : 'border-surface-border bg-white text-ink-light hover:border-green-300'
                         }`}
                       >
-                        Ja, bevestigt
+                        {t.modalAfrondenJa}
                       </button>
                       <button
                         onClick={() => setMedewerkerBevestigt(false)}
@@ -556,7 +768,7 @@ export default function AdminFitGarantie() {
                             : 'border-surface-border bg-white text-ink-light hover:border-red-300'
                         }`}
                       >
-                        Nee, bevestigt niet
+                        {t.modalAfrondenNee}
                       </button>
                     </div>
                   </div>
@@ -564,20 +776,19 @@ export default function AdminFitGarantie() {
                   {medewerkerBevestigt === false && (
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                       <p className="text-xs text-amber-700 font-medium">
-                        Let op: Zonder bevestiging van de medewerker kan de claim in principe niet worden goedgekeurd.
-                        Het eindoordeel ligt bij Refurzy.
+                        {t.modalAfrondenWarning}
                       </p>
                     </div>
                   )}
 
                   <div className="flex justify-end gap-3">
-                    <button onClick={() => setShowAfrondenModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">Annuleren</button>
+                    <button onClick={() => setShowAfrondenModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">{t.modalAfrondenCancel}</button>
                     <button
                       onClick={handleAfrondenExitgesprek}
                       disabled={!exitSamenvatting || medewerkerBevestigt === null}
                       className="px-6 py-2 bg-cyan text-navy-dark text-sm font-medium rounded-lg hover:bg-cyan/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Exitgesprek afronden
+                      {t.modalAfrondenSubmit}
                     </button>
                   </div>
                 </div>
@@ -593,7 +804,7 @@ export default function AdminFitGarantie() {
           <div className="bg-white rounded-2xl shadow-xl border border-surface-border w-full max-w-md mx-4 p-6 space-y-5">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-ink">
-                Claim {besluitType === 'goedgekeurd' ? 'goedkeuren' : 'afwijzen'}
+                {t.modalBesluitTitle(besluitType)}
               </h3>
               <button onClick={() => setShowBesluitModal(false)} className="text-ink-muted hover:text-ink text-xl">&times;</button>
             </div>
@@ -608,48 +819,46 @@ export default function AdminFitGarantie() {
                     <p className="text-ink-muted text-xs">{claim.vacature} bij {claim.opdrachtgeverBedrijf}</p>
                     {claim.medewerkerBevestigt !== undefined && (
                       <p className={`text-xs font-medium mt-1 ${claim.medewerkerBevestigt ? 'text-green-600' : 'text-red-500'}`}>
-                        Medewerker: {claim.medewerkerBevestigt ? 'bevestigt fit-mismatch' : 'bevestigt geen fit-mismatch'}
+                        {t.detailMedewerkerLabel} {t.detailMedewerkerBevestigt(claim.medewerkerBevestigt)}
                       </p>
                     )}
                   </div>
 
                   {besluitType === 'goedgekeurd' ? (
                     <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-green-700">
-                      <p className="font-semibold mb-1">Bij goedkeuring:</p>
+                      <p className="font-semibold mb-1">{t.modalBesluitInfoGoedgekeurd.header}</p>
                       <ul className="list-disc list-inside space-y-0.5">
-                        <li>Opdrachtgever ontvangt bevestiging</li>
-                        <li>Refurzy levert een vervangende kandidaat zonder nieuwe plaatsingsfee</li>
-                        <li>Scout wordt geinformeerd</li>
+                        {t.modalBesluitInfoGoedgekeurd.items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
                       </ul>
                     </div>
                   ) : (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-xs text-red-700">
-                      <p className="font-semibold mb-1">Bij afwijzing:</p>
+                      <p className="font-semibold mb-1">{t.modalBesluitInfoAfgewezen.header}</p>
                       <ul className="list-disc list-inside space-y-0.5">
-                        <li>Opdrachtgever ontvangt motivatie van de afwijzing</li>
-                        <li>Geen vervangende kandidaat</li>
-                        <li>Opdrachtgever kan bezwaar maken</li>
+                        {t.modalBesluitInfoAfgewezen.items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
                       </ul>
                     </div>
                   )}
 
                   <div>
                     <label className="block text-sm font-medium text-ink mb-1.5">
-                      {besluitType === 'goedgekeurd' ? 'Motivatie goedkeuring' : 'Motivatie afwijzing'}
+                      {t.modalBesluitMotivatieLabel(besluitType)}
                     </label>
                     <textarea
                       value={besluitToelichting}
                       onChange={(e) => setBesluitToelichting(e.target.value)}
-                      placeholder={besluitType === 'goedgekeurd'
-                        ? 'Beschrijf waarom de claim binnen de dekking valt...'
-                        : 'Beschrijf waarom de claim buiten de dekking valt...'}
+                      placeholder={t.modalBesluitPlaceholder(besluitType)}
                       rows={3}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50 resize-none"
                     />
                   </div>
 
                   <div className="flex justify-end gap-3">
-                    <button onClick={() => setShowBesluitModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">Annuleren</button>
+                    <button onClick={() => setShowBesluitModal(false)} className="px-4 py-2 text-sm text-ink-light hover:text-ink">{t.modalBesluitCancel}</button>
                     <button
                       onClick={handleBesluit}
                       disabled={!besluitToelichting}
@@ -657,7 +866,7 @@ export default function AdminFitGarantie() {
                         besluitType === 'goedgekeurd' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-500 hover:bg-red-600'
                       }`}
                     >
-                      {besluitType === 'goedgekeurd' ? 'Goedkeuren' : 'Afwijzen'}
+                      {t.modalBesluitSubmit(besluitType)}
                     </button>
                   </div>
                 </div>

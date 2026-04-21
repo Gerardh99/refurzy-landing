@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
 
 type FactuurStatus = 'betaald' | 'openstaand' | 'creditnota'
 
@@ -101,7 +102,78 @@ const mockFacturen: AdminFactuur[] = [
 
 const opdrachtgevers = Array.from(new Set(mockFacturen.map(f => f.opdrachtgever)))
 
+// ─── Translations ────────────────────────────────────────────────────────────
+
+const texts = {
+  nl: {
+    title: 'Facturen overzicht',
+    subtitle: 'Alle facturen op het platform — admin weergave',
+    statTotaalOmzet: 'Totaal omzet',
+    statInclBtw: "Incl. BTW, excl. creditnota\u2019s",
+    statBetaald: 'Betaald',
+    statOpenstaand: 'Openstaand',
+    statCreditnotas: "Creditnota\u2019s",
+    statFitGarantie: 'Fit Garantie vervangingen',
+    filterAlle: 'Alle',
+    filterBetaald: 'Betaald',
+    filterOpenstaand: 'Openstaand',
+    filterCreditnota: 'Creditnota',
+    filterAlleOG: 'Alle opdrachtgevers',
+    filterAllePeriodes: 'Alle periodes',
+    colFactuurNr: 'Factuur nr',
+    colDatum: 'Datum',
+    colOpdrachtgever: 'Opdrachtgever',
+    colVacature: 'Vacature',
+    colKandidaat: 'Kandidaat',
+    colScout: 'Scout',
+    colBedrag: 'Bedrag',
+    colBtw: 'BTW',
+    colTotaal: 'Totaal',
+    colStatus: 'Status',
+    badgeBetaald: 'Betaald',
+    badgeOpenstaand: 'Openstaand',
+    badgeCreditnota: 'Creditnota',
+    emptyState: 'Geen facturen gevonden met de geselecteerde filters.',
+  },
+  en: {
+    title: 'Invoice overview',
+    subtitle: 'All invoices on the platform — admin view',
+    statTotaalOmzet: 'Total revenue',
+    statInclBtw: 'Incl. VAT, excl. credit notes',
+    statBetaald: 'Paid',
+    statOpenstaand: 'Outstanding',
+    statCreditnotas: 'Credit notes',
+    statFitGarantie: 'Fit Guarantee replacements',
+    filterAlle: 'All',
+    filterBetaald: 'Paid',
+    filterOpenstaand: 'Outstanding',
+    filterCreditnota: 'Credit note',
+    filterAlleOG: 'All employers',
+    filterAllePeriodes: 'All periods',
+    colFactuurNr: 'Invoice no.',
+    colDatum: 'Date',
+    colOpdrachtgever: 'Employer',
+    colVacature: 'Job',
+    colKandidaat: 'Candidate',
+    colScout: 'Scout',
+    colBedrag: 'Amount',
+    colBtw: 'VAT',
+    colTotaal: 'Total',
+    colStatus: 'Status',
+    badgeBetaald: 'Paid',
+    badgeOpenstaand: 'Outstanding',
+    badgeCreditnota: 'Credit note',
+    emptyState: 'No invoices found with the selected filters.',
+  },
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
+
 export default function AdminFacturen() {
+  const { lang } = useLang()
+  const t = texts[lang]
+  const locale = lang === 'nl' ? 'nl-NL' : 'en-GB'
+
   const [statusFilter, setStatusFilter] = useState<'alle' | FactuurStatus>('alle')
   const [ogFilter, setOgFilter] = useState<string>('alle')
   const [periodeFilter, setPeriodeFilter] = useState<string>('alle')
@@ -124,32 +196,45 @@ export default function AdminFacturen() {
 
   const fmt = (n: number) => '\u20AC' + Math.abs(n).toLocaleString('nl-NL', { minimumFractionDigits: 2 })
 
+  const statusBadgeLabel = (status: FactuurStatus) => {
+    if (status === 'betaald') return t.badgeBetaald
+    if (status === 'openstaand') return t.badgeOpenstaand
+    return t.badgeCreditnota
+  }
+
+  const filterButtonLabel = (s: 'alle' | FactuurStatus) => {
+    if (s === 'alle') return t.filterAlle
+    if (s === 'betaald') return t.filterBetaald
+    if (s === 'openstaand') return t.filterOpenstaand
+    return t.filterCreditnota
+  }
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Facturen overzicht</h1>
-        <p className="text-ink-light text-sm mt-1">Alle facturen op het platform — admin weergave</p>
+        <h1 className="text-2xl font-bold text-ink">{t.title}</h1>
+        <p className="text-ink-light text-sm mt-1">{t.subtitle}</p>
       </div>
 
       {/* Summary stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Totaal omzet</p>
+          <p className="text-xs text-ink-muted">{t.statTotaalOmzet}</p>
           <p className="text-2xl font-bold text-ink mt-1">{fmt(totaalOmzet)}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Incl. BTW, excl. creditnota&apos;s</p>
+          <p className="text-[10px] text-ink-muted mt-1">{t.statInclBtw}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Betaald</p>
+          <p className="text-xs text-ink-muted">{t.statBetaald}</p>
           <p className="text-2xl font-bold text-green-600 mt-1">{fmt(totaalBetaald)}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Openstaand</p>
+          <p className="text-xs text-ink-muted">{t.statOpenstaand}</p>
           <p className="text-2xl font-bold text-orange mt-1">{fmt(totaalOpenstaand)}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Creditnota&apos;s</p>
+          <p className="text-xs text-ink-muted">{t.statCreditnotas}</p>
           <p className="text-2xl font-bold text-red-500 mt-1">{fmt(totaalCreditnota)}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Fit Garantie vervangingen</p>
+          <p className="text-[10px] text-ink-muted mt-1">{t.statFitGarantie}</p>
         </div>
       </div>
 
@@ -161,14 +246,14 @@ export default function AdminFacturen() {
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 statusFilter === s ? 'bg-ink text-white' : 'bg-surface-muted text-ink-muted hover:text-ink'
               }`}>
-              {s === 'alle' ? 'Alle' : s === 'betaald' ? 'Betaald' : s === 'openstaand' ? 'Openstaand' : 'Creditnota'}
+              {filterButtonLabel(s)}
             </button>
           ))}
         </div>
 
         <select value={ogFilter} onChange={e => setOgFilter(e.target.value)}
           className="px-3 py-1.5 rounded-lg border border-surface-border text-xs text-ink bg-white">
-          <option value="alle">Alle opdrachtgevers</option>
+          <option value="alle">{t.filterAlleOG}</option>
           {opdrachtgevers.map(og => (
             <option key={og} value={og}>{og}</option>
           ))}
@@ -176,7 +261,7 @@ export default function AdminFacturen() {
 
         <select value={periodeFilter} onChange={e => setPeriodeFilter(e.target.value)}
           className="px-3 py-1.5 rounded-lg border border-surface-border text-xs text-ink bg-white">
-          <option value="alle">Alle periodes</option>
+          <option value="alle">{t.filterAllePeriodes}</option>
           <option value="2026">2026</option>
           <option value="2025">2025</option>
         </select>
@@ -188,16 +273,16 @@ export default function AdminFacturen() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border bg-surface-muted/50">
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Factuur nr</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Datum</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Opdrachtgever</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Vacature</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Kandidaat</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Scout</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">Bedrag</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">BTW</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">Totaal</th>
-                <th className="text-center px-4 py-3 text-xs font-medium text-ink-muted">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colFactuurNr}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colDatum}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colOpdrachtgever}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colVacature}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colKandidaat}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colScout}</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">{t.colBedrag}</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">{t.colBtw}</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">{t.colTotaal}</th>
+                <th className="text-center px-4 py-3 text-xs font-medium text-ink-muted">{t.colStatus}</th>
                 <th className="text-center px-4 py-3 text-xs font-medium text-ink-muted"></th>
               </tr>
             </thead>
@@ -205,7 +290,7 @@ export default function AdminFacturen() {
               {filtered.map(f => (
                 <tr key={f.id} className="border-b border-surface-border last:border-0 hover:bg-surface-muted/30">
                   <td className="px-4 py-3.5 font-mono text-ink font-medium text-xs">{f.factuurNummer}</td>
-                  <td className="px-4 py-3.5 text-ink-light text-xs">{new Date(f.datum).toLocaleDateString('nl-NL')}</td>
+                  <td className="px-4 py-3.5 text-ink-light text-xs">{new Date(f.datum).toLocaleDateString(locale)}</td>
                   <td className="px-4 py-3.5 text-ink text-xs">{f.opdrachtgever}</td>
                   <td className="px-4 py-3.5 text-ink text-xs">{f.vacatureTitle}</td>
                   <td className="px-4 py-3.5 text-ink text-xs">{f.kandidaatNaam}</td>
@@ -225,7 +310,7 @@ export default function AdminFacturen() {
                       f.status === 'openstaand' ? 'bg-yellow-100 text-yellow-700' :
                       'bg-red-100 text-red-700'
                     }`}>
-                      {f.status === 'betaald' ? 'Betaald' : f.status === 'openstaand' ? 'Openstaand' : 'Creditnota'}
+                      {statusBadgeLabel(f.status)}
                     </span>
                   </td>
                   <td className="px-4 py-3.5 text-center">
@@ -239,7 +324,7 @@ export default function AdminFacturen() {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <div className="p-8 text-center text-ink-muted text-sm">Geen facturen gevonden met de geselecteerde filters.</div>
+            <div className="p-8 text-center text-ink-muted text-sm">{t.emptyState}</div>
           )}
         </div>
       </div>

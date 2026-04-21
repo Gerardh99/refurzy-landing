@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useLang } from '@/lib/i18n'
 
 type AccountStatus = 'actief' | 'geblokkeerd_temp' | 'geblokkeerd_perm'
 type OrgRole = 'owner' | 'admin' | 'gebruiker'
@@ -68,33 +69,176 @@ const mockScouts: ScoutAccount[] = [
   { id: 's3', naam: 'Eva van Leeuwen', email: 'eva@recruit.nl', status: 'geblokkeerd_perm', aangemeld: '2026-02-10', rating: 0, plaatsingen: 0, poolSize: 0 },
 ]
 
-function StatusBadge({ status }: { status: AccountStatus }) {
+const texts = {
+  nl: {
+    backLink: '← Terug naar admin',
+    title: 'Gebruikers overzicht',
+    subtitle: 'Gegroepeerd per organisatie en type',
+    stats: {
+      organisations: 'Organisaties',
+      users: 'Gebruikers',
+      scouts: 'Talent Scouts',
+      active: 'Actief',
+      blocked: 'Geblokkeerd',
+    },
+    tabs: {
+      organisations: 'Organisaties',
+      scouts: 'Scouts',
+    },
+    status: {
+      actief: 'Actief',
+      geblokkeerd_temp: '⏸ Tijdelijk',
+      geblokkeerd_perm: '🚫 Permanent',
+    } as Record<AccountStatus, string>,
+    roles: {
+      owner: 'owner',
+      admin: 'admin',
+      gebruiker: 'gebruiker',
+    } as Record<OrgRole, string>,
+    orgMeta: {
+      kvk: 'KVK:',
+      plan: 'Plan:',
+      members: 'leden',
+      vacancies: 'vacatures',
+      placements: 'plaatsingen',
+    },
+    memberHeaders: {
+      name: 'Naam',
+      email: 'E-mail',
+      role: 'Rol',
+      status: 'Status',
+      actions: 'Acties',
+    },
+    scoutHeaders: {
+      name: 'Naam',
+      email: 'E-mail',
+      rating: 'Rating',
+      pool: 'Pool',
+      placements: 'Plaatsingen',
+      status: 'Status',
+      actions: 'Acties',
+    },
+    blockBtn: '⏸ Blokkeer',
+    unblockBtn: '✓ Deblokkeer',
+    modal: {
+      unblock: 'Deblokkeren',
+      permBlock: 'Permanent blokkeren',
+      tempBlock: 'Tijdelijk blokkeren',
+      noteLabel: 'Let op:',
+      permWarnOrg: 'Alle leden van deze organisatie verliezen toegang. Actieve vacatures worden bevroren.',
+      permWarnUser: 'Dit account verliest permanent alle toegang tot het platform.',
+      reasonLabel: 'Reden',
+      reasonPlaceholder: 'Geef een reden op...',
+      cancel: 'Annuleren',
+      confirmUnblock: '✓ Deblokkeren',
+      confirmPerm: '🚫 Permanent',
+      confirmTemp: '⏸ Tijdelijk',
+    },
+    toast: {
+      unblocked: 'gedeblokkeerd',
+      tempBlocked: 'tijdelijk geblokkeerd',
+      permBlocked: 'permanent geblokkeerd',
+    },
+  },
+  en: {
+    backLink: '← Back to admin',
+    title: 'User overview',
+    subtitle: 'Grouped by organisation and type',
+    stats: {
+      organisations: 'Organisations',
+      users: 'Users',
+      scouts: 'Talent Scouts',
+      active: 'Active',
+      blocked: 'Blocked',
+    },
+    tabs: {
+      organisations: 'Organisations',
+      scouts: 'Scouts',
+    },
+    status: {
+      actief: 'Active',
+      geblokkeerd_temp: '⏸ Temporary',
+      geblokkeerd_perm: '🚫 Permanent',
+    } as Record<AccountStatus, string>,
+    roles: {
+      owner: 'owner',
+      admin: 'admin',
+      gebruiker: 'user',
+    } as Record<OrgRole, string>,
+    orgMeta: {
+      kvk: 'CoC:',
+      plan: 'Plan:',
+      members: 'members',
+      vacancies: 'vacancies',
+      placements: 'placements',
+    },
+    memberHeaders: {
+      name: 'Name',
+      email: 'Email',
+      role: 'Role',
+      status: 'Status',
+      actions: 'Actions',
+    },
+    scoutHeaders: {
+      name: 'Name',
+      email: 'Email',
+      rating: 'Rating',
+      pool: 'Pool',
+      placements: 'Placements',
+      status: 'Status',
+      actions: 'Actions',
+    },
+    blockBtn: '⏸ Block',
+    unblockBtn: '✓ Unblock',
+    modal: {
+      unblock: 'Unblock',
+      permBlock: 'Permanently block',
+      tempBlock: 'Temporarily block',
+      noteLabel: 'Note:',
+      permWarnOrg: 'All members of this organisation will lose access. Active vacancies will be frozen.',
+      permWarnUser: 'This account will permanently lose all access to the platform.',
+      reasonLabel: 'Reason',
+      reasonPlaceholder: 'Enter a reason...',
+      cancel: 'Cancel',
+      confirmUnblock: '✓ Unblock',
+      confirmPerm: '🚫 Permanent',
+      confirmTemp: '⏸ Temporary',
+    },
+    toast: {
+      unblocked: 'unblocked',
+      tempBlocked: 'temporarily blocked',
+      permBlocked: 'permanently blocked',
+    },
+  },
+}
+
+function StatusBadge({ status, lang }: { status: AccountStatus; lang: 'nl' | 'en' }) {
   const styles: Record<AccountStatus, string> = {
     actief: 'bg-green-500/15 text-green-400 border-green-500/20',
     geblokkeerd_temp: 'bg-orange/15 text-orange border-orange/20',
     geblokkeerd_perm: 'bg-red-500/15 text-red-400 border-red-500/20',
   }
-  const labels: Record<AccountStatus, string> = {
-    actief: 'Actief',
-    geblokkeerd_temp: '⏸ Tijdelijk',
-    geblokkeerd_perm: '🚫 Permanent',
-  }
+  const labels = texts[lang].status
   return <span className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold border ${styles[status]}`}>{labels[status]}</span>
 }
 
-function RoleBadge({ role }: { role: OrgRole }) {
+function RoleBadge({ role, lang }: { role: OrgRole; lang: 'nl' | 'en' }) {
   const s: Record<OrgRole, string> = {
     owner: 'bg-purple/15 text-purple border-surface-border',
     admin: 'bg-cyan/15 text-cyan border-cyan/20',
     gebruiker: 'bg-gray-500/15 text-ink-light border-gray-500/20',
   }
   const l: Record<OrgRole, string> = { owner: '👑', admin: '🛡', gebruiker: '👤' }
-  return <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${s[role]}`}>{l[role]} {role}</span>
+  const roleLabel = texts[lang].roles[role]
+  return <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${s[role]}`}>{l[role]} {roleLabel}</span>
 }
 
 type Tab = 'organisaties' | 'scouts'
 
 export default function GebruikersPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [tab, setTab] = useState<Tab>('organisaties')
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null)
   const [blockModal, setBlockModal] = useState<{ id: string; type: 'org' | 'user' | 'scout'; action: 'temp' | 'perm' | 'unblock'; naam: string } | null>(null)
@@ -103,7 +247,11 @@ export default function GebruikersPage() {
 
   function handleBlock() {
     if (!blockModal) return
-    const actionLabel = blockModal.action === 'unblock' ? 'gedeblokkeerd' : blockModal.action === 'temp' ? 'tijdelijk geblokkeerd' : 'permanent geblokkeerd'
+    const actionLabel = blockModal.action === 'unblock'
+      ? t.toast.unblocked
+      : blockModal.action === 'temp'
+        ? t.toast.tempBlocked
+        : t.toast.permBlocked
     setToast(`${blockModal.naam} is ${actionLabel}`)
     setTimeout(() => setToast(null), 3000)
     setBlockModal(null)
@@ -120,20 +268,20 @@ export default function GebruikersPage() {
 
       <div className="mb-8">
         <Link href="/demo/admin" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
-          ← Terug naar admin
+          {t.backLink}
         </Link>
-        <h1 className="text-2xl font-bold text-ink mt-3">Gebruikers overzicht</h1>
-        <p className="text-ink-light font-medium mt-1">Gegroepeerd per organisatie en type</p>
+        <h1 className="text-2xl font-bold text-ink mt-3">{t.title}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.subtitle}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-5 gap-4 mb-6">
         {[
-          { label: 'Organisaties', value: mockOrganizations.length, color: 'text-purple' },
-          { label: 'Gebruikers', value: mockOrganizations.reduce((s, o) => s + o.leden.length, 0), color: 'text-ink' },
-          { label: 'Talent Scouts', value: mockScouts.length, color: 'text-cyan' },
-          { label: 'Actief', value: mockOrganizations.filter(o => o.status === 'actief').length + mockScouts.filter(s => s.status === 'actief').length, color: 'text-green-400' },
-          { label: 'Geblokkeerd', value: mockOrganizations.filter(o => o.status !== 'actief').length + mockScouts.filter(s => s.status !== 'actief').length, color: 'text-red-400' },
+          { label: t.stats.organisations, value: mockOrganizations.length, color: 'text-purple' },
+          { label: t.stats.users, value: mockOrganizations.reduce((s, o) => s + o.leden.length, 0), color: 'text-ink' },
+          { label: t.stats.scouts, value: mockScouts.length, color: 'text-cyan' },
+          { label: t.stats.active, value: mockOrganizations.filter(o => o.status === 'actief').length + mockScouts.filter(s => s.status === 'actief').length, color: 'text-green-400' },
+          { label: t.stats.blocked, value: mockOrganizations.filter(o => o.status !== 'actief').length + mockScouts.filter(s => s.status !== 'actief').length, color: 'text-red-400' },
         ].map(s => (
           <div key={s.label} className="bg-white rounded-2xl border border-surface-border p-4 text-center">
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
@@ -145,10 +293,10 @@ export default function GebruikersPage() {
       {/* Tabs */}
       <div className="flex gap-1 bg-white rounded-xl p-1 border border-surface-border w-fit mb-6">
         <button onClick={() => setTab('organisaties')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'organisaties' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink'}`}>
-          🏢 Organisaties ({mockOrganizations.length})
+          🏢 {t.tabs.organisations} ({mockOrganizations.length})
         </button>
         <button onClick={() => setTab('scouts')} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${tab === 'scouts' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink'}`}>
-          🔍 Talent Scouts ({mockScouts.length})
+          🔍 Talent {t.tabs.scouts} ({mockScouts.length})
         </button>
       </div>
 
@@ -167,14 +315,14 @@ export default function GebruikersPage() {
                   <div className="text-left">
                     <div className="text-ink font-semibold flex items-center gap-2">
                       {org.naam}
-                      <StatusBadge status={org.status} />
+                      <StatusBadge status={org.status} lang={lang} />
                     </div>
                     <div className="text-xs text-ink-muted flex items-center gap-3 mt-0.5">
-                      <span>KVK: {org.kvk}</span>
-                      <span>Plan: {org.plan}</span>
-                      <span>{org.leden.length} leden</span>
-                      <span>{org.vacatures} vacatures</span>
-                      <span>{org.plaatsingen} plaatsingen</span>
+                      <span>{t.orgMeta.kvk} {org.kvk}</span>
+                      <span>{t.orgMeta.plan} {org.plan}</span>
+                      <span>{org.leden.length} {t.orgMeta.members}</span>
+                      <span>{org.vacatures} {t.orgMeta.vacancies}</span>
+                      <span>{org.plaatsingen} {t.orgMeta.placements}</span>
                     </div>
                   </div>
                 </div>
@@ -184,14 +332,14 @@ export default function GebruikersPage() {
                       onClick={e => { e.stopPropagation(); setBlockModal({ id: org.id, type: 'org', action: 'temp', naam: org.naam }) }}
                       className="text-xs text-orange hover:bg-orange/10 px-3 py-1.5 rounded-lg transition-colors border border-orange/20"
                     >
-                      ⏸ Blokkeer
+                      {t.blockBtn}
                     </button>
                   ) : (
                     <button
                       onClick={e => { e.stopPropagation(); setBlockModal({ id: org.id, type: 'org', action: 'unblock', naam: org.naam }) }}
                       className="text-xs text-green-400 hover:bg-green-500/10 px-3 py-1.5 rounded-lg transition-colors border border-green-500/20"
                     >
-                      ✓ Deblokkeer
+                      {t.unblockBtn}
                     </button>
                   )}
                   <span className={`text-ink-muted transition-transform ${expandedOrg === org.id ? 'rotate-90' : ''}`}>▶</span>
@@ -202,11 +350,11 @@ export default function GebruikersPage() {
               {expandedOrg === org.id && (
                 <div className="border-t border-surface-border px-5 pb-5">
                   <div className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-2 text-[10px] text-ink-muted uppercase tracking-wider mt-3">
-                    <div>Naam</div>
-                    <div>E-mail</div>
-                    <div>Rol</div>
-                    <div>Status</div>
-                    <div className="text-right">Acties</div>
+                    <div>{t.memberHeaders.name}</div>
+                    <div>{t.memberHeaders.email}</div>
+                    <div>{t.memberHeaders.role}</div>
+                    <div>{t.memberHeaders.status}</div>
+                    <div className="text-right">{t.memberHeaders.actions}</div>
                   </div>
                   {org.leden.map(lid => (
                     <div key={lid.id} className="grid grid-cols-[2fr_2.5fr_1fr_1fr_1.5fr] gap-2 px-4 py-3 items-center hover:bg-surface-muted rounded-lg transition-colors">
@@ -217,8 +365,8 @@ export default function GebruikersPage() {
                         <span className="text-ink text-sm font-medium">{lid.naam}</span>
                       </div>
                       <div className="text-ink-light text-sm">{lid.email}</div>
-                      <div><RoleBadge role={lid.role} /></div>
-                      <div><StatusBadge status={lid.status} /></div>
+                      <div><RoleBadge role={lid.role} lang={lang} /></div>
+                      <div><StatusBadge status={lid.status} lang={lang} /></div>
                       <div className="flex justify-end gap-2">
                         {lid.status === 'actief' && lid.role !== 'owner' && (
                           <button
@@ -242,13 +390,13 @@ export default function GebruikersPage() {
       {tab === 'scouts' && (
         <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
           <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-3 text-xs text-ink-muted uppercase tracking-wider border-b border-surface-border bg-surface-muted">
-            <div>Naam</div>
-            <div>E-mail</div>
-            <div className="text-center">Rating</div>
-            <div className="text-center">Pool</div>
-            <div className="text-center">Plaatsingen</div>
-            <div className="text-center">Status</div>
-            <div className="text-right">Acties</div>
+            <div>{t.scoutHeaders.name}</div>
+            <div>{t.scoutHeaders.email}</div>
+            <div className="text-center">{t.scoutHeaders.rating}</div>
+            <div className="text-center">{t.scoutHeaders.pool}</div>
+            <div className="text-center">{t.scoutHeaders.placements}</div>
+            <div className="text-center">{t.scoutHeaders.status}</div>
+            <div className="text-right">{t.scoutHeaders.actions}</div>
           </div>
           {mockScouts.map(scout => (
             <div key={scout.id} className={`grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_1.5fr] gap-2 px-6 py-4 border-b border-surface-border items-center hover:bg-surface-muted transition-colors ${scout.status !== 'actief' ? 'opacity-50' : ''}`}>
@@ -262,7 +410,7 @@ export default function GebruikersPage() {
               <div className="text-center text-sm text-yellow-400">⭐ {scout.rating > 0 ? scout.rating : '—'}</div>
               <div className="text-center text-sm text-ink-light">{scout.poolSize}</div>
               <div className="text-center text-sm text-cyan font-semibold">{scout.plaatsingen}</div>
-              <div className="flex justify-center"><StatusBadge status={scout.status} /></div>
+              <div className="flex justify-center"><StatusBadge status={scout.status} lang={lang} /></div>
               <div className="flex justify-end gap-2">
                 {scout.status === 'actief' ? (
                   <>
@@ -283,31 +431,31 @@ export default function GebruikersPage() {
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl border border-surface-border p-8 max-w-md w-full shadow-2xl">
             <h3 className="text-xl font-bold text-ink mb-2">
-              {blockModal.action === 'unblock' ? 'Deblokkeren' : blockModal.action === 'perm' ? 'Permanent blokkeren' : 'Tijdelijk blokkeren'}
+              {blockModal.action === 'unblock' ? t.modal.unblock : blockModal.action === 'perm' ? t.modal.permBlock : t.modal.tempBlock}
             </h3>
             <p className="text-ink-light font-medium text-sm mb-4">{blockModal.naam}</p>
 
             {blockModal.action === 'perm' && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3 mb-4">
-                <p className="text-sm text-red-400"><strong>Let op:</strong> {blockModal.type === 'org' ? 'Alle leden van deze organisatie verliezen toegang. Actieve vacatures worden bevroren.' : 'Dit account verliest permanent alle toegang tot het platform.'}</p>
+                <p className="text-sm text-red-400"><strong>{t.modal.noteLabel}</strong> {blockModal.type === 'org' ? t.modal.permWarnOrg : t.modal.permWarnUser}</p>
               </div>
             )}
 
             {blockModal.action !== 'unblock' && (
               <div className="mb-4">
-                <label className="text-xs text-ink-muted mb-1.5 block">Reden</label>
-                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder="Geef een reden op..." className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none" />
+                <label className="text-xs text-ink-muted mb-1.5 block">{t.modal.reasonLabel}</label>
+                <textarea rows={3} value={blockReason} onChange={e => setBlockReason(e.target.value)} placeholder={t.modal.reasonPlaceholder} className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none" />
               </div>
             )}
 
             <div className="flex gap-3">
-              <button onClick={() => { setBlockModal(null); setBlockReason('') }} className="flex-1 bg-surface-muted border border-surface-border text-ink-light px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-ink transition-colors">Annuleren</button>
+              <button onClick={() => { setBlockModal(null); setBlockReason('') }} className="flex-1 bg-surface-muted border border-surface-border text-ink-light px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-ink transition-colors">{t.modal.cancel}</button>
               <button onClick={handleBlock} className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                 blockModal.action === 'unblock' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
                 blockModal.action === 'perm' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
                 'bg-orange/20 text-orange border border-orange/30'
               }`}>
-                {blockModal.action === 'unblock' ? '✓ Deblokkeren' : blockModal.action === 'perm' ? '🚫 Permanent' : '⏸ Tijdelijk'}
+                {blockModal.action === 'unblock' ? t.modal.confirmUnblock : blockModal.action === 'perm' ? t.modal.confirmPerm : t.modal.confirmTemp}
               </button>
             </div>
           </div>

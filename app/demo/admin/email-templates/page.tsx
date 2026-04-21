@@ -1,23 +1,41 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
 
 interface EmailTemplate {
   id: number
-  name: string
-  recipientRole: string
-  trigger: string
-  subject: string
+  name: { nl: string; en: string }
+  recipientRole: { nl: string; en: string }
+  trigger: { nl: string; en: string }
+  subject: { nl: string; en: string }
   bodyPreview: string
+}
+
+const texts = {
+  nl: {
+    pageTitle: 'Email Templates',
+    subtitle: (n: number) => `Overzicht van alle ${n} email templates in het systeem.`,
+    triggerLabel: 'Trigger:',
+    subjectLabel: 'Onderwerp:',
+    previewLabel: 'Email preview',
+  },
+  en: {
+    pageTitle: 'Email Templates',
+    subtitle: (n: number) => `Overview of all ${n} email templates in the system.`,
+    triggerLabel: 'Trigger:',
+    subjectLabel: 'Subject:',
+    previewLabel: 'Email preview',
+  },
 }
 
 const templates: EmailTemplate[] = [
   {
     id: 1,
-    name: 'Uitnodiging kandidaat (door scout)',
-    recipientRole: 'Kandidaat',
-    trigger: 'Scout nodigt kandidaat uit',
-    subject: 'Je bent uitgenodigd voor een unieke kans bij {{bedrijf}}!',
+    name: { nl: 'Uitnodiging kandidaat (door scout)', en: 'Candidate invitation (by scout)' },
+    recipientRole: { nl: 'Kandidaat', en: 'Candidate' },
+    trigger: { nl: 'Scout nodigt kandidaat uit', en: 'Scout invites candidate' },
+    subject: { nl: 'Je bent uitgenodigd voor een unieke kans bij {{bedrijf}}!', en: 'You have been invited for a unique opportunity at {{company}}!' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Je bent uitgenodigd!</h1>
@@ -35,10 +53,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 2,
-    name: 'Matching Scan herinnering',
-    recipientRole: 'Kandidaat',
-    trigger: 'Scan niet ingevuld na 48 uur',
-    subject: 'Vergeet je Matching Scan niet!',
+    name: { nl: 'Matching Scan herinnering', en: 'Matching Scan reminder' },
+    recipientRole: { nl: 'Kandidaat', en: 'Candidate' },
+    trigger: { nl: 'Scan niet ingevuld na 48 uur', en: 'Scan not completed after 48 hours' },
+    subject: { nl: 'Vergeet je Matching Scan niet!', en: "Don't forget your Matching Scan!" },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Herinnering: Matching Scan</h1>
@@ -55,10 +73,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 3,
-    name: 'Nieuwe matchingsuggestie (naar scout)',
-    recipientRole: 'Scout',
-    trigger: 'Nieuwe vacature matcht met talent pool',
-    subject: 'Nieuwe match gevonden: {{vacature_titel}} bij {{bedrijf}}',
+    name: { nl: 'Nieuwe matchingsuggestie (naar scout)', en: 'New match suggestion (to scout)' },
+    recipientRole: { nl: 'Scout', en: 'Scout' },
+    trigger: { nl: 'Nieuwe vacature matcht met talent pool', en: 'New vacancy matches with talent pool' },
+    subject: { nl: 'Nieuwe match gevonden: {{vacature_titel}} bij {{bedrijf}}', en: 'New match found: {{vacancy_title}} at {{company}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Nieuwe matchingsuggestie</h1>
@@ -79,10 +97,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 4,
-    name: 'Kandidaat voorgedragen (naar opdrachtgever)',
-    recipientRole: 'Opdrachtgever',
-    trigger: 'Scout draagt kandidaat voor',
-    subject: 'Nieuwe kandidaat voorgedragen voor {{vacature_titel}}',
+    name: { nl: 'Kandidaat voorgedragen (naar opdrachtgever)', en: 'Candidate nominated (to employer)' },
+    recipientRole: { nl: 'Opdrachtgever', en: 'Employer' },
+    trigger: { nl: 'Scout draagt kandidaat voor', en: 'Scout nominates candidate' },
+    subject: { nl: 'Nieuwe kandidaat voorgedragen voor {{vacature_titel}}', en: 'New candidate nominated for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Nieuwe kandidaat!</h1>
@@ -102,10 +120,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 5,
-    name: 'Contract akkoord bevestiging',
-    recipientRole: 'Scout',
-    trigger: 'Opdrachtgever accepteert profiel',
-    subject: 'Profiel ontgrendeld: {{kandidaat_naam}} voor {{vacature_titel}}',
+    name: { nl: 'Contract akkoord bevestiging', en: 'Contract approval confirmation' },
+    recipientRole: { nl: 'Scout', en: 'Scout' },
+    trigger: { nl: 'Opdrachtgever accepteert profiel', en: 'Employer accepts profile' },
+    subject: { nl: 'Profiel ontgrendeld: {{kandidaat_naam}} voor {{vacature_titel}}', en: 'Profile unlocked: {{candidate_name}} for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Profiel ontgrendeld!</h1>
@@ -122,10 +140,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 6,
-    name: 'Gespreksdatum herinnering',
-    recipientRole: 'Kandidaat, Scout',
-    trigger: '24 uur voor gepland gesprek',
-    subject: 'Morgen: gesprek bij {{bedrijf}} voor {{vacature_titel}}',
+    name: { nl: 'Gespreksdatum herinnering', en: 'Interview date reminder' },
+    recipientRole: { nl: 'Kandidaat, Scout', en: 'Candidate, Scout' },
+    trigger: { nl: '24 uur voor gepland gesprek', en: '24 hours before scheduled interview' },
+    subject: { nl: 'Morgen: gesprek bij {{bedrijf}} voor {{vacature_titel}}', en: 'Tomorrow: interview at {{company}} for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Gesprek morgen</h1>
@@ -143,10 +161,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 7,
-    name: 'Nudge 1 — Vriendelijke herinnering',
-    recipientRole: 'Opdrachtgever',
-    trigger: 'Scout stuurt nudge (niveau 1)',
-    subject: 'Herinnering: plan het gesprek in voor {{vacature_titel}}',
+    name: { nl: 'Nudge 1 — Vriendelijke herinnering', en: 'Nudge 1 — Friendly reminder' },
+    recipientRole: { nl: 'Opdrachtgever', en: 'Employer' },
+    trigger: { nl: 'Scout stuurt nudge (niveau 1)', en: 'Scout sends nudge (level 1)' },
+    subject: { nl: 'Herinnering: plan het gesprek in voor {{vacature_titel}}', en: 'Reminder: schedule the interview for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: #f59e0b; padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Vriendelijke herinnering</h1>
@@ -163,10 +181,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 8,
-    name: 'Nudge 2 — Urgente herinnering',
-    recipientRole: 'Opdrachtgever',
-    trigger: 'Scout stuurt nudge (niveau 2)',
-    subject: 'Urgent: kandidaat wacht op reactie voor {{vacature_titel}}',
+    name: { nl: 'Nudge 2 — Urgente herinnering', en: 'Nudge 2 — Urgent reminder' },
+    recipientRole: { nl: 'Opdrachtgever', en: 'Employer' },
+    trigger: { nl: 'Scout stuurt nudge (niveau 2)', en: 'Scout sends nudge (level 2)' },
+    subject: { nl: 'Urgent: kandidaat wacht op reactie voor {{vacature_titel}}', en: 'Urgent: candidate awaiting response for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: #ef4444; padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Urgente herinnering</h1>
@@ -183,10 +201,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 9,
-    name: 'Escalatie naar Refurzy',
-    recipientRole: 'Admin',
-    trigger: 'Na 2 onbeantwoorde nudges',
-    subject: 'Escalatie: geen reactie van {{bedrijf}} op {{vacature_titel}}',
+    name: { nl: 'Escalatie naar Refurzy', en: 'Escalation to Refurzy' },
+    recipientRole: { nl: 'Admin', en: 'Admin' },
+    trigger: { nl: 'Na 2 onbeantwoorde nudges', en: 'After 2 unanswered nudges' },
+    subject: { nl: 'Escalatie: geen reactie van {{bedrijf}} op {{vacature_titel}}', en: 'Escalation: no response from {{company}} on {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: #dc2626; padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Escalatie rapport</h1>
@@ -205,10 +223,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 10,
-    name: 'Feedback na gesprek herinnering',
-    recipientRole: 'Opdrachtgever',
-    trigger: 'Gesprek afgerond, geen feedback na 48u',
-    subject: 'Geef feedback over het gesprek met kandidaat {{initialen}}',
+    name: { nl: 'Feedback na gesprek herinnering', en: 'Post-interview feedback reminder' },
+    recipientRole: { nl: 'Opdrachtgever', en: 'Employer' },
+    trigger: { nl: 'Gesprek afgerond, geen feedback na 48u', en: 'Interview completed, no feedback after 48h' },
+    subject: { nl: 'Geef feedback over het gesprek met kandidaat {{initialen}}', en: 'Give feedback on the interview with candidate {{initials}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #6D40F9, #14CDD3); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Feedback gevraagd</h1>
@@ -225,10 +243,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 11,
-    name: 'Felicitatie contract getekend',
-    recipientRole: 'Opdrachtgever, Kandidaat, Scout',
-    trigger: 'Arbeidsovereenkomst getekend',
-    subject: 'Gefeliciteerd! Contract getekend voor {{vacature_titel}}',
+    name: { nl: 'Felicitatie contract getekend', en: 'Contract signed congratulations' },
+    recipientRole: { nl: 'Opdrachtgever, Kandidaat, Scout', en: 'Employer, Candidate, Scout' },
+    trigger: { nl: 'Arbeidsovereenkomst getekend', en: 'Employment contract signed' },
+    subject: { nl: 'Gefeliciteerd! Contract getekend voor {{vacature_titel}}', en: 'Congratulations! Contract signed for {{vacancy_title}}' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #14CDD3, #6D40F9, #f59e0b); padding: 40px; border-radius: 12px 12px 0 0; text-align: center;">
         <p style="font-size: 48px; margin: 0;">🎉</p>
@@ -247,10 +265,10 @@ const templates: EmailTemplate[] = [
   },
   {
     id: 12,
-    name: 'Fit Garantie check-in',
-    recipientRole: 'Opdrachtgever',
-    trigger: '3, 6 en 12 maanden na startdatum',
-    subject: 'Fit Garantie check-in: hoe gaat het met {{kandidaat_naam}}?',
+    name: { nl: 'Fit Garantie check-in', en: 'Fit Guarantee check-in' },
+    recipientRole: { nl: 'Opdrachtgever', en: 'Employer' },
+    trigger: { nl: '3, 6 en 12 maanden na startdatum', en: '3, 6 and 12 months after start date' },
+    subject: { nl: 'Fit Garantie check-in: hoe gaat het met {{kandidaat_naam}}?', en: 'Fit Guarantee check-in: how is {{candidate_name}} doing?' },
     bodyPreview: `<div style="font-family: 'Poppins', sans-serif; max-width: 560px; margin: 0 auto;">
       <div style="background: linear-gradient(135deg, #14CDD3, #06BAFF); padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
         <h1 style="color: white; margin: 0; font-size: 22px;">Fit Garantie check-in</h1>
@@ -269,64 +287,75 @@ const templates: EmailTemplate[] = [
   },
 ]
 
+const roleColors: Record<string, string> = {
+  // English keys
+  'Candidate': 'bg-cyan/10 text-cyan-dark',
+  'Scout': 'bg-purple/10 text-purple',
+  'Employer': 'bg-orange/10 text-orange',
+  'Admin': 'bg-red-100 text-red-700',
+  'Employer, Candidate, Scout': 'bg-green-100 text-green-700',
+  'Candidate, Scout': 'bg-blue-100 text-blue-700',
+  // Dutch keys (backwards compat)
+  'Kandidaat': 'bg-cyan/10 text-cyan-dark',
+  'Opdrachtgever': 'bg-orange/10 text-orange',
+  'Opdrachtgever, Kandidaat, Scout': 'bg-green-100 text-green-700',
+  'Kandidaat, Scout': 'bg-blue-100 text-blue-700',
+}
+
 export default function EmailTemplatesPage() {
   const [expandedId, setExpandedId] = useState<number | null>(null)
-
-  const roleColors: Record<string, string> = {
-    'Kandidaat': 'bg-cyan/10 text-cyan-dark',
-    'Scout': 'bg-purple/10 text-purple',
-    'Opdrachtgever': 'bg-orange/10 text-orange',
-    'Admin': 'bg-red-100 text-red-700',
-    'Opdrachtgever, Kandidaat, Scout': 'bg-green-100 text-green-700',
-    'Kandidaat, Scout': 'bg-blue-100 text-blue-700',
-  }
+  const { lang } = useLang()
+  const t = texts[lang]
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-ink">Email Templates</h1>
-        <p className="text-ink-muted mt-1">Overzicht van alle {templates.length} email templates in het systeem.</p>
+        <h1 className="text-2xl font-semibold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-muted mt-1">{t.subtitle(templates.length)}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {templates.map(template => (
-          <div key={template.id}
-            className={`bg-white rounded-xl border transition-all ${
-              expandedId === template.id ? 'border-purple col-span-1 md:col-span-2 xl:col-span-3' : 'border-surface-border hover:border-purple/40'
-            }`}>
-            <div className="p-5 cursor-pointer" onClick={() => setExpandedId(expandedId === template.id ? null : template.id)}>
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-ink-muted">{String(template.id).padStart(2, '0')}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${roleColors[template.recipientRole] || 'bg-surface-muted text-ink-muted'}`}>
-                    {template.recipientRole}
+        {templates.map(template => {
+          const roleDisplay = template.recipientRole[lang]
+          return (
+            <div key={template.id}
+              className={`bg-white rounded-xl border transition-all ${
+                expandedId === template.id ? 'border-purple col-span-1 md:col-span-2 xl:col-span-3' : 'border-surface-border hover:border-purple/40'
+              }`}>
+              <div className="p-5 cursor-pointer" onClick={() => setExpandedId(expandedId === template.id ? null : template.id)}>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-ink-muted">{String(template.id).padStart(2, '0')}</span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${roleColors[roleDisplay] || 'bg-surface-muted text-ink-muted'}`}>
+                      {roleDisplay}
+                    </span>
+                  </div>
+                  <span className={`text-ink-muted transition-transform ${expandedId === template.id ? 'rotate-180' : ''}`}>
+                    ▾
                   </span>
                 </div>
-                <span className={`text-ink-muted transition-transform ${expandedId === template.id ? 'rotate-180' : ''}`}>
-                  ▾
-                </span>
-              </div>
-              <h3 className="text-sm font-semibold text-ink mb-2">{template.name}</h3>
-              <div className="space-y-1.5">
-                <p className="text-xs text-ink-muted">
-                  <span className="font-medium text-ink-light">Trigger:</span> {template.trigger}
-                </p>
-                <p className="text-xs text-ink-muted">
-                  <span className="font-medium text-ink-light">Onderwerp:</span> {template.subject}
-                </p>
-              </div>
-            </div>
-
-            {expandedId === template.id && (
-              <div className="border-t border-surface-border p-5">
-                <h4 className="text-sm font-medium text-ink mb-3">Email preview</h4>
-                <div className="bg-surface-muted rounded-lg p-6 overflow-auto">
-                  <div dangerouslySetInnerHTML={{ __html: template.bodyPreview }} />
+                <h3 className="text-sm font-semibold text-ink mb-2">{template.name[lang]}</h3>
+                <div className="space-y-1.5">
+                  <p className="text-xs text-ink-muted">
+                    <span className="font-medium text-ink-light">{t.triggerLabel}</span> {template.trigger[lang]}
+                  </p>
+                  <p className="text-xs text-ink-muted">
+                    <span className="font-medium text-ink-light">{t.subjectLabel}</span> {template.subject[lang]}
+                  </p>
                 </div>
               </div>
-            )}
-          </div>
-        ))}
+
+              {expandedId === template.id && (
+                <div className="border-t border-surface-border p-5">
+                  <h4 className="text-sm font-medium text-ink mb-3">{t.previewLabel}</h4>
+                  <div className="bg-surface-muted rounded-lg p-6 overflow-auto">
+                    <div dangerouslySetInnerHTML={{ __html: template.bodyPreview }} />
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )

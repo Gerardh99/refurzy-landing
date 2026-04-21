@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useLang } from '@/lib/i18n'
 import {
   COUNTRIES,
   calculatePrice,
@@ -17,7 +18,81 @@ import {
 const experiences: ExperienceLevel[] = ['0-2', '2-5', '5-10', '10+']
 const educations: EducationLevel[] = ['MBO', 'HBO', 'WO']
 
+const texts = {
+  nl: {
+    backLink: '← Terug naar admin',
+    title: 'Pricing beheer',
+    subtitle: 'No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt',
+    countryLabel: 'Land selecteren',
+    statusActive: 'ACTIEF',
+    statusInactive: 'INACTIEF',
+    langLabel: 'Taal:',
+    currencyLabel: 'Valuta:',
+    inactiveOption: '(inactief)',
+    sectionValuePerPoint: 'Waarde per punt',
+    amountLabel: (currency: string) => `Bedrag (${currency})`,
+    splitInfo: '50% Scout / 50% Refurzy',
+    sectionFormula: 'Formule',
+    formulaComment: 'prijs = werkervaring × opleiding × waarde_per_punt',
+    exampleText: (country: string) => `Voorbeeld: HBO + 5-10 jaar (${country})`,
+    sectionExp: 'Werkervaring — punten',
+    sectionEdu: 'Opleiding — punten',
+    normalLabel: 'Normaal',
+    over10Label: '>10 jaar',
+    over10Note: 'Bij >10 jaar ervaring worden HBO en WO gelijk (multiplier 2,5) omdat het opleidingsniveau minder relevant is.',
+    liveTableTitle: (country: string) => `Live prijstabel — ${country}`,
+    priceFootnote: (currency: string) => `Prijzen in ${currency} (ex. BTW)`,
+    equalLabel: 'gelijk',
+    expHeader: 'Werkervaring',
+    sectionDistribution: 'Verdeling per plaatsing',
+    distScout: 'Talent Scout',
+    distRefurzy: 'Refurzy',
+    distExclusivity: 'Exclusiviteitstoeslag',
+    toScout: 'naar Scout',
+    resetBtn: 'Reset',
+    saveBtn: (country: string) => `Opslaan voor ${country}`,
+    toastSaved: (country: string) => `Pricing voor ${country} opgeslagen`,
+  },
+  en: {
+    backLink: '← Back to admin',
+    title: 'Pricing management',
+    subtitle: 'No Cure No Pay — price = work experience × education × value per point',
+    countryLabel: 'Select country',
+    statusActive: 'ACTIVE',
+    statusInactive: 'INACTIVE',
+    langLabel: 'Language:',
+    currencyLabel: 'Currency:',
+    inactiveOption: '(inactive)',
+    sectionValuePerPoint: 'Value per point',
+    amountLabel: (currency: string) => `Amount (${currency})`,
+    splitInfo: '50% Scout / 50% Refurzy',
+    sectionFormula: 'Formula',
+    formulaComment: 'price = work_experience × education × value_per_point',
+    exampleText: (country: string) => `Example: HBO + 5-10 yr (${country})`,
+    sectionExp: 'Work experience — points',
+    sectionEdu: 'Education — points',
+    normalLabel: 'Standard',
+    over10Label: '>10 yr',
+    over10Note: 'With >10 yr experience, HBO and WO become equal (multiplier 2.5) as education level becomes less relevant.',
+    liveTableTitle: (country: string) => `Live price table — ${country}`,
+    priceFootnote: (currency: string) => `Prices in ${currency} (excl. VAT)`,
+    equalLabel: 'equal',
+    expHeader: 'Work experience',
+    sectionDistribution: 'Distribution per placement',
+    distScout: 'Talent Scout',
+    distRefurzy: 'Refurzy',
+    distExclusivity: 'Exclusivity fee',
+    toScout: 'to Scout',
+    resetBtn: 'Reset',
+    saveBtn: (country: string) => `Save for ${country}`,
+    toastSaved: (country: string) => `Pricing for ${country} saved`,
+  },
+}
+
 export default function PricingAdminPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [selectedCountry, setSelectedCountry] = useState<CountryConfig>(
     COUNTRIES.find(c => c.code === 'NL')!
   )
@@ -31,7 +106,7 @@ export default function PricingAdminPage() {
   }
 
   function handleSave() {
-    setToast(`Pricing voor ${selectedCountry.localName} opgeslagen`)
+    setToast(t.toastSaved(selectedCountry.localName))
     setTimeout(() => setToast(null), 3000)
   }
 
@@ -61,19 +136,19 @@ export default function PricingAdminPage() {
 
       <div className="mb-8">
         <Link href="/demo/admin" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">
-          ← Terug naar admin
+          {t.backLink}
         </Link>
-        <h1 className="text-2xl font-bold text-ink mt-3">Pricing beheer</h1>
-        <p className="text-ink-light font-medium mt-1">No Cure No Pay — prijs = werkervaring × opleiding × waarde per punt</p>
+        <h1 className="text-2xl font-bold text-ink mt-3">{t.title}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.subtitle}</p>
       </div>
 
-      {/* Land selector */}
+      {/* Country selector */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-2xl">🌍</span>
             <div>
-              <label className="text-xs text-ink-muted block mb-1">Land selecteren</label>
+              <label className="text-xs text-ink-muted block mb-1">{t.countryLabel}</label>
               <select
                 value={selectedCountry.code}
                 onChange={e => handleCountryChange(e.target.value)}
@@ -81,7 +156,7 @@ export default function PricingAdminPage() {
               >
                 {COUNTRIES.map(c => (
                   <option key={c.code} value={c.code}>
-                    {c.localName} ({c.code}) — {c.currency} {c.active ? '' : '(inactief)'}
+                    {c.localName} ({c.code}) — {c.currency} {c.active ? '' : t.inactiveOption}
                   </option>
                 ))}
               </select>
@@ -93,20 +168,20 @@ export default function PricingAdminPage() {
                 ? 'bg-green-500/15 text-green-400 border-green-500/20'
                 : 'bg-gray-500/15 text-ink-light border-gray-500/20'
             }`}>
-              {selectedCountry.active ? 'ACTIEF' : 'INACTIEF'}
+              {selectedCountry.active ? t.statusActive : t.statusInactive}
             </span>
-            <span className="text-sm text-ink-muted">Taal: {selectedCountry.language} | Valuta: {selectedCountry.currency}</span>
+            <span className="text-sm text-ink-muted">{t.langLabel} {selectedCountry.language} | {t.currencyLabel} {selectedCountry.currency}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Waarde per punt */}
+        {/* Value per point */}
         <div className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-ink font-semibold mb-4">Waarde per punt</h2>
+          <h2 className="text-ink font-semibold mb-4">{t.sectionValuePerPoint}</h2>
           <div className="flex items-end gap-4">
             <div className="flex-1">
-              <label className="text-xs text-ink-muted mb-1.5 block">Bedrag ({pricing.currency})</label>
+              <label className="text-xs text-ink-muted mb-1.5 block">{t.amountLabel(pricing.currency)}</label>
               <input
                 type="number"
                 value={pricing.valuePerPoint}
@@ -115,17 +190,17 @@ export default function PricingAdminPage() {
               />
             </div>
             <div className="text-xs text-ink-muted pb-3">
-              50% Scout / 50% Refurzy
+              {t.splitInfo}
             </div>
           </div>
         </div>
 
-        {/* Formule uitleg */}
+        {/* Formula */}
         <div className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-ink font-semibold mb-4">Formule</h2>
+          <h2 className="text-ink font-semibold mb-4">{t.sectionFormula}</h2>
           <div className="bg-surface-muted rounded-xl border border-surface-border p-4 font-mono text-sm">
-            <div className="text-cyan mb-2">prijs = werkervaring × opleiding × waarde_per_punt</div>
-            <div className="text-ink-muted text-xs mt-3">Voorbeeld: HBO + 5-10 jaar ({selectedCountry.localName})</div>
+            <div className="text-cyan mb-2">{t.formulaComment}</div>
+            <div className="text-ink-muted text-xs mt-3">{t.exampleText(selectedCountry.localName)}</div>
             <div className="text-ink">
               {pricing.experiencePoints['5-10']} × {pricing.educationPoints['HBO']} × {formatPrice(pricing.valuePerPoint, pricing)} = <span className="text-cyan font-bold">{formatPrice(calculatePrice('5-10', 'HBO', pricing), pricing)}</span>
             </div>
@@ -134,9 +209,9 @@ export default function PricingAdminPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Werkervaring punten */}
+        {/* Work experience points */}
         <div className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-ink font-semibold mb-4">Werkervaring — punten</h2>
+          <h2 className="text-ink font-semibold mb-4">{t.sectionExp}</h2>
           <div className="space-y-3">
             {experiences.map(exp => (
               <div key={exp} className="flex items-center justify-between">
@@ -153,16 +228,16 @@ export default function PricingAdminPage() {
           </div>
         </div>
 
-        {/* Opleiding punten */}
+        {/* Education points */}
         <div className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-ink font-semibold mb-4">Opleiding — punten</h2>
+          <h2 className="text-ink font-semibold mb-4">{t.sectionEdu}</h2>
           <div className="space-y-3">
             {educations.map(edu => (
               <div key={edu} className="flex items-center justify-between gap-4">
                 <span className="text-sm text-ink-light w-16">{EDUCATION_LABELS[edu]}</span>
                 <div className="flex items-center gap-2">
                   <div>
-                    <label className="text-[10px] text-ink-muted block text-center">Normaal</label>
+                    <label className="text-[10px] text-ink-muted block text-center">{t.normalLabel}</label>
                     <input
                       type="number"
                       step="0.5"
@@ -172,7 +247,7 @@ export default function PricingAdminPage() {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] text-ink-muted block text-center">&gt;10 jaar</label>
+                    <label className="text-[10px] text-ink-muted block text-center">{t.over10Label}</label>
                     <input
                       type="number"
                       step="0.5"
@@ -187,24 +262,24 @@ export default function PricingAdminPage() {
           </div>
           <div className="mt-4 bg-purple/10 rounded-lg p-3 border border-surface-border">
             <p className="text-xs text-purple">
-              Bij &gt;10 jaar ervaring worden HBO en WO gelijk (multiplier 2,5) omdat het opleidingsniveau minder relevant is.
+              {t.over10Note}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Live prijstabel */}
+      {/* Live price table */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-ink font-semibold">Live prijstabel — {selectedCountry.localName}</h2>
-          <span className="text-xs text-ink-muted">Prijzen in {pricing.currency} (ex. BTW)</span>
+          <h2 className="text-ink font-semibold">{t.liveTableTitle(selectedCountry.localName)}</h2>
+          <span className="text-xs text-ink-muted">{t.priceFootnote(pricing.currency)}</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left py-3 px-4 text-xs text-ink-muted uppercase">Werkervaring</th>
+                <th className="text-left py-3 px-4 text-xs text-ink-muted uppercase">{t.expHeader}</th>
                 {educations.map(edu => (
                   <th key={edu} className="text-center py-3 px-4 text-xs text-ink-muted uppercase">{edu}</th>
                 ))}
@@ -222,7 +297,7 @@ export default function PricingAdminPage() {
                         <span className={`text-sm font-bold ${isEqual ? 'text-cyan' : 'text-ink'}`}>
                           {formatPrice(price, pricing)}
                         </span>
-                        {isEqual && <span className="text-[10px] text-cyan/60 block">gelijk</span>}
+                        {isEqual && <span className="text-[10px] text-cyan/60 block">{t.equalLabel}</span>}
                       </td>
                     )
                   })}
@@ -233,22 +308,22 @@ export default function PricingAdminPage() {
         </div>
       </div>
 
-      {/* Verdeling */}
+      {/* Distribution */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 mb-6">
-        <h2 className="text-ink font-semibold mb-4">Verdeling per plaatsing</h2>
+        <h2 className="text-ink font-semibold mb-4">{t.sectionDistribution}</h2>
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-surface-muted rounded-xl border border-cyan/20 p-4 text-center">
-            <div className="text-xs text-ink-muted mb-1">Talent Scout</div>
+            <div className="text-xs text-ink-muted mb-1">{t.distScout}</div>
             <div className="text-2xl font-bold text-cyan">50%</div>
           </div>
           <div className="bg-surface-muted rounded-xl border border-surface-border p-4 text-center">
-            <div className="text-xs text-ink-muted mb-1">Refurzy</div>
+            <div className="text-xs text-ink-muted mb-1">{t.distRefurzy}</div>
             <div className="text-2xl font-bold text-purple">50%</div>
           </div>
           <div className="bg-surface-muted rounded-xl border border-orange/20 p-4 text-center">
-            <div className="text-xs text-ink-muted mb-1">Exclusiviteitstoeslag</div>
+            <div className="text-xs text-ink-muted mb-1">{t.distExclusivity}</div>
             <div className="text-2xl font-bold text-orange">+30%</div>
-            <div className="text-[10px] text-orange/60">naar Scout</div>
+            <div className="text-[10px] text-orange/60">{t.toScout}</div>
           </div>
         </div>
       </div>
@@ -259,13 +334,13 @@ export default function PricingAdminPage() {
           onClick={() => setPricing({ ...selectedCountry.pricing })}
           className="bg-surface-muted border border-surface-border text-ink-light px-6 py-3 rounded-xl font-semibold text-sm hover:text-ink transition-colors"
         >
-          Reset
+          {t.resetBtn}
         </button>
         <button
           onClick={handleSave}
           className="bg-gradient-to-r from-cyan via-blue to-purple text-white px-8 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity"
         >
-          Opslaan voor {selectedCountry.localName}
+          {t.saveBtn(selectedCountry.localName)}
         </button>
       </div>
     </div>

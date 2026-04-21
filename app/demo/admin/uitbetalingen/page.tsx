@@ -1,6 +1,139 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useLang } from '@/lib/i18n'
+
+// ─── Texts ──────────────────────────────────────────────────────────────────
+const texts = {
+  nl: {
+    title: 'Uitbetalingen',
+    subtitle: 'Overzicht van alle uitbetalingen aan Talent Scouts. Exporteer per land voor belastingaangifte (IB-47 / lokaal equivalent).',
+    filterLand: 'Land',
+    filterJaar: 'Jaar',
+    filterType: 'Type relatie',
+    alleLanden: 'Alle landen',
+    alleTypes: 'Alle types',
+    typeParticulier: 'Particulier (logging vereist)',
+    typeZakelijk: 'Zakelijk (geen logging)',
+    downloadSamenvatting: 'Download samenvatting',
+    downloadDetail: 'Download detail export',
+    statTotaal: 'Totaal uitbetalingen',
+    statScouts: 'Unieke scouts',
+    statBruto: 'Totaal bruto',
+    statFees: 'Totaal scout fees',
+    loggingVereistTitle: 'Belastingdienst logging vereist',
+    loggingVereistBody: (n: number, total: string) =>
+      `${n} betaling${n !== 1 ? 'en' : ''} aan particulieren (zonder KVK) — totaal €${total}`,
+    loggingVereistSub: 'Deze betalingen moeten worden opgenomen in de IB-47 / lokale belastingaangifte',
+    loggingNietTitle: 'Geen logging vereist (zakelijk)',
+    loggingNietBody: (n: number, total: string) =>
+      `${n} betaling${n !== 1 ? 'en' : ''} aan zakelijke relaties (met KVK) — totaal €${total}`,
+    loggingNietSub: 'Zakelijke relaties met KVK-nummer zijn vrijgesteld van IB-47 rapportage',
+    viewSamenvatting: 'Samenvatting per scout',
+    viewDetail: 'Alle transacties',
+    colScout: 'Scout',
+    colBsn: 'BSN / TIN',
+    colGeboortedatum: 'Geboortedatum',
+    colWoonplaats: 'Woonplaats',
+    colIban: 'IBAN',
+    colType: 'Type',
+    colLogging: 'Logging',
+    colBetalingen: '# Betalingen',
+    colTotaalFee: 'Totaal fee',
+    colPeriode: 'Periode',
+    badgeNietVereist: 'Niet vereist',
+    badgeIb47: 'IB-47 vereist',
+    colFactuur: 'Factuur',
+    colVacature: 'Vacature',
+    colKandidaat: 'Kandidaat',
+    colBruto: 'Bruto',
+    colScoutFee: 'Scout fee',
+    colPlaatsing: 'Plaatsing',
+    colUitbetaling: 'Uitbetaling',
+    colStatus: 'Status',
+    statusUitbetaald: 'Uitbetaald',
+    statusPending: 'In afwachting',
+    statusGeblokkeerd: 'Geblokkeerd',
+    loggingJa: 'Ja',
+    loggingNee: 'Nee',
+    emptyState: 'Geen uitbetalingen gevonden voor deze selectie.',
+    ib47Title: 'Verplichte velden in export (IB-47 / lokaal equivalent)',
+    groupPersons: 'Persoonsgegevens',
+    groupFinancial: 'Financieel',
+    groupBusiness: 'Bedrijfsgegevens',
+    groupTransaction: 'Transactiedetails',
+    personsItems: ['Volledige naam', 'BSN / TIN (fiscaal nummer)', 'Geboortedatum', 'Adres + postcode', 'Woonplaats + land'],
+    financialItems: ['IBAN', 'Bruto uitbetaald bedrag', 'Scout fee (50%)', 'Valuta'],
+    businessItems: ['KVK-nummer (indien van toepassing)', 'BTW-nummer', 'Type relatie (zakelijk / natuurlijk persoon)'],
+    transactionItems: ['Factuurnummer', 'Datum plaatsing', 'Datum uitbetaling', 'Vacature / kandidaat', 'Betalingsstatus'],
+    typeNatuurlijk: 'Natuurlijk persoon',
+    typeZakelijkLabel: 'Zakelijk',
+  },
+  en: {
+    title: 'Payouts',
+    subtitle: 'Overview of all payouts to Talent Scouts. Export by country for tax reporting (IB-47 / local equivalent).',
+    filterLand: 'Country',
+    filterJaar: 'Year',
+    filterType: 'Relationship type',
+    alleLanden: 'All countries',
+    alleTypes: 'All types',
+    typeParticulier: 'Private individual (logging required)',
+    typeZakelijk: 'Business (no logging)',
+    downloadSamenvatting: 'Download summary',
+    downloadDetail: 'Download detail export',
+    statTotaal: 'Total payouts',
+    statScouts: 'Unique scouts',
+    statBruto: 'Total gross',
+    statFees: 'Total scout fees',
+    loggingVereistTitle: 'Tax authority logging required',
+    loggingVereistBody: (n: number, total: string) =>
+      `${n} payment${n !== 1 ? 's' : ''} to private individuals (without CoC) — total €${total}`,
+    loggingVereistSub: 'These payments must be included in the IB-47 / local tax return',
+    loggingNietTitle: 'No logging required (business)',
+    loggingNietBody: (n: number, total: string) =>
+      `${n} payment${n !== 1 ? 's' : ''} to business relationships (with CoC) — total €${total}`,
+    loggingNietSub: 'Business relationships with CoC number are exempt from IB-47 reporting',
+    viewSamenvatting: 'Summary per scout',
+    viewDetail: 'All transactions',
+    colScout: 'Scout',
+    colBsn: 'BSN / TIN',
+    colGeboortedatum: 'Date of birth',
+    colWoonplaats: 'City',
+    colIban: 'IBAN',
+    colType: 'Type',
+    colLogging: 'Logging',
+    colBetalingen: '# Payments',
+    colTotaalFee: 'Total fee',
+    colPeriode: 'Period',
+    badgeNietVereist: 'Not required',
+    badgeIb47: 'IB-47 required',
+    colFactuur: 'Invoice',
+    colVacature: 'Job',
+    colKandidaat: 'Candidate',
+    colBruto: 'Gross',
+    colScoutFee: 'Scout fee',
+    colPlaatsing: 'Placement',
+    colUitbetaling: 'Payout',
+    colStatus: 'Status',
+    statusUitbetaald: 'Paid',
+    statusPending: 'Pending',
+    statusGeblokkeerd: 'Blocked',
+    loggingJa: 'Yes',
+    loggingNee: 'No',
+    emptyState: 'No payouts found for this selection.',
+    ib47Title: 'Required fields in export (IB-47 / local equivalent)',
+    groupPersons: 'Personal details',
+    groupFinancial: 'Financial',
+    groupBusiness: 'Business details',
+    groupTransaction: 'Transaction details',
+    personsItems: ['Full name', 'BSN / TIN (tax number)', 'Date of birth', 'Address + postcode', 'City + country'],
+    financialItems: ['IBAN', 'Gross payout amount', 'Scout fee (50%)', 'Currency'],
+    businessItems: ['CoC number (if applicable)', 'VAT number', 'Relationship type (business / private individual)'],
+    transactionItems: ['Invoice number', 'Placement date', 'Payout date', 'Job / candidate', 'Payment status'],
+    typeNatuurlijk: 'Private individual',
+    typeZakelijkLabel: 'Business',
+  },
+}
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface Uitbetaling {
@@ -123,38 +256,53 @@ const mockUitbetalingen: Uitbetaling[] = [
 ]
 
 // ─── Countries in the system ────────────────────────────────────────────────
-const landen = [
-  { code: 'ALL', label: 'Alle landen' },
-  { code: 'NL', label: 'Nederland' },
-  { code: 'DE', label: 'Duitsland' },
-  { code: 'BE', label: 'België' },
-  { code: 'FR', label: 'Frankrijk' },
-  { code: 'GB', label: 'Verenigd Koninkrijk' },
+const landenBase = [
+  { code: 'ALL', nl: 'Alle landen', en: 'All countries' },
+  { code: 'NL', nl: 'Nederland', en: 'Nederland' },
+  { code: 'DE', nl: 'Duitsland', en: 'Duitsland' },
+  { code: 'BE', nl: 'België', en: 'België' },
+  { code: 'FR', nl: 'Frankrijk', en: 'Frankrijk' },
+  { code: 'GB', nl: 'Verenigd Koninkrijk', en: 'Verenigd Koninkrijk' },
 ]
 
 const jaren = ['2026', '2025', '2024']
 
 // ─── IB-47 info banner per country ─────────────────────────────────────────
-const landInfo: Record<string, { formulier: string; toelichting: string }> = {
+const landInfo: Record<string, { formulier: string; toelichting: { nl: string; en: string } }> = {
   NL: {
     formulier: 'IB-47 (Opgaaf uitbetaalde bedragen aan derden)',
-    toelichting: 'Alleen verplicht voor betalingen aan natuurlijke personen (zonder KVK). Zakelijke relaties (met KVK) zijn uitgesloten van IB-47 logging. Jaarlijks vóór 1 februari in te dienen bij de Belastingdienst.',
+    toelichting: {
+      nl: 'Alleen verplicht voor betalingen aan natuurlijke personen (zonder KVK). Zakelijke relaties (met KVK) zijn uitgesloten van IB-47 logging. Jaarlijks vóór 1 februari in te dienen bij de Belastingdienst.',
+      en: 'Required only for payments to private individuals (without CoC number). Business relationships (with CoC) are excluded from IB-47 logging. To be submitted annually before 1 February to the Dutch Tax Authority.',
+    },
   },
   DE: {
     formulier: 'Meldung nach §93c AO',
-    toelichting: 'Betalingen aan zelfstandigen in Duitsland. Rapportage via het Bundeszentralamt für Steuern.',
+    toelichting: {
+      nl: 'Betalingen aan zelfstandigen in Duitsland. Rapportage via het Bundeszentralamt für Steuern.',
+      en: 'Payments to self-employed in Germany. Reporting via the Bundeszentralamt für Steuern.',
+    },
   },
   BE: {
     formulier: 'Fiche 281.50',
-    toelichting: 'Commissies, erelonen en voordelen aan derden. Jaarlijks in te dienen bij de FOD Financiën via Belcotax.',
+    toelichting: {
+      nl: 'Commissies, erelonen en voordelen aan derden. Jaarlijks in te dienen bij de FOD Financiën via Belcotax.',
+      en: 'Commissions, fees and benefits to third parties. Filed annually with the FPS Finance via Belcotax.',
+    },
   },
   FR: {
     formulier: 'DAS-2 / Déclaration des honoraires',
-    toelichting: 'Verplichte aangifte van honoraria en commissies boven €1.200 per ontvanger per jaar.',
+    toelichting: {
+      nl: 'Verplichte aangifte van honoraria en commissies boven €1.200 per ontvanger per jaar.',
+      en: 'Mandatory declaration of fees and commissions above €1,200 per recipient per year.',
+    },
   },
   GB: {
     formulier: 'CIS / Self Assessment',
-    toelichting: 'Rapportage aan HMRC voor betalingen aan zelfstandigen. Afhankelijk van CIS-registratie.',
+    toelichting: {
+      nl: 'Rapportage aan HMRC voor betalingen aan zelfstandigen. Afhankelijk van CIS-registratie.',
+      en: 'Reporting to HMRC for payments to self-employed. Depends on CIS registration.',
+    },
   },
 }
 
@@ -217,7 +365,8 @@ interface ScoutSamenvatting {
   laatsteBetaling: string
 }
 
-function aggregatePerScout(data: Uitbetaling[]): ScoutSamenvatting[] {
+function aggregatePerScout(data: Uitbetaling[], lang: 'nl' | 'en'): ScoutSamenvatting[] {
+  const t = texts[lang]
   const map = new Map<string, ScoutSamenvatting>()
   data.forEach(u => {
     const existing = map.get(u.scoutId)
@@ -235,7 +384,7 @@ function aggregatePerScout(data: Uitbetaling[]): ScoutSamenvatting[] {
         bsn: u.bsn, tinNummer: u.tinNummer, geboortedatum: u.geboortedatum,
         adres: u.adres, postcode: u.postcode, woonplaats: u.woonplaats,
         land: u.land, iban: u.iban, kvkNummer: u.kvkNummer, btwNummer: u.btwNummer,
-        typeRelatie: u.typeRelatie === 'natuurlijk_persoon' ? 'Natuurlijk persoon' : 'Zakelijk',
+        typeRelatie: u.typeRelatie === 'natuurlijk_persoon' ? t.typeNatuurlijk : t.typeZakelijkLabel,
         aantalUitbetalingen: 1, totaalBedrag: u.bedrag, totaalScoutFee: u.scoutFee,
         valuta: u.valuta,
         eersteBetaling: u.datumUitbetaling || '', laatsteBetaling: u.datumUitbetaling || '',
@@ -264,10 +413,17 @@ function generateSummaryCSV(scouts: ScoutSamenvatting[]): string {
 
 // ─── Component ──────────────────────────────────────────────────────────────
 export default function AdminUitbetalingen() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [selectedLand, setSelectedLand] = useState('ALL')
   const [selectedJaar, setSelectedJaar] = useState('2026')
   const [selectedType, setSelectedType] = useState<'ALL' | 'natuurlijk_persoon' | 'zzp'>('ALL')
   const [view, setView] = useState<'overzicht' | 'detail'>('overzicht')
+
+  const landen = landenBase.map(l => ({ code: l.code, label: lang === 'nl' ? l.nl : l.en }))
+
+  const locale = lang === 'nl' ? 'nl-NL' : 'en-GB'
 
   const filtered = useMemo(() => {
     return mockUitbetalingen.filter(u => {
@@ -282,7 +438,7 @@ export default function AdminUitbetalingen() {
   const loggingVereist = filtered.filter(u => u.typeRelatie === 'natuurlijk_persoon')
   const loggingNietVereist = filtered.filter(u => u.typeRelatie === 'zzp')
 
-  const scoutSamenvatting = useMemo(() => aggregatePerScout(filtered), [filtered])
+  const scoutSamenvatting = useMemo(() => aggregatePerScout(filtered, lang), [filtered, lang])
 
   const totaalBedrag = filtered.reduce((sum, u) => sum + u.bedrag, 0)
   const totaalScoutFee = filtered.reduce((sum, u) => sum + u.scoutFee, 0)
@@ -306,16 +462,16 @@ export default function AdminUitbetalingen() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-ink">Uitbetalingen</h1>
+        <h1 className="text-2xl font-bold text-ink">{t.title}</h1>
         <p className="text-ink-light font-medium mt-1">
-          Overzicht van alle uitbetalingen aan Talent Scouts. Exporteer per land voor belastingaangifte (IB-47 / lokaal equivalent).
+          {t.subtitle}
         </p>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap items-end gap-4">
         <div>
-          <label className="block text-xs font-medium text-ink-muted mb-1">Land</label>
+          <label className="block text-xs font-medium text-ink-muted mb-1">{t.filterLand}</label>
           <select
             value={selectedLand}
             onChange={(e) => setSelectedLand(e.target.value)}
@@ -327,7 +483,7 @@ export default function AdminUitbetalingen() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-ink-muted mb-1">Jaar</label>
+          <label className="block text-xs font-medium text-ink-muted mb-1">{t.filterJaar}</label>
           <select
             value={selectedJaar}
             onChange={(e) => setSelectedJaar(e.target.value)}
@@ -339,15 +495,15 @@ export default function AdminUitbetalingen() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-ink-muted mb-1">Type relatie</label>
+          <label className="block text-xs font-medium text-ink-muted mb-1">{t.filterType}</label>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as 'ALL' | 'natuurlijk_persoon' | 'zzp')}
             className="bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50"
           >
-            <option value="ALL">Alle types</option>
-            <option value="natuurlijk_persoon">Particulier (logging vereist)</option>
-            <option value="zzp">Zakelijk (geen logging)</option>
+            <option value="ALL">{t.alleTypes}</option>
+            <option value="natuurlijk_persoon">{t.typeParticulier}</option>
+            <option value="zzp">{t.typeZakelijk}</option>
           </select>
         </div>
         <div className="flex gap-2 ml-auto">
@@ -355,13 +511,13 @@ export default function AdminUitbetalingen() {
             onClick={handleDownloadSamenvatting}
             className="px-4 py-2.5 bg-purple text-white rounded-lg text-sm font-medium hover:bg-purple/90 transition-colors inline-flex items-center gap-2"
           >
-            <span>📊</span> Download samenvatting
+            <span>📊</span> {t.downloadSamenvatting}
           </button>
           <button
             onClick={handleDownloadDetail}
             className="px-4 py-2.5 bg-cyan text-navy-dark rounded-lg text-sm font-medium hover:bg-cyan/90 transition-colors inline-flex items-center gap-2"
           >
-            <span>📥</span> Download detail export
+            <span>📥</span> {t.downloadDetail}
           </button>
         </div>
       </div>
@@ -373,7 +529,7 @@ export default function AdminUitbetalingen() {
             <span className="text-lg">📋</span>
             <div>
               <p className="text-sm font-medium text-ink">{info.formulier}</p>
-              <p className="text-xs text-ink-light mt-0.5">{info.toelichting}</p>
+              <p className="text-xs text-ink-light mt-0.5">{info.toelichting[lang]}</p>
             </div>
           </div>
         </div>
@@ -382,20 +538,20 @@ export default function AdminUitbetalingen() {
       {/* Stats cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Totaal uitbetalingen</p>
+          <p className="text-xs text-ink-muted">{t.statTotaal}</p>
           <p className="text-2xl font-bold text-ink mt-1">{filtered.length}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Unieke scouts</p>
+          <p className="text-xs text-ink-muted">{t.statScouts}</p>
           <p className="text-2xl font-bold text-ink mt-1">{aantalScouts}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Totaal bruto</p>
-          <p className="text-2xl font-bold text-ink mt-1">€{totaalBedrag.toLocaleString('nl-NL')}</p>
+          <p className="text-xs text-ink-muted">{t.statBruto}</p>
+          <p className="text-2xl font-bold text-ink mt-1">€{totaalBedrag.toLocaleString(locale)}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Totaal scout fees</p>
-          <p className="text-2xl font-bold text-cyan mt-1">€{totaalScoutFee.toLocaleString('nl-NL')}</p>
+          <p className="text-xs text-ink-muted">{t.statFees}</p>
+          <p className="text-2xl font-bold text-cyan mt-1">€{totaalScoutFee.toLocaleString(locale)}</p>
         </div>
       </div>
 
@@ -405,12 +561,11 @@ export default function AdminUitbetalingen() {
           <div className="flex items-start gap-3">
             <span className="text-lg">📋</span>
             <div>
-              <p className="text-sm font-semibold text-amber-800">Belastingdienst logging vereist</p>
+              <p className="text-sm font-semibold text-amber-800">{t.loggingVereistTitle}</p>
               <p className="text-xs text-amber-700 mt-0.5">
-                {loggingVereist.length} betaling{loggingVereist.length !== 1 ? 'en' : ''} aan particulieren (zonder KVK) —
-                totaal €{loggingVereist.reduce((s, u) => s + u.scoutFee, 0).toLocaleString('nl-NL')}
+                {t.loggingVereistBody(loggingVereist.length, loggingVereist.reduce((s, u) => s + u.scoutFee, 0).toLocaleString(locale))}
               </p>
-              <p className="text-[10px] text-amber-600 mt-1">Deze betalingen moeten worden opgenomen in de IB-47 / lokale belastingaangifte</p>
+              <p className="text-[10px] text-amber-600 mt-1">{t.loggingVereistSub}</p>
             </div>
           </div>
         </div>
@@ -418,12 +573,11 @@ export default function AdminUitbetalingen() {
           <div className="flex items-start gap-3">
             <span className="text-lg">✅</span>
             <div>
-              <p className="text-sm font-semibold text-green-800">Geen logging vereist (zakelijk)</p>
+              <p className="text-sm font-semibold text-green-800">{t.loggingNietTitle}</p>
               <p className="text-xs text-green-700 mt-0.5">
-                {loggingNietVereist.length} betaling{loggingNietVereist.length !== 1 ? 'en' : ''} aan zakelijke relaties (met KVK) —
-                totaal €{loggingNietVereist.reduce((s, u) => s + u.scoutFee, 0).toLocaleString('nl-NL')}
+                {t.loggingNietBody(loggingNietVereist.length, loggingNietVereist.reduce((s, u) => s + u.scoutFee, 0).toLocaleString(locale))}
               </p>
-              <p className="text-[10px] text-green-600 mt-1">Zakelijke relaties met KVK-nummer zijn vrijgesteld van IB-47 rapportage</p>
+              <p className="text-[10px] text-green-600 mt-1">{t.loggingNietSub}</p>
             </div>
           </div>
         </div>
@@ -437,7 +591,7 @@ export default function AdminUitbetalingen() {
             view === 'overzicht' ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink'
           }`}
         >
-          Samenvatting per scout
+          {t.viewSamenvatting}
         </button>
         <button
           onClick={() => setView('detail')}
@@ -445,7 +599,7 @@ export default function AdminUitbetalingen() {
             view === 'detail' ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink'
           }`}
         >
-          Alle transacties
+          {t.viewDetail}
         </button>
       </div>
 
@@ -456,16 +610,16 @@ export default function AdminUitbetalingen() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-surface-border bg-surface-muted/50">
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Scout</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">BSN / TIN</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Geboortedatum</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Woonplaats</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">IBAN</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Type</th>
-                  <th className="text-center px-4 py-3 text-ink-muted font-medium">Logging</th>
-                  <th className="text-right px-4 py-3 text-ink-muted font-medium"># Betalingen</th>
-                  <th className="text-right px-4 py-3 text-ink-muted font-medium">Totaal fee</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Periode</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colScout}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colBsn}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colGeboortedatum}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colWoonplaats}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colIban}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colType}</th>
+                  <th className="text-center px-4 py-3 text-ink-muted font-medium">{t.colLogging}</th>
+                  <th className="text-right px-4 py-3 text-ink-muted font-medium">{t.colBetalingen}</th>
+                  <th className="text-right px-4 py-3 text-ink-muted font-medium">{t.colTotaalFee}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colPeriode}</th>
                 </tr>
               </thead>
               <tbody>
@@ -478,7 +632,7 @@ export default function AdminUitbetalingen() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-ink font-mono text-xs">{s.bsn || s.tinNummer || '—'}</td>
-                    <td className="px-4 py-3 text-ink">{new Date(s.geboortedatum).toLocaleDateString('nl-NL')}</td>
+                    <td className="px-4 py-3 text-ink">{new Date(s.geboortedatum).toLocaleDateString(locale)}</td>
                     <td className="px-4 py-3">
                       <span className="text-ink">{s.woonplaats}</span>
                       <span className="text-ink-muted text-xs ml-1">({s.land})</span>
@@ -486,7 +640,7 @@ export default function AdminUitbetalingen() {
                     <td className="px-4 py-3 text-ink font-mono text-xs">{s.iban}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        s.typeRelatie === 'Zakelijk'
+                        s.typeRelatie === t.typeZakelijkLabel
                           ? 'bg-cyan/10 text-cyan'
                           : 'bg-purple/10 text-purple'
                       }`}>
@@ -495,17 +649,17 @@ export default function AdminUitbetalingen() {
                     </td>
                     <td className="px-4 py-3 text-center">
                       {s.kvkNummer ? (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">Niet vereist</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">{t.badgeNietVereist}</span>
                       ) : (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">IB-47 vereist</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">{t.badgeIb47}</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-right text-ink">{s.aantalUitbetalingen}</td>
-                    <td className="px-4 py-3 text-right font-medium text-ink">€{s.totaalScoutFee.toLocaleString('nl-NL')}</td>
+                    <td className="px-4 py-3 text-right font-medium text-ink">€{s.totaalScoutFee.toLocaleString(locale)}</td>
                     <td className="px-4 py-3 text-xs text-ink-light">
-                      {s.eersteBetaling ? new Date(s.eersteBetaling).toLocaleDateString('nl-NL') : '—'}
+                      {s.eersteBetaling ? new Date(s.eersteBetaling).toLocaleDateString(locale) : '—'}
                       {s.eersteBetaling && s.laatsteBetaling && s.eersteBetaling !== s.laatsteBetaling && (
-                        <> – {new Date(s.laatsteBetaling).toLocaleDateString('nl-NL')}</>
+                        <> – {new Date(s.laatsteBetaling).toLocaleDateString(locale)}</>
                       )}
                     </td>
                   </tr>
@@ -515,7 +669,7 @@ export default function AdminUitbetalingen() {
           </div>
           {scoutSamenvatting.length === 0 && (
             <div className="p-8 text-center text-ink-muted text-sm">
-              Geen uitbetalingen gevonden voor deze selectie.
+              {t.emptyState}
             </div>
           )}
         </div>
@@ -528,16 +682,16 @@ export default function AdminUitbetalingen() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-surface-border bg-surface-muted/50">
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Factuur</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Scout</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Vacature</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Kandidaat</th>
-                  <th className="text-right px-4 py-3 text-ink-muted font-medium">Bruto</th>
-                  <th className="text-right px-4 py-3 text-ink-muted font-medium">Scout fee</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Plaatsing</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Uitbetaling</th>
-                  <th className="text-left px-4 py-3 text-ink-muted font-medium">Status</th>
-                  <th className="text-center px-4 py-3 text-ink-muted font-medium">Logging</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colFactuur}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colScout}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colVacature}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colKandidaat}</th>
+                  <th className="text-right px-4 py-3 text-ink-muted font-medium">{t.colBruto}</th>
+                  <th className="text-right px-4 py-3 text-ink-muted font-medium">{t.colScoutFee}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colPlaatsing}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colUitbetaling}</th>
+                  <th className="text-left px-4 py-3 text-ink-muted font-medium">{t.colStatus}</th>
+                  <th className="text-center px-4 py-3 text-ink-muted font-medium">{t.colLogging}</th>
                 </tr>
               </thead>
               <tbody>
@@ -552,24 +706,24 @@ export default function AdminUitbetalingen() {
                     </td>
                     <td className="px-4 py-3 text-ink">{u.vacatureTitle}</td>
                     <td className="px-4 py-3 text-ink">{u.kandidaatNaam}</td>
-                    <td className="px-4 py-3 text-right text-ink">{u.valuta === 'GBP' ? '£' : '€'}{u.bedrag.toLocaleString('nl-NL')}</td>
-                    <td className="px-4 py-3 text-right font-medium text-cyan">{u.valuta === 'GBP' ? '£' : '€'}{u.scoutFee.toLocaleString('nl-NL')}</td>
-                    <td className="px-4 py-3 text-ink text-xs">{new Date(u.datumPlaatsing).toLocaleDateString('nl-NL')}</td>
-                    <td className="px-4 py-3 text-ink text-xs">{u.datumUitbetaling ? new Date(u.datumUitbetaling).toLocaleDateString('nl-NL') : '—'}</td>
+                    <td className="px-4 py-3 text-right text-ink">{u.valuta === 'GBP' ? '£' : '€'}{u.bedrag.toLocaleString(locale)}</td>
+                    <td className="px-4 py-3 text-right font-medium text-cyan">{u.valuta === 'GBP' ? '£' : '€'}{u.scoutFee.toLocaleString(locale)}</td>
+                    <td className="px-4 py-3 text-ink text-xs">{new Date(u.datumPlaatsing).toLocaleDateString(locale)}</td>
+                    <td className="px-4 py-3 text-ink text-xs">{u.datumUitbetaling ? new Date(u.datumUitbetaling).toLocaleDateString(locale) : '—'}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
                         u.status === 'uitbetaald' ? 'bg-green-100 text-green-700' :
                         u.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
                         'bg-red-100 text-red-700'
                       }`}>
-                        {u.status === 'uitbetaald' ? 'Uitbetaald' : u.status === 'pending' ? 'In afwachting' : 'Geblokkeerd'}
+                        {u.status === 'uitbetaald' ? t.statusUitbetaald : u.status === 'pending' ? t.statusPending : t.statusGeblokkeerd}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-center">
                       {u.kvkNummer ? (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">Nee</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">{t.loggingNee}</span>
                       ) : (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Ja</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">{t.loggingJa}</span>
                       )}
                     </td>
                   </tr>
@@ -579,7 +733,7 @@ export default function AdminUitbetalingen() {
           </div>
           {filtered.length === 0 && (
             <div className="p-8 text-center text-ink-muted text-sm">
-              Geen uitbetalingen gevonden voor deze selectie.
+              {t.emptyState}
             </div>
           )}
         </div>
@@ -587,43 +741,30 @@ export default function AdminUitbetalingen() {
 
       {/* IB-47 required fields info */}
       <div className="bg-white rounded-2xl border border-surface-border p-6">
-        <h2 className="text-sm font-semibold text-ink mb-4">Verplichte velden in export (IB-47 / lokaal equivalent)</h2>
+        <h2 className="text-sm font-semibold text-ink mb-4">{t.ib47Title}</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div>
-            <h3 className="font-medium text-ink-muted mb-2">Persoonsgegevens</h3>
+            <h3 className="font-medium text-ink-muted mb-2">{t.groupPersons}</h3>
             <ul className="space-y-1 text-ink-light">
-              <li>• Volledige naam</li>
-              <li>• BSN / TIN (fiscaal nummer)</li>
-              <li>• Geboortedatum</li>
-              <li>• Adres + postcode</li>
-              <li>• Woonplaats + land</li>
+              {t.personsItems.map((item, i) => <li key={i}>• {item}</li>)}
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-ink-muted mb-2">Financieel</h3>
+            <h3 className="font-medium text-ink-muted mb-2">{t.groupFinancial}</h3>
             <ul className="space-y-1 text-ink-light">
-              <li>• IBAN</li>
-              <li>• Bruto uitbetaald bedrag</li>
-              <li>• Scout fee (50%)</li>
-              <li>• Valuta</li>
+              {t.financialItems.map((item, i) => <li key={i}>• {item}</li>)}
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-ink-muted mb-2">Bedrijfsgegevens</h3>
+            <h3 className="font-medium text-ink-muted mb-2">{t.groupBusiness}</h3>
             <ul className="space-y-1 text-ink-light">
-              <li>• KVK-nummer (indien van toepassing)</li>
-              <li>• BTW-nummer</li>
-              <li>• Type relatie (zakelijk / natuurlijk persoon)</li>
+              {t.businessItems.map((item, i) => <li key={i}>• {item}</li>)}
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-ink-muted mb-2">Transactiedetails</h3>
+            <h3 className="font-medium text-ink-muted mb-2">{t.groupTransaction}</h3>
             <ul className="space-y-1 text-ink-light">
-              <li>• Factuurnummer</li>
-              <li>• Datum plaatsing</li>
-              <li>• Datum uitbetaling</li>
-              <li>• Vacature / kandidaat</li>
-              <li>• Betalingsstatus</li>
+              {t.transactionItems.map((item, i) => <li key={i}>• {item}</li>)}
             </ul>
           </div>
         </div>
