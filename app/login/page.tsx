@@ -23,6 +23,7 @@ const loginTexts = {
     forgotPassword: 'Wachtwoord vergeten?',
     invalidCredentials: 'Ongeldige inloggegevens.',
     consentRequired: 'U dient akkoord te gaan met alle voorwaarden.',
+    profileLabels: { employer: 'Opdrachtgever', scout: 'Talent Scout', candidate: 'Kandidaat', admin: 'Admin' },
   },
   en: {
     subtitle: 'Demo Platform',
@@ -39,6 +40,7 @@ const loginTexts = {
     forgotPassword: 'Forgot password?',
     invalidCredentials: 'Invalid credentials.',
     consentRequired: 'You must agree to all terms.',
+    profileLabels: { employer: 'Employer', scout: 'Talent Scout', candidate: 'Candidate', admin: 'Admin' },
   },
 }
 
@@ -72,11 +74,11 @@ const DOC_URLS: Record<DocumentType, string> = {
   cookiebeleid: '/juridisch/cookiebeleid',
 }
 
-const PROFILE_CARDS = [
-  { icon: '\uD83D\uDC54', label: 'Opdrachtgever', name: 'Daan Verhoeven', email: 'demo@bedrijf.nl', color: 'from-cyan/20 to-cyan/5', border: 'border-cyan/30', hoverBorder: 'hover:border-cyan/60' },
-  { icon: '\uD83D\uDD0D', label: 'Talent Scout', name: 'Lisa de Groot', email: 'scout@refurzy.com', color: 'from-purple/20 to-purple/5', border: 'border-purple/30', hoverBorder: 'hover:border-purple/60' },
-  { icon: '\uD83D\uDC64', label: 'Kandidaat', name: 'Thomas Bakker', email: 'kandidaat@email.com', color: 'from-blue-400/20 to-blue-400/5', border: 'border-blue-400/30', hoverBorder: 'hover:border-blue-400/60' },
-  { icon: '\u2699\uFE0F', label: 'Admin', name: 'Refurzy Admin', email: 'admin@refurzy.com', color: 'from-gray-400/20 to-gray-400/5', border: 'border-gray-400/30', hoverBorder: 'hover:border-gray-400/60' },
+const PROFILE_CARD_BASE = [
+  { icon: '\uD83D\uDC54', labelKey: 'employer' as const, name: 'Daan Verhoeven', email: 'demo@bedrijf.nl', color: 'from-cyan/20 to-cyan/5', border: 'border-cyan/30', hoverBorder: 'hover:border-cyan/60' },
+  { icon: '\uD83D\uDD0D', labelKey: 'scout' as const, name: 'Lisa de Groot', email: 'scout@refurzy.com', color: 'from-purple/20 to-purple/5', border: 'border-purple/30', hoverBorder: 'hover:border-purple/60' },
+  { icon: '\uD83D\uDC64', labelKey: 'candidate' as const, name: 'Thomas Bakker', email: 'kandidaat@email.com', color: 'from-blue-400/20 to-blue-400/5', border: 'border-blue-400/30', hoverBorder: 'hover:border-blue-400/60' },
+  { icon: '\u2699\uFE0F', labelKey: 'admin' as const, name: 'Refurzy Admin', email: 'admin@refurzy.com', color: 'from-gray-400/20 to-gray-400/5', border: 'border-gray-400/30', hoverBorder: 'hover:border-gray-400/60' },
 ]
 
 export default function LoginPage() {
@@ -176,7 +178,7 @@ export default function LoginPage() {
           <div className="mb-6">
             <p className="text-sm text-gray-400 text-center mb-4">{lt.pickProfile}</p>
             <div className="grid grid-cols-2 gap-3">
-              {PROFILE_CARDS.map(card => (
+              {PROFILE_CARD_BASE.map(card => (
                 <button
                   key={card.email}
                   onClick={() => handleProfileClick(card.email)}
@@ -188,7 +190,7 @@ export default function LoginPage() {
                   `}
                 >
                   <div className="text-2xl mb-2">{card.icon}</div>
-                  <div className="text-sm font-semibold text-white">{card.label}</div>
+                  <div className="text-sm font-semibold text-white">{lt.profileLabels[card.labelKey]}</div>
                   <div className="text-xs text-gray-400 mt-0.5">{card.name}</div>
                   <div className="text-xs text-gray-500 mt-0.5 truncate">{card.email}</div>
                 </button>
