@@ -2,12 +2,25 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { User } from '@/lib/types'
+import { Lang } from '@/lib/i18n'
 import NotificationBell from '@/app/demo/components/NotificationBell'
+import LangToggle from '@/components/LangToggle'
 import Link from 'next/link'
 
 export default function TopBar({ user }: { user: User }) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const [lang, setLangState] = useState<Lang>('nl')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('refurzy_lang') as Lang
+    if (saved === 'nl' || saved === 'en') setLangState(saved)
+  }, [])
+
+  function changeLang(l: Lang) {
+    setLangState(l)
+    localStorage.setItem('refurzy_lang', l)
+  }
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -27,6 +40,8 @@ export default function TopBar({ user }: { user: User }) {
         <span>←</span> Homepage
       </Link>
       <div className="flex items-center gap-3">
+        <LangToggle lang={lang} setLang={changeLang} variant="light" />
+
         <Link href="/demo/help"
           className="w-9 h-9 rounded-full flex items-center justify-center text-ink-muted hover:text-cyan hover:bg-cyan/10 transition-colors"
           title="Help & Support">

@@ -4,6 +4,43 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { login, profileLogin, getRolePath } from '@/lib/auth'
 import { logConsent, DocumentType, DOCUMENT_VERSIONS } from '@/lib/consent-log'
+import type { Lang } from '@/lib/i18n'
+import LangToggle from '@/components/LangToggle'
+
+const loginTexts = {
+  nl: {
+    subtitle: 'Demo Platform',
+    pickProfile: 'Kies een profiel om in te loggen',
+    heading: 'Inloggen',
+    emailLabel: 'E-mailadres',
+    emailPlaceholder: 'je@email.nl',
+    passwordLabel: 'Wachtwoord',
+    consentHeading: 'Akkoord met voorwaarden',
+    consentPrefix: 'Ik ga akkoord met de',
+    submitLogin: 'Inloggen',
+    submitRegister: 'Registreren & inloggen',
+    noAccess: 'Vraag uw demo-inloggegevens aan via',
+    forgotPassword: 'Wachtwoord vergeten?',
+    invalidCredentials: 'Ongeldige inloggegevens.',
+    consentRequired: 'U dient akkoord te gaan met alle voorwaarden.',
+  },
+  en: {
+    subtitle: 'Demo Platform',
+    pickProfile: 'Choose a profile to log in',
+    heading: 'Log in',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@email.com',
+    passwordLabel: 'Password',
+    consentHeading: 'Agree to terms',
+    consentPrefix: 'I agree to the',
+    submitLogin: 'Log in',
+    submitRegister: 'Register & log in',
+    noAccess: 'Request your demo credentials at',
+    forgotPassword: 'Forgot password?',
+    invalidCredentials: 'Invalid credentials.',
+    consentRequired: 'You must agree to all terms.',
+  },
+}
 
 const ROLE_CONSENTS: Record<string, { docs: DocumentType[]; labels: string[] }> = {
   'demo@bedrijf.nl': {
@@ -50,7 +87,20 @@ export default function LoginPage() {
   const [consents, setConsents] = useState<Record<string, boolean>>({})
   const [hasDemoAccess, setHasDemoAccess] = useState(false)
   const [selectedProfile, setSelectedProfile] = useState<string | null>(null)
+  const [lang, setLangState] = useState<Lang>('nl')
   const router = useRouter()
+
+  useEffect(() => {
+    const saved = localStorage.getItem('refurzy_lang') as Lang
+    if (saved === 'nl' || saved === 'en') setLangState(saved)
+  }, [])
+
+  function changeLang(l: Lang) {
+    setLangState(l)
+    localStorage.setItem('refurzy_lang', l)
+  }
+
+  const lt = loginTexts[lang]
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -69,7 +119,7 @@ export default function LoginPage() {
     if (roleConsents && showRegister) {
       const allChecked = roleConsents.docs.every(doc => consents[doc])
       if (!allChecked) {
-        setError('U dient akkoord te gaan met alle voorwaarden.')
+        setError(lt.consentRequired)
         return
       }
       // Log all consents
@@ -96,7 +146,7 @@ export default function LoginPage() {
         router.push(getRolePath(user.role))
       }
     } else {
-      setError('Ongeldige inloggegevens.')
+      setError(lt.invalidCredentials)
     }
   }
 
@@ -109,17 +159,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy flex items-center justify-center px-4">
+    <div className="min-h-screen bg-navy flex items-center justify-center px-4 relative">
+      {/* Lang toggle top-right */}
+      <div className="absolute top-5 right-6">
+        <LangToggle lang={lang} setLang={changeLang} variant="dark" />
+      </div>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
-          <img src="/assets/refurzy-logo-white.png" alt="Refurzy" className="h-10 mx-auto mb-2" />
-          <p className="text-gray-500 text-sm">Demo Platform</p>
+          <img src="/logo-dark.png" alt="Refurzy" className="h-10 mx-auto mb-2" />
+          <p className="text-gray-500 text-sm">{lt.subtitle}</p>
         </div>
 
         {/* Profile picker — only shown when user has demo access */}
         {hasDemoAccess && (
           <div className="mb-6">
-            <p className="text-sm text-gray-400 text-center mb-4">Kies een profiel om in te loggen</p>
+            <p className="text-sm text-gray-400 text-center mb-4">{lt.pickProfile}</p>
             <div className="grid grid-cols-2 gap-3">
               {PROFILE_CARDS.map(card => (
                 <button
@@ -143,7 +198,7 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit} className="bg-navy-light rounded-2xl p-8 border border-purple/20">
-          <h2 className="text-xl font-semibold mb-6">Inloggen</h2>
+          <h2 className="text-xl font-semibold mb-6">{lt.heading}</h2>
 
           {error && (
             <div className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm rounded-lg p-3 mb-4">
@@ -152,18 +207,18 @@ export default function LoginPage() {
           )}
 
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-1.5">E-mailadres</label>
+            <label className="block text-sm text-gray-400 mb-1.5">{lt.emailLabel}</label>
             <input
               type="email" value={email} onChange={e => { setEmail(e.target.value); setShowRegister(false); setSelectedProfile(null) }}
               className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
-              placeholder="je@email.nl" required
+              placeholder={lt.emailPlaceholder} required
             />
           </div>
 
           {/* Password field: hidden when using profile card (no password needed) */}
           {!selectedProfile && (
             <div className="mb-4">
-              <label className="block text-sm text-gray-400 mb-1.5">Wachtwoord</label>
+              <label className="block text-sm text-gray-400 mb-1.5">{lt.passwordLabel}</label>
               <input
                 type="password" value={password} onChange={e => setPassword(e.target.value)}
                 className="w-full bg-navy border border-purple/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan transition-colors"
@@ -175,7 +230,7 @@ export default function LoginPage() {
           {/* Consent checkboxes — shown when demo account selected */}
           {showRegister && roleConsents && (
             <div className="mb-6 bg-navy/50 border border-purple/15 rounded-xl p-4 space-y-3">
-              <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-2">Akkoord met voorwaarden</p>
+              <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-2">{lt.consentHeading}</p>
               {roleConsents.docs.map((doc, i) => (
                 <label key={doc} className="flex items-start gap-3 cursor-pointer group">
                   <input
@@ -185,7 +240,7 @@ export default function LoginPage() {
                     className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-navy accent-cyan flex-shrink-0"
                   />
                   <span className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                    Ik ga akkoord met de{' '}
+                    {lt.consentPrefix}{' '}
                     <a href={DOC_URLS[doc]} target="_blank" rel="noopener noreferrer" className="text-cyan underline hover:text-cyan/80">
                       {roleConsents.labels[i]}
                     </a>
@@ -197,22 +252,21 @@ export default function LoginPage() {
           )}
 
           <button type="submit" className="w-full btn-gradient text-white font-semibold py-3 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-            {showRegister ? 'Registreren & inloggen' : 'Inloggen'}
+            {showRegister ? lt.submitRegister : lt.submitLogin}
           </button>
 
           {/* Hint for non-demo users */}
           {!hasDemoAccess && (
             <p className="text-xs text-gray-500 text-center mt-4">
-              Vraag uw demo-inloggegevens aan via{' '}
+              {lt.noAccess}{' '}
               <a href="mailto:info@refurzy.com" className="text-cyan/70 hover:text-cyan transition-colors">info@refurzy.com</a>
             </p>
           )}
 
         </form>
 
-        {/* Wachtwoord vergeten link voor productie-look */}
         <p className="text-center mt-4">
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-400 transition-colors">Wachtwoord vergeten?</a>
+          <a href="#" className="text-xs text-gray-500 hover:text-gray-400 transition-colors">{lt.forgotPassword}</a>
         </p>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { Lang } from '@/lib/i18n'
+import LangToggle from '@/components/LangToggle'
 
 const texts = {
   nl: {
@@ -125,32 +126,7 @@ export default function LandingPage() {
 
       {/* Top-right: lang toggle + login */}
       <div style={{ position: 'fixed', top: '20px', right: '24px', zIndex: 10, display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div style={{ display: 'flex', background: 'rgba(0,0,0,0.04)', borderRadius: '8px', padding: '2px', border: '1px solid rgba(0,0,0,0.08)' }}>
-          <button
-            onClick={() => switchLang('nl')}
-            style={{
-              padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
-              fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
-              background: lang === 'nl' ? 'rgba(0,0,0,0.08)' : 'transparent',
-              color: lang === 'nl' ? '#334155' : '#94a3b8',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            NL
-          </button>
-          <button
-            onClick={() => switchLang('en')}
-            style={{
-              padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
-              fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif',
-              background: lang === 'en' ? 'rgba(0,0,0,0.08)' : 'transparent',
-              color: lang === 'en' ? '#334155' : '#94a3b8',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            EN
-          </button>
-        </div>
+        <LangToggle lang={lang} setLang={switchLang} variant="light" />
         <Link
           href="/login"
           style={{
