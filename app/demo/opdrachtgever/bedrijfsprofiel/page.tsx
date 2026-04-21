@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
 
 // ─── Mock data ──────────────────────────────────────────────────────────────
 
@@ -40,14 +41,123 @@ const contracten = [
   { contractnaam: 'Plaatsingsovereenkomst RF-2025-047', vacature: 'Product Owner', kandidaat: 'Sanne Visser', datumGetekend: '2025-06-20', status: 'verlopen' },
 ]
 
+// ─── Texts ───────────────────────────────────────────────────────────────────
+
+const texts = {
+  nl: {
+    pageTitle: 'Bedrijfsprofiel',
+    pageSubtitle: 'Beheer uw bedrijfsgegevens, facturatie en M-Score profiel',
+    save: 'Opslaan',
+    edit: 'Bewerken',
+    // Section 1
+    companyDataTitle: 'Bedrijfsgegevens',
+    kvk: 'KVK-nummer',
+    bedrijfsnaam: 'Bedrijfsnaam',
+    adres: 'Adres',
+    postcode: 'Postcode',
+    plaats: 'Plaats',
+    land: 'Land',
+    sector: 'Sector',
+    website: 'Website',
+    // Section 2
+    invoiceDataTitle: 'Factuurgegevens',
+    factuurnaam: 'Factuurnaam',
+    factuuradres: 'Factuuradres',
+    btwNummer: 'BTW-nummer',
+    iban: 'IBAN',
+    // Section 3
+    contactsTitle: 'Contactpersonen',
+    colNaam: 'Naam',
+    colEmail: 'Email',
+    colRol: 'Rol',
+    colActiefSinds: 'Actief sinds',
+    inviteColleague: '+ Collega uitnodigen',
+    // Section 4
+    orgProfileTitle: 'Organisatie M-Score Profiel',
+    status: 'Status:',
+    profileFilled: 'Ingevuld',
+    profileNotFilled: 'Nog niet ingevuld',
+    valuesLabel: 'Waarden (Dimensie 2)',
+    orgFeaturesLabel: 'Organisatiekenmerken (Dimensie 3)',
+    editProfile: 'Profiel bewerken',
+    profileReused: 'Dit profiel wordt hergebruikt bij alle vacatures. Alleen werkzaamheden worden per vacature ingevuld.',
+    // Section 5
+    contractsTitle: 'Getekende contracten',
+    colContract: 'Contractnaam',
+    colVacature: 'Vacature',
+    colKandidaat: 'Kandidaat',
+    colDateSigned: 'Datum getekend',
+    colStatus: 'Status',
+    colAction: 'Actie',
+    downloadPdf: 'Download PDF',
+    // Status display
+    statusActief: 'Actief',
+    statusGetekend: 'Getekend',
+    statusVerlopen: 'Verlopen',
+  },
+  en: {
+    pageTitle: 'Company profile',
+    pageSubtitle: 'Manage your company data, invoicing and M-Score profile',
+    save: 'Save',
+    edit: 'Edit',
+    // Section 1
+    companyDataTitle: 'Company details',
+    kvk: 'Chamber of Commerce number',
+    bedrijfsnaam: 'Company name',
+    adres: 'Address',
+    postcode: 'Postcode',
+    plaats: 'City',
+    land: 'Country',
+    sector: 'Sector',
+    website: 'Website',
+    // Section 2
+    invoiceDataTitle: 'Invoice details',
+    factuurnaam: 'Invoice name',
+    factuuradres: 'Invoice address',
+    btwNummer: 'VAT number',
+    iban: 'IBAN',
+    // Section 3
+    contactsTitle: 'Contact persons',
+    colNaam: 'Name',
+    colEmail: 'Email',
+    colRol: 'Role',
+    colActiefSinds: 'Active since',
+    inviteColleague: '+ Invite colleague',
+    // Section 4
+    orgProfileTitle: 'Organisation M-Score Profile',
+    status: 'Status:',
+    profileFilled: 'Completed',
+    profileNotFilled: 'Not yet completed',
+    valuesLabel: 'Values (Dimension 2)',
+    orgFeaturesLabel: 'Organisation characteristics (Dimension 3)',
+    editProfile: 'Edit profile',
+    profileReused: 'This profile is reused for all vacancies. Only job activities are filled in per vacancy.',
+    // Section 5
+    contractsTitle: 'Signed contracts',
+    colContract: 'Contract name',
+    colVacature: 'Vacancy',
+    colKandidaat: 'Candidate',
+    colDateSigned: 'Date signed',
+    colStatus: 'Status',
+    colAction: 'Action',
+    downloadPdf: 'Download PDF',
+    // Status display
+    statusActief: 'Active',
+    statusGetekend: 'Signed',
+    statusVerlopen: 'Expired',
+  },
+}
+
 // ─── Section component ──────────────────────────────────────────────────────
 
-function Section({ title, icon, children, editMode, onToggleEdit }: {
+function Section({ title, icon, children, editMode, onToggleEdit, saveLabel, editLabel }: {
   title: string
   icon: string
   children: React.ReactNode
   editMode?: boolean
   onToggleEdit?: () => void
+  saveLabel?: string
+  editLabel?: string
 }) {
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-6">
@@ -65,7 +175,7 @@ function Section({ title, icon, children, editMode, onToggleEdit }: {
                 : 'bg-surface-muted text-ink-light hover:bg-surface-border'
             }`}
           >
-            {editMode ? 'Opslaan' : 'Bewerken'}
+            {editMode ? (saveLabel || 'Opslaan') : (editLabel || 'Bewerken')}
           </button>
         )}
       </div>
@@ -94,50 +204,60 @@ function Field({ label, value, editing }: { label: string; value: string; editin
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 export default function BedrijfsprofielPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [editBedrijf, setEditBedrijf] = useState(false)
   const [editFactuur, setEditFactuur] = useState(false)
+
+  const getStatusDisplay = (status: string) => {
+    if (status === 'actief') return t.statusActief
+    if (status === 'getekend') return t.statusGetekend
+    if (status === 'verlopen') return t.statusVerlopen
+    return status.charAt(0).toUpperCase() + status.slice(1)
+  }
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Bedrijfsprofiel</h1>
-        <p className="text-ink-light font-medium mt-1">Beheer uw bedrijfsgegevens, facturatie en M-Score profiel</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* 1. Bedrijfsgegevens */}
-      <Section title="Bedrijfsgegevens" icon="🏢" editMode={editBedrijf} onToggleEdit={() => setEditBedrijf(!editBedrijf)}>
+      <Section title={t.companyDataTitle} icon="🏢" editMode={editBedrijf} onToggleEdit={() => setEditBedrijf(!editBedrijf)} saveLabel={t.save} editLabel={t.edit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-          <Field label="KVK-nummer" value={bedrijfsgegevens.kvkNummer} editing={editBedrijf} />
-          <Field label="Bedrijfsnaam" value={bedrijfsgegevens.bedrijfsnaam} editing={editBedrijf} />
-          <Field label="Adres" value={bedrijfsgegevens.adres} editing={editBedrijf} />
-          <Field label="Postcode" value={bedrijfsgegevens.postcode} editing={editBedrijf} />
-          <Field label="Plaats" value={bedrijfsgegevens.plaats} editing={editBedrijf} />
-          <Field label="Land" value={bedrijfsgegevens.land} editing={editBedrijf} />
-          <Field label="Sector" value={bedrijfsgegevens.sector} editing={editBedrijf} />
-          <Field label="Website" value={bedrijfsgegevens.website} editing={editBedrijf} />
+          <Field label={t.kvk} value={bedrijfsgegevens.kvkNummer} editing={editBedrijf} />
+          <Field label={t.bedrijfsnaam} value={bedrijfsgegevens.bedrijfsnaam} editing={editBedrijf} />
+          <Field label={t.adres} value={bedrijfsgegevens.adres} editing={editBedrijf} />
+          <Field label={t.postcode} value={bedrijfsgegevens.postcode} editing={editBedrijf} />
+          <Field label={t.plaats} value={bedrijfsgegevens.plaats} editing={editBedrijf} />
+          <Field label={t.land} value={bedrijfsgegevens.land} editing={editBedrijf} />
+          <Field label={t.sector} value={bedrijfsgegevens.sector} editing={editBedrijf} />
+          <Field label={t.website} value={bedrijfsgegevens.website} editing={editBedrijf} />
         </div>
       </Section>
 
       {/* 2. Factuurgegevens */}
-      <Section title="Factuurgegevens" icon="🧾" editMode={editFactuur} onToggleEdit={() => setEditFactuur(!editFactuur)}>
+      <Section title={t.invoiceDataTitle} icon="🧾" editMode={editFactuur} onToggleEdit={() => setEditFactuur(!editFactuur)} saveLabel={t.save} editLabel={t.edit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-          <Field label="Factuurnaam" value={factuurgegevens.factuurnaam} editing={editFactuur} />
-          <Field label="Factuuradres" value={factuurgegevens.factuuradres} editing={editFactuur} />
-          <Field label="BTW-nummer" value={factuurgegevens.btwNummer} editing={editFactuur} />
-          <Field label="IBAN" value={factuurgegevens.iban} editing={editFactuur} />
+          <Field label={t.factuurnaam} value={factuurgegevens.factuurnaam} editing={editFactuur} />
+          <Field label={t.factuuradres} value={factuurgegevens.factuuradres} editing={editFactuur} />
+          <Field label={t.btwNummer} value={factuurgegevens.btwNummer} editing={editFactuur} />
+          <Field label={t.iban} value={factuurgegevens.iban} editing={editFactuur} />
         </div>
       </Section>
 
       {/* 3. Contactpersonen */}
-      <Section title="Contactpersonen" icon="👥">
+      <Section title={t.contactsTitle} icon="👥">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Naam</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Email</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Rol</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Actief sinds</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colNaam}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colEmail}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colRol}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colActiefSinds}</th>
               </tr>
             </thead>
             <tbody>
@@ -158,23 +278,23 @@ export default function BedrijfsprofielPage() {
         </div>
         <div className="mt-4">
           <button className="bg-cyan text-navy-dark px-4 py-2 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
-            + Collega uitnodigen
+            {t.inviteColleague}
           </button>
         </div>
       </Section>
 
       {/* 4. Organisatie M-Score Profiel */}
-      <Section title="Organisatie M-Score Profiel" icon="🧪">
+      <Section title={t.orgProfileTitle} icon="🧪">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-medium text-ink-muted">Status:</span>
+            <span className="text-xs font-medium text-ink-muted">{t.status}</span>
             {mScoreProfiel.ingevuld ? (
               <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                Ingevuld
+                {t.profileFilled}
               </span>
             ) : (
               <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-orange/10 text-orange border border-orange/30">
-                Nog niet ingevuld
+                {t.profileNotFilled}
               </span>
             )}
           </div>
@@ -182,7 +302,7 @@ export default function BedrijfsprofielPage() {
           {mScoreProfiel.ingevuld && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-xs text-ink-muted font-medium mb-2">Waarden (Dimensie 2)</h4>
+                <h4 className="text-xs text-ink-muted font-medium mb-2">{t.valuesLabel}</h4>
                 <div className="flex flex-wrap gap-2">
                   {mScoreProfiel.waarden.map((w) => (
                     <span key={w} className="inline-block px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan/10 text-cyan border border-cyan/20">
@@ -192,7 +312,7 @@ export default function BedrijfsprofielPage() {
                 </div>
               </div>
               <div>
-                <h4 className="text-xs text-ink-muted font-medium mb-2">Organisatiekenmerken (Dimensie 3)</h4>
+                <h4 className="text-xs text-ink-muted font-medium mb-2">{t.orgFeaturesLabel}</h4>
                 <div className="flex flex-wrap gap-2">
                   {mScoreProfiel.organisatiekenmerken.map((k) => (
                     <span key={k} className="inline-block px-3 py-1.5 rounded-lg text-xs font-medium bg-purple/10 text-purple border border-purple/20">
@@ -205,27 +325,27 @@ export default function BedrijfsprofielPage() {
           )}
 
           <button className="bg-surface-muted text-ink-light px-4 py-2 rounded-lg text-xs font-semibold hover:bg-surface-border transition-colors">
-            Profiel bewerken
+            {t.editProfile}
           </button>
 
           <p className="text-xs text-ink-muted italic">
-            Dit profiel wordt hergebruikt bij alle vacatures. Alleen werkzaamheden worden per vacature ingevuld.
+            {t.profileReused}
           </p>
         </div>
       </Section>
 
       {/* 5. Getekende contracten */}
-      <Section title="Getekende contracten" icon="📄">
+      <Section title={t.contractsTitle} icon="📄">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Contractnaam</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Vacature</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Kandidaat</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Datum getekend</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Status</th>
-                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">Actie</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colContract}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colVacature}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colKandidaat}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colDateSigned}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colStatus}</th>
+                <th className="text-left py-3 px-2 text-ink-muted font-medium text-xs">{t.colAction}</th>
               </tr>
             </thead>
             <tbody>
@@ -243,12 +363,12 @@ export default function BedrijfsprofielPage() {
                         ? 'bg-cyan/10 text-cyan border border-cyan/20'
                         : 'bg-surface-muted text-ink-muted border border-surface-border'
                     }`}>
-                      {c.status.charAt(0).toUpperCase() + c.status.slice(1)}
+                      {getStatusDisplay(c.status)}
                     </span>
                   </td>
                   <td className="py-3 px-2">
                     <button className="text-purple hover:text-purple-dark text-xs font-medium hover:underline">
-                      Download PDF
+                      {t.downloadPdf}
                     </button>
                   </td>
                 </tr>

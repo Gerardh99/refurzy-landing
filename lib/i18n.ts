@@ -2,11 +2,31 @@ import { useState, useEffect } from 'react'
 
 export type Lang = 'nl' | 'en'
 
+/** Custom event name dispatched when the language changes */
+export const LANG_CHANGE_EVENT = 'refurzy_lang_change'
+
+/** Dispatch to all components that use useLang() */
+export function dispatchLangChange(l: Lang) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('refurzy_lang', l)
+    window.dispatchEvent(new CustomEvent(LANG_CHANGE_EVENT, { detail: l }))
+  }
+}
+
 export function useLang() {
   const [lang, setLang] = useState<Lang>('nl')
   useEffect(() => {
-    const saved = typeof window !== 'undefined' ? localStorage.getItem('refurzy_lang') as Lang : null
+    // Initial value from localStorage
+    const saved = localStorage.getItem('refurzy_lang') as Lang
     if (saved === 'en' || saved === 'nl') setLang(saved)
+
+    // Live updates when TopBar (or any component) changes the language
+    function onLangChange(e: Event) {
+      const detail = (e as CustomEvent<Lang>).detail
+      if (detail === 'nl' || detail === 'en') setLang(detail)
+    }
+    window.addEventListener(LANG_CHANGE_EVENT, onLangChange)
+    return () => window.removeEventListener(LANG_CHANGE_EVENT, onLangChange)
   }, [])
   return { lang }
 }

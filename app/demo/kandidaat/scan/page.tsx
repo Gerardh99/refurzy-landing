@@ -18,6 +18,124 @@ import {
   type KenmerkItem,
   type ScaleOption,
 } from '@/lib/matching-scan'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    stepPrefix: 'Stap',
+    of: 'van',
+    backLabel: '← Terug',
+    startScan: 'Start de scan →',
+    nextStep: 'Volgende →',
+    // Intro
+    introTitle: 'Matching Scan',
+    introDesc: 'De Matching Scan meet in 35 vragen hoe goed u past bij een organisatie. De scan is ontwikkeld met de Vrije Universiteit Amsterdam.',
+    howItWorks: 'Hoe werkt het?',
+    howStep1: 'Rangschik werkzaamheden naar voorkeur',
+    howStep2: 'Beoordeel werkzaamheden op een schaal',
+    howStep3: 'Rangschik persoonlijke waarden',
+    howStep4: 'Beoordeel uw waarden op een schaal',
+    howStep5: 'Rangschik organisatiekenmerken',
+    howStep6: 'Beoordeel organisatiekenmerken op een schaal',
+    scienceBadge: 'Wetenschappelijk onderbouwd — ontwikkeld i.s.m. de Vrije Universiteit Amsterdam',
+    stepsCompleted: '0/6 stappen voltooid',
+    // Ranking
+    rankingTitle: 'Rangschik de werkzaamheden',
+    rankingDesc: 'Geef elke werkzaamheid een unieke rangorde van 1 (minst passend) tot 19 (meest passend). Elk nummer mag maar één keer gebruikt worden.',
+    valuesRankingTitle: 'Rangschik de waarden',
+    valuesRankingDesc: 'Geef elke waarde een unieke rangorde van 1 (minst belangrijk) tot 9 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden.',
+    kenmerkenRankingTitle: 'Rangschik de organisatiekenmerken',
+    kenmerkenRankingDesc: 'Geef elk kenmerk een unieke rangorde van 1 (minst belangrijk) tot 7 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden.',
+    inUse: '(in gebruik)',
+    // Rating
+    ratingTitle: 'Beoordeel elke werkzaamheid',
+    ratingDesc: 'Geef aan in welke mate u deze werkzaamheid bij u past.',
+    valuesRatingTitle: 'Beoordeel elke waarde',
+    valuesRatingDesc: 'Geef aan hoe belangrijk deze waarde voor u is.',
+    kenmerkenRatingTitle: 'Beoordeel elk organisatiekenmerk',
+    kenmerkenRatingDesc: 'Geef aan in welke mate dit kenmerk bij u past.',
+    filled: 'van',
+    rated: 'beoordeeld',
+    // Validation
+    valWorkRanking: 'Geef elke werkzaamheid een rangorde.',
+    valWorkRankingUnique: 'Elke rangorde mag maar één keer voorkomen.',
+    valWorkRating: 'Beoordeel alle werkzaamheden.',
+    valValuesRanking: 'Geef elke waarde een rangorde.',
+    valValuesRankingUnique: 'Elke rangorde mag maar één keer voorkomen.',
+    valValuesRating: 'Beoordeel alle waarden.',
+    valKenmerkenRanking: 'Geef elk kenmerk een rangorde.',
+    valKenmerkenRankingUnique: 'Elke rangorde mag maar één keer voorkomen.',
+    valKenmerkenRating: 'Beoordeel alle kenmerken.',
+    // Result
+    resultTitle: 'Uw profiel is compleet!',
+    resultDesc: 'Hieronder ziet u uw M-Score berekend tegen het demo-organisatieprofiel (TechVentures B.V.)',
+    mScoreLabel: 'M-Score',
+    strongMatch: 'Sterke match! Uw profiel sluit goed aan bij deze organisatie.',
+    moderateMatch: 'Redelijke match. Er zijn overeenkomsten, maar ook verschillen.',
+    weakMatch: 'Beperkte match. Uw profiel wijkt af van het organisatieprofiel.',
+    breakdownTitle: 'Breakdown per dimensie',
+    dimWork: 'Werkzaamheden / Interesses',
+    dimValues: 'Waarden',
+    dimOrg: 'Organisatiekenmerken',
+  },
+  en: {
+    stepPrefix: 'Step',
+    of: 'of',
+    backLabel: '← Back',
+    startScan: 'Start the scan →',
+    nextStep: 'Next →',
+    // Intro
+    introTitle: 'Matching Scan',
+    introDesc: 'The Matching Scan measures in 35 questions how well you fit an organization. The scan was developed with Vrije Universiteit Amsterdam.',
+    howItWorks: 'How does it work?',
+    howStep1: 'Rank work activities by preference',
+    howStep2: 'Rate work activities on a scale',
+    howStep3: 'Rank personal values',
+    howStep4: 'Rate your values on a scale',
+    howStep5: 'Rank organizational traits',
+    howStep6: 'Rate organizational traits on a scale',
+    scienceBadge: 'Scientifically grounded — developed in collaboration with Vrije Universiteit Amsterdam',
+    stepsCompleted: '0/6 steps completed',
+    // Ranking
+    rankingTitle: 'Rank the work activities',
+    rankingDesc: 'Give each work activity a unique rank from 1 (least fitting) to 19 (most fitting). Each number may only be used once.',
+    valuesRankingTitle: 'Rank the values',
+    valuesRankingDesc: 'Give each value a unique rank from 1 (least important) to 9 (most important). Each number may only be used once.',
+    kenmerkenRankingTitle: 'Rank the organizational traits',
+    kenmerkenRankingDesc: 'Give each trait a unique rank from 1 (least important) to 7 (most important). Each number may only be used once.',
+    inUse: '(in use)',
+    // Rating
+    ratingTitle: 'Rate each work activity',
+    ratingDesc: 'Indicate to what extent this work activity suits you.',
+    valuesRatingTitle: 'Rate each value',
+    valuesRatingDesc: 'Indicate how important this value is to you.',
+    kenmerkenRatingTitle: 'Rate each organizational trait',
+    kenmerkenRatingDesc: 'Indicate to what extent this trait suits you.',
+    filled: 'of',
+    rated: 'rated',
+    // Validation
+    valWorkRanking: 'Give each work activity a rank.',
+    valWorkRankingUnique: 'Each rank may only appear once.',
+    valWorkRating: 'Rate all work activities.',
+    valValuesRanking: 'Give each value a rank.',
+    valValuesRankingUnique: 'Each rank may only appear once.',
+    valValuesRating: 'Rate all values.',
+    valKenmerkenRanking: 'Give each trait a rank.',
+    valKenmerkenRankingUnique: 'Each rank may only appear once.',
+    valKenmerkenRating: 'Rate all traits.',
+    // Result
+    resultTitle: 'Your profile is complete!',
+    resultDesc: 'Below you can see your M-Score calculated against the demo organization profile (TechVentures B.V.)',
+    mScoreLabel: 'M-Score',
+    strongMatch: 'Strong match! Your profile aligns well with this organization.',
+    moderateMatch: 'Moderate match. There are similarities, but also differences.',
+    weakMatch: 'Limited match. Your profile deviates from the organization profile.',
+    breakdownTitle: 'Breakdown by dimension',
+    dimWork: 'Work activities / Interests',
+    dimValues: 'Values',
+    dimOrg: 'Organizational traits',
+  },
+}
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -46,6 +164,9 @@ function emptyResponses(): ScanResponses {
 // ─── Main page component ────────────────────────────────────────────────────
 
 export default function KandidaatMatchingScan() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [stepIndex, setStepIndex] = useState(0)
   const [responses, setResponses] = useState<ScanResponses>(emptyResponses)
   const [validationError, setValidationError] = useState('')
@@ -78,30 +199,30 @@ export default function KandidaatMatchingScan() {
 
     if (currentStep === 'werkzaamheden_ranking') {
       const vals = Object.values(responses.werkzaamheden_ranking)
-      if (vals.length < 19) { setValidationError('Geef elke werkzaamheid een rangorde.'); return false }
+      if (vals.length < 19) { setValidationError(t.valWorkRanking); return false }
       const unique = new Set(vals)
-      if (unique.size < 19) { setValidationError('Elke rangorde mag maar één keer voorkomen.'); return false }
+      if (unique.size < 19) { setValidationError(t.valWorkRankingUnique); return false }
     }
     if (currentStep === 'werkzaamheden_rating') {
-      if (Object.values(responses.werkzaamheden_rating).length < 19) { setValidationError('Beoordeel alle werkzaamheden.'); return false }
+      if (Object.values(responses.werkzaamheden_rating).length < 19) { setValidationError(t.valWorkRating); return false }
     }
     if (currentStep === 'waarden_ranking') {
       const vals = Object.values(responses.waarden_ranking)
-      if (vals.length < 9) { setValidationError('Geef elke waarde een rangorde.'); return false }
+      if (vals.length < 9) { setValidationError(t.valValuesRanking); return false }
       const unique = new Set(vals)
-      if (unique.size < 9) { setValidationError('Elke rangorde mag maar één keer voorkomen.'); return false }
+      if (unique.size < 9) { setValidationError(t.valValuesRankingUnique); return false }
     }
     if (currentStep === 'waarden_rating') {
-      if (Object.values(responses.waarden_rating).length < 9) { setValidationError('Beoordeel alle waarden.'); return false }
+      if (Object.values(responses.waarden_rating).length < 9) { setValidationError(t.valValuesRating); return false }
     }
     if (currentStep === 'kenmerken_ranking') {
       const vals = Object.values(responses.kenmerken_ranking)
-      if (vals.length < 7) { setValidationError('Geef elk kenmerk een rangorde.'); return false }
+      if (vals.length < 7) { setValidationError(t.valKenmerkenRanking); return false }
       const unique = new Set(vals)
-      if (unique.size < 7) { setValidationError('Elke rangorde mag maar één keer voorkomen.'); return false }
+      if (unique.size < 7) { setValidationError(t.valKenmerkenRankingUnique); return false }
     }
     if (currentStep === 'kenmerken_rating') {
-      if (Object.values(responses.kenmerken_rating).length < 7) { setValidationError('Beoordeel alle kenmerken.'); return false }
+      if (Object.values(responses.kenmerken_rating).length < 7) { setValidationError(t.valKenmerkenRating); return false }
     }
 
     return true
@@ -131,78 +252,90 @@ export default function KandidaatMatchingScan() {
   return (
     <div className="space-y-6 max-w-3xl">
       {/* Progress bar */}
-      <ProgressBar current={stepIndex} total={STEP_ORDER.length} label={stepMeta.label} />
+      <ProgressBar current={stepIndex} total={STEP_ORDER.length} label={stepMeta.label} t={t} />
 
       {/* Step content */}
-      {currentStep === 'intro' && <IntroStep />}
+      {currentStep === 'intro' && <IntroStep t={t} />}
 
       {currentStep === 'werkzaamheden_ranking' && (
         <RankingStep
-          title="Rangschik de werkzaamheden"
-          description="Geef elke werkzaamheid een unieke rangorde van 1 (minst passend) tot 19 (meest passend). Elk nummer mag maar één keer gebruikt worden."
+          title={t.rankingTitle}
+          description={t.rankingDesc}
           items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelKandidaat, description: w.description }))}
           max={19}
           values={responses.werkzaamheden_ranking}
           onChange={(id, v) => setRanking('werkzaamheden_ranking', id, v)}
+          inUseLabel={t.inUse}
+          filledLabel={t.filled}
         />
       )}
 
       {currentStep === 'werkzaamheden_rating' && (
         <RatingStep
-          title="Beoordeel elke werkzaamheid"
-          description="Geef aan in welke mate u deze werkzaamheid bij u past."
+          title={t.ratingTitle}
+          description={t.ratingDesc}
           items={werkzaamheden.map((w) => ({ id: w.id, label: w.labelKandidaat, description: w.description }))}
           scale={werkzaamhedenRatingScale}
           values={responses.werkzaamheden_rating}
           onChange={(id, v) => setRating('werkzaamheden_rating', id, v)}
+          ratedLabel={t.rated}
+          filledLabel={t.filled}
         />
       )}
 
       {currentStep === 'waarden_ranking' && (
         <RankingStep
-          title="Rangschik de waarden"
-          description="Geef elke waarde een unieke rangorde van 1 (minst belangrijk) tot 9 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden."
+          title={t.valuesRankingTitle}
+          description={t.valuesRankingDesc}
           items={waarden.map((w) => ({ id: w.id, label: w.label, description: w.description }))}
           max={9}
           values={responses.waarden_ranking}
           onChange={(id, v) => setRanking('waarden_ranking', id, v)}
+          inUseLabel={t.inUse}
+          filledLabel={t.filled}
         />
       )}
 
       {currentStep === 'waarden_rating' && (
         <RatingStep
-          title="Beoordeel elke waarde"
-          description="Geef aan hoe belangrijk deze waarde voor u is."
+          title={t.valuesRatingTitle}
+          description={t.valuesRatingDesc}
           items={waarden.map((w) => ({ id: w.id, label: w.label, description: w.description }))}
           scale={waardenRatingScaleKandidaat}
           values={responses.waarden_rating}
           onChange={(id, v) => setRating('waarden_rating', id, v)}
+          ratedLabel={t.rated}
+          filledLabel={t.filled}
         />
       )}
 
       {currentStep === 'kenmerken_ranking' && (
         <RankingStep
-          title="Rangschik de organisatiekenmerken"
-          description="Geef elk kenmerk een unieke rangorde van 1 (minst belangrijk) tot 7 (meest belangrijk). Elk nummer mag maar één keer gebruikt worden."
+          title={t.kenmerkenRankingTitle}
+          description={t.kenmerkenRankingDesc}
           items={organisatiekenmerken.map((k) => ({ id: k.id, label: k.label, description: k.description }))}
           max={7}
           values={responses.kenmerken_ranking}
           onChange={(id, v) => setRanking('kenmerken_ranking', id, v)}
+          inUseLabel={t.inUse}
+          filledLabel={t.filled}
         />
       )}
 
       {currentStep === 'kenmerken_rating' && (
         <RatingStep
-          title="Beoordeel elk organisatiekenmerk"
-          description="Geef aan in welke mate dit kenmerk bij u past."
+          title={t.kenmerkenRatingTitle}
+          description={t.kenmerkenRatingDesc}
           items={organisatiekenmerken.map((k) => ({ id: k.id, label: k.label, description: k.description }))}
           scale={kenmerkenRatingScale}
           values={responses.kenmerken_rating}
           onChange={(id, v) => setRating('kenmerken_rating', id, v)}
+          ratedLabel={t.rated}
+          filledLabel={t.filled}
         />
       )}
 
-      {currentStep === 'result' && <ResultStep responses={responses} />}
+      {currentStep === 'result' && <ResultStep responses={responses} t={t} />}
 
       {/* Validation error */}
       {validationError && (
@@ -218,7 +351,7 @@ export default function KandidaatMatchingScan() {
             onClick={goBack}
             className="px-5 py-2.5 text-sm font-medium text-ink-light hover:text-ink border border-surface-border rounded-lg transition-colors"
           >
-            &larr; Terug
+            {t.backLabel}
           </button>
         ) : (
           <div />
@@ -229,7 +362,7 @@ export default function KandidaatMatchingScan() {
             onClick={goNext}
             className="px-6 py-2.5 bg-cyan text-navy-dark rounded-lg font-medium text-sm hover:bg-cyan/90 transition-colors"
           >
-            {currentStep === 'intro' ? 'Start de scan \u2192' : 'Volgende \u2192'}
+            {currentStep === 'intro' ? t.startScan : t.nextStep}
           </button>
         )}
       </div>
@@ -239,14 +372,14 @@ export default function KandidaatMatchingScan() {
 
 // ─── Progress Bar ───────────────────────────────────────────────────────────
 
-function ProgressBar({ current, total, label }: { current: number; total: number; label: string }) {
+function ProgressBar({ current, total, label, t }: { current: number; total: number; label: string; t: typeof texts['nl'] }) {
   const pct = Math.round((current / (total - 1)) * 100)
 
   return (
     <div className="space-y-2">
       <div className="flex justify-between text-sm">
         <span className="text-ink-light">
-          Stap {current + 1} van {total} &mdash; {label}
+          {t.stepPrefix} {current + 1} {t.of} {total} &mdash; {label}
         </span>
         <span className="text-cyan">{pct}%</span>
       </div>
@@ -262,35 +395,32 @@ function ProgressBar({ current, total, label }: { current: number; total: number
 
 // ─── Intro Step ─────────────────────────────────────────────────────────────
 
-function IntroStep() {
+function IntroStep({ t }: { t: typeof texts['nl'] }) {
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-8 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Matching Scan</h1>
-        <p className="text-ink-light mt-2 leading-relaxed">
-          De Matching Scan meet in 35 vragen hoe goed u past bij een organisatie.
-          De scan is ontwikkeld met de Vrije Universiteit Amsterdam.
-        </p>
+        <h1 className="text-2xl font-bold text-ink">{t.introTitle}</h1>
+        <p className="text-ink-light mt-2 leading-relaxed">{t.introDesc}</p>
       </div>
 
       <div className="bg-purple/10 border border-purple/20 rounded-xl p-5 space-y-3">
-        <p className="text-sm font-medium text-purple">Hoe werkt het?</p>
+        <p className="text-sm font-medium text-purple">{t.howItWorks}</p>
         <ul className="text-sm text-ink-light space-y-2">
-          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> Rangschik werkzaamheden naar voorkeur</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">2.</span> Beoordeel werkzaamheden op een schaal</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> Rangschik persoonlijke waarden</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> Beoordeel uw waarden op een schaal</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">5.</span> Rangschik organisatiekenmerken</li>
-          <li className="flex gap-2"><span className="text-purple font-bold">6.</span> Beoordeel organisatiekenmerken op een schaal</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">1.</span> {t.howStep1}</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">2.</span> {t.howStep2}</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">3.</span> {t.howStep3}</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">4.</span> {t.howStep4}</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">5.</span> {t.howStep5}</li>
+          <li className="flex gap-2"><span className="text-purple font-bold">6.</span> {t.howStep6}</li>
         </ul>
       </div>
 
       <div className="flex items-center gap-3 text-sm text-ink-muted">
         <span className="text-lg">&#127891;</span>
-        <span>Wetenschappelijk onderbouwd &mdash; ontwikkeld i.s.m. de Vrije Universiteit Amsterdam</span>
+        <span>{t.scienceBadge}</span>
       </div>
 
-      <p className="text-ink-muted text-sm">0/6 stappen voltooid</p>
+      <p className="text-ink-muted text-sm">{t.stepsCompleted}</p>
     </div>
   )
 }
@@ -310,6 +440,8 @@ function RankingStep({
   max,
   values,
   onChange,
+  inUseLabel,
+  filledLabel,
 }: {
   title: string
   description: string
@@ -317,10 +449,10 @@ function RankingStep({
   max: number
   values: Record<string, number>
   onChange: (id: string, value: number) => void
+  inUseLabel: string
+  filledLabel: string
 }) {
-  // Build used-values set
   const usedValues = new Set(Object.values(values))
-
   const options = Array.from({ length: max }, (_, i) => i + 1)
 
   return (
@@ -351,7 +483,7 @@ function RankingStep({
                   const taken = usedValues.has(n) && currentVal !== n
                   return (
                     <option key={n} value={n} disabled={taken}>
-                      {n}{taken ? ' (in gebruik)' : ''}
+                      {n}{taken ? ` ${inUseLabel}` : ''}
                     </option>
                   )
                 })}
@@ -366,7 +498,7 @@ function RankingStep({
       </div>
 
       <p className="text-xs text-ink-muted">
-        {Object.keys(values).length} van {items.length} ingevuld
+        {Object.keys(values).length} {filledLabel} {items.length}
       </p>
     </div>
   )
@@ -381,6 +513,8 @@ function RatingStep({
   scale,
   values,
   onChange,
+  ratedLabel,
+  filledLabel,
 }: {
   title: string
   description: string
@@ -388,6 +522,8 @@ function RatingStep({
   scale: ScaleOption[]
   values: Record<string, number>
   onChange: (id: string, value: number) => void
+  ratedLabel: string
+  filledLabel: string
 }) {
   return (
     <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-5">
@@ -439,7 +575,7 @@ function RatingStep({
       </div>
 
       <p className="text-xs text-ink-muted">
-        {Object.keys(values).length} van {items.length} beoordeeld
+        {Object.keys(values).length} {filledLabel} {items.length} {ratedLabel}
       </p>
     </div>
   )
@@ -447,10 +583,9 @@ function RatingStep({
 
 // ─── Result Step ────────────────────────────────────────────────────────────
 
-function ResultStep({ responses }: { responses: ScanResponses }) {
+function ResultStep({ responses, t }: { responses: ScanResponses; t: typeof texts['nl'] }) {
   const mScore = calculateMScore(demoOrgResponses, responses)
 
-  // Dimension sub-scores for breakdown
   const werkRanking = avgPOMPForKeys(responses.werkzaamheden_ranking, 1, 19)
   const werkRating = avgPOMPForKeys(responses.werkzaamheden_rating, 1, 7)
   const werkTotal = Math.round((werkRanking + werkRating) / 2)
@@ -469,33 +604,31 @@ function ResultStep({ responses }: { responses: ScanResponses }) {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl border border-surface-border p-8 text-center space-y-6">
-        <h2 className="text-2xl font-bold text-ink">Uw profiel is compleet!</h2>
-        <p className="text-ink-light text-sm">
-          Hieronder ziet u uw M-Score berekend tegen het demo-organisatieprofiel (TechVentures B.V.)
-        </p>
+        <h2 className="text-2xl font-bold text-ink">{t.resultTitle}</h2>
+        <p className="text-ink-light text-sm">{t.resultDesc}</p>
 
         {/* Big score circle */}
         <div className="flex justify-center">
           <div className={`w-36 h-36 rounded-full border-4 ${ringColor} flex flex-col items-center justify-center`}>
             <span className={`text-4xl font-bold ${scoreColor}`}>{mScore}</span>
-            <span className="text-xs text-ink-muted mt-1">M-Score</span>
+            <span className="text-xs text-ink-muted mt-1">{t.mScoreLabel}</span>
           </div>
         </div>
 
         <p className="text-sm text-ink-muted">
-          {mScore >= 70 && 'Sterke match! Uw profiel sluit goed aan bij deze organisatie.'}
-          {mScore >= 50 && mScore < 70 && 'Redelijke match. Er zijn overeenkomsten, maar ook verschillen.'}
-          {mScore < 50 && 'Beperkte match. Uw profiel wijkt af van het organisatieprofiel.'}
+          {mScore >= 70 && t.strongMatch}
+          {mScore >= 50 && mScore < 70 && t.moderateMatch}
+          {mScore < 50 && t.weakMatch}
         </p>
       </div>
 
       {/* Breakdown */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
-        <h3 className="text-lg font-semibold text-ink">Breakdown per dimensie</h3>
+        <h3 className="text-lg font-semibold text-ink">{t.breakdownTitle}</h3>
 
-        <DimensionBar label="Werkzaamheden / Interesses" score={werkTotal} />
-        <DimensionBar label="Waarden" score={waardenTotal} />
-        <DimensionBar label="Organisatiekenmerken" score={kenmTotal} />
+        <DimensionBar label={t.dimWork} score={werkTotal} />
+        <DimensionBar label={t.dimValues} score={waardenTotal} />
+        <DimensionBar label={t.dimOrg} score={kenmTotal} />
       </div>
     </div>
   )

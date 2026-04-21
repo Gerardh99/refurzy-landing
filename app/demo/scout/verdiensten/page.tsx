@@ -1,6 +1,84 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    pageTitle: 'Mijn verdiensten',
+    pageSubtitle: 'Overzicht van al je inkomsten als Talent Scout',
+    statTotalEarned: 'Totaal verdiend',
+    statTotalEarnedNote: 'Excl. BTW',
+    statPaidOut: 'Uitbetaald',
+    statOutstanding: 'Openstaand',
+    statPlacements: 'Aantal plaatsingen',
+    introBannerTitle: 'Introductiekorting',
+    introBannerBody: 'Bij je eerste plaatsing geldt een introductiekorting van 50%. Je ontvangt dan 25% in plaats van 50% van de plaatsingsfee. Zowel jij als Refurzy dragen de korting. Na je eerste succesvolle plaatsing vervalt de korting automatisch.',
+    filterAll: 'Alle',
+    filterPaidOut: 'Uitbetaald',
+    filterOutstanding: 'Openstaand',
+    filterWaiting: 'Wacht op betaling',
+    colDate: 'Datum',
+    colVacancy: 'Vacature',
+    colCandidate: 'Kandidaat',
+    colClient: 'Opdrachtgever',
+    colPlacementFee: 'Plaatsingsfee',
+    colYourShare: 'Jouw deel',
+    colStatus: 'Status',
+    statusPaidOut: 'Uitbetaald',
+    statusOutstanding: 'Openstaand',
+    statusWaiting: 'Wacht op betaling',
+    introDiscountBadge: 'introductiekorting',
+    noResults: 'Geen verdiensten gevonden.',
+    infoTitle: 'Hoe werkt uitbetaling?',
+    infoBody: (invoicesLink: React.ReactNode) => (
+      <>
+        Je ontvangt 50% van de plaatsingsfee (excl. BTW) bij elke succesvolle plaatsing.
+        Uitbetaling vindt plaats zodra de opdrachtgever heeft betaald.
+        Pro Scouts ontvangen daarbovenop 21% BTW. Bekijk je volledige facturen op de{' '}
+        {invoicesLink}.
+      </>
+    ),
+    invoicesPageLink: 'factuurpagina',
+  },
+  en: {
+    pageTitle: 'My earnings',
+    pageSubtitle: 'Overview of all your income as a Talent Scout',
+    statTotalEarned: 'Total earned',
+    statTotalEarnedNote: 'Excl. VAT',
+    statPaidOut: 'Paid out',
+    statOutstanding: 'Outstanding',
+    statPlacements: 'Number of placements',
+    introBannerTitle: 'Introductory discount',
+    introBannerBody: 'For your first placement an introductory discount of 50% applies. You receive 25% instead of 50% of the placement fee. Both you and Refurzy share the discount. After your first successful placement the discount expires automatically.',
+    filterAll: 'All',
+    filterPaidOut: 'Paid out',
+    filterOutstanding: 'Outstanding',
+    filterWaiting: 'Waiting for payment',
+    colDate: 'Date',
+    colVacancy: 'Vacancy',
+    colCandidate: 'Candidate',
+    colClient: 'Client',
+    colPlacementFee: 'Placement fee',
+    colYourShare: 'Your share',
+    colStatus: 'Status',
+    statusPaidOut: 'Paid out',
+    statusOutstanding: 'Outstanding',
+    statusWaiting: 'Waiting for payment',
+    introDiscountBadge: 'intro discount',
+    noResults: 'No earnings found.',
+    infoTitle: 'How does payout work?',
+    infoBody: (invoicesLink: React.ReactNode) => (
+      <>
+        You receive 50% of the placement fee (excl. VAT) for every successful placement.
+        Payout takes place once the client has paid.
+        Pro Scouts additionally receive 21% VAT. View your full invoices on the{' '}
+        {invoicesLink}.
+      </>
+    ),
+    invoicesPageLink: 'invoices page',
+  },
+}
 
 interface Verdienste {
   id: string
@@ -55,6 +133,9 @@ const mockVerdiensten: Verdienste[] = [
 ]
 
 export default function ScoutVerdiensten() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [filter, setFilter] = useState<'alle' | 'uitbetaald' | 'openstaand' | 'wacht_op_betaling'>('alle')
 
   const filtered = filter === 'alle' ? mockVerdiensten : mockVerdiensten.filter(v => v.status === filter)
@@ -66,11 +147,17 @@ export default function ScoutVerdiensten() {
 
   const fmt = (n: number) => '\u20AC' + n.toLocaleString('nl-NL', { minimumFractionDigits: 0 })
 
+  const statusLabel = (status: Verdienste['status']) => {
+    if (status === 'uitbetaald') return t.statusPaidOut
+    if (status === 'openstaand') return t.statusOutstanding
+    return t.statusWaiting
+  }
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Mijn verdiensten</h1>
-        <p className="text-ink-light text-sm mt-1">Overzicht van al je inkomsten als Talent Scout</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light text-sm mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Summary cards */}
@@ -78,29 +165,29 @@ export default function ScoutVerdiensten() {
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xl">💰</span>
-            <p className="text-xs text-ink-muted">Totaal verdiend</p>
+            <p className="text-xs text-ink-muted">{t.statTotalEarned}</p>
           </div>
           <p className="text-2xl font-bold text-ink">{fmt(totaalVerdiend)}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Excl. BTW</p>
+          <p className="text-[10px] text-ink-muted mt-1">{t.statTotalEarnedNote}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xl">✅</span>
-            <p className="text-xs text-ink-muted">Uitbetaald</p>
+            <p className="text-xs text-ink-muted">{t.statPaidOut}</p>
           </div>
           <p className="text-2xl font-bold text-green-600">{fmt(uitbetaald)}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xl">⏳</span>
-            <p className="text-xs text-ink-muted">Openstaand</p>
+            <p className="text-xs text-ink-muted">{t.statOutstanding}</p>
           </div>
           <p className="text-2xl font-bold text-orange">{fmt(openstaand)}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xl">🎯</span>
-            <p className="text-xs text-ink-muted">Aantal plaatsingen</p>
+            <p className="text-xs text-ink-muted">{t.statPlacements}</p>
           </div>
           <p className="text-2xl font-bold text-ink">{aantalPlaatsingen}</p>
         </div>
@@ -110,11 +197,8 @@ export default function ScoutVerdiensten() {
       <div className="bg-purple/5 border border-purple/20 rounded-xl p-4 flex items-start gap-3">
         <span className="text-lg">🎁</span>
         <div className="text-sm text-ink-light">
-          <p><strong className="text-ink">Introductiekorting</strong></p>
-          <p className="mt-1">
-            Bij je eerste plaatsing geldt een introductiekorting van 50%. Je ontvangt dan 25% in plaats van 50% van de plaatsingsfee.
-            Zowel jij als Refurzy dragen de korting. Na je eerste succesvolle plaatsing vervalt de korting automatisch.
-          </p>
+          <p><strong className="text-ink">{t.introBannerTitle}</strong></p>
+          <p className="mt-1">{t.introBannerBody}</p>
         </div>
       </div>
 
@@ -125,7 +209,7 @@ export default function ScoutVerdiensten() {
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
               filter === f ? 'bg-ink text-white' : 'bg-surface-muted text-ink-muted hover:text-ink'
             }`}>
-            {f === 'alle' ? 'Alle' : f === 'uitbetaald' ? 'Uitbetaald' : f === 'openstaand' ? 'Openstaand' : 'Wacht op betaling'}
+            {f === 'alle' ? t.filterAll : f === 'uitbetaald' ? t.filterPaidOut : f === 'openstaand' ? t.filterOutstanding : t.filterWaiting}
           </button>
         ))}
       </div>
@@ -136,13 +220,13 @@ export default function ScoutVerdiensten() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border bg-surface-muted/50">
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Datum</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Vacature</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Kandidaat</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">Opdrachtgever</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">Plaatsingsfee</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">Jouw deel</th>
-                <th className="text-center px-4 py-3 text-xs font-medium text-ink-muted">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colDate}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colVacancy}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colCandidate}</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-ink-muted">{t.colClient}</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">{t.colPlacementFee}</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-ink-muted">{t.colYourShare}</th>
+                <th className="text-center px-4 py-3 text-xs font-medium text-ink-muted">{t.colStatus}</th>
               </tr>
             </thead>
             <tbody>
@@ -158,7 +242,7 @@ export default function ScoutVerdiensten() {
                     <span className="text-ink-muted ml-1">({v.deelPercentage}%)</span>
                     {v.introductiekorting && (
                       <span className="ml-1.5 text-[10px] bg-purple/10 text-purple px-1.5 py-0.5 rounded-full font-medium">
-                        introductiekorting
+                        {t.introDiscountBadge}
                       </span>
                     )}
                   </td>
@@ -168,7 +252,7 @@ export default function ScoutVerdiensten() {
                       v.status === 'openstaand' ? 'bg-yellow-100 text-yellow-700' :
                       'bg-blue-100 text-blue-700'
                     }`}>
-                      {v.status === 'uitbetaald' ? 'Uitbetaald' : v.status === 'openstaand' ? 'Openstaand' : 'Wacht op betaling'}
+                      {statusLabel(v.status)}
                     </span>
                   </td>
                 </tr>
@@ -176,7 +260,7 @@ export default function ScoutVerdiensten() {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <div className="p-8 text-center text-ink-muted text-sm">Geen verdiensten gevonden.</div>
+            <div className="p-8 text-center text-ink-muted text-sm">{t.noResults}</div>
           )}
         </div>
       </div>
@@ -185,12 +269,11 @@ export default function ScoutVerdiensten() {
       <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-start gap-3">
         <span className="text-lg">💡</span>
         <div className="text-sm text-ink-light">
-          <p><strong className="text-ink">Hoe werkt uitbetaling?</strong></p>
+          <p><strong className="text-ink">{t.infoTitle}</strong></p>
           <p className="mt-1">
-            Je ontvangt 50% van de plaatsingsfee (excl. BTW) bij elke succesvolle plaatsing.
-            Uitbetaling vindt plaats zodra de opdrachtgever heeft betaald.
-            Pro Scouts ontvangen daarbovenop 21% BTW. Bekijk je volledige facturen op de{' '}
-            <a href="/demo/scout/facturen" className="text-cyan hover:underline">factuurpagina</a>.
+            {t.infoBody(
+              <a href="/demo/scout/facturen" className="text-cyan hover:underline">{t.invoicesPageLink}</a>
+            )}
           </p>
         </div>
       </div>

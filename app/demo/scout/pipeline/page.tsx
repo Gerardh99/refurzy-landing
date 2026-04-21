@@ -6,6 +6,100 @@ import { allVacatures, pipelineSteps } from '@/lib/mock-data'
 import { KandidaatMatch, ProcesStatus } from '@/lib/types'
 import FitScore from '@/components/FitScore'
 import PipelineTracker from '@/components/PipelineTracker'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    pageTitle: 'Mijn Pipeline',
+    pageSubtitle: 'Volg de voortgang van al je voorgedragen kandidaten',
+    statTotal: 'Totaal voorgedragen',
+    statInProcess: 'In proces bij opdrachtgever',
+    statSuccessful: 'Succesvol geplaatst',
+    statWaiting: 'Wacht op opdrachtgever',
+    autoBannerTitle: 'Automatische herinneringen actief',
+    autoBannerBody: 'Refurzy stuurt automatisch herinneringen naar opdrachtgevers bij vertragingen. Na 7 dagen zonder actie wordt de voordracht geëscaleerd. Je hoeft zelf niets te doen.',
+    filterAll: 'Alle',
+    today: 'Vandaag',
+    daysInStep: (n: number) => `${n}d in deze stap`,
+    mScore: 'M-Score',
+    statusWaitingReaction: 'Wacht op reactie opdrachtgever',
+    statusProfileUnlocked: 'Opdrachtgever heeft profiel ontgrendeld',
+    statusWaitingDate: 'Wacht op gespreksdatum van opdrachtgever',
+    statusNoAction: (n: number) => `Al ${n} dagen geen actie`,
+    statusInterviewDate: (date: string) => `Gesprek: ${date}`,
+    statusCandidateConfirmed: 'Kandidaat heeft bevestigd',
+    statusWaitingConfirmation: 'Wacht op bevestiging kandidaat',
+    statusWaitingFeedback: 'Wacht op feedback van opdrachtgever',
+    statusInterviewWasOn: (date: string) => `Gesprek was op ${date}`,
+    statusFollowUp: (date: string) => `Vervolggesprek: ${date}`,
+    statusFollowUpTBD: 'datum volgt',
+    statusFeedbackFirstInterview: (score: number, summary: string) => `Feedback eerste gesprek: ${score}/5 — ${summary}`,
+    statusTermsProposal: 'Voorstel verstuurd naar kandidaat',
+    statusTermsNegotiating: 'In onderhandeling',
+    statusTermsAgreed: 'Arbeidsvoorwaarden akkoord — wacht op contract',
+    statusTermsStarted: 'Arbeidsvoorwaarden fase gestart',
+    statusInterviewFeedback: (score: number, summary: string) => `Gespreksfeedback: ${score}/5 — ${summary}`,
+    statusInterviewsCompleted: (n: number) => `${n} gesprek${n > 1 ? 'ken' : ''} afgerond`,
+    statusStartDate: (date: string) => `Startdatum: ${date}`,
+    candidate: 'Kandidaat',
+    client: 'Opdrachtgever',
+    lastUpdated: 'Laatst bijgewerkt:',
+    lastUpdatedToday: 'vandaag',
+    lastUpdatedYesterday: 'gisteren',
+    lastUpdatedDaysAgo: (n: number) => `${n} dagen geleden`,
+    actionNeedsDate: 'Opdrachtgever moet gespreksdatum invoeren',
+    actionNeedsFeedback: 'Opdrachtgever moet feedback geven',
+    autoReminderActive: '🤖 Auto-herinnering actief',
+    successPlacement: 'Succesvolle plaatsing!',
+    successFeeNote: 'Fee wordt uitbetaald na bevestiging eerste werkdag',
+    noResults: 'Geen kandidaten gevonden met deze filter.',
+  },
+  en: {
+    pageTitle: 'My Pipeline',
+    pageSubtitle: 'Track the progress of all your nominated candidates',
+    statTotal: 'Total nominated',
+    statInProcess: 'In process with client',
+    statSuccessful: 'Successfully placed',
+    statWaiting: 'Waiting for client',
+    autoBannerTitle: 'Automatic reminders active',
+    autoBannerBody: 'Refurzy automatically sends reminders to clients when there are delays. After 7 days without action the nomination is escalated. You do not need to do anything yourself.',
+    filterAll: 'All',
+    today: 'Today',
+    daysInStep: (n: number) => `${n}d in this step`,
+    mScore: 'M-Score',
+    statusWaitingReaction: 'Waiting for client response',
+    statusProfileUnlocked: 'Client has unlocked the profile',
+    statusWaitingDate: 'Waiting for interview date from client',
+    statusNoAction: (n: number) => `No action for ${n} days`,
+    statusInterviewDate: (date: string) => `Interview: ${date}`,
+    statusCandidateConfirmed: 'Candidate has confirmed',
+    statusWaitingConfirmation: 'Waiting for candidate confirmation',
+    statusWaitingFeedback: 'Waiting for feedback from client',
+    statusInterviewWasOn: (date: string) => `Interview was on ${date}`,
+    statusFollowUp: (date: string) => `Follow-up interview: ${date}`,
+    statusFollowUpTBD: 'date to follow',
+    statusFeedbackFirstInterview: (score: number, summary: string) => `First interview feedback: ${score}/5 — ${summary}`,
+    statusTermsProposal: 'Proposal sent to candidate',
+    statusTermsNegotiating: 'In negotiation',
+    statusTermsAgreed: 'Terms agreed — waiting for contract',
+    statusTermsStarted: 'Terms phase started',
+    statusInterviewFeedback: (score: number, summary: string) => `Interview feedback: ${score}/5 — ${summary}`,
+    statusInterviewsCompleted: (n: number) => `${n} interview${n > 1 ? 's' : ''} completed`,
+    statusStartDate: (date: string) => `Start date: ${date}`,
+    candidate: 'Candidate',
+    client: 'Client',
+    lastUpdated: 'Last updated:',
+    lastUpdatedToday: 'today',
+    lastUpdatedYesterday: 'yesterday',
+    lastUpdatedDaysAgo: (n: number) => `${n} days ago`,
+    actionNeedsDate: 'Client must enter interview date',
+    actionNeedsFeedback: 'Client must provide feedback',
+    autoReminderActive: '🤖 Auto-reminder active',
+    successPlacement: 'Successful placement!',
+    successFeeNote: 'Fee is paid out after confirmation of first working day',
+    noResults: 'No candidates found with this filter.',
+  },
+}
 
 // Flatten all kandidaten across vacatures for this scout
 const scoutId = 'scout-1'
@@ -16,6 +110,9 @@ const allKandidaten = allVacatures.flatMap(v =>
 )
 
 export default function ScoutPipeline() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [filter, setFilter] = useState<ProcesStatus | 'alle'>('alle')
 
   const filtered = filter === 'alle' ? allKandidaten : allKandidaten.filter(k => k.procesStatus === filter)
@@ -33,26 +130,26 @@ export default function ScoutPipeline() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-ink">Mijn Pipeline</h1>
-        <p className="text-ink-light font-medium mt-1">Volg de voortgang van al je voorgedragen kandidaten</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-sm text-ink-light font-medium">Totaal voorgedragen</p>
+          <p className="text-sm text-ink-light font-medium">{t.statTotal}</p>
           <p className="text-2xl font-bold text-ink">{allKandidaten.length}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-sm text-ink-light font-medium">In proces bij opdrachtgever</p>
+          <p className="text-sm text-ink-light font-medium">{t.statInProcess}</p>
           <p className="text-2xl font-bold text-cyan">{activeCount}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-sm text-ink-light font-medium">Succesvol geplaatst</p>
+          <p className="text-sm text-ink-light font-medium">{t.statSuccessful}</p>
           <p className="text-2xl font-bold text-green-600">{successCount}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-4">
-          <p className="text-sm text-ink-light font-medium">Wacht op opdrachtgever</p>
+          <p className="text-sm text-ink-light font-medium">{t.statWaiting}</p>
           <p className="text-2xl font-bold text-orange">
             {allKandidaten.filter(k =>
               k.procesStatus === 'gesprek_plannen' || k.procesStatus === 'feedback_geven'
@@ -65,8 +162,8 @@ export default function ScoutPipeline() {
       <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-start gap-3">
         <span className="text-lg">🤖</span>
         <div className="text-sm text-ink-light">
-          <p className="font-medium text-ink">Automatische herinneringen actief</p>
-          <p className="mt-1">Refurzy stuurt automatisch herinneringen naar opdrachtgevers bij vertragingen. Na 7 dagen zonder actie wordt de voordracht geëscaleerd. Je hoeft zelf niets te doen.</p>
+          <p className="font-medium text-ink">{t.autoBannerTitle}</p>
+          <p className="mt-1">{t.autoBannerBody}</p>
         </div>
       </div>
 
@@ -76,7 +173,7 @@ export default function ScoutPipeline() {
           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
             filter === 'alle' ? 'bg-ink text-white' : 'bg-surface-muted text-ink-muted hover:text-ink'
           }`}>
-          Alle ({allKandidaten.length})
+          {t.filterAll} ({allKandidaten.length})
         </button>
         {pipelineSteps.map(step => (
           statusCounts[step.key] ? (
@@ -124,13 +221,13 @@ export default function ScoutPipeline() {
                     <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
                       dagenInStap > 5 ? 'bg-orange/10 text-orange' : 'bg-surface-muted text-ink-muted'
                     }`}>
-                      {dagenInStap === 0 ? 'Vandaag' : `${dagenInStap}d in deze stap`}
+                      {dagenInStap === 0 ? t.today : t.daysInStep(dagenInStap)}
                     </span>
                   )}
                   <div className="text-right">
                     <div className="flex items-center gap-2">
                       <FitScore score={k.deVriesFit} size="sm" />
-                      <span className="text-xs text-ink-muted">M-Score</span>
+                      <span className="text-xs text-ink-muted">{t.mScore}</span>
                     </div>
                   </div>
                 </div>
@@ -142,13 +239,13 @@ export default function ScoutPipeline() {
                 isRejected={k.procesStatus === 'afgewezen'}
               />
 
-              {/* ─── Detail info block: data from opdrachtgever & kandidaat ─── */}
+              {/* ─── Detail info block ─── */}
               <div className="bg-slate-50 rounded-xl p-4 space-y-3">
                 {/* Voorgesteld — waiting for employer to accept */}
                 {k.procesStatus === 'voorgesteld' && (
                   <div className="flex items-center gap-3">
                     <span className="text-lg">📋</span>
-                    <span className="text-sm text-ink font-medium">Wacht op reactie opdrachtgever</span>
+                    <span className="text-sm text-ink font-medium">{t.statusWaitingReaction}</span>
                   </div>
                 )}
 
@@ -156,7 +253,7 @@ export default function ScoutPipeline() {
                 {k.procesStatus === 'contract_akkoord' && (
                   <div className="flex items-center gap-3">
                     <span className="text-lg">✅</span>
-                    <span className="text-sm text-ink font-semibold">Opdrachtgever heeft profiel ontgrendeld</span>
+                    <span className="text-sm text-ink font-semibold">{t.statusProfileUnlocked}</span>
                   </div>
                 )}
 
@@ -165,12 +262,12 @@ export default function ScoutPipeline() {
                   <>
                     <div className="flex items-center gap-3">
                       <span className="text-lg">📅</span>
-                      <span className="text-sm text-orange font-semibold">Wacht op gespreksdatum van opdrachtgever</span>
+                      <span className="text-sm text-orange font-semibold">{t.statusWaitingDate}</span>
                     </div>
                     {!k.gesprekDatum && dagenInStap !== null && dagenInStap >= 3 && (
                       <div className="flex items-center gap-2 ml-8">
                         <span className="text-orange">⚠️</span>
-                        <span className="text-orange text-sm font-medium">Al {dagenInStap} dagen geen actie</span>
+                        <span className="text-orange text-sm font-medium">{t.statusNoAction(dagenInStap)}</span>
                       </div>
                     )}
                   </>
@@ -182,19 +279,19 @@ export default function ScoutPipeline() {
                     <div className="flex items-center gap-3">
                       <span className="text-lg">📅</span>
                       <span className="text-sm text-ink font-semibold">
-                        Gesprek: {k.gesprekDatum ? new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '—'}
+                        {t.statusInterviewDate(k.gesprekDatum ? new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '—')}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 ml-8">
                       {k.kandidaatBevestigd ? (
                         <>
                           <span className="text-green-600 font-bold">✓</span>
-                          <span className="text-green-700 text-sm font-medium">Kandidaat heeft bevestigd</span>
+                          <span className="text-green-700 text-sm font-medium">{t.statusCandidateConfirmed}</span>
                         </>
                       ) : (
                         <>
                           <span className="text-orange">⏳</span>
-                          <span className="text-orange text-sm font-medium">Wacht op bevestiging kandidaat</span>
+                          <span className="text-orange text-sm font-medium">{t.statusWaitingConfirmation}</span>
                         </>
                       )}
                     </div>
@@ -206,13 +303,13 @@ export default function ScoutPipeline() {
                   <>
                     <div className="flex items-center gap-3">
                       <span className="text-lg">💬</span>
-                      <span className="text-sm text-orange font-semibold">Wacht op feedback van opdrachtgever</span>
+                      <span className="text-sm text-orange font-semibold">{t.statusWaitingFeedback}</span>
                     </div>
                     {k.gesprekDatum && (
                       <div className="flex items-center gap-2 ml-8">
                         <span>📅</span>
                         <span className="text-sm text-ink-light font-medium">
-                          Gesprek was op {new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
+                          {t.statusInterviewWasOn(new Date(k.gesprekDatum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' }))}
                         </span>
                       </div>
                     )}
@@ -225,14 +322,14 @@ export default function ScoutPipeline() {
                     <div className="flex items-center gap-3">
                       <span className="text-lg">🔄</span>
                       <span className="text-sm text-ink font-semibold">
-                        Vervolggesprek: {k.vervolggesprekDatum ? new Date(k.vervolggesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long' }) : 'datum volgt'}
+                        {t.statusFollowUp(k.vervolggesprekDatum ? new Date(k.vervolggesprekDatum).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'long' }) : t.statusFollowUpTBD)}
                       </span>
                     </div>
                     {k.feedbackScore && (
                       <div className="flex items-center gap-2 ml-8">
                         <span className="text-yellow-500">⭐</span>
                         <span className="text-sm text-ink font-medium">
-                          Feedback eerste gesprek: {k.feedbackScore}/5 — {k.feedbackSamenvatting || ''}
+                          {t.statusFeedbackFirstInterview(k.feedbackScore, k.feedbackSamenvatting || '')}
                         </span>
                       </div>
                     )}
@@ -245,17 +342,17 @@ export default function ScoutPipeline() {
                     <div className="flex items-center gap-3">
                       <span className="text-lg">💼</span>
                       <span className="text-sm text-ink font-semibold">
-                        {k.arbeidsvoorwaardenStatus === 'voorstel_verstuurd' && 'Voorstel verstuurd naar kandidaat'}
-                        {k.arbeidsvoorwaardenStatus === 'in_onderhandeling' && 'In onderhandeling'}
-                        {k.arbeidsvoorwaardenStatus === 'akkoord' && 'Arbeidsvoorwaarden akkoord — wacht op contract'}
-                        {!k.arbeidsvoorwaardenStatus && 'Arbeidsvoorwaarden fase gestart'}
+                        {k.arbeidsvoorwaardenStatus === 'voorstel_verstuurd' && t.statusTermsProposal}
+                        {k.arbeidsvoorwaardenStatus === 'in_onderhandeling' && t.statusTermsNegotiating}
+                        {k.arbeidsvoorwaardenStatus === 'akkoord' && t.statusTermsAgreed}
+                        {!k.arbeidsvoorwaardenStatus && t.statusTermsStarted}
                       </span>
                     </div>
                     {k.feedbackScore && (
                       <div className="flex items-center gap-2 ml-8">
                         <span className="text-yellow-500">⭐</span>
                         <span className="text-sm text-ink font-medium">
-                          Gespreksfeedback: {k.feedbackScore}/5 — {k.feedbackSamenvatting || ''}
+                          {t.statusInterviewFeedback(k.feedbackScore, k.feedbackSamenvatting || '')}
                         </span>
                       </div>
                     )}
@@ -263,7 +360,7 @@ export default function ScoutPipeline() {
                       <div className="flex items-center gap-2 ml-8">
                         <span>🤝</span>
                         <span className="text-sm text-ink font-medium">
-                          {k.gesprekken.length} gesprek{k.gesprekken.length > 1 ? 'ken' : ''} afgerond
+                          {t.statusInterviewsCompleted(k.gesprekken.length)}
                         </span>
                       </div>
                     )}
@@ -277,17 +374,17 @@ export default function ScoutPipeline() {
                       <div className="flex items-center gap-3">
                         <span className="text-lg">📅</span>
                         <span className="text-sm text-green-700 font-semibold">
-                          Startdatum: {new Date(k.startDatum).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                          {t.statusStartDate(new Date(k.startDatum).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }))}
                         </span>
                       </div>
                     )}
                     {(k.startDatumBevestigdKandidaat !== undefined || k.startDatumBevestigdOpdrachtgever !== undefined) && (
                       <div className="flex items-center gap-4 text-sm ml-8">
                         <span className={`font-medium ${k.startDatumBevestigdKandidaat ? 'text-green-600' : 'text-orange'}`}>
-                          {k.startDatumBevestigdKandidaat ? '✓' : '⏳'} Kandidaat
+                          {k.startDatumBevestigdKandidaat ? '✓' : '⏳'} {t.candidate}
                         </span>
                         <span className={`font-medium ${k.startDatumBevestigdOpdrachtgever ? 'text-green-600' : 'text-orange'}`}>
-                          {k.startDatumBevestigdOpdrachtgever ? '✓' : '⏳'} Opdrachtgever
+                          {k.startDatumBevestigdOpdrachtgever ? '✓' : '⏳'} {t.client}
                         </span>
                       </div>
                     )}
@@ -299,7 +396,8 @@ export default function ScoutPipeline() {
                   <div className="flex items-center gap-2 text-sm text-ink-light font-medium mt-1 pt-2 border-t border-slate-200">
                     <span>🕐</span>
                     <span>
-                      Laatst bijgewerkt: {dagenSindsUpdate === 0 ? 'vandaag' : dagenSindsUpdate === 1 ? 'gisteren' : `${dagenSindsUpdate} dagen geleden`}
+                      {t.lastUpdated}{' '}
+                      {dagenSindsUpdate === 0 ? t.lastUpdatedToday : dagenSindsUpdate === 1 ? t.lastUpdatedYesterday : t.lastUpdatedDaysAgo(dagenSindsUpdate)}
                     </span>
                   </div>
                 )}
@@ -312,12 +410,12 @@ export default function ScoutPipeline() {
                     <span className="text-orange">⏳</span>
                     <p className="text-sm text-orange font-medium">
                       {k.procesStatus === 'gesprek_plannen'
-                        ? 'Opdrachtgever moet gespreksdatum invoeren'
-                        : 'Opdrachtgever moet feedback geven'}
+                        ? t.actionNeedsDate
+                        : t.actionNeedsFeedback}
                     </p>
                   </div>
                   <span className="px-3 py-1.5 bg-cyan/10 text-cyan rounded-lg text-xs font-medium">
-                    🤖 Auto-herinnering actief
+                    {t.autoReminderActive}
                   </span>
                 </div>
               )}
@@ -327,8 +425,8 @@ export default function ScoutPipeline() {
                 <div className="bg-green-50 rounded-xl p-3 flex items-center gap-3">
                   <span className="text-2xl">🎉</span>
                   <div>
-                    <p className="text-sm font-medium text-green-700">Succesvolle plaatsing!</p>
-                    <p className="text-xs text-green-600">Fee wordt uitbetaald na bevestiging eerste werkdag</p>
+                    <p className="text-sm font-medium text-green-700">{t.successPlacement}</p>
+                    <p className="text-xs text-green-600">{t.successFeeNote}</p>
                   </div>
                 </div>
               )}
@@ -339,7 +437,7 @@ export default function ScoutPipeline() {
 
       {filtered.length === 0 && (
         <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
-          <p className="text-ink-muted text-sm">Geen kandidaten gevonden met deze filter.</p>
+          <p className="text-ink-muted text-sm">{t.noResults}</p>
         </div>
       )}
     </div>

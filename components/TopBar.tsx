@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { User } from '@/lib/types'
-import { Lang } from '@/lib/i18n'
+import { Lang, dispatchLangChange } from '@/lib/i18n'
 import NotificationBell from '@/app/demo/components/NotificationBell'
 import LangToggle from '@/components/LangToggle'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ export default function TopBar({ user }: { user: User }) {
 
   function changeLang(l: Lang) {
     setLangState(l)
-    localStorage.setItem('refurzy_lang', l)
+    dispatchLangChange(l)  // also updates localStorage + notifies all useLang() consumers
   }
 
   useEffect(() => {

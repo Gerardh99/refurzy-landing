@@ -2,16 +2,180 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    welcomeTitle: 'Welkom, Anna',
+    welcomeSub: 'Bekijk voorgestelde vacatures, volg je processen en beheer je scouts.',
+    tabNew: 'Nieuw',
+    tabActive: 'Actief',
+    tabCompleted: 'Afgerond',
+    tabScouts: 'Scouts',
+    actionRequired: 'Actie vereist',
+    // 2FA Banner
+    twoFATitle: 'Beveilig je account met tweestapsverificatie (2FA)',
+    twoFASub: 'Dit beschermt je account tegen onbevoegde toegang.',
+    twoFAActivate: 'Nu activeren',
+    twoFAClose: 'Sluiten',
+    // Tab: Nieuw
+    newProposals: 'Nieuwe voorstellen',
+    respond5Days: 'Je hebt 5 dagen om te reageren',
+    noNewProposals: 'Geen nieuwe voorstellen',
+    scoutsSearching: 'Je Talent Scouts zoeken passende vacatures voor je.',
+    newBadge: 'Nieuw',
+    expiresIn: 'Verloopt',
+    anonymousCompany: 'Anoniem bedrijf',
+    nominatedBy: 'Voorgedragen door',
+    viewDetails: 'Bekijk details →',
+    noInterest: 'Geen interesse',
+    interested: '✓ Interesse',
+    hardCriteria: 'Harde criteria',
+    indicative: '(indicatief)',
+    // Tab: Actief
+    activeProcesses: 'Actieve processen',
+    confirmFaster: 'Sneller duidelijkheid door te bevestigen',
+    confirmFasterDesc: 'Bevestig elke stap (gesprek gepland, afgerond, etc.) zodra deze heeft plaatsgevonden. Het systeem stuurt dan automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg jij sneller duidelijkheid over je sollicitatie.',
+    noActiveProcesses: 'Geen actieve processen',
+    showInterestFirst: 'Toon interesse in een voorgestelde vacature om te beginnen.',
+    companyVisibleAfterInterview: 'Bedrijfsnaam zichtbaar na gespreksfase',
+    statusAdditionalQuestions: 'Aanvullende vragen',
+    statusFillScan: 'Scan invullen',
+    statusNominated: 'Voorgedragen',
+    statusInterview: 'Gesprek',
+    statusConditions: 'Arbeidsvoorwaarden',
+    statusContract: 'Contract',
+    statusInterestConfirmed: 'Interesse bevestigd',
+    fillAdditionalQuestions: 'Vul de aanvullende vragen in voor een definitieve M-Score',
+    fillMatchingScan: 'Vul de Matching Scan in om voorgedragen te worden',
+    confirmAfterInterview: 'Bevestig na je gesprek: is het gesprek doorgegaan?',
+    confirmAfterInterviewDesc: 'Jouw bevestiging zorgt ervoor dat de opdrachtgever wordt gestimuleerd om sneller een beslissing te nemen.',
+    via: 'Via',
+    // Tab: Afgerond
+    completedProcesses: 'Afgeronde processen',
+    noCompletedProcesses: 'Geen afgeronde processen',
+    statusNoInterest: 'Geen interesse',
+    statusNotSelected: 'Niet geselecteerd',
+    statusExpired: 'Verlopen',
+    // Tab: Scouts
+    myScouts: 'Mijn Talent Scouts',
+    scoutsSub: 'Je kunt door meerdere scouts tegelijkertijd worden bemiddeld. Elke scout kan je onafhankelijk voordragen op vacatures.',
+    placements: 'plaatsing',
+    placementsPlural: 'plaatsingen',
+    since: 'Sinds',
+    vacanciesProposed: 'Vacatures voorgesteld',
+    whyConfirm: 'Waarom bevestigen?',
+    whyConfirmDesc: 'Wanneer jij een stap bevestigt (bijv. "gesprek heeft plaatsgevonden"), stuurt het systeem automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg je sneller duidelijkheid over je sollicitatie.',
+    bothConfirmed: 'Beide bevestigd — proces gaat door',
+    employerWaiting: 'Opdrachtgever wacht op jouw bevestiging',
+    youConfirmed: 'Jij hebt bevestigd — opdrachtgever krijgt herinnering',
+    noneConfirmed: 'Nog niemand heeft bevestigd',
+    // Reject modal
+    noInterestTitle: 'Geen interesse',
+    noInterestDesc: 'Laat je scout weten waarom deze vacature niet past. Dit helpt bij toekomstige voorstellen.',
+    reason: 'Reden',
+    selectReason: 'Selecteer een reden...',
+    explanation: 'Toelichting',
+    explainBriefly: 'Vertel kort waarom...',
+    cancel: 'Annuleren',
+    confirmRejection: 'Bevestig afwijzing',
+  },
+  en: {
+    welcomeTitle: 'Welcome, Anna',
+    welcomeSub: 'Review proposed vacancies, track your processes and manage your scouts.',
+    tabNew: 'New',
+    tabActive: 'Active',
+    tabCompleted: 'Completed',
+    tabScouts: 'Scouts',
+    actionRequired: 'Action required',
+    // 2FA Banner
+    twoFATitle: 'Secure your account with two-factor authentication (2FA)',
+    twoFASub: 'This protects your account against unauthorized access.',
+    twoFAActivate: 'Activate now',
+    twoFAClose: 'Close',
+    // Tab: New
+    newProposals: 'New proposals',
+    respond5Days: 'You have 5 days to respond',
+    noNewProposals: 'No new proposals',
+    scoutsSearching: 'Your Talent Scouts are searching for suitable vacancies for you.',
+    newBadge: 'New',
+    expiresIn: 'Expires',
+    anonymousCompany: 'Anonymous company',
+    nominatedBy: 'Proposed by',
+    viewDetails: 'View details →',
+    noInterest: 'Not interested',
+    interested: '✓ Interested',
+    hardCriteria: 'Hard criteria',
+    indicative: '(indicative)',
+    // Tab: Active
+    activeProcesses: 'Active processes',
+    confirmFaster: 'Get clarity faster by confirming',
+    confirmFasterDesc: 'Confirm each step (interview scheduled, completed, etc.) as soon as it happens. The system will then automatically remind the employer to also confirm and make a decision. This way you get clarity about your application faster.',
+    noActiveProcesses: 'No active processes',
+    showInterestFirst: 'Show interest in a proposed vacancy to get started.',
+    companyVisibleAfterInterview: 'Company name visible after interview stage',
+    statusAdditionalQuestions: 'Additional questions',
+    statusFillScan: 'Complete scan',
+    statusNominated: 'Nominated',
+    statusInterview: 'Interview',
+    statusConditions: 'Employment terms',
+    statusContract: 'Contract',
+    statusInterestConfirmed: 'Interest confirmed',
+    fillAdditionalQuestions: 'Complete the additional questions for a definitive M-Score',
+    fillMatchingScan: 'Complete the Matching Scan to be nominated',
+    confirmAfterInterview: 'Confirm after your interview: did the interview take place?',
+    confirmAfterInterviewDesc: 'Your confirmation encourages the employer to make a decision faster.',
+    via: 'Via',
+    // Tab: Completed
+    completedProcesses: 'Completed processes',
+    noCompletedProcesses: 'No completed processes',
+    statusNoInterest: 'Not interested',
+    statusNotSelected: 'Not selected',
+    statusExpired: 'Expired',
+    // Tab: Scouts
+    myScouts: 'My Talent Scouts',
+    scoutsSub: 'You can be mediated by multiple scouts simultaneously. Each scout can independently nominate you for vacancies.',
+    placements: 'placement',
+    placementsPlural: 'placements',
+    since: 'Since',
+    vacanciesProposed: 'Vacancies proposed',
+    whyConfirm: 'Why confirm?',
+    whyConfirmDesc: 'When you confirm a step (e.g. "interview took place"), the system automatically reminds the employer to also confirm and make a decision. This way you get clarity about your application faster.',
+    bothConfirmed: 'Both confirmed — process continues',
+    employerWaiting: 'Employer waiting for your confirmation',
+    youConfirmed: 'You have confirmed — employer gets reminder',
+    noneConfirmed: 'No one has confirmed yet',
+    // Reject modal
+    noInterestTitle: 'Not interested',
+    noInterestDesc: 'Let your scout know why this vacancy does not fit. This helps with future proposals.',
+    reason: 'Reason',
+    selectReason: 'Select a reason...',
+    explanation: 'Explanation',
+    explainBriefly: 'Briefly explain why...',
+    cancel: 'Cancel',
+    confirmRejection: 'Confirm rejection',
+  },
+}
 
 // ─── 7-step pipeline (kandidaat perspectief) ────────────────────────────────
 
-const pipelineSteps = [
+const pipelineStepsNl = [
   { key: 'voorgesteld', label: 'Voorgesteld' },
   { key: 'interesse', label: 'Interesse' },
   { key: 'scan', label: 'Scan' },
   { key: 'voorgedragen', label: 'Voorgedragen' },
   { key: 'gesprek', label: 'Gesprek' },
   { key: 'voorwaarden', label: 'Voorwaarden' },
+  { key: 'contract', label: 'Contract' },
+]
+
+const pipelineStepsEn = [
+  { key: 'voorgesteld', label: 'Proposed' },
+  { key: 'interesse', label: 'Interested' },
+  { key: 'scan', label: 'Scan' },
+  { key: 'voorgedragen', label: 'Nominated' },
+  { key: 'gesprek', label: 'Interview' },
+  { key: 'voorwaarden', label: 'Conditions' },
   { key: 'contract', label: 'Contract' },
 ]
 
@@ -168,13 +332,22 @@ const mockScouts = [
   { naam: 'Mark Jansen', rating: 4.1, plaatsingen: 1, sinds: '2026-03-10' },
 ]
 
-const afwijzingsRedenen = [
+const afwijzingsRedenenNl = [
   'Salaris niet aantrekkelijk',
   'Locatie niet haalbaar',
   'Functie past niet bij mijn ambitie',
   'Sector spreekt mij niet aan',
   'Ik ben al in gesprek voor een vergelijkbare rol',
   'Anders',
+]
+
+const afwijzingsRedenenEn = [
+  'Salary not attractive',
+  'Location not feasible',
+  'Role does not match my ambition',
+  'Sector does not appeal to me',
+  'I am already in talks for a similar role',
+  'Other',
 ]
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -202,7 +375,7 @@ function DualStatusBadge({ opdrachtgever, kandidaat }: { opdrachtgever: boolean;
   return <span className="text-[10px] bg-gray-100 text-ink-muted px-1.5 py-0.5 rounded font-medium">??</span>
 }
 
-function PipelineBar({ step, status }: { step: number; status: VacatureStatus }) {
+function PipelineBar({ step, status, pipelineSteps }: { step: number; status: VacatureStatus; pipelineSteps: { key: string; label: string }[] }) {
   const isAfgewezen = status === 'afgewezen'
   return (
     <div>
@@ -237,15 +410,25 @@ function PipelineBar({ step, status }: { step: number; status: VacatureStatus })
   )
 }
 
-function dagenGeleden(datum: string) {
+function dagenGeleden(datum: string, lang: 'nl' | 'en') {
   const diff = Math.floor((new Date('2026-03-21').getTime() - new Date(datum).getTime()) / (1000 * 60 * 60 * 24))
+  if (lang === 'en') {
+    if (diff === 0) return 'today'
+    if (diff === 1) return '1 day ago'
+    return `${diff} days ago`
+  }
   if (diff === 0) return 'vandaag'
   if (diff === 1) return '1 dag geleden'
   return `${diff} dagen geleden`
 }
 
-function dagenTot(datum: string) {
+function dagenTot(datum: string, lang: 'nl' | 'en') {
   const diff = Math.floor((new Date(datum).getTime() - new Date('2026-03-21').getTime()) / (1000 * 60 * 60 * 24))
+  if (lang === 'en') {
+    if (diff <= 0) return 'today'
+    if (diff === 1) return '1 day left'
+    return `${diff} days left`
+  }
   if (diff <= 0) return 'vandaag'
   if (diff === 1) return 'nog 1 dag'
   return `nog ${diff} dagen`
@@ -256,6 +439,11 @@ function dagenTot(datum: string) {
 type Tab = 'nieuw' | 'actief' | 'afgerond' | 'scouts'
 
 export default function KandidaatDashboard() {
+  const { lang } = useLang()
+  const t = texts[lang]
+  const pipelineSteps = lang === 'en' ? pipelineStepsEn : pipelineStepsNl
+  const afwijzingsRedenen = lang === 'en' ? afwijzingsRedenenEn : afwijzingsRedenenNl
+
   const [show2FABanner, setShow2FABanner] = useState(true)
   const [activeTab, setActiveTab] = useState<Tab>('nieuw')
   const [rejectingId, setRejectingId] = useState<string | null>(null)
@@ -274,10 +462,10 @@ export default function KandidaatDashboard() {
   )
 
   const tabs: { key: Tab; label: string; count: number; icon: string }[] = [
-    { key: 'nieuw', label: 'Nieuw', count: nieuweVacatures.length, icon: '🆕' },
-    { key: 'actief', label: 'Actief', count: actieveVacatures.length, icon: '📋' },
-    { key: 'afgerond', label: 'Afgerond', count: afgerondeVacatures.length, icon: '✅' },
-    { key: 'scouts', label: 'Scouts', count: mockScouts.length, icon: '👥' },
+    { key: 'nieuw', label: t.tabNew, count: nieuweVacatures.length, icon: '🆕' },
+    { key: 'actief', label: t.tabActive, count: actieveVacatures.length, icon: '📋' },
+    { key: 'afgerond', label: t.tabCompleted, count: afgerondeVacatures.length, icon: '✅' },
+    { key: 'scouts', label: t.tabScouts, count: mockScouts.length, icon: '👥' },
   ]
 
   const handleAccept = (id: string) => {
@@ -307,15 +495,15 @@ export default function KandidaatDashboard() {
               <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
             </div>
             <div>
-              <p className="text-amber-800 font-semibold text-sm">Beveilig je account met tweestapsverificatie (2FA)</p>
-              <p className="text-amber-700 text-xs mt-0.5">Dit beschermt je account tegen onbevoegde toegang.</p>
+              <p className="text-amber-800 font-semibold text-sm">{t.twoFATitle}</p>
+              <p className="text-amber-700 text-xs mt-0.5">{t.twoFASub}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
             <Link href="/demo/kandidaat/instellingen" className="bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-amber-700 transition-colors">
-              Nu activeren
+              {t.twoFAActivate}
             </Link>
-            <button onClick={() => setShow2FABanner(false)} className="text-amber-400 hover:text-amber-600 transition-colors text-lg" title="Sluiten">
+            <button onClick={() => setShow2FABanner(false)} className="text-amber-400 hover:text-amber-600 transition-colors text-lg" title={t.twoFAClose}>
               ✕
             </button>
           </div>
@@ -324,31 +512,31 @@ export default function KandidaatDashboard() {
 
       {/* Welcome */}
       <div>
-        <h1 className="text-2xl font-bold text-ink">Welkom, Anna</h1>
-        <p className="text-ink-light font-medium mt-1">Bekijk voorgestelde vacatures, volg je processen en beheer je scouts.</p>
+        <h1 className="text-2xl font-bold text-ink">{t.welcomeTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.welcomeSub}</p>
       </div>
 
       {/* Quick stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {tabs.map(t => (
+        {tabs.map(tab => (
           <button
-            key={t.key}
-            onClick={() => setActiveTab(t.key)}
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
             className={`rounded-2xl border p-4 text-left transition-all ${
-              activeTab === t.key
+              activeTab === tab.key
                 ? 'border-purple bg-purple/5 shadow-sm'
                 : 'border-surface-border bg-white hover:border-purple/25'
             }`}
           >
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-lg">{t.icon}</span>
-              <span className="text-xs text-ink-muted">{t.label}</span>
+              <span className="text-lg">{tab.icon}</span>
+              <span className="text-xs text-ink-muted">{tab.label}</span>
             </div>
             <p className={`text-2xl font-bold ${
-              activeTab === t.key ? 'text-purple' : 'text-ink'
-            }`}>{t.count}</p>
-            {t.key === 'nieuw' && t.count > 0 && (
-              <p className="text-[10px] text-orange font-medium mt-0.5">Actie vereist</p>
+              activeTab === tab.key ? 'text-purple' : 'text-ink'
+            }`}>{tab.count}</p>
+            {tab.key === 'nieuw' && tab.count > 0 && (
+              <p className="text-[10px] text-orange font-medium mt-0.5">{t.actionRequired}</p>
             )}
           </button>
         ))}
@@ -358,15 +546,15 @@ export default function KandidaatDashboard() {
       {activeTab === 'nieuw' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-ink">Nieuwe voorstellen</h2>
-            <p className="text-xs text-ink-muted">Je hebt 5 dagen om te reageren</p>
+            <h2 className="text-lg font-semibold text-ink">{t.newProposals}</h2>
+            <p className="text-xs text-ink-muted">{t.respond5Days}</p>
           </div>
 
           {nieuweVacatures.length === 0 ? (
             <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
               <span className="text-4xl">📭</span>
-              <p className="text-ink-light mt-3">Geen nieuwe voorstellen</p>
-              <p className="text-ink-muted text-sm mt-1">Je Talent Scouts zoeken passende vacatures voor je.</p>
+              <p className="text-ink-light mt-3">{t.noNewProposals}</p>
+              <p className="text-ink-muted text-sm mt-1">{t.scoutsSearching}</p>
             </div>
           ) : (
             nieuweVacatures.map(v => (
@@ -375,15 +563,15 @@ export default function KandidaatDashboard() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs bg-purple/15 text-purple px-2.5 py-1 rounded-full font-semibold">Nieuw</span>
-                      <span className="text-xs text-ink-light">{dagenGeleden(v.datum)}</span>
+                      <span className="text-xs bg-purple/15 text-purple px-2.5 py-1 rounded-full font-semibold">{t.newBadge}</span>
+                      <span className="text-xs text-ink-light">{dagenGeleden(v.datum, lang)}</span>
                       {v.verloopdatum && (
-                        <span className="text-xs text-orange font-semibold">· Verloopt {dagenTot(v.verloopdatum)}</span>
+                        <span className="text-xs text-orange font-semibold">· {t.expiresIn} {dagenTot(v.verloopdatum, lang)}</span>
                       )}
                     </div>
                     <h3 className="text-xl font-bold text-ink">{v.vacatureTitle}</h3>
                     <p className="text-sm text-ink mt-1">
-                      <span className="text-ink-light italic">Anoniem bedrijf</span>
+                      <span className="text-ink-light italic">{t.anonymousCompany}</span>
                       <span className="mx-2 text-ink-muted">·</span>
                       <span className="font-medium">{v.locatie}, {v.land}</span>
                       <span className="mx-2 text-ink-muted">·</span>
@@ -411,7 +599,7 @@ export default function KandidaatDashboard() {
                     v.hardeCriteriaFit >= 75 ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
                   }`}>
-                    Harde criteria: {v.hardeCriteriaFit}%
+                    {t.hardCriteria}: {v.hardeCriteriaFit}%
                   </span>
                   {v.mScore !== null && (
                     <span className={`px-3 py-1.5 rounded-lg font-semibold ${
@@ -419,14 +607,14 @@ export default function KandidaatDashboard() {
                       v.mScore >= 50 ? 'bg-purple/15 text-purple' :
                       'bg-orange/15 text-orange'
                     }`}>
-                      M-Score: {v.mScore}%{v.mScoreIndicatief ? ' (indicatief)' : ''}
+                      M-Score: {v.mScore}%{v.mScoreIndicatief ? ` ${t.indicative}` : ''}
                     </span>
                   )}
                 </div>
 
                 {/* Scout info */}
                 <div className="text-sm text-ink-light">
-                  Voorgedragen door <span className="text-ink font-semibold">{v.scoutNaam}</span>
+                  {t.nominatedBy} <span className="text-ink font-semibold">{v.scoutNaam}</span>
                 </div>
 
                 {/* Action buttons */}
@@ -435,20 +623,20 @@ export default function KandidaatDashboard() {
                     href={`/demo/kandidaat/vacature/${v.id}`}
                     className="text-sm text-purple hover:underline font-semibold"
                   >
-                    Bekijk details →
+                    {t.viewDetails}
                   </Link>
                   <div className="flex-1" />
                   <button
                     onClick={() => handleReject(v.id)}
                     className="px-4 py-2.5 text-sm border border-red-300 text-red-600 rounded-xl hover:bg-red-50 transition-colors font-medium"
                   >
-                    Geen interesse
+                    {t.noInterest}
                   </button>
                   <button
                     onClick={() => handleAccept(v.id)}
                     className="px-6 py-2.5 text-sm bg-purple text-white rounded-xl hover:bg-purple/90 transition-colors font-semibold shadow-sm"
                   >
-                    ✓ Interesse
+                    {t.interested}
                   </button>
                 </div>
               </div>
@@ -460,22 +648,22 @@ export default function KandidaatDashboard() {
       {/* ═══ TAB: ACTIEF ═══ */}
       {activeTab === 'actief' && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-ink">Actieve processen</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.activeProcesses}</h2>
 
           {/* Incentive banner */}
           <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-start gap-3">
             <span className="text-lg">💡</span>
             <div>
-              <p className="text-sm font-semibold text-ink">Sneller duidelijkheid door te bevestigen</p>
-              <p className="text-sm text-ink-light mt-0.5">Bevestig elke stap (gesprek gepland, afgerond, etc.) zodra deze heeft plaatsgevonden. Het systeem stuurt dan automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg jij sneller duidelijkheid over je sollicitatie.</p>
+              <p className="text-sm font-semibold text-ink">{t.confirmFaster}</p>
+              <p className="text-sm text-ink-light mt-0.5">{t.confirmFasterDesc}</p>
             </div>
           </div>
 
           {actieveVacatures.length === 0 ? (
             <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
               <span className="text-4xl">📂</span>
-              <p className="text-ink-light mt-3">Geen actieve processen</p>
-              <p className="text-ink-muted text-sm mt-1">Toon interesse in een voorgestelde vacature om te beginnen.</p>
+              <p className="text-ink-light mt-3">{t.noActiveProcesses}</p>
+              <p className="text-ink-muted text-sm mt-1">{t.showInterestFirst}</p>
             </div>
           ) : (
             actieveVacatures.map(v => (
@@ -494,14 +682,14 @@ export default function KandidaatDashboard() {
                         accepted.has(v.id) ? 'bg-orange/15 text-orange' :
                         'bg-cyan/10 text-cyan'
                       }`}>
-                        {accepted.has(v.id) ? 'Aanvullende vragen' :
-                         v.status === 'scan_nodig' ? 'Scan invullen' :
-                         v.status === 'scan_aanvullen' ? 'Aanvullende vragen' :
-                         v.status === 'voorgedragen' ? 'Voorgedragen' :
-                         v.status === 'gesprek' ? 'Gesprek' :
-                         v.status === 'voorwaarden' ? 'Arbeidsvoorwaarden' :
-                         v.status === 'contract' ? 'Contract' :
-                         v.status === 'interesse' ? 'Interesse bevestigd' :
+                        {accepted.has(v.id) ? t.statusAdditionalQuestions :
+                         v.status === 'scan_nodig' ? t.statusFillScan :
+                         v.status === 'scan_aanvullen' ? t.statusAdditionalQuestions :
+                         v.status === 'voorgedragen' ? t.statusNominated :
+                         v.status === 'gesprek' ? t.statusInterview :
+                         v.status === 'voorwaarden' ? t.statusConditions :
+                         v.status === 'contract' ? t.statusContract :
+                         v.status === 'interesse' ? t.statusInterestConfirmed :
                          v.status}
                       </span>
                       {v.dualStatus && <DualStatusBadge opdrachtgever={v.dualStatus.opdrachtgever} kandidaat={v.dualStatus.kandidaat} />}
@@ -509,7 +697,7 @@ export default function KandidaatDashboard() {
                     <h3 className="text-lg font-bold text-ink">{v.vacatureTitle}</h3>
                     <p className="text-sm text-ink mt-1">
                       {v.bedrijfAnoniem ? (
-                        <span className="text-ink-light italic">Bedrijfsnaam zichtbaar na gespreksfase</span>
+                        <span className="text-ink-light italic">{t.companyVisibleAfterInterview}</span>
                       ) : (
                         <span className="text-purple font-medium">{v.bedrijf}</span>
                       )}
@@ -529,20 +717,20 @@ export default function KandidaatDashboard() {
                 </div>
 
                 {/* Pipeline */}
-                <PipelineBar step={accepted.has(v.id) ? 1 : v.pipelineStap} status={v.status} />
+                <PipelineBar step={accepted.has(v.id) ? 1 : v.pipelineStap} status={v.status} pipelineSteps={pipelineSteps} />
 
                 {/* Status message */}
                 {(v.status === 'scan_aanvullen' || accepted.has(v.id)) && (
                   <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
                     <span>🧪</span>
-                    <p className="text-sm text-orange font-medium">Vul de aanvullende vragen in voor een definitieve M-Score</p>
+                    <p className="text-sm text-orange font-medium">{t.fillAdditionalQuestions}</p>
                     <span className="ml-auto text-sm text-orange">→</span>
                   </div>
                 )}
                 {v.status === 'scan_nodig' && (
                   <div className="bg-orange/10 rounded-xl p-3 flex items-center gap-2">
                     <span>🧪</span>
-                    <p className="text-sm text-orange font-medium">Vul de Matching Scan in om voorgedragen te worden</p>
+                    <p className="text-sm text-orange font-medium">{t.fillMatchingScan}</p>
                     <span className="ml-auto text-sm text-orange">→</span>
                   </div>
                 )}
@@ -557,16 +745,16 @@ export default function KandidaatDashboard() {
                 )}
                 {v.status === 'gesprek' && v.dualStatus && v.dualStatus.opdrachtgever && v.dualStatus.kandidaat && (
                   <div className="bg-blue-50 rounded-xl p-3 space-y-1">
-                    <p className="text-sm text-blue-700 font-semibold">Bevestig na je gesprek: is het gesprek doorgegaan?</p>
-                    <p className="text-xs text-blue-600">Jouw bevestiging zorgt ervoor dat de opdrachtgever wordt gestimuleerd om sneller een beslissing te nemen.</p>
+                    <p className="text-sm text-blue-700 font-semibold">{t.confirmAfterInterview}</p>
+                    <p className="text-xs text-blue-600">{t.confirmAfterInterviewDesc}</p>
                   </div>
                 )}
 
                 {/* Meta */}
                 <div className="text-sm text-ink-light">
-                  Via <span className="text-ink font-semibold">{v.scoutNaam}</span>
+                  {t.via} <span className="text-ink font-semibold">{v.scoutNaam}</span>
                   <span className="mx-2 text-ink-muted">·</span>
-                  {new Date(v.datum).toLocaleDateString('nl-NL')}
+                  {new Date(v.datum).toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-NL')}
                 </div>
               </Link>
             ))
@@ -577,12 +765,12 @@ export default function KandidaatDashboard() {
       {/* ═══ TAB: AFGEROND ═══ */}
       {activeTab === 'afgerond' && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-ink">Afgeronde processen</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.completedProcesses}</h2>
 
           {afgerondeVacatures.length === 0 ? (
             <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
               <span className="text-4xl">📁</span>
-              <p className="text-ink-light mt-3">Geen afgeronde processen</p>
+              <p className="text-ink-light mt-3">{t.noCompletedProcesses}</p>
             </div>
           ) : (
             afgerondeVacatures.map(v => (
@@ -596,14 +784,14 @@ export default function KandidaatDashboard() {
                         v.status === 'verlopen' ? 'bg-gray-100 text-gray-600' :
                         'bg-gray-100 text-gray-600'
                       }`}>
-                        {rejected.has(v.id) ? 'Geen interesse' :
-                         v.status === 'afgewezen' ? 'Niet geselecteerd' :
-                         v.status === 'verlopen' ? 'Verlopen' : v.status}
+                        {rejected.has(v.id) ? t.statusNoInterest :
+                         v.status === 'afgewezen' ? t.statusNotSelected :
+                         v.status === 'verlopen' ? t.statusExpired : v.status}
                       </span>
                     </div>
                     <h3 className="text-lg font-bold text-ink">{v.vacatureTitle}</h3>
                     <p className="text-sm text-ink mt-1">
-                      {v.bedrijfAnoniem ? <span className="text-ink-light italic">Anoniem bedrijf</span> : <span className="font-medium">{v.bedrijf}</span>}
+                      {v.bedrijfAnoniem ? <span className="text-ink-light italic">{t.anonymousCompany}</span> : <span className="font-medium">{v.bedrijf}</span>}
                       <span className="mx-2 text-ink-muted">·</span>
                       <span className="font-medium">{v.locatie}</span>
                       <span className="mx-2 text-ink-muted">·</span>
@@ -612,9 +800,9 @@ export default function KandidaatDashboard() {
                   </div>
                   {v.mScore !== null && <MScoreCircle score={v.mScore} />}
                 </div>
-                {!rejected.has(v.id) && <PipelineBar step={v.pipelineStap} status={v.status} />}
+                {!rejected.has(v.id) && <PipelineBar step={v.pipelineStap} status={v.status} pipelineSteps={pipelineSteps} />}
                 <div className="text-sm text-ink-light">
-                  Via <span className="font-semibold">{v.scoutNaam}</span> · {new Date(v.datum).toLocaleDateString('nl-NL')}
+                  {t.via} <span className="font-semibold">{v.scoutNaam}</span> · {new Date(v.datum).toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-NL')}
                 </div>
               </div>
             ))
@@ -626,10 +814,8 @@ export default function KandidaatDashboard() {
       {activeTab === 'scouts' && (
         <div className="space-y-4">
           <div>
-            <h2 className="text-lg font-semibold text-ink">Mijn Talent Scouts</h2>
-            <p className="text-ink-muted text-xs mt-1">
-              Je kunt door meerdere scouts tegelijkertijd worden bemiddeld. Elke scout kan je onafhankelijk voordragen op vacatures.
-            </p>
+            <h2 className="text-lg font-semibold text-ink">{t.myScouts}</h2>
+            <p className="text-ink-muted text-xs mt-1">{t.scoutsSub}</p>
           </div>
 
           {mockScouts.map(s => (
@@ -644,12 +830,12 @@ export default function KandidaatDashboard() {
                     <span className="text-yellow-500">{'★'.repeat(Math.round(s.rating))}</span>{' '}
                     {s.rating}
                   </span>
-                  <span>{s.plaatsingen} plaatsing{s.plaatsingen !== 1 ? 'en' : ''}</span>
-                  <span>Sinds {new Date(s.sinds).toLocaleDateString('nl-NL', { month: 'long', year: 'numeric' })}</span>
+                  <span>{s.plaatsingen} {s.plaatsingen !== 1 ? t.placementsPlural : t.placements}</span>
+                  <span>{t.since} {new Date(s.sinds).toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-NL', { month: 'long', year: 'numeric' })}</span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs text-ink-muted">Vacatures voorgesteld</p>
+                <p className="text-xs text-ink-muted">{t.vacanciesProposed}</p>
                 <p className="text-lg font-bold text-ink">
                   {mockVacatures.filter(v => v.scoutNaam === s.naam).length}
                 </p>
@@ -659,24 +845,24 @@ export default function KandidaatDashboard() {
 
           {/* Legend dual status */}
           <div className="bg-surface-muted rounded-2xl p-5 space-y-3">
-            <p className="text-sm font-semibold text-ink">Waarom bevestigen?</p>
-            <p className="text-sm text-ink-light">Wanneer jij een stap bevestigt (bijv. &quot;gesprek heeft plaatsgevonden&quot;), stuurt het systeem automatisch een herinnering naar de opdrachtgever om ook te bevestigen en een beslissing te nemen. Zo krijg je sneller duidelijkheid over je sollicitatie.</p>
+            <p className="text-sm font-semibold text-ink">{t.whyConfirm}</p>
+            <p className="text-sm text-ink-light">{t.whyConfirmDesc}</p>
             <div className="flex flex-wrap gap-4 mt-2">
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={true} kandidaat={true} />
-                <span className="text-xs text-ink-light">Beide bevestigd — proces gaat door</span>
+                <span className="text-xs text-ink-light">{t.bothConfirmed}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={true} kandidaat={false} />
-                <span className="text-xs text-ink-light">Opdrachtgever wacht op jouw bevestiging</span>
+                <span className="text-xs text-ink-light">{t.employerWaiting}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={false} kandidaat={true} />
-                <span className="text-xs text-ink-light">Jij hebt bevestigd — opdrachtgever krijgt herinnering</span>
+                <span className="text-xs text-ink-light">{t.youConfirmed}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <DualStatusBadge opdrachtgever={false} kandidaat={false} />
-                <span className="text-xs text-ink-light">Nog niemand heeft bevestigd</span>
+                <span className="text-xs text-ink-light">{t.noneConfirmed}</span>
               </div>
             </div>
           </div>
@@ -687,34 +873,32 @@ export default function KandidaatDashboard() {
       {rejectingId && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-ink">Geen interesse</h3>
-            <p className="text-sm text-ink-light">
-              Laat je scout weten waarom deze vacature niet past. Dit helpt bij toekomstige voorstellen.
-            </p>
+            <h3 className="text-lg font-semibold text-ink">{t.noInterestTitle}</h3>
+            <p className="text-sm text-ink-light">{t.noInterestDesc}</p>
 
             <div>
-              <label className="text-xs font-medium text-ink-light block mb-1.5">Reden</label>
+              <label className="text-xs font-medium text-ink-light block mb-1.5">{t.reason}</label>
               <select
                 value={rejectReason}
                 onChange={e => setRejectReason(e.target.value)}
                 className="w-full border border-surface-border rounded-xl px-3 py-2.5 text-sm text-ink"
               >
-                <option value="">Selecteer een reden...</option>
+                <option value="">{t.selectReason}</option>
                 {afwijzingsRedenen.map(r => (
                   <option key={r} value={r}>{r}</option>
                 ))}
               </select>
             </div>
 
-            {rejectReason === 'Anders' && (
+            {rejectReason === afwijzingsRedenen[afwijzingsRedenen.length - 1] && (
               <div>
-                <label className="text-xs font-medium text-ink-light block mb-1.5">Toelichting</label>
+                <label className="text-xs font-medium text-ink-light block mb-1.5">{t.explanation}</label>
                 <textarea
                   value={rejectNote}
                   onChange={e => setRejectNote(e.target.value)}
                   rows={3}
                   className="w-full border border-surface-border rounded-xl px-3 py-2.5 text-sm text-ink resize-none"
-                  placeholder="Vertel kort waarom..."
+                  placeholder={t.explainBriefly}
                 />
               </div>
             )}
@@ -724,14 +908,14 @@ export default function KandidaatDashboard() {
                 onClick={() => { setRejectingId(null); setRejectReason(''); setRejectNote('') }}
                 className="flex-1 py-2.5 border border-surface-border rounded-xl text-sm text-ink-light hover:bg-surface-muted transition-colors"
               >
-                Annuleren
+                {t.cancel}
               </button>
               <button
                 onClick={confirmReject}
                 disabled={!rejectReason}
                 className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Bevestig afwijzing
+                {t.confirmRejection}
               </button>
             </div>
           </div>

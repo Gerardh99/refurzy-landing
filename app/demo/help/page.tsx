@@ -3,6 +3,72 @@
 import { useState, useEffect } from 'react'
 import { getUser } from '@/lib/auth'
 import { UserRole } from '@/lib/types'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    title: 'Help & Ondersteuning',
+    subtitle: 'Vind antwoorden op veelgestelde vragen of neem contact met ons op.',
+    faqCard: 'Veelgestelde vragen',
+    faqCardDesc: 'Antwoorden op de meest gestelde vragen',
+    contactCard: 'Contact opnemen',
+    contactCardDesc: 'Stuur ons een bericht',
+    faqTitle: 'Veelgestelde vragen',
+    notFound: 'Antwoord niet gevonden?',
+    notFoundDesc: 'Neem contact met ons op en we helpen u zo snel mogelijk verder.',
+    contactUs: 'Contact opnemen',
+    contactTitle: 'Contact opnemen',
+    contactDesc: 'Uw bericht wordt verstuurd naar het Refurzy support team (hello@refurzy.com).',
+    messageSent: 'Bericht verstuurd!',
+    messageSentDesc: 'We streven ernaar binnen 1 werkdag te reageren. U ontvangt een bevestiging per e-mail.',
+    backToFaq: 'Terug naar FAQ',
+    subjectLabel: 'Onderwerp *',
+    selectSubject: 'Selecteer een onderwerp...',
+    subjectVacancy: 'Vraag over een vacature',
+    subjectScan: 'Vraag over de Matching Scan / M-Score',
+    subjectPipeline: 'Vraag over het wervingsproces / pipeline',
+    subjectFinancial: 'Financiele vraag (facturen, fees, uitbetalingen)',
+    subjectTechnical: 'Technisch probleem',
+    subjectAccount: 'Account / instellingen',
+    subjectOther: 'Anders',
+    messageLabel: 'Uw bericht *',
+    messagePlaceholder: 'Beschrijf uw vraag of probleem zo duidelijk mogelijk...',
+    cancel: 'Annuleren',
+    send: 'Verstuur bericht',
+    responseTime: 'We reageren doorgaans binnen 1 werkdag. Voor urgente zaken kunt u ook mailen naar',
+  },
+  en: {
+    title: 'Help & Support',
+    subtitle: 'Find answers to frequently asked questions or contact us.',
+    faqCard: 'Frequently asked questions',
+    faqCardDesc: 'Answers to the most common questions',
+    contactCard: 'Contact us',
+    contactCardDesc: 'Send us a message',
+    faqTitle: 'Frequently asked questions',
+    notFound: 'Answer not found?',
+    notFoundDesc: 'Contact us and we will help you as soon as possible.',
+    contactUs: 'Contact us',
+    contactTitle: 'Contact us',
+    contactDesc: 'Your message will be sent to the Refurzy support team (hello@refurzy.com).',
+    messageSent: 'Message sent!',
+    messageSentDesc: 'We aim to respond within 1 business day. You will receive a confirmation by email.',
+    backToFaq: 'Back to FAQ',
+    subjectLabel: 'Subject *',
+    selectSubject: 'Select a subject...',
+    subjectVacancy: 'Question about a vacancy',
+    subjectScan: 'Question about the Matching Scan / M-Score',
+    subjectPipeline: 'Question about the recruitment process / pipeline',
+    subjectFinancial: 'Financial question (invoices, fees, payouts)',
+    subjectTechnical: 'Technical problem',
+    subjectAccount: 'Account / settings',
+    subjectOther: 'Other',
+    messageLabel: 'Your message *',
+    messagePlaceholder: 'Describe your question or problem as clearly as possible...',
+    cancel: 'Cancel',
+    send: 'Send message',
+    responseTime: 'We typically respond within 1 business day. For urgent matters you can also email',
+  },
+}
 
 // ─── FAQ data per role ─────────────────────────────────────────────────────────
 
@@ -183,6 +249,9 @@ const faqItems: FaqItem[] = [
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export default function HelpPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [userRole, setUserRole] = useState<UserRole | null>(null)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showForm, setShowForm] = useState(false)
@@ -211,8 +280,8 @@ export default function HelpPage() {
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-ink">Help & Ondersteuning</h1>
-        <p className="text-ink-light font-medium mt-1">Vind antwoorden op veelgestelde vragen of neem contact met ons op.</p>
+        <h1 className="text-2xl font-bold text-ink">{t.title}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.subtitle}</p>
       </div>
 
       {/* Quick links */}
@@ -220,20 +289,20 @@ export default function HelpPage() {
         <button onClick={() => { setShowForm(false); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }) }}
           className="bg-white rounded-2xl border border-surface-border p-5 text-left hover:border-cyan/40 transition-colors group">
           <span className="text-2xl">📖</span>
-          <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">Veelgestelde vragen</p>
-          <p className="text-ink-muted text-xs mt-1">Antwoorden op de meest gestelde vragen</p>
+          <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">{t.faqCard}</p>
+          <p className="text-ink-muted text-xs mt-1">{t.faqCardDesc}</p>
         </button>
         <button onClick={() => { setShowForm(true); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100) }}
           className="bg-white rounded-2xl border border-surface-border p-5 text-left hover:border-cyan/40 transition-colors group">
           <span className="text-2xl">✉️</span>
-          <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">Contact opnemen</p>
-          <p className="text-ink-muted text-xs mt-1">Stuur ons een bericht</p>
+          <p className="text-ink font-semibold mt-2 group-hover:text-cyan transition-colors">{t.contactCard}</p>
+          <p className="text-ink-muted text-xs mt-1">{t.contactCardDesc}</p>
         </button>
       </div>
 
       {/* FAQ Section */}
       <div id="faq">
-        <h2 className="text-lg font-semibold text-ink mb-4">Veelgestelde vragen</h2>
+        <h2 className="text-lg font-semibold text-ink mb-4">{t.faqTitle}</h2>
         <div className="space-y-2">
           {visibleFaqs.map((faq, i) => (
             <div key={i} className="bg-white rounded-xl border border-surface-border overflow-hidden">
@@ -263,11 +332,11 @@ export default function HelpPage() {
       {/* Contact / niet gevonden banner */}
       {!showForm && (
         <div className="bg-white rounded-2xl border border-surface-border p-6 text-center">
-          <p className="text-ink font-semibold">Antwoord niet gevonden?</p>
-          <p className="text-ink-muted text-sm mt-1 mb-4">Neem contact met ons op en we helpen u zo snel mogelijk verder.</p>
+          <p className="text-ink font-semibold">{t.notFound}</p>
+          <p className="text-ink-muted text-sm mt-1 mb-4">{t.notFoundDesc}</p>
           <button onClick={() => { setShowForm(true); setFormSent(false) }}
             className="btn-gradient text-white font-semibold px-6 py-2.5 rounded-[10px] text-sm hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-            Contact opnemen
+            {t.contactUs}
           </button>
         </div>
       )}
@@ -275,60 +344,58 @@ export default function HelpPage() {
       {/* Contact form */}
       {showForm && (
         <div id="contact" className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-lg font-semibold text-ink mb-1">Contact opnemen</h2>
-          <p className="text-ink-muted text-sm mb-6">Uw bericht wordt verstuurd naar het Refurzy support team (hello@refurzy.com).</p>
+          <h2 className="text-lg font-semibold text-ink mb-1">{t.contactTitle}</h2>
+          <p className="text-ink-muted text-sm mb-6">{t.contactDesc}</p>
 
           {formSent ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-3xl mx-auto mb-4">
                 ✓
               </div>
-              <p className="text-ink font-semibold text-lg">Bericht verstuurd!</p>
-              <p className="text-ink-muted text-sm mt-2">
-                We streven ernaar binnen 1 werkdag te reageren. U ontvangt een bevestiging per e-mail.
-              </p>
+              <p className="text-ink font-semibold text-lg">{t.messageSent}</p>
+              <p className="text-ink-muted text-sm mt-2">{t.messageSentDesc}</p>
               <button onClick={() => { setShowForm(false); setFormSent(false) }}
                 className="mt-4 text-sm text-cyan hover:underline">
-                Terug naar FAQ
+                {t.backToFaq}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Onderwerp *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.subjectLabel}</label>
                 <select
                   value={contactForm.onderwerp}
                   onChange={e => setContactForm(f => ({ ...f, onderwerp: e.target.value }))}
                   required
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm focus:outline-none focus:border-cyan transition-colors"
                 >
-                  <option value="">Selecteer een onderwerp...</option>
-                  <option value="vacature">Vraag over een vacature</option>
-                  <option value="matching-scan">Vraag over de Matching Scan / M-Score</option>
-                  <option value="pipeline">Vraag over het wervingsproces / pipeline</option>
-                  <option value="financieel">Financiele vraag (facturen, fees, uitbetalingen)</option>
-                  <option value="technisch">Technisch probleem</option>
-                  <option value="account">Account / instellingen</option>
-                  <option value="anders">Anders</option>
+                  <option value="">{t.selectSubject}</option>
+                  <option value="vacature">{t.subjectVacancy}</option>
+                  <option value="matching-scan">{t.subjectScan}</option>
+                  <option value="pipeline">{t.subjectPipeline}</option>
+                  <option value="financieel">{t.subjectFinancial}</option>
+                  <option value="technisch">{t.subjectTechnical}</option>
+                  <option value="account">{t.subjectAccount}</option>
+                  <option value="anders">{t.subjectOther}</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Uw bericht *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.messageLabel}</label>
                 <textarea
                   value={contactForm.bericht}
                   onChange={e => setContactForm(f => ({ ...f, bericht: e.target.value }))}
                   required
                   rows={5}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none leading-relaxed"
-                  placeholder="Beschrijf uw vraag of probleem zo duidelijk mogelijk..."
+                  placeholder={t.messagePlaceholder}
                 />
               </div>
 
               <div className="flex items-center justify-between pt-2">
                 <button type="button" onClick={() => setShowForm(false)}
                   className="text-sm text-ink-muted hover:text-ink transition-colors">
-                  Annuleren
+                  {t.cancel}
                 </button>
                 <button type="submit"
                   disabled={!contactForm.onderwerp || !contactForm.bericht.trim()}
@@ -337,12 +404,12 @@ export default function HelpPage() {
                       ? 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]'
                       : 'bg-surface-muted border border-surface-border text-ink-muted cursor-not-allowed'
                   }`}>
-                  Verstuur bericht
+                  {t.send}
                 </button>
               </div>
 
               <p className="text-xs text-ink-muted text-center pt-2">
-                We reageren doorgaans binnen 1 werkdag. Voor urgente zaken kunt u ook mailen naar{' '}
+                {t.responseTime}{' '}
                 <a href="mailto:hello@refurzy.com" className="text-cyan hover:underline">hello@refurzy.com</a>.
               </p>
             </form>

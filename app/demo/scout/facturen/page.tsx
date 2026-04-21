@@ -2,6 +2,54 @@
 
 import { useState } from 'react'
 import FactuurPreview from '@/components/FactuurPreview'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    pageTitle: 'Mijn Facturen',
+    pageSubtitle: 'Overzicht van alle gegenereerde facturen en uitbetalingen',
+    statTotalEarned: 'Totaal verdiend',
+    statTotalEarnedNote: 'Incl. BTW (indien Pro Scout)',
+    statOutstanding: 'Openstaand',
+    statOutstandingNote: 'Wordt uitbetaald zodra klant betaalt',
+    statPlacements: 'Aantal plaatsingen',
+    infoTitle: 'Hoe werkt uitbetaling?',
+    infoBody: (
+      <>
+        Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur.
+        Zodra de opdrachtgever heeft betaald, wordt uw fee direct overgemaakt op uw IBAN.
+        {' '}<strong>Pro Scouts</strong> ontvangen 50% van de plaatsingsfee + 21% BTW.
+        {' '}<strong>Particuliere scouts</strong> ontvangen 50% bruto — geen inhouding. Refurzy rapporteert dit jaarlijks aan de Belastingdienst (IB-47).
+      </>
+    ),
+    filterAll: 'Alle',
+    filterPaid: 'Uitbetaald',
+    filterOutstanding: 'Openstaand',
+    noInvoices: 'Geen facturen gevonden.',
+  },
+  en: {
+    pageTitle: 'My Invoices',
+    pageSubtitle: 'Overview of all generated invoices and payouts',
+    statTotalEarned: 'Total earned',
+    statTotalEarnedNote: 'Incl. VAT (if Pro Scout)',
+    statOutstanding: 'Outstanding',
+    statOutstandingNote: 'Paid out once client pays',
+    statPlacements: 'Number of placements',
+    infoTitle: 'How does payout work?',
+    infoBody: (
+      <>
+        After every successful placement Refurzy automatically generates an invoice.
+        Once the client has paid, your fee is transferred directly to your IBAN.
+        {' '}<strong>Pro Scouts</strong> receive 50% of the placement fee + 21% VAT.
+        {' '}<strong>Private scouts</strong> receive 50% gross — no deduction. Refurzy reports this annually to the tax authority (IB-47).
+      </>
+    ),
+    filterAll: 'All',
+    filterPaid: 'Paid out',
+    filterOutstanding: 'Outstanding',
+    noInvoices: 'No invoices found.',
+  },
+}
 
 // Mock facturen data
 const mockFacturen = [
@@ -42,6 +90,9 @@ const mockFacturen = [
 ]
 
 export default function ScoutFacturen() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [filter, setFilter] = useState<'alle' | 'uitbetaald' | 'openstaand'>('alle')
 
   const filtered = filter === 'alle'
@@ -69,24 +120,24 @@ export default function ScoutFacturen() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Mijn Facturen</h1>
-        <p className="text-ink-light font-medium mt-1">Overzicht van alle gegenereerde facturen en uitbetalingen</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Totaal verdiend</p>
+          <p className="text-xs text-ink-muted">{t.statTotalEarned}</p>
           <p className="text-2xl font-bold text-green-600 mt-1">EUR {totaalVerdiend.toLocaleString('nl-NL', { minimumFractionDigits: 2 })}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Incl. BTW (indien Pro Scout)</p>
+          <p className="text-[10px] text-ink-muted mt-1">{t.statTotalEarnedNote}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Openstaand</p>
+          <p className="text-xs text-ink-muted">{t.statOutstanding}</p>
           <p className="text-2xl font-bold text-cyan mt-1">EUR {openstaand.toLocaleString('nl-NL', { minimumFractionDigits: 2 })}</p>
-          <p className="text-[10px] text-ink-muted mt-1">Wordt uitbetaald zodra klant betaalt</p>
+          <p className="text-[10px] text-ink-muted mt-1">{t.statOutstandingNote}</p>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted">Aantal plaatsingen</p>
+          <p className="text-xs text-ink-muted">{t.statPlacements}</p>
           <p className="text-2xl font-bold text-ink mt-1">{mockFacturen.length}</p>
         </div>
       </div>
@@ -95,13 +146,8 @@ export default function ScoutFacturen() {
       <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 flex items-start gap-3">
         <span className="text-lg">💡</span>
         <div className="text-sm text-ink-light">
-          <p><strong className="text-ink">Hoe werkt uitbetaling?</strong></p>
-          <p className="mt-1">
-            Na elke succesvolle plaatsing genereert Refurzy automatisch een factuur.
-            Zodra de opdrachtgever heeft betaald, wordt uw fee direct overgemaakt op uw IBAN.
-            {' '}<strong>Pro Scouts</strong> ontvangen 50% van de plaatsingsfee + 21% BTW.
-            {' '}<strong>Particuliere scouts</strong> ontvangen 50% bruto — geen inhouding. Refurzy rapporteert dit jaarlijks aan de Belastingdienst (IB-47).
-          </p>
+          <p><strong className="text-ink">{t.infoTitle}</strong></p>
+          <p className="mt-1">{t.infoBody}</p>
         </div>
       </div>
 
@@ -112,7 +158,7 @@ export default function ScoutFacturen() {
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
               filter === f ? 'bg-ink text-white' : 'bg-surface-muted text-ink-muted hover:text-ink'
             }`}>
-            {f === 'alle' ? 'Alle' : f === 'uitbetaald' ? 'Uitbetaald' : 'Openstaand'}
+            {f === 'alle' ? t.filterAll : f === 'uitbetaald' ? t.filterPaid : t.filterOutstanding}
           </button>
         ))}
       </div>
@@ -126,7 +172,7 @@ export default function ScoutFacturen() {
 
       {filtered.length === 0 && (
         <div className="bg-white rounded-2xl border border-surface-border p-8 text-center">
-          <p className="text-ink-muted text-sm">Geen facturen gevonden.</p>
+          <p className="text-ink-muted text-sm">{t.noInvoices}</p>
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import {
 } from '@/lib/matching-scan'
 import type { TaalEis } from '@/lib/types'
 import { VAKGEBIEDEN, LANDEN, TALEN, TAALNIVEAUS, TAALNIVEAU_LABELS } from '@/lib/constants'
+import { useLang } from '@/lib/i18n'
 
 // ─── Role-specific task templates (simulates AI web search for similar vacancies) ───
 
@@ -151,13 +152,10 @@ const ROLE_REQUIREMENT_TEMPLATES: Record<string, string[]> = {
 
 function getRoleSpecificTasks(title: string): string[] {
   const normalized = title.toLowerCase().trim()
-  // Direct match
   if (ROLE_TASK_TEMPLATES[normalized]) return ROLE_TASK_TEMPLATES[normalized]
-  // Partial match — find the best matching template
   for (const [key, tasks] of Object.entries(ROLE_TASK_TEMPLATES)) {
     if (normalized.includes(key) || key.includes(normalized)) return tasks
   }
-  // Fallback: generic but professional tasks
   return [
     `Verantwoordelijk voor het ontwikkelen en uitvoeren van de ${title.toLowerCase()} strategie`,
     `Samenwerken met interne teams en externe stakeholders om doelen te realiseren`,
@@ -184,16 +182,303 @@ function getRoleSpecificRequirements(title: string): string[] {
 type Step = 1 | 2 | 3 | 4 | 5 | 6
 type WerkzaamhedenSubStep = 'ranking' | 'rating'
 
-const STEPS = [
-  { nr: 1, label: 'Functie', short: 'Titel' },
-  { nr: 2, label: 'Details', short: 'Info' },
-  { nr: 3, label: 'Harde criteria', short: 'Criteria' },
-  { nr: 4, label: 'Omschrijving', short: 'Tekst' },
-  { nr: 5, label: 'Controleer & publiceer', short: 'Publiceer' },
-  { nr: 6, label: 'Werkzaamheden', short: 'M-Score' },
-]
+const texts = {
+  nl: {
+    backToDashboard: '← Terug naar dashboard',
+    pageTitle: 'Vacature aanmaken',
+    pageSubtitle: 'Doorloop de stappen om uw vacature te publiceren',
+    steps: [
+      { nr: 1, label: 'Functie', short: 'Titel' },
+      { nr: 2, label: 'Details', short: 'Info' },
+      { nr: 3, label: 'Harde criteria', short: 'Criteria' },
+      { nr: 4, label: 'Omschrijving', short: 'Tekst' },
+      { nr: 5, label: 'Controleer & publiceer', short: 'Publiceer' },
+      { nr: 6, label: 'Werkzaamheden', short: 'M-Score' },
+    ],
+    // Step 1
+    step1Title: 'Functietitel & afdeling',
+    step1Subtitle: 'Geef de functie een duidelijke titel zodat Talent Scouts de juiste kandidaten kunnen vinden.',
+    labelJobTitle: 'Functietitel *',
+    placeholderJobTitle: 'bijv. Marketing Manager, Senior Developer, Sales Lead',
+    labelDepartment: 'Afdeling / Team',
+    placeholderDepartment: 'bijv. Marketing, Engineering, Sales',
+    // Step 2
+    step2Title: 'Vacature details',
+    step2Subtitle: 'Praktische informatie over de functie en de werkomgeving.',
+    labelLocation: 'Locatie *',
+    placeholderLocation: 'bijv. Amsterdam',
+    labelCountry: 'Land *',
+    labelJobField: 'Functiegebied *',
+    placeholderJobField: 'Selecteer een functiegebied...',
+    labelSalary: 'Salarisindicatie (bruto per maand) *',
+    placeholderSalaryMin: 'min. bijv. 4000',
+    placeholderSalaryMax: 'max. bijv. 5500',
+    labelContractType: 'Contracttype',
+    contractOptions: ['Vast', 'Tijdelijk', 'Freelance / ZZP', 'Stage'],
+    labelOfficePolicy: 'Op kantoor',
+    officePolicyOptions: ['Op kantoor (5 dagen)', 'Hybride (3 dagen)', 'Hybride (2 dagen)', 'Volledig remote'],
+    labelMaxCommute: 'Max reistijd',
+    maxCommuteOptions: ['15 minuten', '30 minuten', '45 minuten', '60 minuten', 'Niet van toepassing'],
+    labelStartDate: 'Gewenste startdatum',
+    labelTasks: 'Taken & verantwoordelijkheden',
+    tasksNote: 'Beschrijf de belangrijkste taken voor deze functie. Dit wordt door AI gebruikt om de vacaturetekst te genereren. Laat leeg om AI suggesties te krijgen op basis van de functietitel.',
+    tasksPlaceholder: 'bijv.\n• Ontwikkelen en uitvoeren van de marketingstrategie\n• Aansturen van het marketingteam en externe bureaus\n• Analyseren van campagneresultaten en ROI',
+    chars: 'tekens',
+    optional: 'Optioneel',
+    labelCulture: 'Afdelingscultuur & dynamiek *',
+    cultureNote: 'Beschrijf hoe het team samenwerkt, de sfeer, het tempo en wat het uniek maakt. Dit wordt gedeeld met kandidaten en helpt bij de M-Score matching.',
+    culturePlaceholder: 'bijv. Ons marketingteam van 8 personen werkt in een informele, energieke omgeving...',
+    minChars: 'Min. 10 tekens',
+    // Step 3
+    step3Title: 'Harde criteria',
+    step3Subtitle: 'Stel de minimale eisen in voor kandidaten op deze vacature.',
+    labelEducation: 'Minimaal opleidingsniveau *',
+    labelExperience: 'Minimale werkervaring *',
+    labelLanguages: 'Vereiste talen',
+    languagesNote: 'Voeg talen toe die de kandidaat minimaal moet beheersen.',
+    selectLanguage: 'Selecteer taal...',
+    addLanguage: 'Taal toevoegen',
+    infoHighExp: 'Bij >10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.',
+    labelExclusivity: 'Exclusiviteit',
+    exclusiveTitle: 'Exclusieve kandidaten',
+    exclusiveSubtitle: 'Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde functiegebied. Sollicitaties in andere functiegebieden lopen gewoon door — een vacature in een heel ander functiegebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.',
+    exclusiveMore: 'Meer kandidaten:',
+    exclusiveMoreText: 'de hogere fee motiveert Talent Scouts extra om voor uw vacature aan de slag te gaan. Exclusieve vacatures ontvangen gemiddeld aanzienlijk meer voorgedragen kandidaten.',
+    exclusiveWarning: 'Let op:',
+    exclusiveWarningText: 'na publicatie kan exclusiviteit niet meer worden uitgeschakeld voor deze vacature.',
+    priceLabel: 'Prijsindicatie (no cure, no pay)',
+    exclVat: 'excl. BTW',
+    exclusivity: 'exclusiviteit',
+    scoutShare: 'Scout:',
+    refurzyShare: 'Refurzy:',
+    // Step 4
+    step4Title: 'Functieomschrijving',
+    step4Subtitle: 'Schrijf een aantrekkelijke vacaturetekst of laat AI een concept genereren op basis van de informatie die u eerder heeft ingevuld.',
+    aiContextLabel: 'AI gebruikt deze context:',
+    aiGenerateBtn: '✨ Genereer met AI',
+    aiWriting: 'AI schrijft...',
+    aiFillFirst: (fields: string) => `Vul eerst ${fields} in (stap 1-3)`,
+    aiGeneratesFrom: 'Genereert een vacaturetekst op basis van alle ingevulde gegevens',
+    descriptionPlaceholder: 'Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt. Of gebruik de AI-knop hierboven om automatisch een concept te genereren op basis van de stappen die u al heeft doorlopen.',
+    minChars20: 'Min. 20 tekens',
+    ownTasksProvided: 'Eigen taken opgegeven',
+    cultureDescribed: 'Cultuur beschreven',
+    culture: 'Cultuur',
+    functionTitle: 'Functietitel',
+    locationLabel: 'Locatie',
+    educationLabel: 'Opleiding',
+    experienceLabel: 'Ervaring',
+    // Step 5
+    step5Title: 'Controleer & publiceer',
+    step5Subtitle: 'Controleer uw vacature en publiceer deze. Talent Scouts kunnen daarna kandidaten voordragen.',
+    vacancySummaryTitle: 'Samenvatting vacature',
+    labelFunction: 'Functie:',
+    labelDept: 'Afdeling:',
+    labelLoc: 'Locatie:',
+    labelLandLabel: 'Land:',
+    labelJobFieldLabel: 'Functiegebied:',
+    labelSalaryLabel: 'Salarisindicatie:',
+    labelContract: 'Contract:',
+    labelOffice: 'Op kantoor:',
+    labelMaxCommuteLabel: 'Max reistijd:',
+    labelEduc: 'Opleiding:',
+    labelExp: 'Ervaring:',
+    labelLanguagesLabel: 'Talen:',
+    labelExclusivityLabel: 'Exclusiviteit:',
+    labelFeeLabel: 'Plaatsingsfee:',
+    notFilled: 'Niet ingevuld',
+    vacancyTextLabel: 'Vacaturetekst:',
+    cultureLabel: 'Afdelingscultuur:',
+    howItWorksTitle: 'Hoe werkt het?',
+    howItWorksText: 'Na publicatie kunnen Talent Scouts kandidaten voordragen. U ontvangt kandidaten met een anonieme M-Score. Wanneer u een profiel wilt bekijken, gaat u akkoord met de plaatsingsovereenkomst. U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).',
+    confirmCheckbox: 'Ik bevestig dat de bovenstaande gegevens correct zijn en wil deze vacature publiceren.',
+    exclusiveYes: 'Ja (14 dagen, +25%)',
+    exclusiveNo: 'Nee',
+    // Step 6
+    step6Title: (title: string) => `Werkzaamheden profiel — specifiek voor ${title || 'deze vacature'}`,
+    step6Subtitle: 'Geef aan welke werkzaamheden het meest relevant zijn voor deze functie. Dit bepaalt de M-Score matching.',
+    step6OrgNote: 'Uw organisatieprofiel (waarden & kenmerken) wordt automatisch gecombineerd.',
+    orgProfileFilled: 'Organisatieprofiel: ✓ Ingevuld',
+    orgProfileNotFilled: 'Niet ingevuld —',
+    orgProfileLink: 'vul eerst uw organisatieprofiel in',
+    subStepRanking: 'Rangorde',
+    subStepRating: 'Beoordeling',
+    rankingTitle: 'Rangschik de werkzaamheden',
+    rankingDesc: 'Geef elke werkzaamheid een unieke rangorde van 1 (minst relevant voor de vacature) tot 19 (meest relevant). Elk nummer mag maar één keer gebruikt worden.',
+    ratingTitle: 'Beoordeel elke werkzaamheid',
+    ratingDesc: 'Geef aan in welke mate deze werkzaamheid relevant is voor de vacature.',
+    inUse: '(in gebruik)',
+    filledOf: (done: number, total: number) => `${done} van ${total} ingevuld`,
+    ratedOf: (done: number, total: number) => `${done} van ${total} beoordeeld`,
+    // Navigation
+    previous: '← Vorige',
+    next: 'Volgende →',
+    backToRanking: '← Terug naar rangorde',
+    publishVacancy: '✓ Publiceer vacature',
+    // Published
+    publishedTitle: 'Vacature gepubliceerd!',
+    publishedDesc: (title: string) => `${title} staat nu open voor Talent Scouts.`,
+    publishedNote: 'Je ontvangt een melding zodra de eerste kandidaten worden voorgedragen.',
+    publishedMScore: 'M-Score profiel compleet — kandidaten worden automatisch gematcht.',
+    labelModel: 'Model:',
+    labelExcl: 'Exclusief:',
+    labelFee: 'Fee:',
+    backToDashboardBtn: 'Terug naar dashboard',
+    exclusiveWithPct: 'Ja (+25%)',
+    exclusiveNoBtn: 'Nee',
+  },
+  en: {
+    backToDashboard: '← Back to dashboard',
+    pageTitle: 'Create vacancy',
+    pageSubtitle: 'Complete the steps to publish your vacancy',
+    steps: [
+      { nr: 1, label: 'Role', short: 'Title' },
+      { nr: 2, label: 'Details', short: 'Info' },
+      { nr: 3, label: 'Hard criteria', short: 'Criteria' },
+      { nr: 4, label: 'Description', short: 'Text' },
+      { nr: 5, label: 'Review & publish', short: 'Publish' },
+      { nr: 6, label: 'Job activities', short: 'M-Score' },
+    ],
+    // Step 1
+    step1Title: 'Job title & department',
+    step1Subtitle: 'Give the role a clear title so Talent Scouts can find the right candidates.',
+    labelJobTitle: 'Job title *',
+    placeholderJobTitle: 'e.g. Marketing Manager, Senior Developer, Sales Lead',
+    labelDepartment: 'Department / Team',
+    placeholderDepartment: 'e.g. Marketing, Engineering, Sales',
+    // Step 2
+    step2Title: 'Vacancy details',
+    step2Subtitle: 'Practical information about the role and work environment.',
+    labelLocation: 'Location *',
+    placeholderLocation: 'e.g. Amsterdam',
+    labelCountry: 'Country *',
+    labelJobField: 'Job field *',
+    placeholderJobField: 'Select a job field...',
+    labelSalary: 'Salary indication (gross per month) *',
+    placeholderSalaryMin: 'min. e.g. 4000',
+    placeholderSalaryMax: 'max. e.g. 5500',
+    labelContractType: 'Contract type',
+    contractOptions: ['Permanent', 'Temporary', 'Freelance / Self-employed', 'Internship'],
+    labelOfficePolicy: 'Office policy',
+    officePolicyOptions: ['On-site (5 days)', 'Hybrid (3 days)', 'Hybrid (2 days)', 'Fully remote'],
+    labelMaxCommute: 'Max commute time',
+    maxCommuteOptions: ['15 minutes', '30 minutes', '45 minutes', '60 minutes', 'Not applicable'],
+    labelStartDate: 'Desired start date',
+    labelTasks: 'Tasks & responsibilities',
+    tasksNote: 'Describe the main tasks for this role. This is used by AI to generate the vacancy text. Leave blank to get AI suggestions based on the job title.',
+    tasksPlaceholder: 'e.g.\n• Develop and execute the marketing strategy\n• Manage the marketing team and external agencies\n• Analyse campaign results and ROI',
+    chars: 'characters',
+    optional: 'Optional',
+    labelCulture: 'Department culture & dynamics *',
+    cultureNote: 'Describe how the team works together, the atmosphere, pace and what makes it unique. This is shared with candidates and helps with M-Score matching.',
+    culturePlaceholder: 'e.g. Our marketing team of 8 works in an informal, energetic environment...',
+    minChars: 'Min. 10 characters',
+    // Step 3
+    step3Title: 'Hard criteria',
+    step3Subtitle: 'Set the minimum requirements for candidates on this vacancy.',
+    labelEducation: 'Minimum education level *',
+    labelExperience: 'Minimum work experience *',
+    labelLanguages: 'Required languages',
+    languagesNote: 'Add languages the candidate must have at minimum.',
+    selectLanguage: 'Select language...',
+    addLanguage: 'Add language',
+    infoHighExp: 'For >10 years experience HBO and WO carry the same rate.',
+    labelExclusivity: 'Exclusivity',
+    exclusiveTitle: 'Exclusive candidates',
+    exclusiveSubtitle: 'Nominated candidates are exclusively available for your vacancy for 14 days and will not be offered to other employers for vacancies in the same job field during that period. Applications in other job fields continue as normal — a vacancy in a completely different field is not a competitor for your position. The exclusivity surcharge of 25% is added to the placement fee on successful placement.',
+    exclusiveMore: 'More candidates:',
+    exclusiveMoreText: 'the higher fee gives Talent Scouts extra motivation to work for your vacancy. Exclusive vacancies receive significantly more nominated candidates on average.',
+    exclusiveWarning: 'Note:',
+    exclusiveWarningText: 'after publishing, exclusivity can no longer be disabled for this vacancy.',
+    priceLabel: 'Price indication (no cure, no pay)',
+    exclVat: 'excl. VAT',
+    exclusivity: 'exclusivity',
+    scoutShare: 'Scout:',
+    refurzyShare: 'Refurzy:',
+    // Step 4
+    step4Title: 'Job description',
+    step4Subtitle: 'Write an attractive vacancy text or let AI generate a draft based on the information you filled in earlier.',
+    aiContextLabel: 'AI uses this context:',
+    aiGenerateBtn: '✨ Generate with AI',
+    aiWriting: 'AI writing...',
+    aiFillFirst: (fields: string) => `First fill in ${fields} (steps 1–3)`,
+    aiGeneratesFrom: 'Generates a vacancy text based on all filled-in information',
+    descriptionPlaceholder: 'Describe the role, responsibilities, team and what you offer. Or use the AI button above to automatically generate a draft based on the steps you have already completed.',
+    minChars20: 'Min. 20 characters',
+    ownTasksProvided: 'Own tasks provided',
+    cultureDescribed: 'Culture described',
+    culture: 'Culture',
+    functionTitle: 'Job title',
+    locationLabel: 'Location',
+    educationLabel: 'Education',
+    experienceLabel: 'Experience',
+    // Step 5
+    step5Title: 'Review & publish',
+    step5Subtitle: 'Review your vacancy and publish it. Talent Scouts can then nominate candidates.',
+    vacancySummaryTitle: 'Vacancy summary',
+    labelFunction: 'Role:',
+    labelDept: 'Department:',
+    labelLoc: 'Location:',
+    labelLandLabel: 'Country:',
+    labelJobFieldLabel: 'Job field:',
+    labelSalaryLabel: 'Salary indication:',
+    labelContract: 'Contract:',
+    labelOffice: 'Office policy:',
+    labelMaxCommuteLabel: 'Max commute:',
+    labelEduc: 'Education:',
+    labelExp: 'Experience:',
+    labelLanguagesLabel: 'Languages:',
+    labelExclusivityLabel: 'Exclusivity:',
+    labelFeeLabel: 'Placement fee:',
+    notFilled: 'Not filled in',
+    vacancyTextLabel: 'Vacancy text:',
+    cultureLabel: 'Department culture:',
+    howItWorksTitle: 'How does it work?',
+    howItWorksText: 'After publishing, Talent Scouts can nominate candidates. You receive candidates with an anonymous M-Score. When you want to view a profile, you agree to the placement agreement. You only pay on successful placement (no cure, no pay).',
+    confirmCheckbox: 'I confirm that the above information is correct and want to publish this vacancy.',
+    exclusiveYes: 'Yes (14 days, +25%)',
+    exclusiveNo: 'No',
+    // Step 6
+    step6Title: (title: string) => `Job activities profile — specific to ${title || 'this vacancy'}`,
+    step6Subtitle: 'Indicate which job activities are most relevant for this role. This determines M-Score matching.',
+    step6OrgNote: 'Your organisation profile (values & characteristics) is automatically combined.',
+    orgProfileFilled: 'Organisation profile: ✓ Completed',
+    orgProfileNotFilled: 'Not completed —',
+    orgProfileLink: 'first complete your organisation profile',
+    subStepRanking: 'Ranking',
+    subStepRating: 'Rating',
+    rankingTitle: 'Rank the job activities',
+    rankingDesc: 'Give each job activity a unique rank from 1 (least relevant for the vacancy) to 19 (most relevant). Each number may only be used once.',
+    ratingTitle: 'Rate each job activity',
+    ratingDesc: 'Indicate the extent to which this job activity is relevant for the vacancy.',
+    inUse: '(in use)',
+    filledOf: (done: number, total: number) => `${done} of ${total} filled in`,
+    ratedOf: (done: number, total: number) => `${done} of ${total} rated`,
+    // Navigation
+    previous: '← Previous',
+    next: 'Next →',
+    backToRanking: '← Back to ranking',
+    publishVacancy: '✓ Publish vacancy',
+    // Published
+    publishedTitle: 'Vacancy published!',
+    publishedDesc: (title: string) => `${title} is now open for Talent Scouts.`,
+    publishedNote: 'You will receive a notification when the first candidates are nominated.',
+    publishedMScore: 'M-Score profile complete — candidates are automatically matched.',
+    labelModel: 'Model:',
+    labelExcl: 'Exclusivity:',
+    labelFee: 'Fee:',
+    backToDashboardBtn: 'Back to dashboard',
+    exclusiveWithPct: 'Yes (+25%)',
+    exclusiveNoBtn: 'No',
+  },
+}
 
 export default function VacatureAanmakenPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
+  const STEPS = t.steps
+
   const [step, setStep] = useState<Step>(1)
   const [aiLoading, setAiLoading] = useState(false)
   const [akkoord, setAkkoord] = useState(false)
@@ -209,9 +494,9 @@ export default function VacatureAanmakenPage() {
     salarisMin: '',
     salarisMax: '',
     taken: '',
-    contractType: 'Vast',
-    opKantoor: 'Hybride (3 dagen)',
-    maxReistijd: '45 minuten',
+    contractType: lang === 'en' ? 'Permanent' : 'Vast',
+    opKantoor: lang === 'en' ? 'Hybrid (3 days)' : 'Hybride (3 dagen)',
+    maxReistijd: lang === 'en' ? '45 minutes' : '45 minuten',
     startdatum: '',
     afdelingscultuur: '',
     opleiding: '' as EducationLevel | '',
@@ -219,7 +504,6 @@ export default function VacatureAanmakenPage() {
     exclusief: false,
   })
   const [taalEisen, setTaalEisen] = useState<TaalEis[]>([])
-
 
   // Werkzaamheden state (step 6)
   const [werkzaamhedenSubStep, setWerkzaamhedenSubStep] = useState<WerkzaamhedenSubStep>('ranking')
@@ -236,13 +520,12 @@ export default function VacatureAanmakenPage() {
   const exclusiviteitToeslag = form.exclusief ? Math.round(basePrice * 0.25) : 0
   const price = basePrice + exclusiviteitToeslag
 
-  // Check if enough info is filled for AI generation
   const aiReady = form.titel.length > 0 && form.locatie.length > 0 && form.opleiding !== '' && form.ervaring !== ''
   const aiMissingFields = [
-    ...(!form.titel ? ['functietitel'] : []),
-    ...(!form.locatie ? ['locatie'] : []),
-    ...(!form.opleiding ? ['opleidingsniveau'] : []),
-    ...(!form.ervaring ? ['werkervaring'] : []),
+    ...(!form.titel ? [t.functionTitle.toLowerCase()] : []),
+    ...(!form.locatie ? [t.locationLabel.toLowerCase()] : []),
+    ...(!form.opleiding ? [t.educationLabel.toLowerCase()] : []),
+    ...(!form.ervaring ? [t.experienceLabel.toLowerCase()] : []),
   ]
 
   const canProceed = () => {
@@ -279,28 +562,22 @@ export default function VacatureAanmakenPage() {
       const opleiding = form.opleiding
       const cultuur = form.afdelingscultuur
 
-      // Use user-entered tasks if available, otherwise use role-specific templates
       const userTaken = form.taken.trim()
       const takenList = userTaken
         ? userTaken.split('\n').map(t => t.replace(/^[•\-\*]\s*/, '').trim()).filter(Boolean)
         : getRoleSpecificTasks(titel)
 
       let omschrijving = `Ben jij een ervaren ${titel} en zoek je een nieuwe uitdaging in ${locatie}? Wij zoeken een gedreven professional voor ${afdeling}.`
-
       omschrijving += `\n\n`
-
       if (cultuur) {
         omschrijving += `Over het team\n${cultuur}\n\n`
       }
-
       omschrijving += `Wat ga je doen?\n`
       omschrijving += takenList.map(t => `• ${t}`).join('\n')
-
       omschrijving += `\n\nWat vragen wij?\n`
       omschrijving += `• Minimaal ${ervaring.toLowerCase()} relevante werkervaring\n`
       omschrijving += `• ${opleiding} werk- en denkniveau\n`
       omschrijving += getRoleSpecificRequirements(titel).map(r => `• ${r}`).join('\n')
-
       omschrijving += `\n\nWat bieden wij?\n`
       omschrijving += `• Salaris: ${salarisLabel}\n`
       omschrijving += `• ${contract} contract\n`
@@ -340,24 +617,24 @@ export default function VacatureAanmakenPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md">
           <div className="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center text-4xl mx-auto mb-6">&#10003;</div>
-          <h2 className="text-2xl font-bold text-ink mb-3">Vacature gepubliceerd!</h2>
-          <p className="text-ink-light mb-2"><span className="text-ink font-semibold">{form.titel}</span> staat nu open voor Talent Scouts.</p>
-          <p className="text-ink-muted text-sm mb-4">Je ontvangt een melding zodra de eerste kandidaten worden voorgedragen.</p>
+          <h2 className="text-2xl font-bold text-ink mb-3">{t.publishedTitle}</h2>
+          <p className="text-ink-light mb-2"><span className="text-ink font-semibold">{form.titel}</span> {t.publishedDesc('').replace(form.titel, '').trim()}</p>
+          <p className="text-ink-muted text-sm mb-4">{t.publishedNote}</p>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 mb-6 text-sm text-green-400 font-medium">
-            M-Score profiel compleet &mdash; kandidaten worden automatisch gematcht.
+            {t.publishedMScore}
           </div>
           <div className="bg-white rounded-2xl border border-surface-border p-4 mb-8 text-left">
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div><span className="text-ink-muted">Model:</span> <span className="text-green-400">No Cure No Pay</span></div>
-              <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
-              <div><span className="text-ink-muted">Opleiding:</span> <span className="text-ink">{form.opleiding}</span></div>
-              <div><span className="text-ink-muted">Ervaring:</span> <span className="text-ink">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
-              <div><span className="text-ink-muted">Exclusief:</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? 'Ja (+25%)' : 'Nee'}</span></div>
-              <div><span className="text-ink-muted">Fee:</span> <span className="text-ink font-medium">{formatPrice(price, pricing)}</span></div>
+              <div><span className="text-ink-muted">{t.labelModel}</span> <span className="text-green-400">No Cure No Pay</span></div>
+              <div><span className="text-ink-muted">{t.labelLoc}</span> <span className="text-ink">{form.locatie}</span></div>
+              <div><span className="text-ink-muted">{t.labelEduc}</span> <span className="text-ink">{form.opleiding}</span></div>
+              <div><span className="text-ink-muted">{t.labelExp}</span> <span className="text-ink">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
+              <div><span className="text-ink-muted">{t.labelExcl}</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? t.exclusiveWithPct : t.exclusiveNoBtn}</span></div>
+              <div><span className="text-ink-muted">{t.labelFee}</span> <span className="text-ink font-medium">{formatPrice(price, pricing)}</span></div>
             </div>
           </div>
           <Link href="/demo/opdrachtgever" className="btn-gradient text-white font-semibold px-6 py-3 rounded-[10px] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)] transition-all">
-            Terug naar dashboard
+            {t.backToDashboardBtn}
           </Link>
         </div>
       </div>
@@ -367,9 +644,9 @@ export default function VacatureAanmakenPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">&larr; Terug naar dashboard</Link>
-        <h1 className="text-2xl font-bold text-ink mt-3">Vacature aanmaken</h1>
-        <p className="text-ink-light font-medium mt-1">Doorloop de stappen om uw vacature te publiceren</p>
+        <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm mb-4 inline-flex items-center gap-1 transition-colors">{t.backToDashboard}</Link>
+        <h1 className="text-2xl font-bold text-ink mt-3">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Step indicator */}
@@ -397,146 +674,137 @@ export default function VacatureAanmakenPage() {
 
       <div className="bg-white rounded-2xl border border-surface-border p-8">
 
-        {/* ═══ STEP 1: Functietitel ═══ */}
+        {/* ═══ STEP 1 ═══ */}
         {step === 1 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Functietitel &amp; afdeling</h2>
-            <p className="text-ink-light text-sm font-medium mb-8">Geef de functie een duidelijke titel zodat Talent Scouts de juiste kandidaten kunnen vinden.</p>
+            <h2 className="text-xl font-semibold text-ink mb-2">{t.step1Title}</h2>
+            <p className="text-ink-light text-sm font-medium mb-8">{t.step1Subtitle}</p>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Functietitel *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelJobTitle}</label>
                 <input type="text" value={form.titel} onChange={e => setForm(f => ({ ...f, titel: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="bijv. Marketing Manager, Senior Developer, Sales Lead" />
+                  placeholder={t.placeholderJobTitle} />
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Afdeling / Team</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelDepartment}</label>
                 <input type="text" value={form.afdeling} onChange={e => setForm(f => ({ ...f, afdeling: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="bijv. Marketing, Engineering, Sales" />
+                  placeholder={t.placeholderDepartment} />
               </div>
             </div>
           </div>
         )}
 
-        {/* ═══ STEP 2: Details + Afdelingscultuur ═══ */}
+        {/* ═══ STEP 2 ═══ */}
         {step === 2 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Vacature details</h2>
-            <p className="text-ink-light text-sm font-medium mb-8">Praktische informatie over de functie en de werkomgeving.</p>
+            <h2 className="text-xl font-semibold text-ink mb-2">{t.step2Title}</h2>
+            <p className="text-ink-light text-sm font-medium mb-8">{t.step2Subtitle}</p>
             <div className="grid grid-cols-2 gap-5 mb-6">
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Locatie *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelLocation}</label>
                 <input type="text" value={form.locatie} onChange={e => setForm(f => ({ ...f, locatie: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                  placeholder="bijv. Amsterdam" />
+                  placeholder={t.placeholderLocation} />
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Land *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelCountry}</label>
                 <select value={form.land} onChange={e => setForm(f => ({ ...f, land: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
                   {LANDEN.map(l => <option key={l} value={l}>{l}</option>)}
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="block text-sm text-ink font-medium mb-1.5">Functiegebied *</label>
-                <select
-                  value={form.vakgebied}
-                  onChange={e => setForm(f => ({ ...f, vakgebied: e.target.value }))}
-                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors"
-                >
-                  <option value="">Selecteer een functiegebied...</option>
-                  {VAKGEBIEDEN.map(v => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelJobField}</label>
+                <select value={form.vakgebied} onChange={e => setForm(f => ({ ...f, vakgebied: e.target.value }))}
+                  className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
+                  <option value="">{t.placeholderJobField}</option>
+                  {VAKGEBIEDEN.map(v => <option key={v} value={v}>{v}</option>)}
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="block text-sm text-ink font-medium mb-1.5">Salarisindicatie (bruto per maand) *</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelSalary}</label>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
                     <input type="number" value={form.salarisMin} onChange={e => setForm(f => ({ ...f, salarisMin: e.target.value }))}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg pl-8 pr-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                      placeholder="min. bijv. 4000" />
+                      placeholder={t.placeholderSalaryMin} />
                   </div>
                   <span className="text-ink-muted text-sm">–</span>
                   <div className="flex-1 relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted text-sm">€</span>
                     <input type="number" value={form.salarisMax} onChange={e => setForm(f => ({ ...f, salarisMax: e.target.value }))}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg pl-8 pr-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors"
-                      placeholder="max. bijv. 5500" />
+                      placeholder={t.placeholderSalaryMax} />
                   </div>
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Contracttype</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelContractType}</label>
                 <select value={form.contractType} onChange={e => setForm(f => ({ ...f, contractType: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
-                  <option>Vast</option><option>Tijdelijk</option><option>Freelance / ZZP</option><option>Stage</option>
+                  {t.contractOptions.map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Op kantoor</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelOfficePolicy}</label>
                 <select value={form.opKantoor} onChange={e => setForm(f => ({ ...f, opKantoor: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
-                  <option>Op kantoor (5 dagen)</option><option>Hybride (3 dagen)</option><option>Hybride (2 dagen)</option><option>Volledig remote</option>
+                  {t.officePolicyOptions.map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Max reistijd</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelMaxCommute}</label>
                 <select value={form.maxReistijd} onChange={e => setForm(f => ({ ...f, maxReistijd: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors">
-                  <option>15 minuten</option><option>30 minuten</option><option>45 minuten</option><option>60 minuten</option><option>Niet van toepassing</option>
+                  {t.maxCommuteOptions.map(o => <option key={o}>{o}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-ink font-medium mb-1.5">Gewenste startdatum</label>
+                <label className="block text-sm text-ink font-medium mb-1.5">{t.labelStartDate}</label>
                 <input type="date" value={form.startdatum} onChange={e => setForm(f => ({ ...f, startdatum: e.target.value }))}
                   className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-cyan transition-colors" />
               </div>
             </div>
 
-            {/* Taken & verantwoordelijkheden */}
+            {/* Taken */}
             <div className="border-t border-surface-border pt-6">
-              <label className="block text-sm text-ink font-medium mb-1.5">Taken &amp; verantwoordelijkheden</label>
-              <p className="text-xs text-ink-muted mb-3">
-                Beschrijf de belangrijkste taken voor deze functie. Dit wordt door AI gebruikt om de vacaturetekst te genereren. Laat leeg om AI suggesties te krijgen op basis van de functietitel.
-              </p>
+              <label className="block text-sm text-ink font-medium mb-1.5">{t.labelTasks}</label>
+              <p className="text-xs text-ink-muted mb-3">{t.tasksNote}</p>
               <textarea value={form.taken} onChange={e => setForm(f => ({ ...f, taken: e.target.value }))} rows={4}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
-                placeholder={"bijv.\n• Ontwikkelen en uitvoeren van de marketingstrategie\n• Aansturen van het marketingteam en externe bureaus\n• Analyseren van campagneresultaten en ROI"} />
+                placeholder={t.tasksPlaceholder} />
               <div className="flex justify-between mt-2">
-                <span className="text-xs text-ink-muted">{form.taken.length} tekens</span>
-                <span className="text-xs text-ink-muted">Optioneel</span>
+                <span className="text-xs text-ink-muted">{form.taken.length} {t.chars}</span>
+                <span className="text-xs text-ink-muted">{t.optional}</span>
               </div>
             </div>
 
             {/* Afdelingscultuur */}
             <div className="border-t border-surface-border pt-6">
-              <label className="block text-sm text-ink font-medium mb-1.5">Afdelingscultuur &amp; dynamiek *</label>
-              <p className="text-xs text-ink-muted mb-3">
-                Beschrijf hoe het team samenwerkt, de sfeer, het tempo en wat het uniek maakt. Dit wordt gedeeld met kandidaten en helpt bij de M-Score matching.
-              </p>
+              <label className="block text-sm text-ink font-medium mb-1.5">{t.labelCulture}</label>
+              <p className="text-xs text-ink-muted mb-3">{t.cultureNote}</p>
               <textarea value={form.afdelingscultuur} onChange={e => setForm(f => ({ ...f, afdelingscultuur: e.target.value }))} rows={4}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
-                placeholder="bijv. Ons marketingteam van 8 personen werkt in een informele, energieke omgeving. We combineren data-gedreven beslissingen met creatieve brainstorms. Het tempo is hoog maar de sfeer is open en ondersteunend. Fouten maken mag — leren is belangrijker dan perfect zijn." />
+                placeholder={t.culturePlaceholder} />
               <div className="flex justify-between mt-2">
-                <span className="text-xs text-ink-muted">{form.afdelingscultuur.length} tekens</span>
-                <span className="text-xs text-ink-muted">Min. 10 tekens</span>
+                <span className="text-xs text-ink-muted">{form.afdelingscultuur.length} {t.chars}</span>
+                <span className="text-xs text-ink-muted">{t.minChars}</span>
               </div>
             </div>
           </div>
         )}
 
-        {/* ═══ STEP 3: Harde criteria ═══ */}
+        {/* ═══ STEP 3 ═══ */}
         {step === 3 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Harde criteria</h2>
-            <p className="text-ink-light text-sm font-medium mb-8">Stel de minimale eisen in voor kandidaten op deze vacature.</p>
+            <h2 className="text-xl font-semibold text-ink mb-2">{t.step3Title}</h2>
+            <p className="text-ink-light text-sm font-medium mb-8">{t.step3Subtitle}</p>
             <div className="grid grid-cols-2 gap-8">
               <div>
-                <label className="block text-sm text-ink-light mb-3">Minimaal opleidingsniveau *</label>
+                <label className="block text-sm text-ink-light mb-3">{t.labelEducation}</label>
                 <div className="space-y-2">
                   {(['MBO', 'HBO', 'WO'] as EducationLevel[]).map(edu => (
                     <button key={edu} onClick={() => setForm(f => ({ ...f, opleiding: edu }))}
@@ -550,7 +818,7 @@ export default function VacatureAanmakenPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-ink-light mb-3">Minimale werkervaring *</label>
+                <label className="block text-sm text-ink-light mb-3">{t.labelExperience}</label>
                 <div className="space-y-2">
                   {(['0-2', '2-5', '5-10', '10+'] as ExperienceLevel[]).map(exp => (
                     <button key={exp} onClick={() => setForm(f => ({ ...f, ervaring: exp }))}
@@ -564,75 +832,66 @@ export default function VacatureAanmakenPage() {
               </div>
             </div>
 
-            {/* Talen vereisten */}
+            {/* Talen */}
             <div className="mt-8 pt-6 border-t border-surface-border">
-              <label className="block text-sm text-ink-light mb-1">Vereiste talen</label>
-              <p className="text-xs text-ink-muted mb-3">Voeg talen toe die de kandidaat minimaal moet beheersen.</p>
+              <label className="block text-sm text-ink-light mb-1">{t.labelLanguages}</label>
+              <p className="text-xs text-ink-muted mb-3">{t.languagesNote}</p>
 
               {taalEisen.map((eis, idx) => (
                 <div key={idx} className="flex items-center gap-3 mb-2">
-                  <select
-                    value={eis.taal}
+                  <select value={eis.taal}
                     onChange={e => {
                       const updated = [...taalEisen]
                       updated[idx] = { ...updated[idx], taal: e.target.value }
                       setTaalEisen(updated)
                     }}
-                    className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors"
-                  >
-                    <option value="">Selecteer taal...</option>
-                    {TALEN.filter(t => t === eis.taal || !taalEisen.some(e => e.taal === t)).map(t => (
-                      <option key={t} value={t}>{t}</option>
+                    className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors">
+                    <option value="">{t.selectLanguage}</option>
+                    {TALEN.filter(tl => tl === eis.taal || !taalEisen.some(e => e.taal === tl)).map(tl => (
+                      <option key={tl} value={tl}>{tl}</option>
                     ))}
                   </select>
-                  <select
-                    value={eis.minimaalNiveau}
+                  <select value={eis.minimaalNiveau}
                     onChange={e => {
                       const updated = [...taalEisen]
                       updated[idx] = { ...updated[idx], minimaalNiveau: e.target.value as TaalEis['minimaalNiveau'] }
                       setTaalEisen(updated)
                     }}
-                    className="w-48 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors"
-                  >
+                    className="w-48 bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-cyan transition-colors">
                     {TAALNIVEAUS.map(n => (
                       <option key={n} value={n}>{n} — {TAALNIVEAU_LABELS[n]}</option>
                     ))}
                   </select>
                   <button type="button" onClick={() => setTaalEisen(prev => prev.filter((_, i) => i !== idx))}
                     className="p-2 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                    title="Verwijderen">
+                    title={lang === 'en' ? 'Remove' : 'Verwijderen'}>
                     ✕
                   </button>
                 </div>
               ))}
 
-              <button
-                type="button"
+              <button type="button"
                 onClick={() => setTaalEisen(prev => [...prev, { taal: '', minimaalNiveau: 'B2' }])}
-                className="mt-2 flex items-center gap-2 text-sm text-cyan hover:text-cyan/80 font-medium transition-colors"
-              >
+                className="mt-2 flex items-center gap-2 text-sm text-cyan hover:text-cyan/80 font-medium transition-colors">
                 <span className="w-5 h-5 rounded-full border-2 border-cyan/40 flex items-center justify-center text-xs">+</span>
-                Taal toevoegen
+                {t.addLanguage}
               </button>
             </div>
 
             {form.opleiding && form.ervaring && form.opleiding !== 'MBO' && form.ervaring === '10+' && (
               <div className="mt-4 bg-cyan/5 border border-cyan/20 rounded-xl p-3">
-                <p className="text-xs text-cyan">&#8505;&#65039; Bij &gt;10 jaar ervaring geldt voor HBO en WO hetzelfde tarief.</p>
+                <p className="text-xs text-cyan">&#8505;&#65039; {t.infoHighExp}</p>
               </div>
             )}
 
-            {/* Exclusiviteit optie */}
+            {/* Exclusiviteit */}
             <div className="mt-8 pt-6 border-t border-surface-border">
-              <label className="block text-sm text-ink-light mb-3">Exclusiviteit</label>
+              <label className="block text-sm text-ink-light mb-3">{t.labelExclusivity}</label>
               <div
                 onClick={() => { if (!form.exclusief) setForm(f => ({ ...f, exclusief: true })) }}
                 className={`rounded-xl border-2 p-5 transition-all ${
-                  form.exclusief
-                    ? 'bg-purple/5 border-purple/30'
-                    : 'bg-surface-muted border-surface-border hover:border-purple/30 cursor-pointer'
-                }`}
-              >
+                  form.exclusief ? 'bg-purple/5 border-purple/30' : 'bg-surface-muted border-surface-border hover:border-purple/30 cursor-pointer'
+                }`}>
                 <div className="flex items-start gap-4">
                   <div className={`w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
                     form.exclusief ? 'bg-purple border-purple text-white' : 'border-surface-border'
@@ -641,23 +900,21 @@ export default function VacatureAanmakenPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-ink font-semibold text-sm">Exclusieve kandidaten</span>
+                      <span className="text-ink font-semibold text-sm">{t.exclusiveTitle}</span>
                       <span className="px-2 py-0.5 bg-purple/10 text-purple text-[10px] font-bold rounded-full uppercase tracking-wider">+25%</span>
                     </div>
-                    <p className="text-xs text-ink-light mt-1.5 leading-relaxed">
-                      Voorgedragen kandidaten zijn 14 dagen exclusief beschikbaar voor uw vacature en worden in die periode niet aan andere opdrachtgevers aangeboden voor vacatures in hetzelfde functiegebied. Sollicitaties in andere functiegebieden lopen gewoon door — een vacature in een heel ander functiegebied is immers geen concurrent voor uw positie. De exclusiviteitstoeslag van 25% wordt bij een succesvolle plaatsing toegevoegd aan de plaatsingsfee.
-                    </p>
+                    <p className="text-xs text-ink-light mt-1.5 leading-relaxed">{t.exclusiveSubtitle}</p>
                     <div className="mt-3 bg-cyan/10 border border-cyan/20 rounded-lg p-2.5 flex items-start gap-2">
                       <span className="text-cyan-700 text-xs">🚀</span>
                       <p className="text-xs text-cyan-700">
-                        <strong>Meer kandidaten:</strong> de hogere fee motiveert Talent Scouts extra om voor uw vacature aan de slag te gaan. Exclusieve vacatures ontvangen gemiddeld aanzienlijk meer voorgedragen kandidaten.
+                        <strong>{t.exclusiveMore}</strong> {t.exclusiveMoreText}
                       </p>
                     </div>
                     {form.exclusief && (
                       <div className="mt-3 bg-orange/10 border border-orange/20 rounded-lg p-2.5 flex items-start gap-2">
                         <span className="text-orange-700 text-xs">&#9888;&#65039;</span>
                         <p className="text-xs text-orange-700">
-                          <strong>Let op:</strong> na publicatie kan exclusiviteit niet meer worden uitgeschakeld voor deze vacature.
+                          <strong>{t.exclusiveWarning}</strong> {t.exclusiveWarningText}
                         </p>
                       </div>
                     )}
@@ -665,26 +922,26 @@ export default function VacatureAanmakenPage() {
                 </div>
               </div>
 
-              {/* Live prijsindicatie */}
+              {/* Live price */}
               {form.opleiding && form.ervaring && (
                 <div className="mt-4 bg-white rounded-xl border border-surface-border p-4">
-                  <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">Prijsindicatie (no cure, no pay)</p>
+                  <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">{t.priceLabel}</p>
                   <div className="flex items-end justify-between">
                     <div>
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-bold text-ink">{formatPrice(price, pricing)}</span>
-                        <span className="text-xs text-ink-muted">excl. BTW</span>
+                        <span className="text-xs text-ink-muted">{t.exclVat}</span>
                       </div>
                       {form.exclusief && (
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-xs text-ink-muted line-through">{formatPrice(basePrice, pricing)}</span>
-                          <span className="text-xs text-purple font-medium">+ {formatPrice(exclusiviteitToeslag, pricing)} exclusiviteit</span>
+                          <span className="text-xs text-purple font-medium">+ {formatPrice(exclusiviteitToeslag, pricing)} {t.exclusivity}</span>
                         </div>
                       )}
                     </div>
                     <div className="text-right text-xs text-ink-muted">
-                      <p>Scout: {formatPrice(Math.round(price / 2), pricing)}</p>
-                      <p>Refurzy: {formatPrice(Math.round(price / 2), pricing)}</p>
+                      <p>{t.scoutShare} {formatPrice(Math.round(price / 2), pricing)}</p>
+                      <p>{t.refurzyShare} {formatPrice(Math.round(price / 2), pricing)}</p>
                     </div>
                   </div>
                 </div>
@@ -693,48 +950,32 @@ export default function VacatureAanmakenPage() {
           </div>
         )}
 
-        {/* ═══ STEP 4: Omschrijving (nu met alle context beschikbaar) ═══ */}
+        {/* ═══ STEP 4 ═══ */}
         {step === 4 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Functieomschrijving</h2>
-            <p className="text-ink-light text-sm mb-6">
-              Schrijf een aantrekkelijke vacaturetekst of laat AI een concept genereren op basis van de informatie die u eerder heeft ingevuld.
-            </p>
+            <h2 className="text-xl font-semibold text-ink mb-2">{t.step4Title}</h2>
+            <p className="text-ink-light text-sm mb-6">{t.step4Subtitle}</p>
 
             {/* AI context summary */}
             <div className="bg-surface-muted rounded-xl border border-surface-border p-4 mb-4">
-              <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-2">AI gebruikt deze context:</p>
+              <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-2">{t.aiContextLabel}</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div className="flex items-center gap-1.5">
-                  <span className={form.titel ? 'text-green-500' : 'text-ink-muted'}>
-                    {form.titel ? '✓' : '○'}
-                  </span>
-                  <span className={form.titel ? 'text-ink' : 'text-ink-muted'}>
-                    {form.titel || 'Functietitel'}
-                  </span>
+                  <span className={form.titel ? 'text-green-500' : 'text-ink-muted'}>{form.titel ? '✓' : '○'}</span>
+                  <span className={form.titel ? 'text-ink' : 'text-ink-muted'}>{form.titel || t.functionTitle}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={form.locatie ? 'text-green-500' : 'text-ink-muted'}>
-                    {form.locatie ? '✓' : '○'}
-                  </span>
-                  <span className={form.locatie ? 'text-ink' : 'text-ink-muted'}>
-                    {form.locatie || 'Locatie'}
-                  </span>
+                  <span className={form.locatie ? 'text-green-500' : 'text-ink-muted'}>{form.locatie ? '✓' : '○'}</span>
+                  <span className={form.locatie ? 'text-ink' : 'text-ink-muted'}>{form.locatie || t.locationLabel}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={form.opleiding ? 'text-green-500' : 'text-ink-muted'}>
-                    {form.opleiding ? '✓' : '○'}
-                  </span>
-                  <span className={form.opleiding ? 'text-ink' : 'text-ink-muted'}>
-                    {form.opleiding || 'Opleiding'}
-                  </span>
+                  <span className={form.opleiding ? 'text-green-500' : 'text-ink-muted'}>{form.opleiding ? '✓' : '○'}</span>
+                  <span className={form.opleiding ? 'text-ink' : 'text-ink-muted'}>{form.opleiding || t.educationLabel}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={form.ervaring ? 'text-green-500' : 'text-ink-muted'}>
-                    {form.ervaring ? '✓' : '○'}
-                  </span>
+                  <span className={form.ervaring ? 'text-green-500' : 'text-ink-muted'}>{form.ervaring ? '✓' : '○'}</span>
                   <span className={form.ervaring ? 'text-ink' : 'text-ink-muted'}>
-                    {form.ervaring ? EXPERIENCE_LABELS[form.ervaring as ExperienceLevel] : 'Ervaring'}
+                    {form.ervaring ? EXPERIENCE_LABELS[form.ervaring as ExperienceLevel] : t.experienceLabel}
                   </span>
                 </div>
                 {form.afdeling && (
@@ -752,7 +993,7 @@ export default function VacatureAanmakenPage() {
                 {form.taken && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-green-500">✓</span>
-                    <span className="text-ink">Eigen taken opgegeven</span>
+                    <span className="text-ink">{t.ownTasksProvided}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">
@@ -764,7 +1005,7 @@ export default function VacatureAanmakenPage() {
                     {form.afdelingscultuur ? '✓' : '○'}
                   </span>
                   <span className={form.afdelingscultuur ? 'text-ink' : 'text-ink-muted'}>
-                    {form.afdelingscultuur ? 'Cultuur beschreven' : 'Cultuur'}
+                    {form.afdelingscultuur ? t.cultureDescribed : t.culture}
                   </span>
                 </div>
               </div>
@@ -778,65 +1019,63 @@ export default function VacatureAanmakenPage() {
                   : aiReady ? 'btn-gradient text-white hover:-translate-y-px'
                   : 'bg-surface-muted border border-surface-border text-ink-muted cursor-not-allowed'
                 }`}>
-                {aiLoading ? <><span className="animate-spin">&#10227;</span> AI schrijft...</> : <>&#10024; Genereer met AI</>}
+                {aiLoading ? <><span className="animate-spin">&#10227;</span> {t.aiWriting}</> : <>{t.aiGenerateBtn}</>}
               </button>
               {!aiReady && (
                 <span className="text-xs text-ink-muted">
-                  Vul eerst {aiMissingFields.join(', ')} in (stap 1-3)
+                  {t.aiFillFirst(aiMissingFields.join(', '))}
                 </span>
               )}
               {aiReady && !aiLoading && (
-                <span className="text-xs text-ink-muted">
-                  Genereert een vacaturetekst op basis van alle ingevulde gegevens
-                </span>
+                <span className="text-xs text-ink-muted">{t.aiGeneratesFrom}</span>
               )}
             </div>
 
             <textarea value={form.omschrijving} onChange={e => setForm(f => ({ ...f, omschrijving: e.target.value }))} rows={16}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink placeholder-ink-muted focus:outline-none focus:border-cyan transition-colors resize-none text-sm leading-relaxed"
-              placeholder="Beschrijf de functie, verantwoordelijkheden, het team en wat u biedt. Of gebruik de AI-knop hierboven om automatisch een concept te genereren op basis van de stappen die u al heeft doorlopen." />
+              placeholder={t.descriptionPlaceholder} />
             <div className="flex justify-between mt-2">
-              <span className="text-xs text-ink-muted">{form.omschrijving.length} tekens</span>
-              <span className="text-xs text-ink-muted">Min. 20 tekens</span>
+              <span className="text-xs text-ink-muted">{form.omschrijving.length} {t.chars}</span>
+              <span className="text-xs text-ink-muted">{t.minChars20}</span>
             </div>
           </div>
         )}
 
-        {/* ═══ STEP 5: Samenvatting & publiceer ═══ */}
+        {/* ═══ STEP 5 ═══ */}
         {step === 5 && (
           <div>
-            <h2 className="text-xl font-semibold text-ink mb-2">Controleer &amp; publiceer</h2>
-            <p className="text-ink-light text-sm font-medium mb-8">Controleer uw vacature en publiceer deze. Talent Scouts kunnen daarna kandidaten voordragen.</p>
+            <h2 className="text-xl font-semibold text-ink mb-2">{t.step5Title}</h2>
+            <p className="text-ink-light text-sm font-medium mb-8">{t.step5Subtitle}</p>
 
             <div className="bg-surface-muted rounded-2xl border border-surface-border p-6 mb-6">
-              <h3 className="text-ink font-semibold mb-4">Samenvatting vacature</h3>
+              <h3 className="text-ink font-semibold mb-4">{t.vacancySummaryTitle}</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
-                <div><span className="text-ink-muted">Functie:</span> <span className="text-ink font-medium">{form.titel}</span></div>
-                <div><span className="text-ink-muted">Afdeling:</span> <span className="text-ink">{form.afdeling || '—'}</span></div>
-                <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink">{form.locatie}</span></div>
-                <div><span className="text-ink-muted">Land:</span> <span className="text-ink">{form.land}</span></div>
-                <div><span className="text-ink-muted">Functiegebied:</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
-                <div><span className="text-ink-muted">Salarisindicatie:</span> <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : 'Niet ingevuld'}</span></div>
-                <div><span className="text-ink-muted">Contract:</span> <span className="text-ink">{form.contractType}</span></div>
-                <div><span className="text-ink-muted">Op kantoor:</span> <span className="text-ink">{form.opKantoor}</span></div>
-                <div><span className="text-ink-muted">Max reistijd:</span> <span className="text-ink">{form.maxReistijd}</span></div>
-                <div><span className="text-ink-muted">Opleiding:</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
-                <div><span className="text-ink-muted">Ervaring:</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
+                <div><span className="text-ink-muted">{t.labelFunction}</span> <span className="text-ink font-medium">{form.titel}</span></div>
+                <div><span className="text-ink-muted">{t.labelDept}</span> <span className="text-ink">{form.afdeling || '—'}</span></div>
+                <div><span className="text-ink-muted">{t.labelLoc}</span> <span className="text-ink">{form.locatie}</span></div>
+                <div><span className="text-ink-muted">{t.labelLandLabel}</span> <span className="text-ink">{form.land}</span></div>
+                <div><span className="text-ink-muted">{t.labelJobFieldLabel}</span> <span className="text-cyan font-medium">{form.vakgebied}</span></div>
+                <div><span className="text-ink-muted">{t.labelSalaryLabel}</span> <span className="text-ink">{form.salarisMin && form.salarisMax ? `€${form.salarisMin} - €${form.salarisMax} /maand` : t.notFilled}</span></div>
+                <div><span className="text-ink-muted">{t.labelContract}</span> <span className="text-ink">{form.contractType}</span></div>
+                <div><span className="text-ink-muted">{t.labelOffice}</span> <span className="text-ink">{form.opKantoor}</span></div>
+                <div><span className="text-ink-muted">{t.labelMaxCommuteLabel}</span> <span className="text-ink">{form.maxReistijd}</span></div>
+                <div><span className="text-ink-muted">{t.labelEduc}</span> <span className="text-cyan font-medium">{form.opleiding}</span></div>
+                <div><span className="text-ink-muted">{t.labelExp}</span> <span className="text-cyan font-medium">{EXPERIENCE_LABELS[form.ervaring as ExperienceLevel]}</span></div>
                 {taalEisen.length > 0 && (
-                  <div><span className="text-ink-muted">Talen:</span> <span className="text-ink">{taalEisen.filter(e => e.taal).map(e => `${e.taal} (${e.minimaalNiveau})`).join(', ')}</span></div>
+                  <div><span className="text-ink-muted">{t.labelLanguagesLabel}</span> <span className="text-ink">{taalEisen.filter(e => e.taal).map(e => `${e.taal} (${e.minimaalNiveau})`).join(', ')}</span></div>
                 )}
-                <div><span className="text-ink-muted">Exclusiviteit:</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? 'Ja (14 dagen, +25%)' : 'Nee'}</span></div>
-                <div><span className="text-ink-muted">Plaatsingsfee:</span> <span className="text-ink font-medium">{formatPrice(price, pricing)} <span className="text-ink-muted font-normal">excl. BTW</span></span></div>
+                <div><span className="text-ink-muted">{t.labelExclusivityLabel}</span> <span className={form.exclusief ? 'text-purple font-medium' : 'text-ink'}>{form.exclusief ? t.exclusiveYes : t.exclusiveNo}</span></div>
+                <div><span className="text-ink-muted">{t.labelFeeLabel}</span> <span className="text-ink font-medium">{formatPrice(price, pricing)} <span className="text-ink-muted font-normal">{t.exclVat}</span></span></div>
               </div>
               {form.omschrijving && (
                 <div className="mt-4 pt-4 border-t border-surface-border">
-                  <span className="text-ink-muted text-sm">Vacaturetekst:</span>
+                  <span className="text-ink-muted text-sm">{t.vacancyTextLabel}</span>
                   <p className="text-ink-light text-sm mt-1 leading-relaxed whitespace-pre-line line-clamp-6">{form.omschrijving}</p>
                 </div>
               )}
               {form.afdelingscultuur && (
                 <div className="mt-4 pt-4 border-t border-surface-border">
-                  <span className="text-ink-muted text-sm">Afdelingscultuur:</span>
+                  <span className="text-ink-muted text-sm">{t.cultureLabel}</span>
                   <p className="text-ink-light text-sm mt-1 leading-relaxed">{form.afdelingscultuur}</p>
                 </div>
               )}
@@ -845,8 +1084,8 @@ export default function VacatureAanmakenPage() {
             <div className="bg-cyan/5 border border-cyan/20 rounded-xl p-4 mb-6 flex items-start gap-3">
               <span className="text-lg">&#128161;</span>
               <div className="text-sm text-ink-light">
-                <p><strong className="text-ink">Hoe werkt het?</strong></p>
-                <p className="mt-1">Na publicatie kunnen Talent Scouts kandidaten voordragen. U ontvangt kandidaten met een anonieme M-Score. Wanneer u een profiel wilt bekijken, gaat u akkoord met de plaatsingsovereenkomst. U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).</p>
+                <p><strong className="text-ink">{t.howItWorksTitle}</strong></p>
+                <p className="mt-1">{t.howItWorksText}</p>
               </div>
             </div>
 
@@ -854,38 +1093,34 @@ export default function VacatureAanmakenPage() {
               <input type="checkbox" checked={akkoord} onChange={e => setAkkoord(e.target.checked)}
                 className="mt-0.5 w-4 h-4 rounded border-purple/30 bg-surface-muted accent-cyan" />
               <span className="text-sm text-ink-light group-hover:text-ink transition-colors">
-                Ik bevestig dat de bovenstaande gegevens correct zijn en wil deze vacature publiceren.
+                {t.confirmCheckbox}
               </span>
             </label>
           </div>
         )}
 
-        {/* ═══ STEP 6: Werkzaamheden profiel ═══ */}
+        {/* ═══ STEP 6 ═══ */}
         {step === 6 && (
           <div>
             <h2 className="text-xl font-semibold text-ink mb-2">
-              Werkzaamheden profiel &mdash; specifiek voor {form.titel || 'deze vacature'}
+              {t.step6Title(form.titel)}
             </h2>
-            <p className="text-ink-light text-sm mb-2">
-              Geef aan welke werkzaamheden het meest relevant zijn voor deze functie. Dit bepaalt de M-Score matching.
-            </p>
-            <p className="text-xs text-ink-muted mb-4">
-              Uw organisatieprofiel (waarden &amp; kenmerken) wordt automatisch gecombineerd.
-            </p>
+            <p className="text-ink-light text-sm mb-2">{t.step6Subtitle}</p>
+            <p className="text-xs text-ink-muted mb-4">{t.step6OrgNote}</p>
 
             {/* Org profile status banner */}
             {orgProfileFilled ? (
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 mb-6 flex items-center gap-2">
                 <span className="text-green-400">&#8505;&#65039;</span>
-                <span className="text-green-400 text-sm font-medium">Organisatieprofiel: &#10003; Ingevuld</span>
+                <span className="text-green-400 text-sm font-medium">{t.orgProfileFilled}</span>
               </div>
             ) : (
               <div className="bg-orange/10 border border-orange/30 rounded-xl p-3 mb-6 flex items-center gap-2">
                 <span className="text-orange">&#9888;&#65039;</span>
                 <span className="text-orange text-sm">
-                  Niet ingevuld &mdash;{' '}
+                  {t.orgProfileNotFilled}{' '}
                   <Link href="/demo/opdrachtgever/matching-profiel" className="underline font-medium hover:text-orange/80">
-                    vul eerst uw organisatieprofiel in
+                    {t.orgProfileLink}
                   </Link>
                 </span>
               </div>
@@ -899,7 +1134,7 @@ export default function VacatureAanmakenPage() {
                 <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
                   werkzaamhedenSubStep === 'ranking' ? 'bg-cyan text-navy-dark' : 'bg-green-500 text-white'
                 }`}>{werkzaamhedenSubStep === 'ranking' ? 'a' : '\u2713'}</span>
-                Rangorde
+                {t.subStepRanking}
               </div>
               <div className="w-6 h-px bg-purple/10" />
               <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium ${
@@ -908,15 +1143,15 @@ export default function VacatureAanmakenPage() {
                 <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
                   werkzaamhedenSubStep === 'rating' ? 'bg-cyan text-navy-dark' : 'bg-purple/15 text-ink-muted'
                 }`}>b</span>
-                Beoordeling
+                {t.subStepRating}
               </div>
             </div>
 
-            {/* Sub-step content */}
             {werkzaamhedenSubStep === 'ranking' && (
               <WerkzaamhedenRankingStep
                 rankings={werkzaamhedenRankings}
                 onChange={(id, v) => setWerkzaamhedenRankings(prev => ({ ...prev, [id]: v }))}
+                t={t}
               />
             )}
 
@@ -924,6 +1159,7 @@ export default function VacatureAanmakenPage() {
               <WerkzaamhedenRatingStep
                 ratings={werkzaamhedenRatings}
                 onChange={(id, v) => setWerkzaamhedenRatings(prev => ({ ...prev, [id]: v }))}
+                t={t}
               />
             )}
           </div>
@@ -934,20 +1170,20 @@ export default function VacatureAanmakenPage() {
           {step === 6 ? (
             <button onClick={handleStep6Back}
               className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors bg-surface-muted border border-surface-border text-ink-light hover:text-ink">
-              &larr; {werkzaamhedenSubStep === 'rating' ? 'Terug naar rangorde' : 'Vorige'}
+              {werkzaamhedenSubStep === 'rating' ? t.backToRanking : t.previous}
             </button>
           ) : (
             <button onClick={() => setStep((step - 1) as Step)} disabled={step === 1}
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                 step === 1 ? 'text-ink-muted cursor-not-allowed' : 'bg-surface-muted border border-surface-border text-ink-light hover:text-ink'
-              }`}>&larr; Vorige</button>
+              }`}>{t.previous}</button>
           )}
 
           {step < 6 ? (
             <button onClick={() => setStep((step + 1) as Step)} disabled={!canProceed()}
               className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 canProceed() ? 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]' : 'bg-gray-700 text-ink-muted cursor-not-allowed'
-              }`}>Volgende &rarr;</button>
+              }`}>{t.next}</button>
           ) : (
             <button onClick={handleStep6Next} disabled={!canProceed()}
               className={`px-8 py-2.5 rounded-lg text-sm font-semibold transition-all ${
@@ -957,7 +1193,7 @@ export default function VacatureAanmakenPage() {
                     : 'btn-gradient text-white hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(6,186,255,0.3)]'
                   : 'bg-gray-700 text-ink-muted cursor-not-allowed'
               }`}>
-              {werkzaamhedenSubStep === 'rating' ? '\u2713 Publiceer vacature' : 'Volgende \u2192'}
+              {werkzaamhedenSubStep === 'rating' ? t.publishVacancy : t.next}
             </button>
           )}
         </div>
@@ -971,9 +1207,11 @@ export default function VacatureAanmakenPage() {
 function WerkzaamhedenRankingStep({
   rankings,
   onChange,
+  t,
 }: {
   rankings: Record<string, number>
   onChange: (id: string, value: number) => void
+  t: typeof texts['nl']
 }) {
   const usedValues = new Set(Object.values(rankings))
   const options = Array.from({ length: 19 }, (_, i) => i + 1)
@@ -981,20 +1219,15 @@ function WerkzaamhedenRankingStep({
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-lg font-semibold text-ink">Rangschik de werkzaamheden</h3>
-        <p className="text-ink-light text-sm mt-1">
-          Geef elke werkzaamheid een unieke rangorde van 1 (minst relevant voor de vacature) tot 19 (meest relevant). Elk nummer mag maar één keer gebruikt worden.
-        </p>
+        <h3 className="text-lg font-semibold text-ink">{t.rankingTitle}</h3>
+        <p className="text-ink-light text-sm mt-1">{t.rankingDesc}</p>
       </div>
 
       <div className="space-y-3">
         {werkzaamheden.map((item) => {
           const currentVal = rankings[item.id]
           return (
-            <div
-              key={item.id}
-              className="flex items-start gap-4 border-b border-surface-border pb-3 last:border-0 last:pb-0"
-            >
+            <div key={item.id} className="flex items-start gap-4 border-b border-surface-border pb-3 last:border-0 last:pb-0">
               <select
                 value={currentVal || ''}
                 onChange={(e) => {
@@ -1008,7 +1241,7 @@ function WerkzaamhedenRankingStep({
                   const taken = usedValues.has(n) && currentVal !== n
                   return (
                     <option key={n} value={n} disabled={taken}>
-                      {n}{taken ? ' (in gebruik)' : ''}
+                      {n}{taken ? ` ${t.inUse}` : ''}
                     </option>
                   )
                 })}
@@ -1022,9 +1255,7 @@ function WerkzaamhedenRankingStep({
         })}
       </div>
 
-      <p className="text-xs text-ink-muted">
-        {Object.keys(rankings).length} van 19 ingevuld
-      </p>
+      <p className="text-xs text-ink-muted">{t.filledOf(Object.keys(rankings).length, 19)}</p>
     </div>
   )
 }
@@ -1034,17 +1265,17 @@ function WerkzaamhedenRankingStep({
 function WerkzaamhedenRatingStep({
   ratings,
   onChange,
+  t,
 }: {
   ratings: Record<string, number>
   onChange: (id: string, value: number) => void
+  t: typeof texts['nl']
 }) {
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-lg font-semibold text-ink">Beoordeel elke werkzaamheid</h3>
-        <p className="text-ink-light text-sm mt-1">
-          Geef aan in welke mate deze werkzaamheid relevant is voor de vacature.
-        </p>
+        <h3 className="text-lg font-semibold text-ink">{t.ratingTitle}</h3>
+        <p className="text-ink-light text-sm mt-1">{t.ratingDesc}</p>
       </div>
 
       {/* Scale legend */}
@@ -1060,10 +1291,7 @@ function WerkzaamhedenRatingStep({
         {werkzaamheden.map((item) => {
           const currentVal = ratings[item.id]
           return (
-            <div
-              key={item.id}
-              className="border-b border-surface-border pb-4 last:border-0 last:pb-0 space-y-2"
-            >
+            <div key={item.id} className="border-b border-surface-border pb-4 last:border-0 last:pb-0 space-y-2">
               <div>
                 <p className="text-sm font-medium text-ink">{item.labelOrg}</p>
                 <p className="text-xs text-ink-muted">{item.description}</p>
@@ -1089,9 +1317,7 @@ function WerkzaamhedenRatingStep({
         })}
       </div>
 
-      <p className="text-xs text-ink-muted">
-        {Object.keys(ratings).length} van 19 beoordeeld
-      </p>
+      <p className="text-xs text-ink-muted">{t.ratedOf(Object.keys(ratings).length, 19)}</p>
     </div>
   )
 }

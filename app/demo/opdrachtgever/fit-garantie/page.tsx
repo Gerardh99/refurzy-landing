@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
 
 interface FitGarantie {
   id: string
@@ -67,11 +68,112 @@ const mockGaranties: FitGarantie[] = [
   },
 ]
 
-const claimRedenen = [
-  'Culturele mismatch',
-  'Waardenmismatch',
-  'Organisatiefit-mismatch',
-]
+const texts = {
+  nl: {
+    pageTitle: 'Fit Garantie',
+    pageSubtitle: 'Overzicht van alle Fit Garanties voor uw plaatsingen',
+    activeGuaranteesTitle: 'Actieve garanties',
+    noActiveGuarantees: 'Geen actieve garanties.',
+    expiredGuaranteesTitle: 'Verlopen garanties',
+    placed: 'Geplaatst:',
+    mScoreAtPlacement: 'M-Score bij plaatsing',
+    monthsElapsed: (n: number) => `${n} van 12 maanden verstreken`,
+    submitClaim: 'Claim indienen',
+    statusActief: 'Actief',
+    statusVerlopen: 'Verlopen',
+    statusClaimIngediend: 'Claim ingediend',
+    checkInDone: 'afgerond',
+    checkInUpcoming: 'aankomend',
+    checkInFuture: 'toekomstig',
+    months: 'maanden',
+    // Claim modal
+    claimTitle: 'Claim indienen',
+    claimSubmitted: 'Claim ingediend',
+    claimSuccessMsg: 'Uw claim is succesvol ingediend. Refurzy neemt binnen 5 werkdagen contact met u op.',
+    close: 'Sluiten',
+    reasonLabel: 'Reden',
+    reasonPlaceholder: 'Selecteer een reden...',
+    clarificationLabel: 'Toelichting',
+    clarificationPlaceholder: 'Beschrijf de situatie...',
+    coverageTitle: 'Dekking',
+    coverageText: 'De Fit Garantie dekt uitsluitend vertrek dat aantoonbaar het gevolg is van een mismatch op cultuurfit, waardenfit of organisatiefit — de drie dimensies die de M-Score meet. Bij een geldige claim levert Refurzy eenmalig een vervangende kandidaat zonder nieuwe plaatsingsfee.',
+    notCoveredTitle: 'Niet gedekt',
+    notCoveredItems: [
+      'Functioneringsproblemen (prestaties, competenties)',
+      'Persoonlijke omstandigheden (verhuizing, gezin, gezondheid)',
+      'Extern aanbod (kandidaat kiest ander aanbod)',
+      'Gewijzigde functie (werkzaamheden wijken af van vacatureomschrijving)',
+      'Mismanagement door opdrachtgever',
+      'Reorganisatie (functie verdwijnt of wijzigt substantieel)',
+      'Ziekte of arbeidsongeschiktheid',
+      'Input Matching Scan komt niet overeen met de praktijk (oordeel medewerker)',
+    ],
+    procedureTitle: 'Procedure',
+    procedureItems: [
+      'Meld vertrek binnen 30 kalenderdagen bij Refurzy',
+      'Refurzy voert binnen 10 werkdagen een exitgesprek met de medewerker',
+      'De medewerker bevestigt dat het vertrek het gevolg is van een fit-mismatch',
+      'Refurzy beoordeelt of de melding binnen de dekking valt',
+      'Het eindoordeel ligt te allen tijde bij Refurzy',
+    ],
+    procedureNote: 'Zonder exitgesprek met de medewerker kan geen claim worden beoordeeld en vervalt het recht op de garantie.',
+    cancel: 'Annuleren',
+    submitClaimBtn: 'Claim indienen',
+    claimReasons: ['Culturele mismatch', 'Waardenmismatch', 'Organisatiefit-mismatch'],
+  },
+  en: {
+    pageTitle: 'Fit Guarantee',
+    pageSubtitle: 'Overview of all Fit Guarantees for your placements',
+    activeGuaranteesTitle: 'Active guarantees',
+    noActiveGuarantees: 'No active guarantees.',
+    expiredGuaranteesTitle: 'Expired guarantees',
+    placed: 'Placed:',
+    mScoreAtPlacement: 'M-Score at placement',
+    monthsElapsed: (n: number) => `${n} of 12 months elapsed`,
+    submitClaim: 'Submit claim',
+    statusActief: 'Active',
+    statusVerlopen: 'Expired',
+    statusClaimIngediend: 'Claim submitted',
+    checkInDone: 'completed',
+    checkInUpcoming: 'upcoming',
+    checkInFuture: 'future',
+    months: 'months',
+    // Claim modal
+    claimTitle: 'Submit claim',
+    claimSubmitted: 'Claim submitted',
+    claimSuccessMsg: 'Your claim has been successfully submitted. Refurzy will contact you within 5 working days.',
+    close: 'Close',
+    reasonLabel: 'Reason',
+    reasonPlaceholder: 'Select a reason...',
+    clarificationLabel: 'Clarification',
+    clarificationPlaceholder: 'Describe the situation...',
+    coverageTitle: 'Coverage',
+    coverageText: 'The Fit Guarantee covers only departures demonstrably caused by a mismatch in culture fit, values fit or organisational fit — the three dimensions measured by the M-Score. With a valid claim, Refurzy provides one replacement candidate without a new placement fee.',
+    notCoveredTitle: 'Not covered',
+    notCoveredItems: [
+      'Performance issues (results, competencies)',
+      'Personal circumstances (relocation, family, health)',
+      'External offer (candidate chooses another offer)',
+      'Changed role (tasks deviate from vacancy description)',
+      'Mismanagement by employer',
+      'Reorganisation (role disappears or changes substantially)',
+      'Illness or incapacity for work',
+      'Input in Matching Scan does not match reality (employee\'s assessment)',
+    ],
+    procedureTitle: 'Procedure',
+    procedureItems: [
+      'Report departure to Refurzy within 30 calendar days',
+      'Refurzy conducts an exit interview with the employee within 10 working days',
+      'The employee confirms that the departure is due to a fit mismatch',
+      'Refurzy assesses whether the report falls within the coverage',
+      'The final judgement always rests with Refurzy',
+    ],
+    procedureNote: 'Without an exit interview with the employee, no claim can be assessed and the right to the guarantee lapses.',
+    cancel: 'Cancel',
+    submitClaimBtn: 'Submit claim',
+    claimReasons: ['Cultural mismatch', 'Values mismatch', 'Organisation fit mismatch'],
+  },
+}
 
 function getMonthsElapsed(plaatsingsDatum: string): number {
   const start = new Date(plaatsingsDatum)
@@ -81,30 +183,33 @@ function getMonthsElapsed(plaatsingsDatum: string): number {
 }
 
 function CheckInIcon({ status }: { status: string }) {
-  if (status === 'afgerond') return <span title="Afgerond" className="text-green-600">&#10003;</span>
-  if (status === 'aankomend') return <span title="Aankomend" className="text-cyan">&#9679;</span>
-  return <span title="Toekomstig" className="text-ink-muted">&#9633;</span>
+  if (status === 'afgerond') return <span title="Completed" className="text-green-600">&#10003;</span>
+  if (status === 'aankomend') return <span title="Upcoming" className="text-cyan">&#9679;</span>
+  return <span title="Future" className="text-ink-muted">&#9633;</span>
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, labels }: { status: string; labels: { actief: string; verlopen: string; claim_ingediend: string } }) {
   const colors: Record<string, string> = {
     'actief': 'bg-green-100 text-green-700',
     'verlopen': 'bg-surface-muted text-ink-light',
     'claim_ingediend': 'bg-orange/10 text-orange',
   }
-  const labels: Record<string, string> = {
-    'actief': 'Actief',
-    'verlopen': 'Verlopen',
-    'claim_ingediend': 'Claim ingediend',
+  const labelMap: Record<string, string> = {
+    'actief': labels.actief,
+    'verlopen': labels.verlopen,
+    'claim_ingediend': labels.claim_ingediend,
   }
   return (
     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${colors[status] || ''}`}>
-      {labels[status] || status}
+      {labelMap[status] || status}
     </span>
   )
 }
 
 export default function OpdrachtgeverFitGarantie() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [showClaimModal, setShowClaimModal] = useState(false)
   const [claimGarantieId, setClaimGarantieId] = useState<string | null>(null)
   const [claimReden, setClaimReden] = useState('')
@@ -113,6 +218,12 @@ export default function OpdrachtgeverFitGarantie() {
 
   const actieveGaranties = mockGaranties.filter((g) => g.status === 'actief')
   const verlopenGaranties = mockGaranties.filter((g) => g.status === 'verlopen' || g.status === 'claim_ingediend')
+
+  const statusLabels = {
+    actief: t.statusActief,
+    verlopen: t.statusVerlopen,
+    claim_ingediend: t.statusClaimIngediend,
+  }
 
   const openClaimModal = (id: string) => {
     setClaimGarantieId(id)
@@ -127,18 +238,24 @@ export default function OpdrachtgeverFitGarantie() {
     setSubmitted(true)
   }
 
+  const getCheckInLabel = (status: string) => {
+    if (status === 'afgerond') return t.checkInDone
+    if (status === 'aankomend') return t.checkInUpcoming
+    return t.checkInFuture
+  }
+
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Fit Garantie</h1>
-        <p className="text-ink-light font-medium mt-1">Overzicht van alle Fit Garanties voor uw plaatsingen</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Active guarantees */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-ink">Actieve garanties</h2>
+        <h2 className="text-lg font-semibold text-ink">{t.activeGuaranteesTitle}</h2>
         {actieveGaranties.length === 0 ? (
-          <p className="text-ink-muted text-sm">Geen actieve garanties.</p>
+          <p className="text-ink-muted text-sm">{t.noActiveGuarantees}</p>
         ) : (
           <div className="space-y-4">
             {actieveGaranties.map((g) => {
@@ -151,16 +268,16 @@ export default function OpdrachtgeverFitGarantie() {
                     <div>
                       <div className="flex items-center gap-3">
                         <span className="font-semibold text-ink">{g.kandidaatNaam}</span>
-                        <StatusBadge status={g.status} />
+                        <StatusBadge status={g.status} labels={statusLabels} />
                       </div>
                       <p className="text-sm text-ink-light font-medium mt-1">{g.vacature}</p>
                       <p className="text-xs text-ink-muted mt-0.5">
-                        Geplaatst: {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
+                        {t.placed} {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
                       </p>
                     </div>
                     <div className="text-right flex-shrink-0">
                       <div className="text-lg font-bold text-cyan">{g.mScore}%</div>
-                      <div className="text-xs text-ink-muted">M-Score bij plaatsing</div>
+                      <div className="text-xs text-ink-muted">{t.mScoreAtPlacement}</div>
                     </div>
                   </div>
 
@@ -181,7 +298,7 @@ export default function OpdrachtgeverFitGarantie() {
                       <div className="absolute top-0 h-full w-0.5 bg-surface-border" style={{ left: '25%' }} />
                       <div className="absolute top-0 h-full w-0.5 bg-surface-border" style={{ left: '50%' }} />
                     </div>
-                    <div className="text-xs text-ink-light mt-1">{monthsElapsed} van 12 maanden verstreken</div>
+                    <div className="text-xs text-ink-light mt-1">{t.monthsElapsed(monthsElapsed)}</div>
                   </div>
 
                   {/* Check-in status */}
@@ -189,9 +306,9 @@ export default function OpdrachtgeverFitGarantie() {
                     {g.checkIns.map((ci) => (
                       <div key={ci.maanden} className="flex items-center gap-2 text-sm">
                         <CheckInIcon status={ci.status} />
-                        <span className="text-ink-light">{ci.maanden} maanden</span>
+                        <span className="text-ink-light">{ci.maanden} {t.months}</span>
                         <span className="text-xs text-ink-muted">
-                          ({ci.status === 'afgerond' ? 'afgerond' : ci.status === 'aankomend' ? 'aankomend' : 'toekomstig'})
+                          ({getCheckInLabel(ci.status)})
                         </span>
                       </div>
                     ))}
@@ -203,7 +320,7 @@ export default function OpdrachtgeverFitGarantie() {
                       onClick={() => openClaimModal(g.id)}
                       className="px-4 py-2 bg-orange/10 text-orange text-sm font-medium rounded-lg hover:bg-orange/20 transition-colors"
                     >
-                      Claim indienen
+                      {t.submitClaim}
                     </button>
                   </div>
                 </div>
@@ -216,7 +333,7 @@ export default function OpdrachtgeverFitGarantie() {
       {/* Expired guarantees */}
       {verlopenGaranties.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-ink">Verlopen garanties</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.expiredGuaranteesTitle}</h2>
           <div className="space-y-3">
             {verlopenGaranties.map((g) => (
               <div key={g.id} className="bg-white rounded-2xl border border-surface-border p-6 opacity-70">
@@ -224,16 +341,16 @@ export default function OpdrachtgeverFitGarantie() {
                   <div>
                     <div className="flex items-center gap-3">
                       <span className="font-semibold text-ink">{g.kandidaatNaam}</span>
-                      <StatusBadge status={g.status} />
+                      <StatusBadge status={g.status} labels={statusLabels} />
                     </div>
                     <p className="text-sm text-ink-light font-medium mt-1">{g.vacature}</p>
                     <p className="text-xs text-ink-muted mt-0.5">
-                      Geplaatst: {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
+                      {t.placed} {new Date(g.plaatsingsDatum).toLocaleDateString('nl-NL')}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
                     <div className="text-lg font-bold text-ink-light">{g.mScore}%</div>
-                    <div className="text-xs text-ink-muted">M-Score bij plaatsing</div>
+                    <div className="text-xs text-ink-muted">{t.mScoreAtPlacement}</div>
                   </div>
                 </div>
               </div>
@@ -249,19 +366,19 @@ export default function OpdrachtgeverFitGarantie() {
             {submitted ? (
               <div className="text-center py-6 space-y-3">
                 <div className="text-4xl">&#10003;</div>
-                <h3 className="text-lg font-bold text-ink">Claim ingediend</h3>
-                <p className="text-sm text-ink-light">Uw claim is succesvol ingediend. Refurzy neemt binnen 5 werkdagen contact met u op.</p>
+                <h3 className="text-lg font-bold text-ink">{t.claimSubmitted}</h3>
+                <p className="text-sm text-ink-light">{t.claimSuccessMsg}</p>
                 <button
                   onClick={() => setShowClaimModal(false)}
                   className="mt-4 px-6 py-2 bg-purple text-white text-sm font-medium rounded-lg hover:bg-purple-dark transition-colors"
                 >
-                  Sluiten
+                  {t.close}
                 </button>
               </div>
             ) : (
               <>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-ink">Claim indienen</h3>
+                  <h3 className="text-lg font-bold text-ink">{t.claimTitle}</h3>
                   <button
                     onClick={() => setShowClaimModal(false)}
                     className="text-ink-muted hover:text-ink text-xl transition-colors"
@@ -271,54 +388,47 @@ export default function OpdrachtgeverFitGarantie() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-ink mb-1.5">Reden</label>
+                  <label className="block text-sm font-medium text-ink mb-1.5">{t.reasonLabel}</label>
                   <select
                     value={claimReden}
                     onChange={(e) => setClaimReden(e.target.value)}
                     className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50"
                   >
-                    <option value="">Selecteer een reden...</option>
-                    {claimRedenen.map((r) => <option key={r} value={r}>{r}</option>)}
+                    <option value="">{t.reasonPlaceholder}</option>
+                    {t.claimReasons.map((r) => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-ink mb-1.5">Toelichting</label>
+                  <label className="block text-sm font-medium text-ink mb-1.5">{t.clarificationLabel}</label>
                   <textarea
                     value={claimToelichting}
                     onChange={(e) => setClaimToelichting(e.target.value)}
-                    placeholder="Beschrijf de situatie..."
+                    placeholder={t.clarificationPlaceholder}
                     rows={4}
                     className="w-full bg-surface-muted border border-surface-border rounded-lg px-3 py-2 text-ink text-sm focus:outline-none focus:border-cyan/50 resize-none"
                   />
                 </div>
 
                 <div className="bg-surface-muted rounded-lg p-4 text-sm text-ink-light space-y-3">
-                  <p className="font-semibold text-ink">Dekking</p>
-                  <p>De Fit Garantie dekt uitsluitend vertrek dat aantoonbaar het gevolg is van een mismatch op cultuurfit, waardenfit of organisatiefit — de drie dimensies die de M-Score meet. Bij een geldige claim levert Refurzy eenmalig een vervangende kandidaat zonder nieuwe plaatsingsfee.</p>
+                  <p className="font-semibold text-ink">{t.coverageTitle}</p>
+                  <p>{t.coverageText}</p>
 
-                  <p className="font-semibold text-ink">Niet gedekt</p>
+                  <p className="font-semibold text-ink">{t.notCoveredTitle}</p>
                   <ul className="list-disc list-inside space-y-0.5">
-                    <li>Functioneringsproblemen (prestaties, competenties)</li>
-                    <li>Persoonlijke omstandigheden (verhuizing, gezin, gezondheid)</li>
-                    <li>Extern aanbod (kandidaat kiest ander aanbod)</li>
-                    <li>Gewijzigde functie (werkzaamheden wijken af van vacatureomschrijving)</li>
-                    <li>Mismanagement door opdrachtgever</li>
-                    <li>Reorganisatie (functie verdwijnt of wijzigt substantieel)</li>
-                    <li>Ziekte of arbeidsongeschiktheid</li>
-                    <li>Input Matching Scan komt niet overeen met de praktijk (oordeel medewerker)</li>
+                    {t.notCoveredItems.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
                   </ul>
 
-                  <p className="font-semibold text-ink">Procedure</p>
-                  <ul className="list-decimal list-inside space-y-0.5">
-                    <li>Meld vertrek binnen 30 kalenderdagen bij Refurzy</li>
-                    <li>Refurzy voert binnen 10 werkdagen een exitgesprek met de medewerker</li>
-                    <li>De medewerker bevestigt dat het vertrek het gevolg is van een fit-mismatch</li>
-                    <li>Refurzy beoordeelt of de melding binnen de dekking valt</li>
-                    <li>Het eindoordeel ligt te allen tijde bij Refurzy</li>
-                  </ul>
+                  <p className="font-semibold text-ink">{t.procedureTitle}</p>
+                  <ol className="list-decimal list-inside space-y-0.5">
+                    {t.procedureItems.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ol>
 
-                  <p className="text-xs text-ink-muted">Zonder exitgesprek met de medewerker kan geen claim worden beoordeeld en vervalt het recht op de garantie.</p>
+                  <p className="text-xs text-ink-muted">{t.procedureNote}</p>
                 </div>
 
                 <div className="flex justify-end gap-3">
@@ -326,14 +436,14 @@ export default function OpdrachtgeverFitGarantie() {
                     onClick={() => setShowClaimModal(false)}
                     className="px-4 py-2 text-sm text-ink-light hover:text-ink transition-colors"
                   >
-                    Annuleren
+                    {t.cancel}
                   </button>
                   <button
                     onClick={handleSubmitClaim}
                     disabled={!claimReden}
                     className="px-6 py-2 bg-purple text-white text-sm font-medium rounded-lg hover:bg-purple-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Claim indienen
+                    {t.submitClaimBtn}
                   </button>
                 </div>
               </>

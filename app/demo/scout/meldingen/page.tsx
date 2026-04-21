@@ -1,6 +1,30 @@
 'use client'
 
 import { useState } from 'react'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    pageTitle: 'Signaleringen',
+    pageSubtitle: 'Meldingen over je kandidaten en opdrachtgevers',
+    availableAgainBadge: 'Nieuw',
+    availableAgainNote: 'Deze kandidaat was tijdelijk niet beschikbaar en heeft haar profiel weer geactiveerd. Je kunt haar nu voordragen op openstaande vacatures.',
+    reminderWarning: 'Let op: Opdrachtgevers zijn contractueel verplicht binnen 7 dagen te reageren. Bij overschrijding kan een boeteclausule van toepassing zijn.',
+    reminderSent: (company: string) => `Herinnering is verstuurd naar ${company}`,
+    btnSendReminder: 'Stuur herinnering',
+    logTitle: 'Signalering log',
+  },
+  en: {
+    pageTitle: 'Notifications',
+    pageSubtitle: 'Alerts about your candidates and clients',
+    availableAgainBadge: 'New',
+    availableAgainNote: 'This candidate was temporarily unavailable and has reactivated their profile. You can now nominate them for open vacancies.',
+    reminderWarning: 'Note: Clients are contractually required to respond within 7 days. A penalty clause may apply if this is exceeded.',
+    reminderSent: (company: string) => `Reminder sent to ${company}`,
+    btnSendReminder: 'Send reminder',
+    logTitle: 'Notification log',
+  },
+}
 
 const signaleringen = [
   {
@@ -31,13 +55,16 @@ const tijdlijn = [
 ]
 
 export default function ScoutMeldingen() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [herinneringVerstuurd, setHerinneringVerstuurd] = useState(false)
 
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Signaleringen</h1>
-        <p className="text-ink-light font-medium mt-1">Meldingen over je kandidaten en opdrachtgevers</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Kandidaat weer beschikbaar notification */}
@@ -49,11 +76,10 @@ export default function ScoutMeldingen() {
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <p className="text-ink font-semibold text-sm">{signaleringen[0].bericht}</p>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-100 text-green-700">Nieuw</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-100 text-green-700">{t.availableAgainBadge}</span>
             </div>
             <p className="text-ink-light text-sm mt-1">
-              Deze kandidaat was tijdelijk niet beschikbaar en heeft haar profiel weer geactiveerd.
-              Je kunt haar nu voordragen op openstaande vacatures.
+              {t.availableAgainNote}
             </p>
             <p className="text-ink-muted text-xs mt-2">{new Date(signaleringen[0].datum).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
           </div>
@@ -69,8 +95,7 @@ export default function ScoutMeldingen() {
           <div className="flex-1 space-y-2">
             <p className="text-ink font-semibold text-sm">{signaleringen[1].bericht}</p>
             <p className="text-orange text-sm">
-              Let op: Opdrachtgevers zijn contractueel verplicht binnen 7 dagen te reageren.
-              Bij overschrijding kan een boeteclausule van toepassing zijn.
+              {t.reminderWarning}
             </p>
           </div>
         </div>
@@ -78,21 +103,21 @@ export default function ScoutMeldingen() {
         {herinneringVerstuurd ? (
           <div className="bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-3 flex items-center gap-2">
             <span className="text-green-400">&#10003;</span>
-            <span className="text-green-400 text-sm">Herinnering is verstuurd naar TechVentures B.V.</span>
+            <span className="text-green-400 text-sm">{t.reminderSent('TechVentures B.V.')}</span>
           </div>
         ) : (
           <button
             onClick={() => setHerinneringVerstuurd(true)}
             className="px-5 py-2.5 bg-orange text-navy-dark rounded-lg font-medium text-sm hover:bg-orange/90 transition-colors"
           >
-            Stuur herinnering
+            {t.btnSendReminder}
           </button>
         )}
       </div>
 
       {/* Timeline */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-ink">Signalering log</h2>
+        <h2 className="text-lg font-semibold text-ink">{t.logTitle}</h2>
         <div className="space-y-3">
           {tijdlijn.map((item) => (
             <div key={item.id} className={`bg-white rounded-2xl border p-4 flex items-start gap-4 ${

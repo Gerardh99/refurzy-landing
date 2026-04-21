@@ -2,8 +2,124 @@
 
 import { useState } from 'react'
 import { vacatures } from '@/lib/mock-data'
+import { useLang } from '@/lib/i18n'
 
 type UitnodigingType = 'pool' | 'vacature'
+
+const texts = {
+  nl: {
+    pageTitle: 'Kandidaat uitnodigen',
+    pageSubtitle: 'Nodig kandidaten uit voor je talent pool of voor een specifieke vacature',
+    typePool: '👥 Talent Pool (generiek)',
+    typeVacancy: '📋 Specifieke vacature',
+    infoPoolTitle: 'Generieke uitnodiging — Talent Pool',
+    infoPoolBody: 'De kandidaat wordt toegevoegd aan jouw talent pool. Er hoeft nog geen assessment te worden ingevuld. Zodra je de kandidaat voordraagt voor een specifieke vacature, ontvangt deze een uitnodiging om de 35-vragen M-Score in te vullen.',
+    infoVacancyTitle: 'Vacature-specifieke uitnodiging',
+    infoVacancyBody: 'De kandidaat ontvangt een enthousiasmerende e-mail met vacaturedetails en wordt direct uitgenodigd om de 35-vragen M-Score assessment in te vullen voor deze specifieke vacature. De M-Score moet per vacature opnieuw worden ingevuld.',
+    selectVacancyTitle: 'Selecteer vacature',
+    selectVacancyPlaceholder: 'Kies een vacature...',
+    vacancySelectedBadge: 'Geselecteerd',
+    vacancyCompany: 'Bedrijf:',
+    vacancyLocation: 'Locatie:',
+    vacancySalary: 'Salaris:',
+    vacancyDeadline: 'Deadline:',
+    formTitle: (type: UitnodigingType) => type === 'pool' ? 'Uitnodigen per e-mail of link' : 'Uitnodigen per e-mail',
+    labelName: 'Naam kandidaat',
+    namePlaceholder: 'Volledige naam',
+    labelEmail: 'E-mailadres',
+    emailPlaceholder: 'naam@email.nl',
+    labelMessage: 'Persoonlijke boodschap (optioneel)',
+    messagePlaceholder: 'Hi! Ik denk dat deze vacature goed bij je past omdat...',
+    btnSend: '✉️ Uitnodiging versturen',
+    btnPreview: '👁 Preview e-mail',
+    linkTitle: 'Of deel je generieke uitnodigingslink',
+    btnCopied: 'Gekopieerd!',
+    btnCopy: 'Kopieer link',
+    linkNote: 'Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.',
+    recentTitle: 'Recente uitnodigingen',
+    colName: 'Naam',
+    colType: 'Type',
+    colVacancy: 'Vacature',
+    colDate: 'Datum',
+    colStatus: 'Status',
+    typePoolBadge: '👥 Pool',
+    typeVacancyBadge: '📋 Vacature',
+    toastSent: (naam: string) => `Uitnodiging verstuurd naar ${naam}`,
+    modalEmailTitle: 'Er is een vacature die bij je past!',
+    modalGreeting: (naam: string) => `Hi ${naam || 'kandidaat'},`,
+    modalIntro: 'denkt dat onderstaande vacature goed bij jou past en nodigt je uit om deel te nemen aan het selectieproces via Refurzy.',
+    modalVacancyCompany: '🏢 Bedrijf:',
+    modalVacancyLocation: '📍 Locatie:',
+    modalVacancySalary: '💰 Salaris:',
+    modalVacancyStart: '📅 Start:',
+    modalVacancyStartValue: 'Per direct',
+    modalVacancyWorkModel: '🏠 Werkwijze:',
+    modalVacancyLevel: '🎓 Niveau:',
+    modalTeamTitle: 'Over het team:',
+    modalTeamText: 'Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.',
+    modalAssessmentTitle: 'Wat wordt er van je gevraagd?',
+    modalAssessmentText: 'Vul een korte vragenlijst in van 35 vragen (± 5 minuten). Op basis hiervan wordt jouw M-Score berekend: een objectieve match-score die aangeeft hoe goed jij bij deze vacature past.',
+    modalCTA: 'Bekijk vacature en start assessment →',
+    modalPrivacy: 'Je gegevens worden anoniem gepresenteerd aan de opdrachtgever. Pas bij een match worden je contactgegevens gedeeld.',
+    modalClose: 'Sluiten',
+  },
+  en: {
+    pageTitle: 'Invite candidate',
+    pageSubtitle: 'Invite candidates to your talent pool or for a specific vacancy',
+    typePool: '👥 Talent Pool (generic)',
+    typeVacancy: '📋 Specific vacancy',
+    infoPoolTitle: 'Generic invitation — Talent Pool',
+    infoPoolBody: 'The candidate will be added to your talent pool. No assessment needs to be filled in yet. Once you nominate the candidate for a specific vacancy, they will receive an invitation to complete the 35-question M-Score.',
+    infoVacancyTitle: 'Vacancy-specific invitation',
+    infoVacancyBody: 'The candidate receives an enthusiastic email with vacancy details and is immediately invited to complete the 35-question M-Score assessment for this specific vacancy. The M-Score must be completed anew per vacancy.',
+    selectVacancyTitle: 'Select vacancy',
+    selectVacancyPlaceholder: 'Choose a vacancy...',
+    vacancySelectedBadge: 'Selected',
+    vacancyCompany: 'Company:',
+    vacancyLocation: 'Location:',
+    vacancySalary: 'Salary:',
+    vacancyDeadline: 'Deadline:',
+    formTitle: (type: UitnodigingType) => type === 'pool' ? 'Invite by email or link' : 'Invite by email',
+    labelName: 'Candidate name',
+    namePlaceholder: 'Full name',
+    labelEmail: 'Email address',
+    emailPlaceholder: 'name@email.com',
+    labelMessage: 'Personal message (optional)',
+    messagePlaceholder: 'Hi! I think this vacancy is a great fit for you because...',
+    btnSend: '✉️ Send invitation',
+    btnPreview: '👁 Preview email',
+    linkTitle: 'Or share your generic invitation link',
+    btnCopied: 'Copied!',
+    btnCopy: 'Copy link',
+    linkNote: 'Candidates who register via this link are added directly to your talent pool.',
+    recentTitle: 'Recent invitations',
+    colName: 'Name',
+    colType: 'Type',
+    colVacancy: 'Vacancy',
+    colDate: 'Date',
+    colStatus: 'Status',
+    typePoolBadge: '👥 Pool',
+    typeVacancyBadge: '📋 Vacancy',
+    toastSent: (naam: string) => `Invitation sent to ${naam}`,
+    modalEmailTitle: 'There is a vacancy that matches you!',
+    modalGreeting: (naam: string) => `Hi ${naam || 'candidate'},`,
+    modalIntro: 'thinks the vacancy below is a great fit for you and invites you to take part in the selection process via Refurzy.',
+    modalVacancyCompany: '🏢 Company:',
+    modalVacancyLocation: '📍 Location:',
+    modalVacancySalary: '💰 Salary:',
+    modalVacancyStart: '📅 Start:',
+    modalVacancyStartValue: 'Immediately',
+    modalVacancyWorkModel: '🏠 Work model:',
+    modalVacancyLevel: '🎓 Level:',
+    modalTeamTitle: 'About the team:',
+    modalTeamText: 'An innovative and informal team working on the future of recruitment. Short lines, lots of autonomy and room for own initiative.',
+    modalAssessmentTitle: 'What is asked of you?',
+    modalAssessmentText: 'Complete a short questionnaire of 35 questions (± 5 minutes). Based on this your M-Score is calculated: an objective match score that shows how well you fit this vacancy.',
+    modalCTA: 'View vacancy and start assessment →',
+    modalPrivacy: 'Your data will be presented anonymously to the client. Your contact details are only shared upon a match.',
+    modalClose: 'Close',
+  },
+}
 
 const mockUitnodigingen = [
   { id: 1, naam: 'Eva Bakker', email: 'eva.bakker@email.nl', datum: '2026-03-10', status: 'Geaccepteerd', type: 'pool' as const, vacature: null },
@@ -13,6 +129,9 @@ const mockUitnodigingen = [
 ]
 
 export default function KandidaatUitnodigen() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [type, setType] = useState<UitnodigingType>('pool')
   const [selectedVacature, setSelectedVacature] = useState('')
   const [email, setEmail] = useState('')
@@ -37,7 +156,7 @@ export default function KandidaatUitnodigen() {
 
   const handleSendInvite = () => {
     if (!email || !naam) return
-    setToast(`Uitnodiging verstuurd naar ${naam}`)
+    setToast(t.toastSent(naam))
     setEmail('')
     setNaam('')
     setPersoonlijkeBoodschap('')
@@ -53,8 +172,8 @@ export default function KandidaatUitnodigen() {
       )}
 
       <div>
-        <h1 className="text-2xl font-bold text-ink">Kandidaat uitnodigen</h1>
-        <p className="text-ink-light font-medium mt-1">Nodig kandidaten uit voor je talent pool of voor een specifieke vacature</p>
+        <h1 className="text-2xl font-bold text-ink">{t.pageTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.pageSubtitle}</p>
       </div>
 
       {/* Type selector */}
@@ -65,7 +184,7 @@ export default function KandidaatUitnodigen() {
             type === 'pool' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink hover:bg-surface-muted'
           }`}
         >
-          👥 Talent Pool (generiek)
+          {t.typePool}
         </button>
         <button
           onClick={() => setType('vacature')}
@@ -73,7 +192,7 @@ export default function KandidaatUitnodigen() {
             type === 'vacature' ? 'bg-purple/15 text-cyan border border-surface-border' : 'text-ink-light hover:text-ink hover:bg-surface-muted'
           }`}
         >
-          📋 Specifieke vacature
+          {t.typeVacancy}
         </button>
       </div>
 
@@ -87,13 +206,13 @@ export default function KandidaatUitnodigen() {
         <div className="text-sm space-y-1">
           {type === 'pool' ? (
             <>
-              <p className="font-medium text-purple">Generieke uitnodiging — Talent Pool</p>
-              <p className="text-ink-light">De kandidaat wordt toegevoegd aan jouw talent pool. Er hoeft nog geen assessment te worden ingevuld. Zodra je de kandidaat voordraagt voor een specifieke vacature, ontvangt deze een uitnodiging om de 35-vragen M-Score in te vullen.</p>
+              <p className="font-medium text-purple">{t.infoPoolTitle}</p>
+              <p className="text-ink-light">{t.infoPoolBody}</p>
             </>
           ) : (
             <>
-              <p className="font-medium text-cyan">Vacature-specifieke uitnodiging</p>
-              <p className="text-ink-light">De kandidaat ontvangt een enthousiasmerende e-mail met vacaturedetails en wordt direct uitgenodigd om de 35-vragen M-Score assessment in te vullen voor deze specifieke vacature. De M-Score moet per vacature opnieuw worden ingevuld.</p>
+              <p className="font-medium text-cyan">{t.infoVacancyTitle}</p>
+              <p className="text-ink-light">{t.infoVacancyBody}</p>
             </>
           )}
         </div>
@@ -102,13 +221,13 @@ export default function KandidaatUitnodigen() {
       {/* Vacature selector (alleen bij vacature-specifiek) */}
       {type === 'vacature' && (
         <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-ink">Selecteer vacature</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.selectVacancyTitle}</h2>
           <select
             value={selectedVacature}
             onChange={e => setSelectedVacature(e.target.value)}
             className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-ink text-sm focus:outline-none focus:border-cyan/50"
           >
-            <option value="">Kies een vacature...</option>
+            <option value="">{t.selectVacancyPlaceholder}</option>
             {vacatures.map(v => (
               <option key={v.id} value={v.id}>{v.title} — {v.company}</option>
             ))}
@@ -118,13 +237,13 @@ export default function KandidaatUitnodigen() {
             <div className="bg-surface-muted rounded-xl border border-cyan/20 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-ink font-semibold">{activeVacature.title}</h3>
-                <span className="text-xs text-cyan bg-cyan/15 px-2 py-1 rounded border border-cyan/20">Geselecteerd</span>
+                <span className="text-xs text-cyan bg-cyan/15 px-2 py-1 rounded border border-cyan/20">{t.vacancySelectedBadge}</span>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><span className="text-ink-muted">Bedrijf:</span> <span className="text-ink-light">{activeVacature.company}</span></div>
-                <div><span className="text-ink-muted">Locatie:</span> <span className="text-ink-light">{activeVacature.location}</span></div>
-                <div><span className="text-ink-muted">Salaris:</span> <span className="text-ink-light">{activeVacature.salaris}</span></div>
-                <div><span className="text-ink-muted">Deadline:</span> <span className="text-ink-light">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
+                <div><span className="text-ink-muted">{t.vacancyCompany}</span> <span className="text-ink-light">{activeVacature.company}</span></div>
+                <div><span className="text-ink-muted">{t.vacancyLocation}</span> <span className="text-ink-light">{activeVacature.location}</span></div>
+                <div><span className="text-ink-muted">{t.vacancySalary}</span> <span className="text-ink-light">{activeVacature.salaris}</span></div>
+                <div><span className="text-ink-muted">{t.vacancyDeadline}</span> <span className="text-ink-light">{new Date(activeVacature.deadline).toLocaleDateString('nl-NL')}</span></div>
               </div>
             </div>
           )}
@@ -134,23 +253,23 @@ export default function KandidaatUitnodigen() {
       {/* Uitnodigingsformulier */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-5">
         <h2 className="text-lg font-semibold text-ink">
-          {type === 'pool' ? 'Uitnodigen per e-mail of link' : 'Uitnodigen per e-mail'}
+          {t.formTitle(type)}
         </h2>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-ink-muted mb-1.5 block">Naam kandidaat</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">{t.labelName}</label>
             <input
               type="text" value={naam} onChange={e => setNaam(e.target.value)}
-              placeholder="Volledige naam"
+              placeholder={t.namePlaceholder}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted"
             />
           </div>
           <div>
-            <label className="text-xs text-ink-muted mb-1.5 block">E-mailadres</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">{t.labelEmail}</label>
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
-              placeholder="naam@email.nl"
+              placeholder={t.emailPlaceholder}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted"
             />
           </div>
@@ -158,11 +277,11 @@ export default function KandidaatUitnodigen() {
 
         {type === 'vacature' && (
           <div>
-            <label className="text-xs text-ink-muted mb-1.5 block">Persoonlijke boodschap (optioneel)</label>
+            <label className="text-xs text-ink-muted mb-1.5 block">{t.labelMessage}</label>
             <textarea
               rows={3} value={persoonlijkeBoodschap}
               onChange={e => setPersoonlijkeBoodschap(e.target.value)}
-              placeholder="Hi! Ik denk dat deze vacature goed bij je past omdat..."
+              placeholder={t.messagePlaceholder}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50 placeholder-ink-muted resize-none"
             />
           </div>
@@ -178,14 +297,14 @@ export default function KandidaatUitnodigen() {
                 : 'bg-gray-700 text-ink-muted cursor-not-allowed'
             }`}
           >
-            ✉️ Uitnodiging versturen
+            {t.btnSend}
           </button>
           {type === 'vacature' && email && naam && activeVacature && (
             <button
               onClick={() => setEmailPreview(true)}
               className="px-5 py-3 bg-purple/15 text-purple border border-surface-border rounded-lg font-semibold text-sm hover:bg-purple/25 transition-colors"
             >
-              👁 Preview e-mail
+              {t.btnPreview}
             </button>
           )}
         </div>
@@ -194,31 +313,31 @@ export default function KandidaatUitnodigen() {
       {/* Generieke link (alleen bij pool) */}
       {type === 'pool' && (
         <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-ink">Of deel je generieke uitnodigingslink</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.linkTitle}</h2>
           <div className="flex items-center gap-3">
             <div className="flex-1 bg-surface-muted border border-surface-border rounded-lg px-4 py-3 text-purple font-medium text-sm font-mono break-all">
               {poolLink}
             </div>
             <button onClick={handleCopy} className="px-5 py-3 bg-purple text-white rounded-lg font-medium text-sm hover:bg-purple/90 transition-colors whitespace-nowrap">
-              {copied ? 'Gekopieerd!' : 'Kopieer link'}
+              {copied ? t.btnCopied : t.btnCopy}
             </button>
           </div>
-          <p className="text-xs text-ink-muted">Kandidaten die via deze link registreren worden direct aan jouw talent pool toegevoegd.</p>
+          <p className="text-xs text-ink-muted">{t.linkNote}</p>
         </div>
       )}
 
       {/* Recente uitnodigingen */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-ink">Recente uitnodigingen</h2>
+        <h2 className="text-lg font-semibold text-ink">{t.recentTitle}</h2>
         <div className="bg-white rounded-2xl border border-surface-border overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border">
-                <th className="text-left px-6 py-3 text-ink-muted font-medium">Naam</th>
-                <th className="text-left px-6 py-3 text-ink-muted font-medium">Type</th>
-                <th className="text-left px-6 py-3 text-ink-muted font-medium">Vacature</th>
-                <th className="text-left px-6 py-3 text-ink-muted font-medium">Datum</th>
-                <th className="text-left px-6 py-3 text-ink-muted font-medium">Status</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">{t.colName}</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">{t.colType}</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">{t.colVacancy}</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">{t.colDate}</th>
+                <th className="text-left px-6 py-3 text-ink-muted font-medium">{t.colStatus}</th>
               </tr>
             </thead>
             <tbody>
@@ -229,7 +348,7 @@ export default function KandidaatUitnodigen() {
                     <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
                       u.type === 'pool' ? 'bg-purple/15 text-purple' : 'bg-cyan/15 text-cyan'
                     }`}>
-                      {u.type === 'pool' ? '👥 Pool' : '📋 Vacature'}
+                      {u.type === 'pool' ? t.typePoolBadge : t.typeVacancyBadge}
                     </span>
                   </td>
                   <td className="px-6 py-3 text-ink-light">{u.vacature || '—'}</td>
@@ -257,14 +376,13 @@ export default function KandidaatUitnodigen() {
             {/* Email header */}
             <div className="bg-gradient-to-r from-cyan via-[#06BAFF] to-purple p-6">
               <img src="/logo-white.png" alt="Refurzy" className="h-6 mb-4 opacity-80" />
-              <h3 className="text-ink text-xl font-bold">Er is een vacature die bij je past!</h3>
+              <h3 className="text-ink text-xl font-bold">{t.modalEmailTitle}</h3>
             </div>
             {/* Email body */}
             <div className="p-6 space-y-4 text-sm text-ink-muted">
-              <p>Hi {naam || 'kandidaat'},</p>
+              <p>{t.modalGreeting(naam)}</p>
               <p>
-                <strong>Sophie de Graaf</strong> denkt dat onderstaande vacature goed bij jou past
-                en nodigt je uit om deel te nemen aan het selectieproces via Refurzy.
+                <strong>Sophie de Graaf</strong> {t.modalIntro}
               </p>
 
               {persoonlijkeBoodschap && (
@@ -276,32 +394,32 @@ export default function KandidaatUitnodigen() {
               <div className="bg-gray-50 rounded-xl p-5 space-y-3 border">
                 <h4 className="font-bold text-gray-900 text-base">{activeVacature.title}</h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div><span className="text-ink-muted">🏢 Bedrijf:</span> <span className="font-medium">{activeVacature.company}</span></div>
-                  <div><span className="text-ink-muted">📍 Locatie:</span> <span className="font-medium">{activeVacature.location}</span></div>
-                  <div><span className="text-ink-muted">💰 Salaris:</span> <span className="font-medium">{activeVacature.salaris}</span></div>
-                  <div><span className="text-ink-muted">📅 Start:</span> <span className="font-medium">Per direct</span></div>
-                  <div><span className="text-ink-muted">🏠 Werkwijze:</span> <span className="font-medium">{activeVacature.hardeCriteria.opKantoor}</span></div>
-                  <div><span className="text-ink-muted">🎓 Niveau:</span> <span className="font-medium">{activeVacature.hardeCriteria.opleidingsniveau}+</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancyCompany}</span> <span className="font-medium">{activeVacature.company}</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancyLocation}</span> <span className="font-medium">{activeVacature.location}</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancySalary}</span> <span className="font-medium">{activeVacature.salaris}</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancyStart}</span> <span className="font-medium">{t.modalVacancyStartValue}</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancyWorkModel}</span> <span className="font-medium">{activeVacature.hardeCriteria.opKantoor}</span></div>
+                  <div><span className="text-ink-muted">{t.modalVacancyLevel}</span> <span className="font-medium">{activeVacature.hardeCriteria.opleidingsniveau}+</span></div>
                 </div>
                 <div className="border-t pt-3 mt-2">
-                  <p className="text-xs text-ink-muted font-medium mb-1">Over het team:</p>
-                  <p className="text-xs text-ink-muted">Een innovatief en informeel team dat werkt aan de toekomst van recruitment. Korte lijnen, veel autonomie en ruimte voor eigen initiatief.</p>
+                  <p className="text-xs text-ink-muted font-medium mb-1">{t.modalTeamTitle}</p>
+                  <p className="text-xs text-ink-muted">{t.modalTeamText}</p>
                 </div>
               </div>
 
               <div className="bg-cyan-50 border border-cyan-200 rounded-xl p-4 space-y-2">
-                <p className="font-semibold text-cyan-800">Wat wordt er van je gevraagd?</p>
-                <p className="text-cyan-700 text-xs">Vul een korte vragenlijst in van 35 vragen (± 5 minuten). Op basis hiervan wordt jouw M-Score berekend: een objectieve match-score die aangeeft hoe goed jij bij deze vacature past.</p>
+                <p className="font-semibold text-cyan-800">{t.modalAssessmentTitle}</p>
+                <p className="text-cyan-700 text-xs">{t.modalAssessmentText}</p>
               </div>
 
               <div className="text-center py-2">
                 <div className="inline-block bg-gradient-to-r from-cyan via-blue-500 to-purple-600 text-white font-semibold px-8 py-3 rounded-xl text-sm">
-                  Bekijk vacature en start assessment →
+                  {t.modalCTA}
                 </div>
               </div>
 
               <p className="text-xs text-ink-light text-center">
-                Je gegevens worden anoniem gepresenteerd aan de opdrachtgever. Pas bij een match worden je contactgegevens gedeeld.
+                {t.modalPrivacy}
               </p>
             </div>
             {/* Close */}
@@ -310,7 +428,7 @@ export default function KandidaatUitnodigen() {
                 onClick={() => setEmailPreview(false)}
                 className="px-5 py-2 bg-surface-muted text-ink rounded-lg text-sm font-semibold hover:bg-white transition-colors"
               >
-                Sluiten
+                {t.modalClose}
               </button>
             </div>
           </div>

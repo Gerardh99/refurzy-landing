@@ -4,10 +4,67 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { vacatures, archiefVacatures } from '@/lib/mock-data'
 import StatusBadge from '@/components/StatusBadge'
+import { useLang } from '@/lib/i18n'
 
 type Tab = 'actief' | 'afgerond'
 
+const texts = {
+  nl: {
+    twoFATitle: 'Beveilig je account met tweestapsverificatie (2FA)',
+    twoFADesc: 'Dit beschermt je account tegen onbevoegde toegang. Als opdrachtgever heb je toegang tot persoonsgegevens — 2FA is sterk aanbevolen.',
+    twoFAActivate: 'Nu activeren',
+    welcomeTitle: 'Welkom! Stel uw bedrijfsprofiel in',
+    welcomeDesc: 'Vul uw bedrijfsgegevens en omschrijving in zodat kandidaten uw bedrijf zien bij vacatures.',
+    welcomeBtn: 'Bedrijfsprofiel instellen',
+    dashboardTitle: 'Dashboard',
+    dashboardSubtitle: 'Overzicht van uw vacatures en kandidaten',
+    statActiveVacatures: 'Actieve vacatures',
+    statTotalKandidaten: 'Totaal kandidaten',
+    statAvgMScore: 'Gem. M-Score',
+    yourVacatures: 'Uw vacatures',
+    newVacature: '+ Nieuwe vacature',
+    tabActive: 'Actief',
+    tabCompleted: 'Afgerond',
+    deadline: 'Deadline:',
+    closed: 'Afgesloten:',
+    candidates: 'kandidaten',
+    newBadge: 'nieuw',
+    noActiveVacatures: 'Geen actieve vacatures',
+    noCompletedVacatures: 'Geen afgeronde vacatures',
+    fulfilled: '✓ Vervuld',
+    candidateHired: 'Kandidaat aangenomen:',
+  },
+  en: {
+    twoFATitle: 'Secure your account with two-factor authentication (2FA)',
+    twoFADesc: 'This protects your account against unauthorised access. As an employer you have access to personal data — 2FA is strongly recommended.',
+    twoFAActivate: 'Activate now',
+    welcomeTitle: 'Welcome! Set up your company profile',
+    welcomeDesc: 'Fill in your company details and description so candidates can see your company on vacancies.',
+    welcomeBtn: 'Set up company profile',
+    dashboardTitle: 'Dashboard',
+    dashboardSubtitle: 'Overview of your vacancies and candidates',
+    statActiveVacatures: 'Active vacancies',
+    statTotalKandidaten: 'Total candidates',
+    statAvgMScore: 'Avg. M-Score',
+    yourVacatures: 'Your vacancies',
+    newVacature: '+ New vacancy',
+    tabActive: 'Active',
+    tabCompleted: 'Completed',
+    deadline: 'Deadline:',
+    closed: 'Closed:',
+    candidates: 'candidates',
+    newBadge: 'new',
+    noActiveVacatures: 'No active vacancies',
+    noCompletedVacatures: 'No completed vacancies',
+    fulfilled: '✓ Filled',
+    candidateHired: 'Candidate hired:',
+  },
+}
+
 export default function OpdrachtgeverDashboard() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [showWelcome, setShowWelcome] = useState(true)
   const [show2FABanner, setShow2FABanner] = useState(true)
   const [tab, setTab] = useState<Tab>('actief')
@@ -19,9 +76,9 @@ export default function OpdrachtgeverDashboard() {
     : 0
 
   const stats = [
-    { label: 'Actieve vacatures', value: vacatures.length, icon: '📋' },
-    { label: 'Totaal kandidaten', value: totalKandidaten, icon: '👥' },
-    { label: 'Gem. M-Score', value: `${gemiddeldeFit}%`, icon: '🎯' },
+    { label: t.statActiveVacatures, value: vacatures.length, icon: '📋' },
+    { label: t.statTotalKandidaten, value: totalKandidaten, icon: '👥' },
+    { label: t.statAvgMScore, value: `${gemiddeldeFit}%`, icon: '🎯' },
   ]
 
   const activeVacatures = vacatures
@@ -37,13 +94,13 @@ export default function OpdrachtgeverDashboard() {
               <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
             </div>
             <div>
-              <p className="text-amber-800 font-semibold text-sm">Beveilig je account met tweestapsverificatie (2FA)</p>
-              <p className="text-amber-700 text-xs mt-0.5">Dit beschermt je account tegen onbevoegde toegang. Als opdrachtgever heb je toegang tot persoonsgegevens — 2FA is sterk aanbevolen.</p>
+              <p className="text-amber-800 font-semibold text-sm">{t.twoFATitle}</p>
+              <p className="text-amber-700 text-xs mt-0.5">{t.twoFADesc}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
             <Link href="/demo/opdrachtgever/instellingen" className="bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-amber-700 transition-colors">
-              Nu activeren
+              {t.twoFAActivate}
             </Link>
             <button onClick={() => setShow2FABanner(false)} className="text-amber-400 hover:text-amber-600 transition-colors text-lg" title="Sluiten">
               ✕
@@ -58,13 +115,13 @@ export default function OpdrachtgeverDashboard() {
           <div className="flex items-center gap-4">
             <span className="text-3xl">🏢</span>
             <div>
-              <p className="text-ink font-semibold text-sm">Welkom! Stel uw bedrijfsprofiel in</p>
-              <p className="text-ink-light text-xs mt-0.5">Vul uw bedrijfsgegevens en omschrijving in zodat kandidaten uw bedrijf zien bij vacatures.</p>
+              <p className="text-ink font-semibold text-sm">{t.welcomeTitle}</p>
+              <p className="text-ink-light text-xs mt-0.5">{t.welcomeDesc}</p>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
             <Link href="/demo/opdrachtgever/instellingen" className="bg-cyan text-navy-dark px-4 py-2 rounded-lg text-xs font-semibold hover:bg-cyan-light transition-colors">
-              Bedrijfsprofiel instellen
+              {t.welcomeBtn}
             </Link>
             <button onClick={() => setShowWelcome(false)} className="text-ink-muted hover:text-ink-light transition-colors text-lg" title="Sluiten">
               ✕
@@ -74,8 +131,8 @@ export default function OpdrachtgeverDashboard() {
       )}
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink">Dashboard</h1>
-        <p className="text-ink-light font-medium mt-1">Overzicht van uw vacatures en kandidaten</p>
+        <h1 className="text-2xl font-bold text-ink">{t.dashboardTitle}</h1>
+        <p className="text-ink-light font-medium mt-1">{t.dashboardSubtitle}</p>
       </div>
 
       {/* Stats */}
@@ -94,12 +151,12 @@ export default function OpdrachtgeverDashboard() {
       {/* Vacatures lijst */}
       <div className="bg-white rounded-2xl border border-surface-border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-ink">Uw vacatures</h2>
+          <h2 className="text-lg font-semibold text-ink">{t.yourVacatures}</h2>
           <Link
             href="/demo/opdrachtgever/vacature-aanmaken"
             className="bg-cyan text-navy-dark px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cyan-light transition-colors"
           >
-            + Nieuwe vacature
+            {t.newVacature}
           </Link>
         </div>
 
@@ -113,7 +170,7 @@ export default function OpdrachtgeverDashboard() {
                 : 'text-ink-light hover:text-ink'
             }`}
           >
-            Actief ({activeVacatures.length})
+            {t.tabActive} ({activeVacatures.length})
           </button>
           <button
             onClick={() => setTab('afgerond')}
@@ -123,7 +180,7 @@ export default function OpdrachtgeverDashboard() {
                 : 'text-ink-light hover:text-ink'
             }`}
           >
-            Afgerond ({archivedVacatures.length})
+            {t.tabCompleted} ({archivedVacatures.length})
           </button>
         </div>
 
@@ -157,7 +214,7 @@ export default function OpdrachtgeverDashboard() {
                           <span className="text-purple">📍</span> {vacature.location}
                         </span>
                         <span className="flex items-center gap-1">
-                          <span className="text-purple">📅</span> Deadline: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
+                          <span className="text-purple">📅</span> {t.deadline} {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
                         </span>
                         <span className="flex items-center gap-1 font-medium">
                           <span className="text-purple">💰</span> {vacature.salaris}
@@ -168,12 +225,12 @@ export default function OpdrachtgeverDashboard() {
                     <div className="flex items-center gap-6 ml-6">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-ink">{vacature.kandidaten.length}</div>
-                        <div className="text-sm text-ink-light font-medium">kandidaten</div>
+                        <div className="text-sm text-ink-light font-medium">{t.candidates}</div>
                       </div>
                       {nieuweKandidaten > 0 && (
                         <div className="text-center">
                           <div className="text-2xl font-bold text-cyan">{nieuweKandidaten}</div>
-                          <div className="text-sm text-cyan font-medium">nieuw</div>
+                          <div className="text-sm text-cyan font-medium">{t.newBadge}</div>
                         </div>
                       )}
                       <span className="text-ink-muted group-hover:text-purple transition-colors text-xl">
@@ -187,7 +244,7 @@ export default function OpdrachtgeverDashboard() {
 
             {activeVacatures.length === 0 && (
               <div className="text-center py-8 text-ink-muted">
-                <p>Geen actieve vacatures</p>
+                <p>{t.noActiveVacatures}</p>
               </div>
             )}
           </div>
@@ -198,7 +255,7 @@ export default function OpdrachtgeverDashboard() {
           <div className="space-y-3">
             {archivedVacatures.length === 0 ? (
               <div className="text-center py-8 text-ink-muted">
-                <p>Geen afgeronde vacatures</p>
+                <p>{t.noCompletedVacatures}</p>
               </div>
             ) : (
               archivedVacatures.map((vacature) => {
@@ -218,7 +275,7 @@ export default function OpdrachtgeverDashboard() {
                             {vacature.title}
                           </h3>
                           <span className="text-sm px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-600 font-medium">
-                            ✓ Vervuld
+                            {t.fulfilled}
                           </span>
                         </div>
                         <div className="flex items-center gap-4 text-sm text-ink">
@@ -226,7 +283,7 @@ export default function OpdrachtgeverDashboard() {
                             <span className="text-purple">📍</span> {vacature.location}
                           </span>
                           <span className="flex items-center gap-1">
-                            <span className="text-purple">📅</span> Afgesloten: {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
+                            <span className="text-purple">📅</span> {t.closed} {new Date(vacature.deadline).toLocaleDateString('nl-NL')}
                           </span>
                           <span className="flex items-center gap-1 font-medium">
                             <span className="text-purple">💰</span> {vacature.salaris}
@@ -234,7 +291,7 @@ export default function OpdrachtgeverDashboard() {
                         </div>
                         {aangenomen && (
                           <div className="mt-2 text-sm text-green-600">
-                            Kandidaat aangenomen: <span className="font-semibold text-green-700">{aangenomen.naam}</span>
+                            {t.candidateHired} <span className="font-semibold text-green-700">{aangenomen.naam}</span>
                             {aangenomen.contractDatum && (
                               <span> — {new Date(aangenomen.contractDatum).toLocaleDateString('nl-NL')}</span>
                             )}
@@ -245,7 +302,7 @@ export default function OpdrachtgeverDashboard() {
                       <div className="flex items-center gap-6 ml-6">
                         <div className="text-center">
                           <div className="text-2xl font-bold text-ink-light">{vacature.kandidaten.length}</div>
-                          <div className="text-xs text-ink-muted">kandidaten</div>
+                          <div className="text-xs text-ink-muted">{t.candidates}</div>
                         </div>
                       </div>
                     </div>

@@ -9,6 +9,290 @@ import FitScore from '@/components/FitScore'
 import HardeCriteriaDetail from '@/components/HardeCriteriaDetail'
 import PipelineTracker from '@/components/PipelineTracker'
 import { calculateHardeCriteriaMatch } from '@/lib/matching'
+import { useLang } from '@/lib/i18n'
+
+const texts = {
+  nl: {
+    backToDashboard: '← Terug naar dashboard',
+    notFound: 'Kandidaat niet gevonden.',
+    reject: 'Afwijzen',
+    progressTitle: 'Voortgang',
+    mScore: 'M-Score',
+    culturalMatch: 'Culturele match',
+    hardeCriteria: 'Harde Criteria',
+    scoutExplanationTitle: (name: string) => `Toelichting van ${name}`,
+    talentScout: 'Talent Scout',
+    hardeCriteriaMatchTitle: (pct: number) => `Harde Criteria Match — ${pct}%`,
+    criteriaDeviation: (n: number) => `⚠ ${n} ${n === 1 ? 'criterium wijkt af' : 'criteria wijken af'} — overweeg of dit acceptabel is voor deze rol.`,
+    cvTitle: 'Curriculum Vitae',
+    cvProfile: 'Profiel',
+    cvWorkExperience: 'Werkervaring',
+    cvEducation: 'Opleiding',
+    cvSkills: 'Vaardigheden',
+    cvLanguages: 'Talen',
+    cvCertifications: 'Certificeringen',
+    contactTitle: 'Contactgegevens',
+    contactEmail: 'Email',
+    contactPhone: 'Telefoon',
+    contactCity: 'Woonplaats',
+    contactScout: 'Scout',
+    // Step 1
+    step1Title: (scoutName: string) => `Kandidaat voorgesteld door ${scoutName}`,
+    step1Desc: 'Om de contactgegevens van deze kandidaat te ontvangen, dient u akkoord te gaan met de plaatsingsovereenkomst. U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).',
+    placementTermsTitle: 'Plaatsingsvoorwaarden',
+    feeLabel: 'Plaatsingsfee bij aanname (excl. BTW)',
+    paymentMomentLabel: 'Betaalmoment',
+    paymentMomentValue: 'Na ondertekening arbeidsovereenkomst',
+    fitGuaranteeLabel: 'Fit Garantie',
+    fitGuaranteeValue: '12 maanden (bij M-Score ≥80%)',
+    viewContractBtn: 'Bekijk contract en ga akkoord →',
+    // Step 2
+    step2Title: 'Plan een kennismakingsgesprek',
+    step2Desc: (name: string) => `Neem contact op met ${name} en plan een gesprek. Voer de datum hieronder in.`,
+    scheduleInterviewBtn: 'Gespreksdatum invoeren →',
+    // Step 3 — gesprek gepland
+    gesprekGeplandTitle: (type: string) => `${type} gepland`,
+    kennismaking: 'Kennismakingsgesprek',
+    verdieping: 'Verdiepingsgesprek',
+    arbeidsvoorwaarden: 'Arbeidsvoorwaardengesprek',
+    gesprekDoneBtn: 'Gesprek is afgerond — geef feedback →',
+    // Step 4 — feedback
+    step4Title: 'Hoe ging het gesprek?',
+    step4Desc: (type: string) => `Geef feedback over het ${type}gesprek. Dit helpt de Talent Scout u de volgende keer nog beter van dienst te zijn.`,
+    feedbackRatingLabel: 'Beoordeling',
+    feedbackLabel: 'Feedback *',
+    feedbackPlaceholder: 'Hoe verliep het gesprek? Wat viel op?',
+    saveFeedbackBtn: 'Feedback opslaan →',
+    // Step 5 — vervolg
+    step5Title: 'Wat is de volgende stap?',
+    step5Desc: (name: string) => `Kies hoe u verder wilt met ${name}.`,
+    followUpInterview: 'Vervolggesprek plannen',
+    followUpInterviewDesc: 'Plan nog een gesprek met de kandidaat',
+    employmentTerms: 'Arbeidsvoorwaarden bespreken',
+    employmentTermsDesc: 'Ga naar de onderhandelingsfase',
+    rejectOption: 'Afwijzen',
+    rejectOptionDesc: 'Deze kandidaat past niet',
+    // Step 6 — arbeidsvoorwaarden
+    step6Title: 'Arbeidsvoorwaarden',
+    step6Desc: (name: string) => `U bent in gesprek over de arbeidsvoorwaarden met ${name}.`,
+    contractSignedBtn: 'Contract getekend!',
+    contractSignedDesc: 'De kandidaat heeft het contract ondertekend',
+    scheduleAnotherBtn: 'Nog een gesprek plannen',
+    scheduleAnotherDesc: 'Nog niet rond — plan een vervolggesprek',
+    // Contract getekend
+    successTitle: 'Succesvolle match!',
+    successDesc: (naam: string, title: string, company: string) => `${naam} is aangenomen als ${title} bij ${company}. De Fit Garantie van 12 maanden is nu actief.`,
+    feeLabelSmall: 'Plaatsingsfee (excl. BTW)',
+    feeNote: '+ 21% BTW. Wordt geïncasseerd via uw creditcard.',
+    // Afgewezen
+    rejectedTitle: 'Kandidaat afgewezen',
+    rejectedScoutRating: 'Scout rating',
+    // Timeline
+    timelineTitle: 'Gespreksverloop',
+    timelineCompleted: 'Afgerond',
+    timelinePlanned: 'Gepland',
+    // Contract modal
+    contractModalTitle: 'Plaatsingsovereenkomst',
+    contractModalSubtitle: 'Lees de voorwaarden en ga akkoord om de contactgegevens te ontsluiten.',
+    art1Title: 'Artikel 1 — No cure, no pay',
+    art1: 'U betaalt alleen een plaatsingsfee bij daadwerkelijke start van de kandidaat.',
+    art2Title: (opleidingsniveau: string, werkervaring: string) => `Artikel 2 — Plaatsingsfee`,
+    art2: (fee: number, opl: string, we: string) => `De fee bedraagt €${fee.toLocaleString('nl-NL')} excl. BTW, gebaseerd op opleidingsniveau (${opl}) en werkervaring (${we}).`,
+    art3Title: 'Artikel 3 — Fit Garantie',
+    art3: 'Bij een M-Score van ≥80% geldt een Fit Garantie van 12 maanden. Vertrekt de medewerker binnen die periode — ook op eigen initiatief — dan levert Refurzy eenmalig gratis een vervangende kandidaat. Uitsluitingen: afwijkende werkzaamheden, mismanagement of reorganisatie. Refurzy voert een exitgesprek met de kandidaat ter beoordeling.',
+    art4Title: 'Artikel 4 — Betaling',
+    art4: 'De fee wordt gefactureerd op de eerste werkdag van de kandidaat. Beide partijen bevestigen de start via het platform.',
+    art5Title: 'Artikel 5 — Terugtrekking',
+    art5: 'Trekt de kandidaat zich vóór de startdatum terug: geen kosten. Trekt u zich terug: 50% van de fee.',
+    paymentTitle: 'Betaalgegevens',
+    creditcardLabel: 'Creditcardnummer',
+    creditcardPlaceholder: '1234 5678 9012 3456',
+    expiryLabel: 'Vervaldatum (MM/JJ)',
+    expiryPlaceholder: 'MM/JJ',
+    cvcLabel: 'CVC',
+    cvcPlaceholder: '123',
+    signatureLabel: 'Uw naam (ter ondertekening)',
+    signaturePlaceholder: 'Volledige naam',
+    signatureNote: 'Door hieronder uw naam in te vullen en te klikken op \'Onderteken\', gaat u digitaal akkoord met de bovenstaande plaatsingsovereenkomst. Dit contract wordt opgeslagen en is te downloaden via Mijn Contracten.',
+    cancelBtn: 'Annuleren',
+    signBtn: 'Onderteken plaatsingsovereenkomst',
+    // Plan gesprek modal
+    planModalKennismaking: 'Kennismakingsgesprek plannen',
+    planModalVerdieping: 'Verdiepingsgesprek plannen',
+    planModalArbeidsvoorwaarden: 'Arbeidsvoorwaardengesprek plannen',
+    dateTimeLabel: 'Datum en tijd *',
+    scheduleMeetingBtn: 'Gesprek plannen',
+    // Reject modal
+    rejectModalTitle: 'Kandidaat afwijzen',
+    rejectModalSubtitle: 'Uw beoordeling helpt de Talent Scout beter te matchen in de toekomst.',
+    rejectReasonLabel: 'Reden van afwijzing *',
+    rejectReasonPlaceholder: 'Selecteer een reden',
+    rejectScoutRatingLabel: 'Beoordeling scout *',
+    autoRating: 'Automatisch 4 sterren — kandidaat bereikte arbeidsvoorwaarden fase',
+    minRatingText: (n: number) => `Minimaal ${n} sterren — kandidaat kwam tot gespreksfase`,
+    scoutQualityText: 'Hoe goed was de voordracht van de scout?',
+    rejectNoteLabel: 'Toelichting',
+    rejectNotePlaceholder: 'Optioneel: geef extra context',
+    rejectBtn: 'Afwijzen',
+    // Celebrate modal
+    celebrateTitle: 'Gefeliciteerd!',
+    celebrateDesc: (naam: string, title: string, company: string) => `${naam} wordt de nieuwe ${title} bij ${company}!`,
+    emailsTitle: '📧 E-mails worden verstuurd naar:',
+    emailOpdrachtgever: 'Opdrachtgever',
+    emailOpdrachtgeverDesc: 'Welkom & onboarding tips',
+    emailKandidaat: 'Kandidaat',
+    emailKandidaatDesc: 'Felicitatie & eerste werkdag',
+    emailScout: 'Scout',
+    emailScoutDesc: 'Fee bevestiging & uitbetaling',
+    fitGuaranteeActiveTitle: 'Fit Garantie actief',
+    fitGuaranteeActiveDesc: '12 maanden bescherming bij M-Score ≥80%',
+    closeBtn: 'Sluiten',
+    anonimous: (initialen: string) => `Kandidaat ${initialen}`,
+    kennismakingsFeedback: 'kennismakings',
+    verdiepingsFeedback: 'verdiepings',
+    arbeidsvoorwaardenFeedback: 'arbeidsvoorwaarden',
+  },
+  en: {
+    backToDashboard: '← Back to dashboard',
+    notFound: 'Candidate not found.',
+    reject: 'Reject',
+    progressTitle: 'Progress',
+    mScore: 'M-Score',
+    culturalMatch: 'Cultural match',
+    hardeCriteria: 'Hard Criteria',
+    scoutExplanationTitle: (name: string) => `Notes from ${name}`,
+    talentScout: 'Talent Scout',
+    hardeCriteriaMatchTitle: (pct: number) => `Hard Criteria Match — ${pct}%`,
+    criteriaDeviation: (n: number) => `⚠ ${n} ${n === 1 ? 'criterion deviates' : 'criteria deviate'} — consider whether this is acceptable for this role.`,
+    cvTitle: 'Curriculum Vitae',
+    cvProfile: 'Profile',
+    cvWorkExperience: 'Work experience',
+    cvEducation: 'Education',
+    cvSkills: 'Skills',
+    cvLanguages: 'Languages',
+    cvCertifications: 'Certifications',
+    contactTitle: 'Contact details',
+    contactEmail: 'Email',
+    contactPhone: 'Phone',
+    contactCity: 'City',
+    contactScout: 'Scout',
+    // Step 1
+    step1Title: (scoutName: string) => `Candidate nominated by ${scoutName}`,
+    step1Desc: 'To receive the contact details of this candidate, you must agree to the placement agreement. You only pay upon a successful placement (no cure, no pay).',
+    placementTermsTitle: 'Placement terms',
+    feeLabel: 'Placement fee upon hire (excl. VAT)',
+    paymentMomentLabel: 'Payment moment',
+    paymentMomentValue: 'Upon signing of employment contract',
+    fitGuaranteeLabel: 'Fit Guarantee',
+    fitGuaranteeValue: '12 months (with M-Score ≥80%)',
+    viewContractBtn: 'View contract and agree →',
+    // Step 2
+    step2Title: 'Schedule an introductory meeting',
+    step2Desc: (name: string) => `Contact ${name} and schedule a meeting. Enter the date below.`,
+    scheduleInterviewBtn: 'Enter meeting date →',
+    // Step 3 — gesprek gepland
+    gesprekGeplandTitle: (type: string) => `${type} scheduled`,
+    kennismaking: 'Introductory meeting',
+    verdieping: 'In-depth meeting',
+    arbeidsvoorwaarden: 'Employment terms meeting',
+    gesprekDoneBtn: 'Meeting completed — give feedback →',
+    // Step 4 — feedback
+    step4Title: 'How did the meeting go?',
+    step4Desc: (type: string) => `Provide feedback on the ${type} meeting. This helps the Talent Scout serve you better next time.`,
+    feedbackRatingLabel: 'Rating',
+    feedbackLabel: 'Feedback *',
+    feedbackPlaceholder: 'How did the meeting go? What stood out?',
+    saveFeedbackBtn: 'Save feedback →',
+    // Step 5 — vervolg
+    step5Title: 'What is the next step?',
+    step5Desc: (name: string) => `Choose how you want to proceed with ${name}.`,
+    followUpInterview: 'Schedule follow-up meeting',
+    followUpInterviewDesc: 'Schedule another meeting with the candidate',
+    employmentTerms: 'Discuss employment terms',
+    employmentTermsDesc: 'Move to the negotiation phase',
+    rejectOption: 'Reject',
+    rejectOptionDesc: 'This candidate is not a fit',
+    // Step 6 — arbeidsvoorwaarden
+    step6Title: 'Employment terms',
+    step6Desc: (name: string) => `You are discussing employment terms with ${name}.`,
+    contractSignedBtn: 'Contract signed!',
+    contractSignedDesc: 'The candidate has signed the contract',
+    scheduleAnotherBtn: 'Schedule another meeting',
+    scheduleAnotherDesc: 'Not finalised yet — schedule a follow-up',
+    // Contract getekend
+    successTitle: 'Successful match!',
+    successDesc: (naam: string, title: string, company: string) => `${naam} has been hired as ${title} at ${company}. The 12-month Fit Guarantee is now active.`,
+    feeLabelSmall: 'Placement fee (excl. VAT)',
+    feeNote: '+ 21% VAT. Will be charged to your credit card.',
+    // Afgewezen
+    rejectedTitle: 'Candidate rejected',
+    rejectedScoutRating: 'Scout rating',
+    // Timeline
+    timelineTitle: 'Meeting history',
+    timelineCompleted: 'Completed',
+    timelinePlanned: 'Planned',
+    // Contract modal
+    contractModalTitle: 'Placement Agreement',
+    contractModalSubtitle: 'Read the terms and agree to unlock the contact details.',
+    art1Title: 'Article 1 — No cure, no pay',
+    art1: 'You only pay a placement fee when the candidate actually starts.',
+    art2Title: (opleidingsniveau: string, werkervaring: string) => `Article 2 — Placement fee`,
+    art2: (fee: number, opl: string, we: string) => `The fee is €${fee.toLocaleString('nl-NL')} excl. VAT, based on education level (${opl}) and work experience (${we}).`,
+    art3Title: 'Article 3 — Fit Guarantee',
+    art3: 'With an M-Score of ≥80% a Fit Guarantee of 12 months applies. If the employee leaves within that period — including on their own initiative — Refurzy provides one free replacement candidate. Exclusions: changed job duties, mismanagement or reorganisation. Refurzy conducts an exit interview with the candidate for assessment.',
+    art4Title: 'Article 4 — Payment',
+    art4: 'The fee is invoiced on the candidate\'s first working day. Both parties confirm the start via the platform.',
+    art5Title: 'Article 5 — Withdrawal',
+    art5: 'If the candidate withdraws before the start date: no costs. If you withdraw: 50% of the fee.',
+    paymentTitle: 'Payment details',
+    creditcardLabel: 'Credit card number',
+    creditcardPlaceholder: '1234 5678 9012 3456',
+    expiryLabel: 'Expiry date (MM/YY)',
+    expiryPlaceholder: 'MM/YY',
+    cvcLabel: 'CVC',
+    cvcPlaceholder: '123',
+    signatureLabel: 'Your name (for signing)',
+    signaturePlaceholder: 'Full name',
+    signatureNote: 'By entering your name below and clicking \'Sign\', you digitally agree to the placement agreement above. This contract is saved and can be downloaded via My Contracts.',
+    cancelBtn: 'Cancel',
+    signBtn: 'Sign placement agreement',
+    // Plan gesprek modal
+    planModalKennismaking: 'Schedule introductory meeting',
+    planModalVerdieping: 'Schedule in-depth meeting',
+    planModalArbeidsvoorwaarden: 'Schedule employment terms meeting',
+    dateTimeLabel: 'Date and time *',
+    scheduleMeetingBtn: 'Schedule meeting',
+    // Reject modal
+    rejectModalTitle: 'Reject candidate',
+    rejectModalSubtitle: 'Your rating helps the Talent Scout match better in the future.',
+    rejectReasonLabel: 'Reason for rejection *',
+    rejectReasonPlaceholder: 'Select a reason',
+    rejectScoutRatingLabel: 'Scout rating *',
+    autoRating: 'Automatic 4 stars — candidate reached employment terms phase',
+    minRatingText: (n: number) => `Minimum ${n} stars — candidate reached interview phase`,
+    scoutQualityText: 'How good was the scout\'s nomination?',
+    rejectNoteLabel: 'Notes',
+    rejectNotePlaceholder: 'Optional: provide additional context',
+    rejectBtn: 'Reject',
+    // Celebrate modal
+    celebrateTitle: 'Congratulations!',
+    celebrateDesc: (naam: string, title: string, company: string) => `${naam} will be the new ${title} at ${company}!`,
+    emailsTitle: '📧 Emails will be sent to:',
+    emailOpdrachtgever: 'Employer',
+    emailOpdrachtgeverDesc: 'Welcome & onboarding tips',
+    emailKandidaat: 'Candidate',
+    emailKandidaatDesc: 'Congratulations & first working day',
+    emailScout: 'Scout',
+    emailScoutDesc: 'Fee confirmation & payout',
+    fitGuaranteeActiveTitle: 'Fit Guarantee active',
+    fitGuaranteeActiveDesc: '12 months protection with M-Score ≥80%',
+    closeBtn: 'Close',
+    anonimous: (initialen: string) => `Candidate ${initialen}`,
+    kennismakingsFeedback: 'introductory',
+    verdiepingsFeedback: 'in-depth',
+    arbeidsvoorwaardenFeedback: 'employment terms',
+  },
+}
 
 // ─── Mock CV data per kandidaat ──────────────────────────────────────────────
 interface CVData {
@@ -160,6 +444,9 @@ function getDefaultCV(k: { naam: string; opleidingsniveau: string; werkervaring:
 
 export default function OpdrachtgeverKandidaatProces() {
   const params = useParams()
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const vacature = vacatures.find(v => v.id === params.id)
   const kandidaat = vacature?.kandidaten.find(k => k.id === params.kandidaatId)
 
@@ -193,13 +480,15 @@ export default function OpdrachtgeverKandidaatProces() {
   const minRating = getMinRating(procesStatus)
 
   if (!vacature || !kandidaat) {
-    return <div className="flex items-center justify-center h-64"><p className="text-ink-light">Kandidaat niet gevonden.</p></div>
+    return <div className="flex items-center justify-center h-64"><p className="text-ink-light">{t.notFound}</p></div>
   }
 
   const fee = calculateFee(kandidaat.opleidingsniveau, kandidaat.werkervaring)
   const lastGesprek = gesprekken[gesprekken.length - 1]
   const needsFeedback = lastGesprek && lastGesprek.status === 'afgerond' && !lastGesprek.feedback
   const cv = mockCVData[kandidaat.id] || getDefaultCV(kandidaat)
+
+  const displayName = unlocked ? kandidaat.naam : t.anonimous(kandidaat.initialen)
 
   // Calculate detailed harde criteria match using same mock data as HardeCriteriaDetail
   const mockKandidaatData: Record<string, { salarisMin: number; salarisMax: number; maxReistijd: string; opKantoor: string; talen: { taal: string; niveau: 'A2' | 'B1' | 'B2' | 'C1' | 'C2' }[] }> = {
@@ -293,11 +582,25 @@ export default function OpdrachtgeverKandidaatProces() {
     </div>
   )
 
+  // Helper: get translated meeting type label
+  const getMeetingTypeLabel = (type: string) => {
+    if (type === 'kennismaking') return t.kennismaking
+    if (type === 'verdieping') return t.verdieping
+    return t.arbeidsvoorwaarden
+  }
+
+  // Helper: get feedback prefix for meeting type
+  const getFeedbackTypePrefix = (type: string) => {
+    if (type === 'kennismaking') return t.kennismakingsFeedback
+    if (type === 'verdieping') return t.verdiepingsFeedback
+    return t.arbeidsvoorwaardenFeedback
+  }
+
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Back link */}
       <Link href="/demo/opdrachtgever" className="text-ink-light hover:text-cyan text-sm inline-flex items-center gap-1 transition-colors">
-        ← Terug naar dashboard
+        {t.backToDashboard}
       </Link>
 
       {/* Header */}
@@ -309,7 +612,7 @@ export default function OpdrachtgeverKandidaatProces() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-ink">
-                {unlocked ? kandidaat.naam : `Kandidaat ${kandidaat.initialen}`}
+                {displayName}
               </h1>
               <p className="text-ink-light text-sm">{vacature.title} · {vacature.company}</p>
             </div>
@@ -318,31 +621,31 @@ export default function OpdrachtgeverKandidaatProces() {
         {!isRejected && procesStatus !== 'contract_getekend' && (
           <button onClick={() => { setRejectRating(minRating > 0 ? minRating : 0); setShowRejectModal(true) }}
             className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-sm hover:bg-red-50 transition-colors">
-            Afwijzen
+            {t.reject}
           </button>
         )}
       </div>
 
       {/* Pipeline tracker */}
       <div className="bg-white rounded-2xl border border-surface-border p-6">
-        <h2 className="text-xs font-medium text-ink-muted mb-4 uppercase tracking-wider">Voortgang</h2>
+        <h2 className="text-xs font-medium text-ink-muted mb-4 uppercase tracking-wider">{t.progressTitle}</h2>
         <PipelineTracker currentStatus={procesStatus} isRejected={isRejected} />
       </div>
 
       {/* M-Score + Criteria */}
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted mb-2">M-Score</p>
+          <p className="text-xs text-ink-muted mb-2">{t.mScore}</p>
           <div className="flex items-center gap-3">
             <FitScore score={kandidaat.deVriesFit} size="lg" />
             <div>
               <p className="text-ink font-semibold">{kandidaat.deVriesFit}%</p>
-              <p className="text-xs text-ink-muted">Culturele match</p>
+              <p className="text-xs text-ink-muted">{t.culturalMatch}</p>
             </div>
           </div>
         </div>
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <p className="text-xs text-ink-muted mb-2">Harde Criteria</p>
+          <p className="text-xs text-ink-muted mb-2">{t.hardeCriteria}</p>
           <div className="flex items-center gap-3">
             <FitScore score={kandidaat.hardeCriteriaMatch} size="lg" />
             <div>
@@ -361,8 +664,8 @@ export default function OpdrachtgeverKandidaatProces() {
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-sm font-semibold text-ink">Toelichting van {kandidaat.scoutNaam}</h2>
-              <span className="text-[10px] text-ink-muted bg-surface-muted px-1.5 py-0.5 rounded">Talent Scout</span>
+              <h2 className="text-sm font-semibold text-ink">{t.scoutExplanationTitle(kandidaat.scoutNaam)}</h2>
+              <span className="text-[10px] text-ink-muted bg-surface-muted px-1.5 py-0.5 rounded">{t.talentScout}</span>
             </div>
             <p className="text-sm text-ink-light leading-relaxed">{cv.scoutToelichting}</p>
           </div>
@@ -372,7 +675,7 @@ export default function OpdrachtgeverKandidaatProces() {
       {/* ─── Harde Criteria Detail (afwijkingen prominent) ──────────────────── */}
       {hardeCriteriaResult && (
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <h2 className="text-sm font-semibold text-ink mb-4">Harde Criteria Match — {kandidaat.hardeCriteriaMatch}%</h2>
+          <h2 className="text-sm font-semibold text-ink mb-4">{t.hardeCriteriaMatchTitle(kandidaat.hardeCriteriaMatch)}</h2>
           <div className="space-y-2">
             {hardeCriteriaResult.criteria.map((c, i) => (
               <div key={i} className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm ${
@@ -393,7 +696,7 @@ export default function OpdrachtgeverKandidaatProces() {
           {failedCriteria.length > 0 && (
             <div className="mt-3 pt-3 border-t border-surface-border">
               <p className="text-xs text-orange font-medium">
-                ⚠ {failedCriteria.length} {failedCriteria.length === 1 ? 'criterium wijkt af' : 'criteria wijken af'} — overweeg of dit acceptabel is voor deze rol.
+                {t.criteriaDeviation(failedCriteria.length)}
               </p>
             </div>
           )}
@@ -402,17 +705,17 @@ export default function OpdrachtgeverKandidaatProces() {
 
       {/* ─── CV / Profiel ───────────────────────────────────────────────────── */}
       <div className="bg-white rounded-2xl border border-surface-border p-6 space-y-6">
-        <h2 className="text-lg font-semibold text-ink">Curriculum Vitae</h2>
+        <h2 className="text-lg font-semibold text-ink">{t.cvTitle}</h2>
 
         {/* Samenvatting */}
         <div>
-          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Profiel</h3>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">{t.cvProfile}</h3>
           <p className="text-sm text-ink-light leading-relaxed">{cv.samenvatting}</p>
         </div>
 
         {/* Werkervaring */}
         <div>
-          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">Werkervaring</h3>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">{t.cvWorkExperience}</h3>
           <div className="space-y-4">
             {cv.werkervaring.map((w, i) => (
               <div key={i} className="relative pl-5 border-l-2 border-purple/20">
@@ -432,7 +735,7 @@ export default function OpdrachtgeverKandidaatProces() {
 
         {/* Opleiding */}
         <div>
-          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">Opleiding</h3>
+          <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">{t.cvEducation}</h3>
           <div className="space-y-3">
             {cv.opleiding.map((o, i) => (
               <div key={i} className="relative pl-5 border-l-2 border-cyan/20">
@@ -453,7 +756,7 @@ export default function OpdrachtgeverKandidaatProces() {
         {/* Vaardigheden + Talen in 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Vaardigheden</h3>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">{t.cvSkills}</h3>
             <div className="flex flex-wrap gap-1.5">
               {cv.vaardigheden.map((v, i) => (
                 <span key={i} className="px-2.5 py-1 bg-surface-muted text-ink text-xs rounded-lg border border-surface-border">{v}</span>
@@ -461,12 +764,12 @@ export default function OpdrachtgeverKandidaatProces() {
             </div>
           </div>
           <div>
-            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Talen</h3>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">{t.cvLanguages}</h3>
             <div className="space-y-1.5">
-              {cv.talen.map((t, i) => (
+              {cv.talen.map((tl, i) => (
                 <div key={i} className="flex items-center justify-between text-sm">
-                  <span className="text-ink">{t.taal}</span>
-                  <span className="text-ink-muted text-xs">{t.niveau}</span>
+                  <span className="text-ink">{tl.taal}</span>
+                  <span className="text-ink-muted text-xs">{tl.niveau}</span>
                 </div>
               ))}
             </div>
@@ -476,7 +779,7 @@ export default function OpdrachtgeverKandidaatProces() {
         {/* Certificeringen */}
         {cv.certificeringen && cv.certificeringen.length > 0 && (
           <div>
-            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">Certificeringen</h3>
+            <h3 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">{t.cvCertifications}</h3>
             <div className="flex flex-wrap gap-1.5">
               {cv.certificeringen.map((c, i) => (
                 <span key={i} className="px-2.5 py-1 bg-cyan/10 text-cyan text-xs rounded-lg border border-cyan/20 font-medium">{c}</span>
@@ -489,22 +792,22 @@ export default function OpdrachtgeverKandidaatProces() {
       {/* Contact details (only when unlocked) */}
       {unlocked && (
         <div className="bg-white rounded-2xl border border-surface-border p-5">
-          <h2 className="text-sm font-medium text-ink mb-3">Contactgegevens</h2>
+          <h2 className="text-sm font-medium text-ink mb-3">{t.contactTitle}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <p className="text-ink-muted text-xs">Email</p>
+              <p className="text-ink-muted text-xs">{t.contactEmail}</p>
               <p className="text-ink font-medium">{kandidaat.email || 'anna.dejong@email.nl'}</p>
             </div>
             <div>
-              <p className="text-ink-muted text-xs">Telefoon</p>
+              <p className="text-ink-muted text-xs">{t.contactPhone}</p>
               <p className="text-ink font-medium">{kandidaat.telefoon || '06-12345678'}</p>
             </div>
             <div>
-              <p className="text-ink-muted text-xs">Woonplaats</p>
+              <p className="text-ink-muted text-xs">{t.contactCity}</p>
               <p className="text-ink font-medium">{kandidaat.woonplaats}</p>
             </div>
             <div>
-              <p className="text-ink-muted text-xs">Scout</p>
+              <p className="text-ink-muted text-xs">{t.contactScout}</p>
               <p className="text-ink font-medium">{kandidaat.scoutNaam}</p>
             </div>
           </div>
@@ -517,35 +820,32 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">📋</span>
             <div>
-              <h2 className="text-lg font-semibold text-ink">Kandidaat voorgesteld door {kandidaat.scoutNaam}</h2>
-              <p className="text-ink-light text-sm mt-1">
-                Om de contactgegevens van deze kandidaat te ontvangen, dient u akkoord te gaan met de plaatsingsovereenkomst.
-                U betaalt alleen bij een succesvolle plaatsing (no cure, no pay).
-              </p>
+              <h2 className="text-lg font-semibold text-ink">{t.step1Title(kandidaat.scoutNaam)}</h2>
+              <p className="text-ink-light text-sm mt-1">{t.step1Desc}</p>
             </div>
           </div>
 
           <div className="bg-surface-muted rounded-xl p-4">
-            <h3 className="text-sm font-medium text-ink mb-2">Plaatsingsvoorwaarden</h3>
+            <h3 className="text-sm font-medium text-ink mb-2">{t.placementTermsTitle}</h3>
             <div className="space-y-2 text-sm text-ink-light">
               <div className="flex justify-between">
-                <span>Plaatsingsfee bij aanname (excl. BTW)</span>
+                <span>{t.feeLabel}</span>
                 <span className="text-ink font-semibold">€{fee.fee.toLocaleString('nl-NL')}</span>
               </div>
               <div className="flex justify-between">
-                <span>Betaalmoment</span>
-                <span className="text-ink">Na ondertekening arbeidsovereenkomst</span>
+                <span>{t.paymentMomentLabel}</span>
+                <span className="text-ink">{t.paymentMomentValue}</span>
               </div>
               <div className="flex justify-between">
-                <span>Fit Garantie</span>
-                <span className="text-ink">12 maanden (bij M-Score ≥80%)</span>
+                <span>{t.fitGuaranteeLabel}</span>
+                <span className="text-ink">{t.fitGuaranteeValue}</span>
               </div>
             </div>
           </div>
 
           <button onClick={() => setShowContractModal(true)}
             className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors">
-            Bekijk contract en ga akkoord →
+            {t.viewContractBtn}
           </button>
         </div>
       )}
@@ -556,16 +856,14 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">📅</span>
             <div>
-              <h2 className="text-lg font-semibold text-ink">Plan een kennismakingsgesprek</h2>
-              <p className="text-ink-light text-sm mt-1">
-                Neem contact op met {unlocked ? kandidaat.naam : `Kandidaat ${kandidaat.initialen}`} en plan een gesprek. Voer de datum hieronder in.
-              </p>
+              <h2 className="text-lg font-semibold text-ink">{t.step2Title}</h2>
+              <p className="text-ink-light text-sm mt-1">{t.step2Desc(displayName)}</p>
             </div>
           </div>
 
           <button onClick={() => { setNewGesprekType('kennismaking'); setShowPlanModal(true) }}
             className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors">
-            Gespreksdatum invoeren →
+            {t.scheduleInterviewBtn}
           </button>
         </div>
       )}
@@ -577,8 +875,7 @@ export default function OpdrachtgeverKandidaatProces() {
             <span className="text-2xl">🤝</span>
             <div>
               <h2 className="text-lg font-semibold text-ink">
-                {lastGesprek.type === 'kennismaking' ? 'Kennismakingsgesprek' :
-                 lastGesprek.type === 'verdieping' ? 'Verdiepingsgesprek' : 'Arbeidsvoorwaardengesprek'} gepland
+                {t.gesprekGeplandTitle(getMeetingTypeLabel(lastGesprek.type))}
               </h2>
               <p className="text-ink-light text-sm mt-1">
                 Op <strong className="text-ink">{new Date(lastGesprek.datum).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</strong>
@@ -588,7 +885,7 @@ export default function OpdrachtgeverKandidaatProces() {
 
           <button onClick={() => handleMarkGesprekDone(lastGesprek.id)}
             className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors">
-            Gesprek is afgerond — geef feedback →
+            {t.gesprekDoneBtn}
           </button>
         </div>
       )}
@@ -599,26 +896,25 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">💬</span>
             <div>
-              <h2 className="text-lg font-semibold text-ink">Hoe ging het gesprek?</h2>
+              <h2 className="text-lg font-semibold text-ink">{t.step4Title}</h2>
               <p className="text-ink-light text-sm mt-1">
-                Geef feedback over het {lastGesprek.type === 'kennismaking' ? 'kennismakings' : lastGesprek.type === 'verdieping' ? 'verdiepings' : 'arbeidsvoorwaarden'}gesprek.
-                Dit helpt de Talent Scout u de volgende keer nog beter van dienst te zijn.
+                {t.step4Desc(getFeedbackTypePrefix(lastGesprek.type))}
               </p>
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-1">Beoordeling</label>
+            <label className="block text-sm font-medium text-ink mb-1">{t.feedbackRatingLabel}</label>
             <StarRating value={feedbackRating} onChange={setFeedbackRating} />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-ink mb-1">Feedback *</label>
+            <label className="block text-sm font-medium text-ink mb-1">{t.feedbackLabel}</label>
             <textarea
               value={feedbackText}
               onChange={(e) => setFeedbackText(e.target.value)}
               rows={3}
-              placeholder="Hoe verliep het gesprek? Wat viel op?"
+              placeholder={t.feedbackPlaceholder}
               className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50 resize-none"
             />
           </div>
@@ -626,7 +922,7 @@ export default function OpdrachtgeverKandidaatProces() {
           <button onClick={() => handleSubmitFeedback(lastGesprek.id)}
             disabled={!feedbackText}
             className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-            Feedback opslaan →
+            {t.saveFeedbackBtn}
           </button>
         </div>
       )}
@@ -637,10 +933,8 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">🔄</span>
             <div>
-              <h2 className="text-lg font-semibold text-ink">Wat is de volgende stap?</h2>
-              <p className="text-ink-light text-sm mt-1">
-                Kies hoe u verder wilt met {unlocked ? kandidaat.naam : `Kandidaat ${kandidaat.initialen}`}.
-              </p>
+              <h2 className="text-lg font-semibold text-ink">{t.step5Title}</h2>
+              <p className="text-ink-light text-sm mt-1">{t.step5Desc(displayName)}</p>
             </div>
           </div>
 
@@ -648,20 +942,20 @@ export default function OpdrachtgeverKandidaatProces() {
             <button onClick={() => { setNewGesprekType('verdieping'); setShowPlanModal(true) }}
               className="p-4 bg-surface-muted rounded-xl text-left hover:bg-cyan/5 hover:border-cyan/30 border border-surface-border transition-colors">
               <span className="text-lg">🤝</span>
-              <p className="text-sm font-medium text-ink mt-2">Vervolggesprek plannen</p>
-              <p className="text-xs text-ink-muted mt-1">Plan nog een gesprek met de kandidaat</p>
+              <p className="text-sm font-medium text-ink mt-2">{t.followUpInterview}</p>
+              <p className="text-xs text-ink-muted mt-1">{t.followUpInterviewDesc}</p>
             </button>
             <button onClick={handleStartArbeidsvoorwaarden}
               className="p-4 bg-surface-muted rounded-xl text-left hover:bg-green-50 hover:border-green-300 border border-surface-border transition-colors">
               <span className="text-lg">💼</span>
-              <p className="text-sm font-medium text-ink mt-2">Arbeidsvoorwaarden bespreken</p>
-              <p className="text-xs text-ink-muted mt-1">Ga naar de onderhandelingsfase</p>
+              <p className="text-sm font-medium text-ink mt-2">{t.employmentTerms}</p>
+              <p className="text-xs text-ink-muted mt-1">{t.employmentTermsDesc}</p>
             </button>
             <button onClick={() => { setRejectRating(minRating > 0 ? minRating : 0); setShowRejectModal(true) }}
               className="p-4 bg-surface-muted rounded-xl text-left hover:bg-red-50 hover:border-red-300 border border-surface-border transition-colors">
               <span className="text-lg">✕</span>
-              <p className="text-sm font-medium text-ink mt-2">Afwijzen</p>
-              <p className="text-xs text-ink-muted mt-1">Deze kandidaat past niet</p>
+              <p className="text-sm font-medium text-ink mt-2">{t.rejectOption}</p>
+              <p className="text-xs text-ink-muted mt-1">{t.rejectOptionDesc}</p>
             </button>
           </div>
         </div>
@@ -673,10 +967,8 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">💼</span>
             <div>
-              <h2 className="text-lg font-semibold text-ink">Arbeidsvoorwaarden</h2>
-              <p className="text-ink-light text-sm mt-1">
-                U bent in gesprek over de arbeidsvoorwaarden met {unlocked ? kandidaat.naam : `Kandidaat ${kandidaat.initialen}`}.
-              </p>
+              <h2 className="text-lg font-semibold text-ink">{t.step6Title}</h2>
+              <p className="text-ink-light text-sm mt-1">{t.step6Desc(displayName)}</p>
             </div>
           </div>
 
@@ -684,14 +976,14 @@ export default function OpdrachtgeverKandidaatProces() {
             <button onClick={handleContractGetekend}
               className="p-4 bg-green-50 rounded-xl text-left hover:bg-green-100 border border-green-200 transition-colors">
               <span className="text-2xl">🎉</span>
-              <p className="text-sm font-semibold text-green-700 mt-2">Contract getekend!</p>
-              <p className="text-xs text-green-600 mt-1">De kandidaat heeft het contract ondertekend</p>
+              <p className="text-sm font-semibold text-green-700 mt-2">{t.contractSignedBtn}</p>
+              <p className="text-xs text-green-600 mt-1">{t.contractSignedDesc}</p>
             </button>
             <button onClick={() => { setNewGesprekType('arbeidsvoorwaarden'); setShowPlanModal(true) }}
               className="p-4 bg-surface-muted rounded-xl text-left hover:bg-cyan/5 border border-surface-border transition-colors">
               <span className="text-lg">📅</span>
-              <p className="text-sm font-medium text-ink mt-2">Nog een gesprek plannen</p>
-              <p className="text-xs text-ink-muted mt-1">Nog niet rond — plan een vervolggesprek</p>
+              <p className="text-sm font-medium text-ink mt-2">{t.scheduleAnotherBtn}</p>
+              <p className="text-xs text-ink-muted mt-1">{t.scheduleAnotherDesc}</p>
             </button>
           </div>
         </div>
@@ -701,15 +993,14 @@ export default function OpdrachtgeverKandidaatProces() {
       {procesStatus === 'contract_getekend' && (
         <div className="bg-gradient-to-br from-green-50 to-cyan/10 rounded-2xl border-2 border-green-300 p-8 text-center space-y-4">
           <div className="text-5xl">🎉</div>
-          <h2 className="text-2xl font-bold text-ink">Succesvolle match!</h2>
+          <h2 className="text-2xl font-bold text-ink">{t.successTitle}</h2>
           <p className="text-ink-light max-w-md mx-auto">
-            {kandidaat.naam} is aangenomen als {vacature.title} bij {vacature.company}.
-            De Fit Garantie van 12 maanden is nu actief.
+            {t.successDesc(kandidaat.naam, vacature.title, vacature.company)}
           </p>
           <div className="bg-white rounded-xl p-4 max-w-sm mx-auto">
-            <p className="text-xs text-ink-muted">Plaatsingsfee (excl. BTW)</p>
+            <p className="text-xs text-ink-muted">{t.feeLabelSmall}</p>
             <p className="text-2xl font-bold text-ink">€{fee.fee.toLocaleString('nl-NL')}</p>
-            <p className="text-xs text-ink-muted mt-1">+ 21% BTW. Wordt geïncasseerd via uw creditcard.</p>
+            <p className="text-xs text-ink-muted mt-1">{t.feeNote}</p>
           </div>
         </div>
       )}
@@ -720,7 +1011,7 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="flex items-start gap-3">
             <span className="text-2xl">✕</span>
             <div>
-              <h2 className="text-lg font-semibold text-red-700">Kandidaat afgewezen</h2>
+              <h2 className="text-lg font-semibold text-red-700">{t.rejectedTitle}</h2>
               <p className="text-red-600 text-sm mt-1">
                 {afwijzingsRedenen.find(r => r.key === rejectReason)?.label}
                 {rejectNote && ` — "${rejectNote}"`}
@@ -729,7 +1020,7 @@ export default function OpdrachtgeverKandidaatProces() {
                 {[1, 2, 3, 4, 5].map(s => (
                   <span key={s} className={`text-sm ${s <= rejectRating ? 'text-yellow-400' : 'text-surface-border'}`}>★</span>
                 ))}
-                <span className="text-xs text-ink-muted ml-1">Scout rating</span>
+                <span className="text-xs text-ink-muted ml-1">{t.rejectedScoutRating}</span>
               </div>
             </div>
           </div>
@@ -739,7 +1030,7 @@ export default function OpdrachtgeverKandidaatProces() {
       {/* ─── Gesprekken timeline ─────────────────────────────────────────────────── */}
       {gesprekken.length > 0 && (
         <div className="bg-white rounded-2xl border border-surface-border p-6">
-          <h2 className="text-sm font-medium text-ink-muted mb-4">Gespreksverloop</h2>
+          <h2 className="text-sm font-medium text-ink-muted mb-4">{t.timelineTitle}</h2>
           <div className="space-y-4">
             {gesprekken.map((g, i) => (
               <div key={g.id} className="flex gap-4">
@@ -755,13 +1046,12 @@ export default function OpdrachtgeverKandidaatProces() {
                 <div className="flex-1 pb-4">
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-medium text-ink">
-                      {g.type === 'kennismaking' ? 'Kennismakingsgesprek' :
-                       g.type === 'verdieping' ? 'Verdiepingsgesprek' : 'Arbeidsvoorwaardengesprek'}
+                      {getMeetingTypeLabel(g.type)}
                     </p>
                     <span className={`text-xs px-2 py-0.5 rounded-full ${
                       g.status === 'afgerond' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
                     }`}>
-                      {g.status === 'afgerond' ? 'Afgerond' : 'Gepland'}
+                      {g.status === 'afgerond' ? t.timelineCompleted : t.timelinePlanned}
                     </span>
                   </div>
                   <p className="text-xs text-ink-muted mt-0.5">
@@ -791,38 +1081,38 @@ export default function OpdrachtgeverKandidaatProces() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden max-h-[90vh] overflow-y-auto">
             <div className="bg-purple/5 p-6 border-b border-surface-border">
-              <h2 className="text-xl font-bold text-ink">Plaatsingsovereenkomst</h2>
-              <p className="text-ink-light text-sm mt-1">Lees de voorwaarden en ga akkoord om de contactgegevens te ontsluiten.</p>
+              <h2 className="text-xl font-bold text-ink">{t.contractModalTitle}</h2>
+              <p className="text-ink-light text-sm mt-1">{t.contractModalSubtitle}</p>
             </div>
             <div className="p-6 space-y-4">
               <div className="bg-surface-muted rounded-xl p-4 space-y-3 text-sm text-ink-light">
-                <p><strong className="text-ink">Artikel 1 — No cure, no pay</strong><br />U betaalt alleen een plaatsingsfee bij daadwerkelijke start van de kandidaat.</p>
-                <p><strong className="text-ink">Artikel 2 — Plaatsingsfee</strong><br />De fee bedraagt {'\u20AC'}{fee.fee.toLocaleString('nl-NL')} excl. BTW, gebaseerd op opleidingsniveau ({kandidaat.opleidingsniveau}) en werkervaring ({kandidaat.werkervaring}).</p>
-                <p><strong className="text-ink">Artikel 3 — Fit Garantie</strong><br />Bij een M-Score van {'\u2265'}80% geldt een Fit Garantie van 12 maanden. Vertrekt de medewerker binnen die periode — ook op eigen initiatief — dan levert Refurzy eenmalig gratis een vervangende kandidaat. Uitsluitingen: afwijkende werkzaamheden, mismanagement of reorganisatie. Refurzy voert een exitgesprek met de kandidaat ter beoordeling.</p>
-                <p><strong className="text-ink">Artikel 4 — Betaling</strong><br />De fee wordt gefactureerd op de eerste werkdag van de kandidaat. Beide partijen bevestigen de start via het platform.</p>
-                <p><strong className="text-ink">Artikel 5 — Terugtrekking</strong><br />Trekt de kandidaat zich v{'\u00F3\u00F3'}r de startdatum terug: geen kosten. Trekt u zich terug: 50% van de fee.</p>
+                <p><strong className="text-ink">{t.art1Title}</strong><br />{t.art1}</p>
+                <p><strong className="text-ink">{t.art2Title(kandidaat.opleidingsniveau, kandidaat.werkervaring)}</strong><br />{t.art2(fee.fee, kandidaat.opleidingsniveau, kandidaat.werkervaring)}</p>
+                <p><strong className="text-ink">{t.art3Title}</strong><br />{t.art3}</p>
+                <p><strong className="text-ink">{t.art4Title}</strong><br />{t.art4}</p>
+                <p><strong className="text-ink">{t.art5Title}</strong><br />{t.art5}</p>
               </div>
 
               {/* Creditcard gegevens */}
               <div className="space-y-3">
-                <h3 className="text-sm font-medium text-ink">Betaalgegevens</h3>
+                <h3 className="text-sm font-medium text-ink">{t.paymentTitle}</h3>
                 <div>
-                  <label className="block text-xs text-ink-muted mb-1">Creditcardnummer</label>
+                  <label className="block text-xs text-ink-muted mb-1">{t.creditcardLabel}</label>
                   <input type="text" value={creditcardNummer} onChange={(e) => setCreditcardNummer(e.target.value)}
-                    placeholder="1234 5678 9012 3456" maxLength={19}
+                    placeholder={t.creditcardPlaceholder} maxLength={19}
                     className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs text-ink-muted mb-1">Vervaldatum (MM/JJ)</label>
+                    <label className="block text-xs text-ink-muted mb-1">{t.expiryLabel}</label>
                     <input type="text" value={creditcardExpiry} onChange={(e) => setCreditcardExpiry(e.target.value)}
-                      placeholder="MM/JJ" maxLength={5}
+                      placeholder={t.expiryPlaceholder} maxLength={5}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
                   </div>
                   <div>
-                    <label className="block text-xs text-ink-muted mb-1">CVC</label>
+                    <label className="block text-xs text-ink-muted mb-1">{t.cvcLabel}</label>
                     <input type="text" value={creditcardCvc} onChange={(e) => setCreditcardCvc(e.target.value)}
-                      placeholder="123" maxLength={4}
+                      placeholder={t.cvcPlaceholder} maxLength={4}
                       className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
                   </div>
                 </div>
@@ -831,25 +1121,23 @@ export default function OpdrachtgeverKandidaatProces() {
               {/* Ondertekening */}
               <div className="space-y-3 border-t border-surface-border pt-4">
                 <div>
-                  <label className="block text-sm font-medium text-ink mb-1">Uw naam (ter ondertekening)</label>
+                  <label className="block text-sm font-medium text-ink mb-1">{t.signatureLabel}</label>
                   <input type="text" value={ondertekeningNaam} onChange={(e) => setOndertekeningNaam(e.target.value)}
-                    placeholder="Volledige naam"
+                    placeholder={t.signaturePlaceholder}
                     className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50" />
                 </div>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Door hieronder uw naam in te vullen en te klikken op &lsquo;Onderteken&rsquo;, gaat u digitaal akkoord met de bovenstaande plaatsingsovereenkomst. Dit contract wordt opgeslagen en is te downloaden via Mijn Contracten.
-                </p>
+                <p className="text-xs text-ink-muted leading-relaxed">{t.signatureNote}</p>
               </div>
 
               <div className="flex gap-3">
                 <button onClick={() => setShowContractModal(false)}
                   className="flex-1 py-2.5 border border-surface-border text-ink-light rounded-lg text-sm hover:bg-surface-muted transition-colors">
-                  Annuleren
+                  {t.cancelBtn}
                 </button>
                 <button onClick={handleAcceptContract}
                   disabled={!ondertekeningNaam.trim()}
                   className="flex-1 py-2.5 bg-cyan text-navy-dark rounded-lg font-semibold text-sm hover:bg-cyan/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  Onderteken plaatsingsovereenkomst
+                  {t.signBtn}
                 </button>
               </div>
             </div>
@@ -862,22 +1150,22 @@ export default function OpdrachtgeverKandidaatProces() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 space-y-4">
             <h2 className="text-lg font-bold text-ink">
-              {newGesprekType === 'kennismaking' ? 'Kennismakingsgesprek plannen' :
-               newGesprekType === 'verdieping' ? 'Verdiepingsgesprek plannen' : 'Arbeidsvoorwaardengesprek plannen'}
+              {newGesprekType === 'kennismaking' ? t.planModalKennismaking :
+               newGesprekType === 'verdieping' ? t.planModalVerdieping : t.planModalArbeidsvoorwaarden}
             </h2>
             <div>
-              <label className="block text-sm font-medium text-ink mb-1">Datum en tijd *</label>
+              <label className="block text-sm font-medium text-ink mb-1">{t.dateTimeLabel}</label>
               <input type="datetime-local" value={newGesprekDatum} onChange={(e) => setNewGesprekDatum(e.target.value)}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50" />
             </div>
             <div className="flex gap-3">
               <button onClick={() => setShowPlanModal(false)}
                 className="flex-1 py-2.5 border border-surface-border text-ink-light rounded-lg text-sm hover:bg-surface-muted transition-colors">
-                Annuleren
+                {t.cancelBtn}
               </button>
               <button onClick={handlePlanGesprek} disabled={!newGesprekDatum}
                 className="flex-1 py-2.5 bg-cyan text-navy-dark rounded-lg font-semibold text-sm hover:bg-cyan/90 transition-colors disabled:opacity-40">
-                Gesprek plannen
+                {t.scheduleMeetingBtn}
               </button>
             </div>
           </div>
@@ -888,20 +1176,20 @@ export default function OpdrachtgeverKandidaatProces() {
       {showRejectModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 space-y-4">
-            <h2 className="text-lg font-bold text-ink">Kandidaat afwijzen</h2>
-            <p className="text-ink-light text-sm">Uw beoordeling helpt de Talent Scout beter te matchen in de toekomst.</p>
+            <h2 className="text-lg font-bold text-ink">{t.rejectModalTitle}</h2>
+            <p className="text-ink-light text-sm">{t.rejectModalSubtitle}</p>
             <div>
-              <label className="block text-sm font-medium text-ink mb-1">Reden van afwijzing *</label>
+              <label className="block text-sm font-medium text-ink mb-1">{t.rejectReasonLabel}</label>
               <select value={rejectReason} onChange={(e) => setRejectReason(e.target.value as AfwijzingsReden)}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm focus:outline-none focus:border-cyan/50">
-                <option value="">Selecteer een reden</option>
+                <option value="">{t.rejectReasonPlaceholder}</option>
                 {afwijzingsRedenen.map(r => (
                   <option key={r.key} value={r.key}>{r.label}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-ink mb-1">Beoordeling scout *</label>
+              <label className="block text-sm font-medium text-ink mb-1">{t.rejectScoutRatingLabel}</label>
               {procesStatus === 'arbeidsvoorwaarden' ? (
                 <>
                   <div className="flex gap-1">
@@ -909,33 +1197,33 @@ export default function OpdrachtgeverKandidaatProces() {
                       <span key={star} className={`text-2xl ${star <= 4 ? 'text-yellow-400' : 'text-surface-border'}`}>★</span>
                     ))}
                   </div>
-                  <p className="text-xs text-green-600 mt-1">Automatisch 4 sterren — kandidaat bereikte arbeidsvoorwaarden fase</p>
+                  <p className="text-xs text-green-600 mt-1">{t.autoRating}</p>
                 </>
               ) : (
                 <>
                   <StarRating value={rejectRating} onChange={(v) => setRejectRating(Math.max(v, minRating))} />
                   {minRating >= 3 ? (
-                    <p className="text-xs text-ink-muted mt-1">Minimaal {minRating} sterren — kandidaat kwam tot gespreksfase</p>
+                    <p className="text-xs text-ink-muted mt-1">{t.minRatingText(minRating)}</p>
                   ) : (
-                    <p className="text-xs text-ink-muted mt-1">Hoe goed was de voordracht van de scout?</p>
+                    <p className="text-xs text-ink-muted mt-1">{t.scoutQualityText}</p>
                   )}
                 </>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-ink mb-1">Toelichting</label>
+              <label className="block text-sm font-medium text-ink mb-1">{t.rejectNoteLabel}</label>
               <textarea value={rejectNote} onChange={(e) => setRejectNote(e.target.value)} rows={2}
-                placeholder="Optioneel: geef extra context"
+                placeholder={t.rejectNotePlaceholder}
                 className="w-full bg-surface-muted border border-surface-border rounded-lg px-4 py-2.5 text-ink text-sm placeholder:text-ink-muted focus:outline-none focus:border-cyan/50 resize-none" />
             </div>
             <div className="flex gap-3">
               <button onClick={() => setShowRejectModal(false)}
                 className="flex-1 py-2.5 border border-surface-border text-ink-light rounded-lg text-sm hover:bg-surface-muted transition-colors">
-                Annuleren
+                {t.cancelBtn}
               </button>
               <button onClick={handleReject} disabled={!rejectReason || rejectRating === 0}
                 className="flex-1 py-2.5 bg-red-500 text-white rounded-lg font-semibold text-sm hover:bg-red-600 transition-colors disabled:opacity-40">
-                Afwijzen
+                {t.rejectBtn}
               </button>
             </div>
           </div>
@@ -948,39 +1236,39 @@ export default function OpdrachtgeverKandidaatProces() {
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
             <div className="bg-gradient-to-br from-cyan via-blue-500 to-purple p-8 text-center text-white">
               <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-2xl font-bold">Gefeliciteerd!</h2>
-              <p className="text-white/90 mt-2">{kandidaat.naam} wordt de nieuwe {vacature.title} bij {vacature.company}!</p>
+              <h2 className="text-2xl font-bold">{t.celebrateTitle}</h2>
+              <p className="text-white/90 mt-2">{t.celebrateDesc(kandidaat.naam, vacature.title, vacature.company)}</p>
             </div>
             <div className="p-6 space-y-4">
               <div className="bg-surface-muted rounded-xl p-4 space-y-2 text-sm">
-                <p className="text-ink-muted">📧 E-mails worden verstuurd naar:</p>
+                <p className="text-ink-muted">{t.emailsTitle}</p>
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <div className="bg-white rounded-lg p-2">
-                    <p className="font-medium text-ink">Opdrachtgever</p>
-                    <p className="text-ink-muted">Welkom & onboarding tips</p>
+                    <p className="font-medium text-ink">{t.emailOpdrachtgever}</p>
+                    <p className="text-ink-muted">{t.emailOpdrachtgeverDesc}</p>
                   </div>
                   <div className="bg-white rounded-lg p-2">
-                    <p className="font-medium text-ink">Kandidaat</p>
-                    <p className="text-ink-muted">Felicitatie & eerste werkdag</p>
+                    <p className="font-medium text-ink">{t.emailKandidaat}</p>
+                    <p className="text-ink-muted">{t.emailKandidaatDesc}</p>
                   </div>
                   <div className="bg-white rounded-lg p-2">
-                    <p className="font-medium text-ink">Scout</p>
-                    <p className="text-ink-muted">Fee bevestiging & uitbetaling</p>
+                    <p className="font-medium text-ink">{t.emailScout}</p>
+                    <p className="text-ink-muted">{t.emailScoutDesc}</p>
                   </div>
                 </div>
               </div>
               <div className="bg-green-50 rounded-xl p-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-sm font-medium text-green-700">Fit Garantie actief</p>
-                    <p className="text-xs text-green-600">12 maanden bescherming bij M-Score ≥80%</p>
+                    <p className="text-sm font-medium text-green-700">{t.fitGuaranteeActiveTitle}</p>
+                    <p className="text-xs text-green-600">{t.fitGuaranteeActiveDesc}</p>
                   </div>
                   <span className="text-2xl">🛡️</span>
                 </div>
               </div>
               <button onClick={() => setShowCelebrateModal(false)}
                 className="w-full py-3 bg-cyan text-navy-dark rounded-xl font-semibold text-sm hover:bg-cyan/90 transition-colors">
-                Sluiten
+                {t.closeBtn}
               </button>
             </div>
           </div>

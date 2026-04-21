@@ -4,26 +4,68 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getUser } from '@/lib/auth'
 import { UserRole } from '@/lib/types'
-import { mockNotifications, notificationIcons, notificationTypeLabels, NotificationType, Notification } from '@/lib/mock-notifications'
+import { mockNotifications, notificationIcons, NotificationType, Notification } from '@/lib/mock-notifications'
+import { useLang } from '@/lib/i18n'
 
-function timeAgo(timestamp: string): string {
-  const now = new Date('2026-03-19T12:00:00Z')
-  const date = new Date(timestamp)
-  const diffMs = now.getTime() - date.getTime()
-  const diffMins = Math.floor(diffMs / 60000)
-  const diffHours = Math.floor(diffMs / 3600000)
-  const diffDays = Math.floor(diffMs / 86400000)
-
-  if (diffMins < 60) return `${diffMins} min geleden`
-  if (diffHours < 24) return `${diffHours} uur geleden`
-  if (diffDays === 1) return 'gisteren'
-  if (diffDays < 7) return `${diffDays} dagen geleden`
-  return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
+const texts = {
+  nl: {
+    title: 'Notificaties',
+    unread: (count: number) => `${count} ongelezen`,
+    allRead: 'Alles gelezen',
+    markAllRead: 'Alles als gelezen markeren',
+    filterAll: (count: number) => `Alles (${count})`,
+    view: 'Bekijken',
+    markAsUnread: 'Markeer als ongelezen',
+    markAsRead: 'Markeer als gelezen',
+    noNotifications: (label: string | null) =>
+      label ? `Geen notificaties gevonden voor type "${label}".` : 'Geen notificaties gevonden.',
+    typeLabels: {
+      vacancy: 'Vacature',
+      match: 'Match',
+      contract: 'Contract',
+      message: 'Bericht',
+      system: 'Systeem',
+    } as Record<NotificationType, string>,
+    timeAgo: {
+      minutesAgo: (n: number) => `${n} min geleden`,
+      hoursAgo: (n: number) => `${n} uur geleden`,
+      yesterday: 'gisteren',
+      daysAgo: (n: number) => `${n} dagen geleden`,
+    },
+  },
+  en: {
+    title: 'Notifications',
+    unread: (count: number) => `${count} unread`,
+    allRead: 'All read',
+    markAllRead: 'Mark all as read',
+    filterAll: (count: number) => `All (${count})`,
+    view: 'View',
+    markAsUnread: 'Mark as unread',
+    markAsRead: 'Mark as read',
+    noNotifications: (label: string | null) =>
+      label ? `No notifications found for type "${label}".` : 'No notifications found.',
+    typeLabels: {
+      vacancy: 'Vacancy',
+      match: 'Match',
+      contract: 'Contract',
+      message: 'Message',
+      system: 'System',
+    } as Record<NotificationType, string>,
+    timeAgo: {
+      minutesAgo: (n: number) => `${n} min ago`,
+      hoursAgo: (n: number) => `${n} hours ago`,
+      yesterday: 'yesterday',
+      daysAgo: (n: number) => `${n} days ago`,
+    },
+  },
 }
 
 const allTypes: NotificationType[] = ['vacancy', 'match', 'contract', 'message', 'system']
 
 export default function NotificatiesPage() {
+  const { lang } = useLang()
+  const t = texts[lang]
+
   const [role, setRole] = useState<UserRole>('opdrachtgever')
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [filterType, setFilterType] = useState<NotificationType | 'all'>('all')
@@ -35,6 +77,21 @@ export default function NotificatiesPage() {
       setNotifications(mockNotifications[user.role] || [])
     }
   }, [])
+
+  function timeAgo(timestamp: string): string {
+    const now = new Date('2026-03-19T12:00:00Z')
+    const date = new Date(timestamp)
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    if (diffMins < 60) return t.timeAgo.minutesAgo(diffMins)
+    if (diffHours < 24) return t.timeAgo.hoursAgo(diffHours)
+    if (diffDays === 1) return t.timeAgo.yesterday
+    if (diffDays < 7) return t.timeAgo.daysAgo(diffDays)
+    return date.toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-NL', { day: 'numeric', month: 'short' })
+  }
 
   const toggleRead = (id: string) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n))
@@ -54,15 +111,15 @@ export default function NotificatiesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-semibold text-ink">Notificaties</h1>
+          <h1 className="text-2xl font-semibold text-ink">{t.title}</h1>
           <p className="text-ink-muted mt-1">
-            {unreadCount > 0 ? `${unreadCount} ongelezen` : 'Alles gelezen'}
+            {unreadCount > 0 ? t.unread(unreadCount) : t.allRead}
           </p>
         </div>
         {unreadCount > 0 && (
           <button onClick={markAllRead}
             className="px-4 py-2 text-sm font-medium text-purple border border-purple/20 rounded-lg hover:bg-purple/5 transition-colors">
-            Alles als gelezen markeren
+            {t.markAllRead}
           </button>
         )}
       </div>
@@ -73,7 +130,7 @@ export default function NotificatiesPage() {
           className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
             filterType === 'all' ? 'bg-purple text-white border-purple' : 'bg-white text-ink border-surface-border hover:border-purple/40'
           }`}>
-          Alles ({notifications.length})
+          {t.filterAll(notifications.length)}
         </button>
         {allTypes.map(type => {
           const count = notifications.filter(n => n.type === type).length
@@ -83,7 +140,7 @@ export default function NotificatiesPage() {
               className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
                 filterType === type ? 'bg-purple text-white border-purple' : 'bg-white text-ink border-surface-border hover:border-purple/40'
               }`}>
-              {notificationIcons[type]} {notificationTypeLabels[type]} ({count})
+              {notificationIcons[type]} {t.typeLabels[type]} ({count})
             </button>
           )
         })}
@@ -104,7 +161,7 @@ export default function NotificatiesPage() {
                 </span>
                 {!notification.read && <span className="w-2 h-2 bg-purple rounded-full flex-shrink-0" />}
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-surface-muted text-ink-muted ml-auto flex-shrink-0">
-                  {notificationTypeLabels[notification.type]}
+                  {t.typeLabels[notification.type]}
                 </span>
               </div>
               <p className="text-sm text-ink-light">{notification.description}</p>
@@ -112,13 +169,13 @@ export default function NotificatiesPage() {
                 <span className="text-xs text-ink-muted">{timeAgo(notification.timestamp)}</span>
                 {notification.link && (
                   <Link href={notification.link} className="text-xs text-purple hover:text-purple-dark font-medium">
-                    Bekijken
+                    {t.view}
                   </Link>
                 )}
               </div>
             </div>
             <button onClick={() => toggleRead(notification.id)}
-              className="text-ink-muted hover:text-ink-muted mt-1 flex-shrink-0 p-1" title={notification.read ? 'Markeer als ongelezen' : 'Markeer als gelezen'}>
+              className="text-ink-muted hover:text-ink-muted mt-1 flex-shrink-0 p-1" title={notification.read ? t.markAsUnread : t.markAsRead}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={notification.read ? 'none' : 'currentColor'} stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
               </svg>
@@ -128,7 +185,7 @@ export default function NotificatiesPage() {
 
         {filtered.length === 0 && (
           <div className="px-5 py-12 text-center text-ink-muted">
-            Geen notificaties gevonden{filterType !== 'all' ? ` voor type "${notificationTypeLabels[filterType]}"` : ''}.
+            {t.noNotifications(filterType !== 'all' ? t.typeLabels[filterType] : null)}
           </div>
         )}
       </div>
